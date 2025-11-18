@@ -1,0 +1,4 @@
+*.dat
+.oh-my-zsh/*
+# ... BUT, make an exception and DO NOT ignore the custom folder.
+!/.oh-my-zsh/custom

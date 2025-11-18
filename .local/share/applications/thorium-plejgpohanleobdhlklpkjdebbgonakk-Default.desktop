@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Image Upload & Meme Generation | Imgur
+Exec=/opt/thorium-browser/thorium-browser --profile-directory=Default --app-id=plejgpohanleobdhlklpkjdebbgonakk
+Icon=thorium-plejgpohanleobdhlklpkjdebbgonakk-Default
+StartupWMClass=crx_plejgpohanleobdhlklpkjdebbgonakk

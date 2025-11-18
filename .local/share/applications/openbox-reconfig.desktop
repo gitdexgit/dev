@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Openbox Reconfigure
+Comment=Openbox Reconfigure
+Exec=sh -c "openbox --reconfigure &"
+Terminal=false
+Categories=Utility;

@@ -1,0 +1,7 @@
+#!/bin/sh
+# A universal clipboard script
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    wl-copy
+else
+    xclip -i -selection clipboard
+fi

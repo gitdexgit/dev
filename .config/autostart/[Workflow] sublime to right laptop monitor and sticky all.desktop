@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=subl # just launch no big deal you have rules on openbox # /home/dex/scripts/practice/autostart_scripts/sublime.sh # I think I have stuff setup in window manager config rules application sestion
+Name=[Launch] sublime - quick dirty notepad that is good enough
+Type=Application
+Version=1.0

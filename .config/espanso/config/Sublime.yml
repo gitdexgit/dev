@@ -1,0 +1,7 @@
+
+
+## try this in general and with enable_some_zen.yml it might be differnet than bellow
+filter_title: Zen
+filter_class: sublime
+enable: false
+

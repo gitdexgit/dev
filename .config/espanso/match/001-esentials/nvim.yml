@@ -1,0 +1,49 @@
+matches:
+
+  # ---- nvim stuff ---
+
+  # helps changes the root dir in nvim to current buffer dir location.
+  # to check current buffer location do pwd
+  - trigger: "cd ;;h"
+    replace: "cd %:h"
+
+  # make sure you are in the / search mode in nvim then type this 
+  # This makes the search non-case sensitive so it highlights everyting
+  - trigger: ";;c;"
+    replace: "$|$\\c"
+
+  # Make sure you select something then hit / and type bellow
+  # btw you can use ;;c; after ;;v; when it's in \%V so like \%V;;c;
+  # which will give \%V<You_Type_Here_something>\c which will search
+  # everything that matches within the selection be it in case sensitive or case
+  # sadly this works only on first match
+  - trigger: ";;v;"
+    replace: "\\%V"
+ 
+  # this owrks on like first match and then you hit n to go to next and what not... 
+  # sadly I can't go back with N
+  # and sadly when it reaches the end it goes to all occurrences so yeah idk it's alright
+  # the trick is that c in /gc the c adds the converm thing
+  - trigger: ";;vv;"
+    replace: "s/$|$/&/gc"
+  
+  # This is the work around this works 100% just hit enter... N works everything works
+  # no bs
+  - trigger: ";;vvv;"
+    replace: "vimgrep /$|$/g %"
+  # to make \%V<You_Type_Here_something>\c easier in one go I do this
+  - trigger: ";;vc;"
+    replace: "\\%V$|$\\c"
+  # In nvim I think subsitute in general this replaces lines with new line
+  # makes space between lines. make sure you select stuff with V
+  # stuff must be like :'<,'> you know
+  # For the whole file... just do like :% then type the trigger ;;\r; and hit enter
+  - trigger: ";;\\r;"
+    replace: "s/.*/&\\r/"
+
+  # A really fast way to type the subsitute string so I don't deal with the / / typing
+  - trigger: ";;s;"
+    replace: "s/$|$/"
+
+
+  # ---- nvim stuff End---

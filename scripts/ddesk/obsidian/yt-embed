@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# --- NEW LOGIC STARTS HERE ---
+# Check if a URL was provided as a command-line argument.
+if [ -z "$1" ]; then
+    # If no argument is given, get the URL from the clipboard.
+    echo "No URL provided, grabbing from clipboard..."
+    url=$(xclip -o -selection clipboard)
+else
+    # If an argument is given, use it as the URL.
+    echo "URL provided as argument, processing..."
+    url="$1"
+fi
+# --- NEW LOGIC ENDS HERE ---
+
+
+# Check if we actually have a URL now (either from arg or clipboard)
+if [ -z "$url" ]; then
+    echo "❌ Error: Clipboard is empty or no URL was provided."
+    paplay /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
+    exit 1
+fi
+
+# Use yt-dlp to extract just the video ID from the URL
+# We add --no-warnings to keep the output clean
+video_id=$(yt-dlp --get-id --no-warnings "$url")
+
+# Check if yt-dlp succeeded
+if [ -z "$video_id" ]; then
+    echo "❌ Error: Could not extract a valid Video ID from the link."
+    echo "   URL found: '$url'"
+    paplay /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
+    exit 1
+fi
+
+# Create the standard YouTube embed iframe code
+embed_code="<iframe width=\"500\" height=\"315\" src=\"https://www.youtube.com/embed/$video_id\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+
+# Copy the embed code to the clipboard using xclip
+echo -n "$embed_code" | xclip -selection clipboard
+
+# Print a confirmation message to the terminal
+echo "✅ YouTube embed code for video ID '$video_id' copied to clipboard!"
+
+# Play a notification beep
+echo -e '\a'
+
+paplay /usr/share/sounds/freedesktop/stereo/complete.oga &> /dev/null &

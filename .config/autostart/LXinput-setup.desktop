@@ -1,0 +1,9 @@
+[Desktop Entry]
+Comment=Setup keyboard and mouse using settings done in LXInput
+Exec=sh -c \\\\\\\\'xset r rate 176 59\\\\\\\\'
+Name=[Keyboard] ]xset on autostart
+NoDisplay=true
+NotShowIn=GNOME;KDE;XFCE;
+Type=Application
+X-LXQt-Need-Tray=true
+X-LXQt-X11-Only=true

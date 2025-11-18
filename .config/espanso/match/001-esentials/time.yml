@@ -1,0 +1,85 @@
+matches:
+
+  - trigger: ";;.date;"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%d/%m/%Y\n\n%a, %d, %B\n\n%H:%M\n\n"
+
+  - trigger: "].lm]"
+    replace: "W{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%U %a, %d"
+  - trigger: ";;.lm;"
+    replace: "W{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%U %a, %d"
+  - trigger: ";;now"
+    replace: "W{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%V %a, %d at %H:%M"
+  - trigger: "]12"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%r"
+  - trigger: ";;12;"
+    replace: "{{mydate}}:"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%r"
+  - trigger: "]24"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%H:%M"
+
+  - trigger: ";;.df;"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: '%a, %d | %d/%m/%Y | %H:%M'
+
+
+  - trigger: ";;24;"
+    replace: "{{mydate}}:"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%H:%M"
+
+  - trigger: ";;.t;"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%H:%M"
+
+  - trigger: ";;.tt;"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%H:%M | %r"

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=keychain --eval ~/.ssh/githubarch
+Name=[ssh github] keychain for github
+Type=Application
+Version=1.0

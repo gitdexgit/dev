@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/obsidian_ws2.sh
+Name=[Notes] obsidian
+Type=Application
+Version=1.0
+X-LXQt-Autostart-disabled=true

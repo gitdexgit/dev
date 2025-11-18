@@ -1,0 +1,3 @@
+#!/bin/bash
+
+alacritty -e nvim ~/.config/openbox/rc.xml 

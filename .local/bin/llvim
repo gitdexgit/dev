@@ -1,0 +1,5 @@
+#!/bin/bash
+# ~/bin/llvim
+
+export NVIM_APPNAME="conv_nvim_to_lazy"
+exec nvim "$@"

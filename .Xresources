@@ -1,0 +1,67 @@
+! ===================================================
+! XTerm General Settings
+! ===================================================
+! Black background
+XTerm*background: black
+
+! Light gray foreground (easier on the eyes than pure white)
+XTerm*foreground: gray90
+
+! Make the cursor a visible green block
+XTerm*cursorColor: green
+XTerm*cursorBlink: true
+
+! Increase the scrollback buffer from the tiny default
+XTerm*saveLines: 4096
+
+! Disable the scrollbar for a cleaner look (optional)
+XTerm*scrollBar: false
+
+! This should allow for Osc52 support so that I can ssh and nvim copy clipboard support when I have the right nvim config and tmux config so that it also works in xterm not jjust lacritty
+XTerm*allowWindowOps: true
+
+
+! ===================================================
+! XTerm Font Configuration
+! ===================================================
+! This is essential: tells xterm to use modern font rendering
+XTerm*renderFont: true
+
+! Allow control sequences to change the font (CRUCIAL FOR F-KEY BINDINGS)
+XTerm*allowFontOps: true
+
+! Set the main font family and a good starting size
+XTerm*faceName: FiraCode Nerd Font Mono
+XTerm*faceSize: 11
+
+! Use the real "Bold" and "Italic" versions of the font
+XTerm*boldMode: true
+XTerm*italicMode: true
+XTerm*boldItalicMode: true
+
+! ===================================================
+! XTerm Keybindings (Combined)
+! ===================================================
+    XTerm*vt100.translations: #override \n\
+    Ctrl <KeyPress> minus: smaller-vt-font() \n\
+    Ctrl <KeyPress> equal: larger-vt-font() \n\
+    Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
+    Ctrl <KeyPress> V: insert-selection(CLIPBOARD) \n\
+
+*VT100.backarrowKeyIsErase: true
+*VT100.ttyModes: erase ^?
+
+XTerm*metaSendsEscape: true
+XTerm*eightBitInput: true
+
+
+    
+
+
+
+! ===================================================
+! General X Cursor Settings
+! ===================================================
+
+Xcursor.theme: breeze_cursors
+Xcursor.size: 24

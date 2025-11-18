@@ -1,0 +1,54 @@
+
+@import "/usr/share/rofi/themes/Arc-Dark.rasi"
+
+configuration {
+
+
+drun-cache: true;
+
+modi:	"drun,run,window";
+font:	"sans 12";
+
+/**
+here are other matching options (algorithms)
+"normal"	- The default prefix mathicng.
+"regex"		- Match against a regular expression.
+"glob"		- Match against a glob pattern.
+"fuzzy"		- Fuzzy matching. This is wha I like, cuz fzf you know
+
+
+*/
+
+matching: "fuzzy";
+
+sort: true;
+sorting-method: "fzf";
+terminal: "alacritty";
+case-sensitive: false;
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+
+
+
+/* kb-accept-custom (Control+Return) - THIS IS OFTEN THE TERMINAL OPENER */
+// kb-accept-custom: "Control+Return"; 
+
+//@theme "/usr/share/rofi/themes/dmenu.rasi"
+
+//@theme "/home/dex/.local/share/rofi/themes/nord-oneline.rasi"
+
+//@theme "/home/dex/.local/share/rofi/themes/nord-twoLines.rasi"
+
+//@theme "/home/dex/.local/share/rofi/themes/squared-nord.rasi"
+
+//@theme "/home/dex/.local/share/rofi/themes/rounded-nord-dark.rasi"
+
+//@theme "/home/dex/.local/share/rofi/themes/rounded-orange-dark.rasi"
+

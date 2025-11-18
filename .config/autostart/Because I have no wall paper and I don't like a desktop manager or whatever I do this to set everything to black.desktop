@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=hsetroot -solid \\"#162635\\"
+Name=[not needed] [answer was pcmanfc-qt to bring back the wall paper] ] [Wallpaper] Sets a very dark blue arch-blue like background using hsetroot better than xsetroot works with compositor
+Type=Application
+Version=1.0
+X-LXQt-Autostart-disabled=true
+X-LXQt-X11-Only=true

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/tmux_daily_temrinals.sh
+Name=[tmux] daily terminals
+Type=Application
+Version=1.0

@@ -1,0 +1,13 @@
+# In here I'll disable scrcpy because it's not good to be used with scrcpy
+
+# on linux you only have title and class... the executable is it the bin but it doesn't show
+# on the window information
+# you can type #detect# ... make sure espanso is runing or use xprop
+# like xprop | nvim
+
+#for example
+# filter_title: Zen
+filter_class: scrcpy
+enable: false
+
+

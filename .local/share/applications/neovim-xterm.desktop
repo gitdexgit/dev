@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Neovim (in xterm)
+Comment=Open with Neovim inside xterm terminal
+Exec=xterm -e nvim %F
+Icon=neovim
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+MimeType=text/markdown;
+Keywords=text;editor;markdown;nvim;xterm;

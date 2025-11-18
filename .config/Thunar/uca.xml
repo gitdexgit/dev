@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1753226726546316-1</unique-id>
+	<command>alacritty --working-directory %F</command>
+	<description>Example for a custom action</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>Run in Alacrity</name>
+	<submenu></submenu>
+	<unique-id>1754469662395735-1</unique-id>
+	<command>alacritty -e sh -c %f</command>
+	<description>Execute a script in Alacritty terminal</description>
+	<range>*</range>
+	<patterns>*sh</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+</actions>

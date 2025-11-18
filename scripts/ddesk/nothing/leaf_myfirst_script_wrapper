@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+TARGET_DIR="/home/dex/scripts"
+TARTGET_SCRIPT="leaflet.sh"
+
+
+if cd "$TARGET_DIR"; then
+
+
+	FOUND_SCRIPT=$(find . -type f -name "$TARTGET_SCRIPT" | head -n 1)
+
+	if [ -n "$FOUND_SCRIPT" ]; then
+		"$FOUND_SCRIPT"
+		exit 0
+	else
+		exit 1
+	fi
+else
+	exit 1
+fi

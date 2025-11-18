@@ -1,0 +1,9 @@
+matches:
+
+  - trigger: ";;#bash;"
+    replace: "#!/bin/bash"
+
+  - trigger: ";;3;"
+    replace: "#!/"
+
+

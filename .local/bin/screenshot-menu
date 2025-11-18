@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# A rofi-based screenshot menu.
+# Uses flameshot for everything except the multi-monitor scrot command.
+
+# Define the directory where screenshots will be saved
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$SCREENSHOT_DIR" # Ensure the directory exists
+
+# Define the user-friendly options
+options="  Capture Area (Save to File)\n📋  Capture Area (Copy to Clipboard)\n  Capture Fullscreen (Save to File)\n  Capture All Monitors (Save to File)\n  Capture Area (Pin to Screen)"
+
+# Use rofi to get the user's choice
+# The -p flag sets the prompt text.
+choice=$(echo -e "$options" | rofi -dmenu -i -p "Screenshot ")
+
+# Execute the command based on the choice
+case "$choice" in
+    "  Capture Area (Save to File)")
+        flameshot gui --path "$SCREENSHOT_DIR"
+        ;;
+    "📋  Capture Area (Copy to Clipboard)")
+        flameshot gui --clipboard
+        ;;
+    "  Capture Fullscreen (Save to File)")
+        flameshot full --path "$SCREENSHOT_DIR"
+        ;;
+    "  Capture All Monitors (Save to File)")
+        # This is where scrot's --multidisp is unique and useful
+        scrot --multidisp --silent "$SCREENSHOT_DIR/screenshot_%Y-%m-%d_%H-%M-%S.png"
+        ;;
+    "  Capture Area (Pin to Screen)")
+        flameshot gui --pin
+        ;;
+esac

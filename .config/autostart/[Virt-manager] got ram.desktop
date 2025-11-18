@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=sh -c \\\\"env SPICE_NOGRAB=1 virt-manager\\\\"
+Name=[Virt-manager (no grab)] got ram
+Type=Application
+Version=1.0

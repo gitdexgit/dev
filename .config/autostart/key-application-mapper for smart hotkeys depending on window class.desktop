@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/keyd-application-mapper.sh
+Name=[Use Manually] [It uses a lot of cpu] [Keyboard] # something is wrong with this it uses a lot of cpu with zen or somethingkeyd-applicaton-mapper -d [ # for keyd ]
+Type=Application
+Version=1.0
+X-LXQt-Autostart-disabled=true

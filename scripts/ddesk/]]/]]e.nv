@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Use bash -c to reliably execute the command string
+alacritty -e zsh -c "cd ~/.config/nvim && nvim ."

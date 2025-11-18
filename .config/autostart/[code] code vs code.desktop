@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/code_wsR.sh
+Name=[code] code vscode
+Type=Application
+Version=1.0

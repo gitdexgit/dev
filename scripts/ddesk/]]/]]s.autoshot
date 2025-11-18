@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/home/dex/scripts/ddesk/nothing/autoshot.sh &
+

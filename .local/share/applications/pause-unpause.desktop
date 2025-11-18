@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Pause/Unpause Process
+Comment=Click on a window to pause/unpause its process
+Exec=alacritty -e "/home/dex/scripts/cpu/simple_pause_unpause_process.sh"
+Icon=system-run
+Terminal=false
+Categories=Utility;

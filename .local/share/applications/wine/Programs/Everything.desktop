@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Everything
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Everything.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/users/dex/Desktop/EverythingSearch/Everything
+Icon=CE37_Everything.0
+StartupWMClass=everything.exe

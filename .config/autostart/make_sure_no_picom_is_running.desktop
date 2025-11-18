@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=pkill picom
+Name=[Kill picom] making sure picom is not rrunning start up. never use picom it makes moving between desktops slow
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

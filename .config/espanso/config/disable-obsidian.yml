@@ -1,0 +1,19 @@
+#for example
+# filter_title: (Reddit|Google Search|eTools.ch|DuckDuckGo|Google Drive|Colab|tldraw|Excalidraw)
+# filter_title: (Reddit|^Google|Goggle Search)
+filter_class: obsidian 
+# enable: true
+extra_includes:
+  # - "../match/testing_app_sepecific.yml"
+  # - "../match/001-esentials/obsidian.yml"
+extra_excludes:
+  # - "../match/001-esentials/*.yml"
+  - "../match/997-archived/*.yml"
+  - "../match/999-play/*.yml"
+  - "../match/coding/*.yml"
+  - "../match/packages/misspell-en/*.yml"
+  - "../match/packages/typofixer-en/*.yml"
+
+# key_delay: 10
+
+

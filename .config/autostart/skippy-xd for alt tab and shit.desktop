@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=skippy-xd --start-daemon &
+Name=[Alt Tab] skippy-xd for alt tab and shit
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

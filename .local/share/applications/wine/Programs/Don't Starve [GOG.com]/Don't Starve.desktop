@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Don't Starve
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Don\\'t\\ Starve\\ [GOG.com]\\\\Don\\'t\\ Starve.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/GOG Games/Dont Starve/bin
+Icon=521F_goggame-1207659210.0
+StartupWMClass=dontstarve.exe

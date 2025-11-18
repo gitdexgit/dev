@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Define your terminal emulator
+TERMINAL=kitty
+
+# The command to run inside the terminal
+# It finds files, pipes them to fzf, and if a file is selected, opens it with xdg-open
+$TERMINAL -e bash -c "fd --hidden . / | fzf --height 80% --reverse | xargs -r xdg-open"

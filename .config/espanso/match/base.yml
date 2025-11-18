@@ -1,0 +1,454 @@
+# espanso match file
+#
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+
+matches:
+
+  # ----- Experemental ----
+    
+  - trigger: ";;/Home;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Home &
+  - trigger: ";;/Home;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Home &
+  - trigger: ";;/fleet;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/fleet &
+  - trigger: ";;/power;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/power &
+  - trigger: ";;/projects;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/projects &
+  - trigger: ";;/tests;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/tests &
+  - trigger: ";;/scripts;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/scripts &
+  - trigger: ";;/ddesk;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/scripts/ddesk &
+  - trigger: ";;/Backup;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Backup &
+  - trigger: ";;/git;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/scripts/git &
+  - trigger: ";;/Pictures;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/scripts/git &
+  - trigger: ";;/Desktop;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Desktop &
+  - trigger: ";;/Downloads;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Downloads &
+  - trigger: ";;/Screenshots;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Pictures/Screenshots &
+  - trigger: ";;/Documents;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Documents &
+  - trigger: ";;/Audio;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Audio &
+  - trigger: ";;/Android;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Android &
+  - trigger: ";;/phone_sync;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/syncthing/phone_sync &
+  - trigger: ";;/Music;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/Music &
+  - trigger: ";;/syncthing;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: |
+            alacritty --working-directory ~/syncthing &
+
+
+  - trigger: ";;gc=;"
+    force_mode: clipboard
+    replace: |
+      == _)
+      == W{{mydate}}
+      == ==START============================================================
+      == ""{{my_title}}""
+      == ===================================================================
+
+      == [[]]
+
+      == DESCRIPTION:
+
+      == Why?:
+
+      == Solution?:
+
+      == ====================================================================
+
+      $|$
+
+      == ====================================================================
+      == ""{{my_title}}""
+      == ===END==============================================================
+    vars:
+      - name: my_title
+        type: shell
+        params:
+          # cmd: bash '/home/dex/scripts/ddesk/espanso/insert_comment_gc_hashtag.sh'
+          cmd:
+            'zenity --entry --title="Comment Header" --text="Enter the header title:"'
+      - name: mydate
+        type: date
+        params:
+          format: "%V %a, %d at %H:%M"
+
+
+  - trigger: ";;gc-;"
+    force_mode: clipboard
+    replace: |
+      -- _)
+      -- W{{mydate}}
+      -- --START------------------------------------------------------------
+      -- ""{{my_title}}""
+      -- -------------------------------------------------------------------
+
+      -- [[]]
+
+      -- DESCRIPTION:
+
+      -- Why?:
+
+      -- Solution?:
+
+      -- --------------------------------------------------------------------
+
+      $|$
+
+      -- --------------------------------------------------------------------
+      -- ""{{my_title}}""
+      -- ---END--------------------------------------------------------------
+    vars:
+      - name: my_title
+        type: shell
+        params:
+          # cmd: bash '/home/dex/scripts/ddesk/espanso/insert_comment_gc_hashtag.sh'
+          cmd:
+            'zenity --entry --title="Comment Header" --text="Enter the header title:"'
+      - name: mydate
+        type: date
+        params:
+          format: "%V %a, %d at %H:%M"
+
+
+
+  - trigger: ";;gc#;"
+    force_mode: clipboard
+    replace: |
+      # _)
+      # W{{mydate}}
+      # ---START------------------------------------------------------------
+      # ""{{my_title}}""
+      # --------------------------------------------------------------------
+
+      # [[]]
+
+      # DESCRIPTION:
+
+      # Why?:
+
+      # Solution?:
+  
+      # --------------------------------------------------------------------
+
+      $|$
+
+      # --------------------------------------------------------------------
+      # ""{{my_title}}""
+      # ---END--------------------------------------------------------------
+    vars:
+      - name: my_title
+        type: shell
+        params:
+          # cmd: bash '/home/dex/scripts/ddesk/espanso/insert_comment_gc_hashtag.sh'
+          cmd:
+            'zenity --entry --title="Comment Header" --text="Enter the header title:"'
+      - name: mydate
+        type: date
+        params:
+          format: "%V %a, %d at %H:%M"
+  # ----- Experemental END----
+
+  # ---- Remember commands ----
+
+  - trigger: ';;command~screens off' 
+    replace: 'xset dpms force off # make sure to run it in a terminal other wise it will not run'
+     
+  # ---- Remember commands END----
+
+   
+  # ---- terminal ----
+ 
+  - trigger: ';;h;' # leader concept works 
+    replace: '~/'
+  - trigger: '!;;h' # leader concept works 
+    replace: 'tldr'
+  - trigger: ';;cp;' # leader concept works 
+    replace: ' | ]cp '
+  - trigger: ';;a;' # leader concept works 
+    replace: 'nohup alacritty --working-directory . >/dev/null 2>&1 & disown ; exit'
+
+    # just for ideas purpuses
+  - trigger: '!]h]' # ]h is tldr in terminal so it's an alias to an alias in terminal that's sick
+    replace: ' !]h]'
+  - trigger: ' !]h]' # ]h is tldr in terminal so it's an alias to an alias in terminal that's sick
+    replace: ']h '
+  - trigger: ' ]h]' # ]h is tldr in terminal so it's an alias to an alias in terminal that's sick
+    replace: ']h '
+  - trigger: ';]h]' # ]h is tldr in terminal so it's an alias to an alias in terminal that's sick
+    replace: ']h '
+  - trigger: '?]h]' # ]h is tldr in terminal so it's an alias to an alias in terminal that's sick
+    replace: '["]h"]_[" ]h"]_["!]h]'
+
+  - trigger: ';;mpvyt;'
+    replace: 'mpv --ytdl-format=<worst|best |OR| 18|169..etc --> (yt-dlp -F "link")> "youtube link"'
+
+  # just trying to not gotget this command
+  - trigger: ';;feh;'
+    replace: 'feh --geometry 3286x1080+0+0 --borderless .'
+
+  # [IMPROVEMNS] This should probably use the control+alt+p or whatever the *bin functions I use in temrinal... maybe that would 
+  # help so that instead of me needing to open a terminal to run those I can just run them from wherever by just typing text... wherever
+  # - trigger: ';;pbin;'
+  #   replace: 'xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt'
+
+  # [IMPROVEMNS] This should probably use the control+alt+p or whatever the *bin functions I use in temrinal... maybe that would 
+  # - trigger: ';;gbin;'
+  #   replace: 'grep $|$ <(curl {{my_clip}})'
+  #   vars:
+  #     - name: my_clip
+  #       type: clipboard
+
+  # [IMPROVEMNS] This should probably use the control+alt+p or whatever the *bin functions I use in temrinal... maybe that would 
+  # - trigger: ';;vbin;'
+  #   replace: '(curl {{my_clip}}) | vim'
+  #   vars:
+  #     - name: my_clip
+  #       type: clipboard
+
+  # ---- terminal END----
+
+
+
+  # --[EMAIL]-- [ gmails ] ----
+
+  - trigger: ';;g.d;'
+    replace: 'ttdextester@gmail.com'
+  - trigger: ';;g.o;'
+    replace: 'ossqirat@gmail.com'
+  - trigger: ';;g.f;'
+    replace: 'fagottarik@gmail.com'
+
+
+  # END--[EMAIL]-- [ gmails ] END----
+
+
+
+  # ----- Paths --------
+  - trigger: ';;p.desk;'
+    replace: '/home/dex/Desktop/'
+
+  - trigger: ';;p.h;'
+    replace: '/home/dex/'
+
+  - trigger: ';;p.down;'
+    replace: '/home/dex/Downloads/'
+
+  - trigger: ';;p.doc'
+    replace: '/home/dex/Documents/'
+
+  - trigger: ';;p.pic]'
+    replace: '/home/dex/Pictures/'
+
+  - trigger: ';;p.s;'
+    replace: '/home/dex/scripts/'
+  # ----- Paths END--------
+
+  # --[COMMANDS]-- [ tmux ] ----
+  # instead of using the zsh history, which I do from time to time. the most 
+  # frequenly used ones should have their own shortcut.
+  # this only is for long commands
+
+  - trigger: ';;t.date;'
+    replace: ' watch -n 1 /home/dex/scripts/my_clock.sh'
+  - trigger: ';;t.date]'
+    replace: ' while true; do date; echo ""; date "+%y/%m/%d" ; echo "" ; date "+%T" ; sleep 60; clear; done'
+
+  - trigger: ';;t.cal;'
+    replace: ' while true; do cal -w ; sleep 300; clear; done'
+
+  # END--[COMMANDS]-- [ tmux ] END----
+
+
+
+
+
+  # ----- Date & Time ------
+  - trigger: ";;.d;"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%d/%m/%Y"
+
+  - trigger: ";;.f;"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            # this is just a scritp wrapper for running fleet.note.sh to make other triggers work
+            - /home/dex/scripts/ddesk/espanso/f-script-fix.sh
+            # - /home/dex/scripts/ddesk/nothing/fleet.note.sh
+  - trigger: "].f]"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - bash 
+            # this is just a scritp wrapper for running fleet.note.sh to make other triggers work
+            - /home/dex/scripts/ddesk/espanso/f-script-fix.sh
+            # - /home/dex/scripts/ddesk/nothing/fleet.note.sh
+            
+  # ----- Date & Time END------
+
+  # ---- help ----
+# espanso match file
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+
+
+
+
+
+
+
+
+
+
+
+
+

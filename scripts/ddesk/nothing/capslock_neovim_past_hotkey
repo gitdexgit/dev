@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Simple script to type "+y" literally with delays using xdotool
+
+# --- Configuration ---
+
+
+sleep 0.05
+sleep 0.05
+# --- Action ---
+# Simulate pressing the keys for "+y"
+
+# Type the first double quote (")
+xdotool key Shift+apostrophe
+sleep 0.05
+
+# Type the plus sign (+) (Shift+equal on US layout)
+xdotool key Shift+equal
+sleep 0.05
+
+# Type 'y'
+xdotool key p
+sleep 0.05
+
+# Type the second double quote (")

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# 1. Get mouse location and set X, Y, SCREEN, and WINDOW variables in the current shell
+eval $(xdotool getmouselocation --shell)
+
+# 2. Get the active window ID
+WID=$(xdotool getactivewindow)
+
+# 3. Move the active window to the mouse cursor's X and Y coordinates
+xdotool windowmove "$WID" "$X" "$Y"

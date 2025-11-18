@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Dolphin (KDE Themed)
+GenericName=File Manager
+Comment=Browse files and folders with KDE theming
+Exec=/home/dex/.local/bin/dolphin-themed.sh %u
+Icon=folder
+Type=Application
+Terminal=false
+Categories=System;FileTools;FileManager;
+Keywords=file;manager;explorer;kde;
+StartupWMClass=dolphin

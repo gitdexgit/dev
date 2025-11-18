@@ -1,0 +1,1862 @@
+# ~/.xbindkeys
+
+###############!!!!!!!!!!!!!!!!!!! current forbidden keys:
+#
+#
+# we don't use mod4+h or mod4+l... because they conflict other programs or my other programs.
+
+
+
+
+
+
+
+
+
+
+
+
+# _)
+# W39 Sat, 27 at 05:23
+# ---START------------------------------------------------------------
+# ""Requirements.txt""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# --------------------------------------------------------------------
+
+# requirements: 
+# - xbindkeys
+# - xdotool
+# - wmctrl
+# - rofi
+# - alacritty (or other terminal emulator)
+# - skippy-xd
+# - keyd
+# - flameshot
+# - scrot
+# - xclip
+# - wgetpaste
+# - iupload (custom script)
+# - copyq
+# - picom
+# - jgmenu
+# - pavucontrol
+# - xfce4-appfinder
+# - Custom scripts in ~/scripts/ddesk/ directory
+# - Custom binaries in ~/.local/bin/
+# - Japanese keyboard layout support (for mouse movement keys)
+# - Multiple monitor setup (for some positioning scripts)
+# - Openbox window manager (implied by some comments)
+# - Artha/GoldenDict-ng (for dictionary functions)
+# - brightness-controller (custom tool)
+
+
+# --------------------------------------------------------------------
+# ""Requirements.txt""
+# ---END--------------------------------------------------------------
+
+# For the benefit of emacs users: -*- shell-script -*-
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 1.8.7
+#
+# If you edit this file, do not forget to uncomment any lines
+# that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# To specify a key, you can use 'xbindkeys --key' or
+# 'xbindkeys --multikey' and put one of the two lines in this file.
+#
+# The format of a command line is:
+#    "command to start"
+#       associated key
+#
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+#
+
+# ==================================== Exceptions ============================
+# ========= FROM ME ======== 
+# EXCEPTIONS: The following can't be used sadly because of reasons in the workflow:
+
+# Mod4 + control+ Shift + alt + u this can't be used <-- openbox/keyd change that if you want to use it
+
+# =============================================================================
+
+
+
+# "xdotool key F24"
+# m:0x0 + c:202
+
+
+# ---- The far away problamaic problamaic key ----
+
+# it's problematic because you can't pair it with other keys... and it's not in 
+# keyd
+
+# I only have this key. I tried to pair it it didn't work. I guess we actually make it
+# and explorer because it was just a useless button
+# "dolphin"
+# XF86Explorer
+#
+# "dolphin"
+# Hyper_L
+
+
+
+
+
+# ---- The far away problamaic problamaic keyEND ----
+
+"killall xbindkeys && sleep 0.1 && xbindkeys &"
+Mod4 + Shift + control + r
+
+# [Do Not] put in [openbox] play it safe. same with W-Left and W-Right
+"/home/dex/scripts/bash/window_rules/restart_win_pos.sh"
+Mod4 + control + r
+
+# The release modifier is not a standard X modifier, but you can
+# use it if you want to catch release events instead of press events
+
+# By defaults, xbindkeys does not pay attention with the modifiers
+# NumLock, CapsLock and ScrollLock.
+# Uncomment the lines above if you want to pay attention to them.
+
+#keystate_numlock = enable
+# keystate_capslock = enable
+#keystate_scrolllock= enable
+
+# Examples of commands:
+
+# "xbindkeys_show" 
+#   control+Shift + q
+
+# set directly keycode (here control + f with my keyboard)
+# "xterm"
+#   c:41 + m:0x4
+
+# specify a mouse button
+# "xterm"
+#   control + b:2
+
+#"xterm -geom 50x20+20+20"
+#   Shift+Mod2+alt + s
+#
+## set directly keycode (here control+alt+mod2 + f with my keyboard)
+#"xterm"
+#  alt + c:0x29 + m:4 + mod2
+#
+## Control+Shift+a  release event starts rxvt
+#"rxvt"
+#  release+control+Shift + a
+#
+## Control + mouse button 2 release event starts rxvt
+#"rxvt"
+#  Control + b:2 + Release
+
+
+# Toggle Caps Lock state when F24 (remapped Caps Lock, now Mod3) + c is pressed
+
+# pressed
+
+# "/home/dex/scripts/hotkeys/capslock_on_of"
+#   Mod3 + t
+# "/home/dex/scripts/ddesk/nothing/nvim_capslock_send_at_for_macro"
+# Mod3 + m
+
+# ---- rofi ----
+
+# Yes I use 2 pannels
+# "xfce4-popup-whiskermenu --pointer"
+# alt + F1	
+
+# W-w
+# "scripts/ddesk/nothing/rofi_win_w_current_desktop_windows.sh"
+# Mod4 + w
+
+# W-q
+# "$HOME/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh"
+# Mod4 + q
+
+# "zsh -i -c 'rofi -show run'"
+# Mod4 + r
+
+
+# ---- rofi END----
+
+
+
+"$HOME/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh"
+Mod4 + Shift + q
+
+# ----Scroll_Lock screwing around  ----
+
+# Just testing new Scrol_Lock Mod4
+# Mod5 works wow Mod5 is scroll_lock and it works... and F24 I made it Mod4 which is escape
+# and capslock now is on daemon so it's not affected lol really good setup...
+# and the reloads are easy to do as well not that bad.
+"$HOME/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh"
+Mod5 + Shift + q
+
+
+"$HOME/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh"
+alt+F5
+
+"/home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak"
+alt+F6
+
+"/home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak"
+Mod5 + Shift + w
+
+"/home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak"
+Mod4 + Shift + control + w
+
+"xdotool mousemove 900 600"
+Mod5 + Shift + minus
+
+"xdotool mousemove 2600 400"
+Mod5 + Shift + equal
+
+# ----Scroll_Lock screwing around END ----
+
+# ---- zen browser related ----
+
+
+# sadly it doesn't work in nvim... maybe I should do something to make it check if it's in nvim or not I'm not sure I'm too lazy
+# and to be honest most of the time i'm not using this thing to be honest with you 
+# it's limited to mouse but it seems to work in Sublime and obsidian and browser 
+# Most of the time you want to be highlighting with mouse when you are in like copyq like edit and highlihgt then yeah... tbh I should make it copy maybe? like based on clipboard that would be better I think. 
+
+# "/home/dex/scripts/ddesk/nothing/open_highlighedText_inNewTab_inZenBrowser.sh"
+
+
+# This is stupid I never ever use it so fuck it I guess 
+# "/home/dex/scripts/ddesk/nothing/open_highlighedText_inNewTab_inFirefoxBrowser.sh"
+# Mod4 + z
+
+#-- this one opens in browser from clipboard... 
+
+# "/home/dex/scripts/ddesk/nothing/open_fromClipboard_inNewTab_inZenBrowser.sh"
+# Mod4 + alt + z  
+
+# ---- zen browser related END----
+
+
+# ---[MOUSE] [ mouse movements via keyboard, capslock+apphabit and scrolling ] END-----
+
+
+
+#1 ----- Scroll wheels movements-------
+
+
+
+"xdotool click 5"
+Katakana
+
+"xdotool click 4"
+XF86TouchpadToggle
+
+"xdotool click 7"
+Hiragana
+
+"xdotool click 6"
+Hiragana_Katakana
+
+#1 END----- Scroll wheels movements END-------
+
+
+
+
+# yen
+# capslock + h
+"xdotool mousemove_relative -- -20 0"
+m:0x0 + c:132
+
+
+# muhenkan
+# capslock + j
+"xdotool mousemove_relative -- 0 20"
+Muhenkan
+
+# m:0x0 + c:102
+
+# kpjpcomma
+# capslock + k
+"xdotool mousemove_relative -- 0 -20"
+m:0x0 + c:103
+
+# ro
+# capslock + l
+"xdotool mousemove_relative -- 20 0"
+m:0x0 + c:97
+
+
+
+# END---[MOUSE] [ mouse movements via keyboard, capslock+apphabit and scrolling ] END-----
+
+
+
+# --[]-- [ hints ] ----
+
+
+# [GIVE_UP] I gave up on this hints... it's not that good... I should really invest some time into something like 
+# vimium everywhere or whatever wmfocus or whatever.... I gave up on this... I'll use this hotkey some where else I think
+
+# scuffed hints for now and also needs picom lol 
+# "scripts/ddesk/nothing/hint-focus.py"
+# Mod4 + Shift + w
+
+
+# END--[]-- [ hints ] END----
+
+
+
+
+# ---[ WINDOWS ]---- [ resizing windows ] ---
+
+# Window hider, this is a toggle.
+# hides and unhides if it's hidden for the current active window.
+# the script is simple
+"~/.local/bin/window-hider.sh"
+control+alt+h
+
+
+# Reduce width (left)
+"~/scripts/ddesk/resize_window.sh h -40"
+Mod4 + control + alt + h
+
+# Increase width (right)
+"scripts/ddesk/resize_window.sh h 40"
+Mod4 + control + alt + l
+
+# # Decrease height (up)
+"scripts/ddesk/resize_window.sh v -40"
+Mod4 + control + alt + k
+
+# Increase height (down)
+"scripts/ddesk/resize_window.sh v 40"
+Mod4 + control + alt + j
+
+
+# Reduce width (left)
+"~/scripts/ddesk/resize_window.sh h -40"
+Mod5 + +Shift + s
+
+# Increase width (right)
+"scripts/ddesk/resize_window.sh h 40"
+Mod5 + Shift + f
+
+# # Decrease height (up)
+"scripts/ddesk/resize_window.sh v -40"
+Mod5 + Shift + e
+
+# Increase height (down)
+"scripts/ddesk/resize_window.sh v 40"
+Mod5 + Shift + d
+
+
+
+# Reduce width (left)
+"$HOME/scripts/ddesk/move_window2.sh x -40"
+Mod5 + Shift + h
+
+# Increase width (right)
+"$HOME/scripts/ddesk/move_window2.sh x 40"
+Mod5 + Shift + l
+
+# # Decrease height (up)
+"$HOME/scripts/ddesk/move_window2.sh y -40"
+Mod5 + Shift + k
+
+# Increase height (down)
+"$HOME/scripts/ddesk/move_window2.sh y 40"
+Mod5 + Shift + j
+
+
+
+# END---[ WINDOWS ]---- [ resizing windows ] END---
+
+
+
+# ----[TESTS]------ [ f7 test key ] ----
+
+# testing the stupid window position thing W32 Tue, 12 at 14:23
+"$HOME/scripts/ddesk/testkeyf7.sh"
+Mod5 + Shift + F7
+
+
+# window class picker W32 Tue, 12 at 14:23
+"~/scripts/esentials/gitClassOfActiveWindow.sh"
+Mod5 + Shift + F9
+
+# END----[TESTS]------ [ f7 test key ] END----
+
+
+# Increase height (down)
+
+# "xdotool keyup control alt ; xdotool key ctrl+alt+Down"
+# Control + Alt + q
+
+#
+# "xdotool key Right"
+# Mod4 + l
+
+"wmctrl -r :ACTIVE: -e 0,1921,220,1362,732"
+Mod4+shift+l
+
+"wmctrl -r :ACTIVE: -e 0,49,86,1865,992"
+Mod4+shift+ h
+
+"wmctrl -r :ACTIVE: -e 0,0,2,1917,1076"
+alt + F11
+
+"wmctrl -r :ACTIVE: -e 0,52,86,1865,992"
+Mod4 + Left
+
+"wmctrl -r :ACTIVE: -e 0,1921,220,1314,732"
+Mod4 + Right
+
+"xdotool set_desktop --relative -- 1"
+Control + Alt + Right
+
+
+"xdotool set_desktop --relative -- 1"
+Control + Alt + d
+
+"xdotool set_desktop --relative -- -1"
+Control + Alt + Left
+
+"xdotool set_desktop --relative -- -1"
+Control + Alt + a
+
+"xdotool set_desktop --relative -- -10"
+Control + Alt + Up
+
+"xdotool set_desktop --relative -- -10"
+Control + Alt + w
+
+"xdotool set_desktop --relative -- -10"
+Mod4 + w
+
+"xdotool set_desktop --relative -- 10"
+Mod4 + s
+
+# "xdotool set_desktop --relative -- 10"
+# Control + Alt + Down
+
+"xdotool set_desktop --relative -- 10"
+Control + Alt + s
+
+"xdotool set_desktop --relative -- 10"
+Mod4 + Alt + s
+
+# ---- testing win+hjkl for arrows END----
+
+# "/home/dex/scripts/ddesk/nothing/capslock_neovim_copy_hotkey"
+# Mod3 + y
+#
+# "/home/dex/scripts/ddesk/nothing/capslock_neovim_past_hotkey"
+# Mod3 + p
+
+
+# "/home/dex/Desktop/ddesk/nothing/capslock_doubledots_w_save"
+#   Mod3 + w
+# "/home/dex/Desktop/ddesk/nothing/capslock_doubledots_q_quit"
+#   Mod3 + q
+
+# Method1
+# "/home/dex/Desktop/ddesk/nothing/capslock_movewindow_away_method2"
+# "/home/dex/scripts/ddesk/nothing/capslock_movewindow_away"
+# Shift + Mod3 + a
+# "/home/dex/Desktop/ddesk/nothing/capslock_terminal_move_big"
+#   Control + Mod3 + a
+
+
+# ---- Scroll_Lock which is now Mod5 ----
+
+"/home/dex/scripts/ddesk/nothing/capslock_movewindow_to_mouse_pos"
+Mod5 + Shift + a
+
+# "/home/dex/scripts/ddesk/nothing/capslock_movewindow_to_mouse_pos"
+# Mod6 + a
+
+# ---- Scroll_Lock which is now Mod5 END----
+
+
+# "/home/dex/scripts/ddesk/nothing/capslock_movewindow_to_mouse_pos"
+# F13 + a
+
+
+# ----- Send windows to Desktops With NUMPADS numbers (rarely use) -----
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 0 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_1
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 1 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_2
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 2 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_3
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 3 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_4
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 4 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_5
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 5 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_6
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 6 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_7
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 7 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_8
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 8 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_9
+"xdotool set_desktop_for_window $(xdotool getactivewindow) 9 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+Mod4 + KP_0
+# ----- Send windows to Desktops With NUMPADS numbers (rarely use) END -----
+
+
+# ---- Toggle Omnipresent on and off with decimal or also called delete ---- 
+"/home/dex/scripts/ddesk/nothing/sticky_window_toggle"
+Mod4 + KP_Decimal
+
+"/home/dex/scripts/ddesk/nothing/sticky_window_toggle"
+Mod4 + KP_Delete
+
+# This just doesn't wanna work on openbox... not the execute script and not the ToggleShowOnAllDesktops non of them want to work. so fuck it make it on xbindkeys for now for now.
+"/home/dex/scripts/ddesk/nothing/sticky_window_toggle"
+control + alt + k
+
+
+# ---- Toggle Omnipresent on and off with decimal or also called delete END ---- 
+
+
+
+# Maximize active window
+# "wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz"
+# Mod4 + Up
+# Unmaximize (restore) active window
+# "wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz"
+# Mod4 + Down
+# "/home/dex/Desktop/ddesk/nothing/nvim_c-h_c-left"
+# control + h 
+
+# "rm -f /tmp/ctrl_h_held.flag ; xdotool keyup ctrl+Left"
+# release + control + h 
+# "xdotool windowminimize $(xdotool getactivewindow)"
+# Shift + Mod4 + Down
+# ----- Rofi Window Switcher with Prefill -----
+# Open Rofi for window switching, pre-filled with "desktop 1 "
+
+
+
+
+
+# _)
+# W40 Wed, 01 at 07:42
+# ---START------------------------------------------------------------
+# ""flameshot hotkeys""
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# Solution?:
+
+# --------------------------------------------------------------------
+
+# [flameshot] classic simple
+"flameshot gui"
+Print
+
+# [flameshot] fancy no brain easy select menu with rofi
+"~/.local/bin/screenshot-menu"
+Mod4 + Print
+
+
+"flameshot gui --pin"
+control + Print
+"flameshot gui --pin"
+control + Print
+
+# --------------------------------------------------------------------
+# ""flameshot hotkeys""
+# ---END--------------------------------------------------------------
+
+
+
+
+
+# _file manager)
+# W46 Tue, 11 at 20:15
+# ---START------------------------------------------------------------
+# ""file manager""
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# Solution?:
+
+# --------------------------------------------------------------------
+
+
+
+# "thunar"
+# Mod4 + e # moved to openbox (WM) becaue it's faster
+
+# Cannot run this on openbox (WM), the hotkey mod4 + alt + e done't work.
+# Open recent files
+# Ergo, use `escape + r`, the `r` in it stands for recent (ez to remember).
+"thunar 'recent:///'"
+Mod4 + Alt + e
+
+# Open Trash files, opens /home/$USER/.local/share/Trash/files in file manager.
+# Ergo, use `escape + t`, the `t` in it stands for trash (ez to remember).
+"thunar 'trash:///'"
+Mod4 + shift + control + Alt + e
+
+
+
+# --------------------------------------------------------------------
+# ""file manager""
+# ---END--------------------------------------------------------------
+
+
+
+
+
+
+"/home/dex/scripts/ddesk/]/]mouse_focus_toggle"
+Mod4 + control + Shift + f
+
+
+"scrot -s '/home/dex/Pictures/Screenshots/screenshot_%Y-%m-%d_%H-%M-%S.png'" 
+control + Shift + KP_Subtract
+
+
+"flameshot gui --path '/home/dex/fleet/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png'"
+control + Shift + Print
+
+
+#"# I can't do Mod4+Shift+f it's for switching windows for the _c_"
+# Mod4 + Shift + f
+
+"scrot --multidisp --silent '/home/dex/Pictures/Screenshots/screenshot_%Y-%m-%d_%H-%M-%S.png'"
+control + Print
+
+"scrot -s -o - | xclip -selection clipboard -t image/png"
+Shift + Print
+
+
+# W-f
+"wmctrl -r :ACTIVE: -b add,above"
+Mod4 + n
+
+"flameshot gui --pin -s"
+control + alt + f
+
+
+# C-A-u
+# usage: iupload is a script I made in .local/bin/iupoad. it's in
+#       ~/scripts/tools/python/imgur it's exactly in:
+#       ~/scripts/tools/python/imgur/venv/bin/imgur-uploader
+# TIP: you can also run iupload with arguments. read .local/bin/iupload for 
+#       more info
+"iupload"
+Control + alt + u
+
+
+
+
+
+
+
+
+# _)
+# W44 Sun, 02 at 17:13
+# ---START------------------------------------------------------------
+# ""warpd""
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# Solution?:
+
+# --------------------------------------------------------------------
+
+
+
+
+"warpd --hint"
+Mod4 + alt + x
+
+"warpd --grid"
+Mod4 + alt + g
+
+"warpd --hint"
+Mod4 + alt + x
+
+"warpd --normal"
+Mod4 + alt + c
+
+
+"warpd --screen"
+Mod4 + alt + z
+
+
+# --------------------------------------------------------------------
+# ""warpd""
+# ---END--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+"~/.local/bin/screenshot-menu"
+control + Shift + alt + f
+
+"flameshot gui -c"
+Mod4 + alt + f
+
+"/home/dex/scripts/ddesk/nothing/fleet.note.sh"
+control + Mod4 + alt + f
+
+"xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt"
+Mod4 + control + Shift + p
+
+
+# "scrot -s -o - | xclip -selection clipboard -t image/png"
+# Mod3+ x
+
+"flameshot gui -s --pin"
+Alt + control + Shift + Print
+
+
+
+# ---- Tiling_Kida Cylcining ----
+
+# W-d
+"/home/dex/scripts/ddesk/nothing/tiling_window_manager_simulator.sh reverse"
+Mod4+control+d
+
+"/home/dex/scripts/ddesk/nothing/tiling_window_manager_simulator.sh"
+Mod4+control+s
+
+
+# "xdotool keyup super ; xdotool key Control+Alt+s"
+# Mod4 + s
+#
+# "xdotool keyup super ; xdotool key Control+Alt+w"
+# Mod4 + w
+
+# _)
+# W40 Mon, 29 at 09:25
+# ---START------------------------------------------------------------
+# ""quick Cycle between windows of the same class regardless of desktop""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# --------------------------------------------------------------------
+
+
+"sleep 0.1;~/scripts/ddesk/nothing/cycle_windows_same_class_alt_grave.sh"
+Alt + grave
+
+"~/scripts/ddesk/nothing/cycle_windows_same_class_alt_grave.sh reverse"
+alt+Shift+grave
+
+
+# --------------------------------------------------------------------
+# ""quick Cycle between windows of the same class regardless of desktop""
+# ---END--------------------------------------------------------------
+
+
+# ---- Tiling_Kida Cylcining END ----
+
+
+# ---- Terminal Summuning --- 
+# "scripts/ddesk/tmux/newTerm.sh"
+# control+ alt + Tab
+
+# "scripts/ddesk/tmux/newTerm.sh"
+# Mod4 + semicolon
+
+# "sleep 0.4 ; xdotool key down down down down"
+# Mod4 + j
+
+
+# "sleep 1 ; xdotool key --clearmodifiers left"
+# Mod4 + h
+
+"scripts/ddesk/tmux/newTerm.sh"
+control + alt + Shift + t
+
+# "alacritty -e xdotool set_desktop_for_window $(xdotool getactivewindow) -1"
+"scripts/ddesk/tmux/stickyTerm.sh"
+mod4 + control + alt + Shift + t
+
+# "sleep 0.1 ; xdotool key Enter"
+# Mod4 + m
+
+#-- this is just a thing for easy reach when i'm doing like 
+"sleep 0.1 ; xdotool  key --clearmodifiers Enter"
+Mod4 + a
+
+
+
+# "alacritty"
+# control+ alt + grave
+
+# run alacritty terminal and move to it
+# "scripts/ddesk/nothing/alacrity_F2_tmuxSeachMove_withTmuxSesionizer.sh"
+# control + grave
+
+# "kitty"
+# control + F1
+
+# "scripts/ddesk/nothing/alacrity_grave_move_mouse_center_to_center.sh"
+# control + F2
+
+# "alacritty"
+# control + F3
+
+# ---- Terminal Summuning END --- 
+
+
+
+
+# START--[MOVEMENTS]-- [ activating windows ] START------
+# DESCRIPTION: 
+
+
+# ------ Frequently Used --------
+
+
+
+
+# _)
+# ---START------------------------------------------------------------
+# ""Always on 2nd monitor""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?: Because if I enabled the detect which monitor this thing is on.
+#       it will not work well sadly. So things that are always on 2nd
+#       monitor I'll just deal with them with `wmctrl -a _<leter>` and
+#       that's it really... until I understand what the heck is causing
+#       the problem
+
+# --------------------------------------------------------------------
+
+# so study the scripts that are in play in # "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _a_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# and then see if you can make something universal or something or tbh... why not just make each like window activation is make it it's own like script why not... idk you do you
+
+
+# btop yeah I get it _a_ is not btop but you know I like _a_ because it's close. you can think of it as in like aprocess
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _a_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+"wmctrl -a _a_"
+Mod4 + Shift + a
+
+# free
+# "wmctrl -a 'Recent - Thunar'" 
+# Mod4 + alt + r
+
+# Switched to this 
+"wmctrl -a 'Recent - Thunar'"
+Mod4 + shift + r
+
+"wmctrl -a '_todo_ -'"
+Mod4 + shift + t
+
+"wmctrl -a _a_"
+Mod5 + a
+
+# Sublime
+"wmctrl -x -a Sublime"
+Mod4 + Shift + s 
+
+"wmctrl -x -a Sublime"
+Mod5 + s 
+
+# Copyq
+"wmctrl -x -a copyq"
+Mod4 + Shift + d 
+
+"wmctrl -a 'DesktopSwitch Settings' "
+Mod4 + control + d 
+
+"wmctrl -x -a copyq"
+Mod5 + d 
+
+# [TMUX] conf
+"wmctrl -a _f_"
+Mod4 + Shift + f 
+
+"wmctrl -a _f_"
+Mod5 + f 
+
+
+
+
+
+
+# _2)
+# ---START------------------------------------------------------------
+# W39 Thu, 25 at 07:11
+# ""Dictionary solutions""
+
+# [[COMPREHENSION]]
+
+# DESCRIPTION: These are solutions to help me look up words when I'm reading the
+#               docs or parts of the docs using man or tldr or on the website.
+#               It can also help me in English.
+
+# Why?: To help and speed up comprehension of the docs
+
+# --------------------------------------------------------------------
+
+# Arth a lightweight dict (50mb).
+# discription: You can select any text and hit C-A-W and it will open Artha if 
+#              it's on. with the word...etc.
+# Attention: If some words don't work try your luck with dict or goldendict.
+#            If nothing on goldendict then go to google and use websites such as
+#            wordhipo, Dictionary.com, Thesaurus.com, Collins Dictionary, 
+#            Cambridge Dictionary, OneLook, oxford...etc.
+#            
+# M-S-g
+# really lightweight dict. you can select any text and hit C-A-W and it will work
+# alternatively you can click the hotkey corresponding to goldendict. or in temrinal type `dict <word>`
+
+
+
+
+
+
+"wmctrl -a Artha"
+Mod4 + Shift + g
+
+"wmctrl -a KMagnifier"
+Mod4 + control + Shift + k
+
+"wmctrl -a KMagnifier"
+Mod5 + n
+
+"wmctrl -a _j_"
+Mod4 + Shift + j
+
+
+# goldendict
+# C-A-g
+"wmctrl -a GoldenDict-ng"
+Control + alt + g
+
+
+"wmctrl -a GoldenDict-ng"
+Mod5 + alt + g
+
+# --------------------------------------------------------------------
+# ""Dictionary solutions""
+# ---END--------------------------------------------------------------
+
+
+
+#gnome-clocks
+# "wmctrl -x -a 'org.gnome.clocks'"
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'org.gnome.clocks' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + c
+
+# "wmctrl -x -a 'org.gnome.clocks'"
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'org.gnome.clocks' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod5 + c
+
+#tmux
+#this is stupid lol
+"wmctrl -a _tmux_"
+Mod4 + Shift + x
+
+"thunar; wmctrl -x -a 'Thunar'"
+Mod4 + alt + j
+
+"wmctrl -x -a qterminal"
+Mod5 + x
+
+# KeePassXC
+"wmctrl -x -a KeePassXC"
+Mod4 + Shift + k
+
+
+"wmctrl -x -a KeePassXC"
+Mod5 + k
+
+# KolourPaint 
+"wmctrl -x -a lxqt-panel && xdotool set_desktop_for_window $(xdotool search --class lxqt-panel) -1"
+Mod4 + Shift + p 
+
+"wmctrl -x -a lxqt-panel && xdotool set_desktop_for_window $(xdotool search --class lxqt-panel) -1"
+Mod5 + p 
+
+
+"wmctrl -a 'ksnip'"
+Mod4 + Shift + bracketleft
+
+"wmctrl -a 'ksnip'"
+Mod5 + bracketleft
+
+# scrcpy --otg
+"wmctrl -x -a 'scrcpy'"
+Mod4 + Shift + e
+
+
+"wmctrl -x -a 'scrcpy'"
+Mod5 + e
+
+# "wmctrl -a _m_"
+"wmctrl -a mpv"
+Mod4 + Shift + m
+
+# I don't use this that often
+# musc.... just something I give title _m_ to it which stands for music
+# "wmctrl -a mpv"
+"wmctrl -a _m_"
+Mod4 + control + m
+
+"wmctrl -a mpv"
+Mod5 + m
+
+"wmctrl -a _l_"
+Mod4 + Shift + semicolon
+
+"wmctrl -a _l_"
+Mod5 + l
+
+# --------------------------------------------------------------------
+# ""Always on 2nd monitor""
+# ---END--------------------------------------------------------------
+
+
+
+
+# [redendent]
+# Return to the previous dekstop
+# "$HOME/scripts/ddesk/nothing/move_to_last_desktop.sh"
+# Mod4 + Shift + z
+
+# activating zen window to quickly move to browser
+# "wmctrl -x -a zen"
+# Mod4 + shift + z
+
+# b stands for browser.
+"wmctrl -x -a zen"
+Mod4 + b
+
+# a differnet browser ? well easy just mod4+shift+b. ofc I use zen mainly on this system but you know I could.
+# make firefox the mdo4+b. anyway mod4+shift+b is saved for slot 2 for 2nd browser. anyways firefox is a must 
+# browser on all OSes
+"wmctrl -x -a firefox"
+Mod4 + shift + b
+
+# "$HOME/scripts/ddesk/nothing/move_to_last_desktop.sh"
+# Mod5 + z
+
+
+
+
+
+
+
+
+
+# Activate the window QEMU/KVM The VM runing and center mouse
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'QEMU/KVM' && sleep 0.1 && xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + q 
+
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'QEMU/KVM' && sleep 0.1 && xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod5 + q 
+
+# unique exception This is 2nd repeatetion
+# scrcpy visuals
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'scrcpy' && sleep 0.1 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + control  + e
+
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'scrcpy' && sleep 0.1 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod5 + Shift + control + e
+
+# unique exceiption
+# restart_keyd_applicaton_focus.sh"
+# "~/scripts/ddesk/keyd/restart_keyd_applicaton_focus.sh"
+
+# this became uselss and I don't care really about keyd-aplicaton maper that much and tbh I just use a differnet browser to solve the problem
+# "xdotool keyup Super Shift Alt Control; sleep 0.1; xdotool key XF86Mail; sleep 0.1; xdotool key q ; sleep 0.05 ; xdotool key Super"
+# Mod4 + Shift + r 
+
+"~/scripts/ddesk/keyd/restart_keyd_applicaton_focus.sh"
+Mod5 + r 
+
+
+# Virtual Machine Manager
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'Virtual Machine Manager' && sleep 0.1 && xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + v 
+
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'Virtual Machine Manager' && sleep 0.1 && xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod5 + v 
+
+# Audacity
+# I don't use audacity as much or any like voice recording things... like there are voice recording solutions and what not... I'm not sure like how like this plays but whatever. I prefer like just notes writing and whatever.
+# maybe when I'm trying to like improve the way I talk and pronounce things maybe and understanding sounds or whatever... you know learning auditory english
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'Audacity' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + u
+
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'Audacity' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod5 + u
+
+
+# END---
+
+
+
+
+# switch to Obsidian
+# I never use this tbh 
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a obsidian && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + o 
+
+# switch to Terminal _ob_ Obsidian
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _o_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + control + o 
+
+
+
+# what even is this I don't use this 
+# # _dt_ date and time terminal alone
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a '_dt_' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + semicolon 
+
+
+
+
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _y_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + y
+
+# I don't use this that often
+# Thunderbird for mail
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a Thunderbird && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + e
+
+
+# I don't use this that much
+# GIMP
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a GIMP && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod4 + Shift + i 
+
+"/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a GIMP && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+Mod5 + i 
+
+# pulsmixer
+"wmctrl -a _mi_" 
+Mod4 + control + Shift + m
+
+
+# kazam
+"wmctrl -x -a Kazam"
+Mod4 + control + k
+
+# I odn't use this 
+#nvim
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _n_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + n 
+
+# I never use these anyways 
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a VLC && wmctrl -x -a Thunar && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + backslash
+#
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a irssi && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + apostrophe
+
+
+
+
+# what even is this lol
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _f_ fleet && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + e 
+
+# # this should be paint 
+# # Activating scrcpy The Phone. I should probably do one for VNC you know tigervnc through adb port forwarding or ssh port forwarding... ssh is more secure
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'Redmi Note 8' && sleep 0.1 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + p 
+
+
+# I don't use this man just space+7 no big deal mate
+# Activate the window QEMU/KVM The VM runing
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'QEMU/KVM' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + x
+
+
+
+# This changed a lot this is not as it used to be
+# Terminals _d_ _t_ and clock _l_
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _t_ -x -a Clocks -a '_dt_' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + h
+
+
+# END--[MOVEMENTS]-- [ activating windows ] END------
+
+
+
+
+
+
+
+
+
+
+# ---- Miscs ----
+
+
+
+
+#==== Moved to openbox because of performance so my system feels snappy
+# Run this from openbox it's faster
+# "alacritty --working-directory ~/"
+# Control + Alt + t
+
+
+# "xterm"
+# Control + Mod4 + t
+
+# Very useful I use it a lot, this is kinda ergonomic 
+# "xfce4-appfinder"
+# alt + F2	
+
+
+
+
+# ==== Obsidian thing
+# make sure you have a link coppeid in the clipboard www.example.com
+# then hit the hotkey
+# [OUTPUT] ![](www.example.com)
+# this is good for obsidian as I use it a lot on desktop 2
+"/home/dex/scripts/ddesk/clipboard-manipulation/obyt-but-hotkey.sh"
+Control + Alt + v
+#===END
+
+
+
+
+# Meh
+# [USE] "jgmenu_run" type in in terminal if you need it or want it or infact just delete it
+# no need for it never use it and I don't know or can think of a use case for it. 
+# maybe good for just exploration and exploring what's in my system and that's all for clearing
+# "jgmenu_run"
+# alt + Mod4 + F1	
+
+# my personal made script that takes screenshots of the main monitor and I think
+# it only works on my monitor and it needs some lightweight tool. this helps me
+# review what I did across the day
+# I preffer ]]s.autoshot.
+"pkill -CONT  autoshot.sh "
+Mod4+i
+
+# I prefer ]]k.autoshot. but it's an option
+"pkill -STOP  autoshot.sh "
+Mod4+shift+i
+
+# turns on brightness application to adjust the brightness and colors of the screens
+# I preffer ]]s.brightness-controller
+"alacritty -e brightness-controller &"
+control + Shift + alt + Mod4 + 6
+
+# I preffer ]]k.brightness-controller
+"pkill brightness-cont &"
+control + alt + Mod4 + 6
+
+# Turns on sound mixer, there is also ]mixer to trigger it as well.
+"pavucontrol"
+control + Shift + alt + Mod4 + 7
+
+# Turns off the screens of both monntors, works on old monitors 
+# I prefer the turn_screen_off.sh to trigger it.
+"alacritty -e  xset dpms force off"
+Mod4 + Shift + alt + control + 0
+
+# ---- Miscs END----
+
+
+
+"/home/dex/scripts/ddesk/nothing/rename_window.sh > /tmp/rename_window.log 2>&1"
+Mod4 + t
+
+
+
+
+
+# -------- Switch to desktop 1 Numpads --------
+"xdotool set_desktop 0 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_1
+"xdotool set_desktop 1 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_2
+"xdotool set_desktop 2 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_3
+"xdotool set_desktop 3 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_4
+"xdotool set_desktop 4 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_5
+"xdotool set_desktop 5 ; sleep 0.1 ; sleep 0.1; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_6
+"xdotool set_desktop 6 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_7
+"xdotool set_desktop 7 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_8
+"xdotool set_desktop 8 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_9
+"xdotool set_desktop 9 ; sleep 0.1 ; sleep 0.1 ; xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0"
+alt + Mod4 + KP_0
+
+
+# END-------- Switch to desktop 1 Numpads END--------
+
+
+
+
+
+
+
+
+# =================== Switch between desktps ===================================
+
+# ============== Moved to openbox because they feel more snappy there
+
+
+# move to previous desktops 
+# "$HOME/scripts/ddesk/nothing/move_to_last_desktop.sh"
+# Mod4 + grave
+
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 0 " 
+# Mod4 + 1
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 1 " 
+# Mod4 + 2
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 2 " 
+# Mod4 + 3
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 3 " 
+# Mod4 + 4
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 4 " 
+# Mod4 + 5
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 5 " 
+# Mod4 + 6
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 6 " 
+# Mod4 + 7
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 7 " 
+# Mod4 + 8
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 8 " 
+# Mod4 + 9
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 9 " 
+# Mod4 + 0
+
+
+
+
+
+# Move the mouse from 1st monitor to right monitor
+"xdotool mousemove 900 600" 
+Mod4 + minus
+
+"xdotool mousemove 2600 400" 
+Mod4 + equal
+
+
+"xfce4-find-cursor & sleep 0.4; kill $!"
+alt+shift+ F1
+
+
+
+# move between desktop 11-20
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 10 " 
+# Mod4 + F1
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 11 " 
+# Mod4 + F2
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 12 " 
+# Mod4 + F3
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 13 " 
+# Mod4 + F4
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 14 " 
+# Mod4 + F5
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 15 " 
+# Mod4 + F6
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 16 " 
+# Mod4 + F7
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 17 " 
+# Mod4 + F8
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 18 " 
+# Mod4 + F9
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 19 " 
+# Mod4 + F10
+
+
+
+# move between desktop 21-30
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 20 " 
+# Mod4 + Shift + F1
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 21 " 
+# Mod4 + Shift + F2
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 22 " 
+# Mod4 + Shift + F3
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 23 " 
+# Mod4 + Shift + F4
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 24 " 
+# Mod4 + Shift + F5
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 25 " 
+# Mod4 + Shift + F6
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 26 " 
+# Mod4 + Shift + F7
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 27 " 
+# Mod4 + Shift + F8
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 28 " 
+# Mod4 + Shift + F9
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 29 " 
+# Mod4 + Shift + F10
+
+
+
+
+# move between desktop 31-40
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 30 " 
+# Mod4 + Shift + alt + F1
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 31 " 
+# Mod4 + Shift + alt + F2
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 32 " 
+# Mod4 + Shift + alt + F3
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 33 " 
+# Mod4 + Shift + alt + F4
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 34 " 
+# Mod4 + Shift + alt + F5
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 35 " 
+# Mod4 + Shift + alt + F6
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 36 " 
+# Mod4 + Shift + alt + F7
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 37 " 
+# Mod4 + Shift + alt + F8
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 38 " 
+# Mod4 + Shift + alt + F9
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 39 " 
+# Mod4 + Shift + alt + F10
+
+
+
+# ============================ SENDING WINDOWSS TO DESKTOPS =====================
+
+# send to desktop 1nd row: deskop 1234567890
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 0 " 
+# Mod4+ control + 1
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 1 " 
+# Mod4+ control + 2
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 2 " 
+# Mod4+ control + 3
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 3 " 
+# Mod4+ control + 4
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 4 " 
+# Mod4+ control + 5
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 5 " 
+# Mod4+ control + 6
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 6 " 
+# Mod4+ control + 7
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 7 " 
+# Mod4+ control + 8
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 8 " 
+# Mod4+ control + 9
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 9 " 
+# Mod4+ control + 0
+
+
+
+# send to desktop 2nd row: deskop qwertyuiop
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 10 " 
+# Mod4+ control + F1
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 11 " 
+# Mod4+ control + F2
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 12 " 
+# Mod4+ control + F3
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 13 " 
+# Mod4+ control + F4
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 14 " 
+# Mod4+ control + F5
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 15 " 
+# Mod4+ control + F6
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 16 " 
+# Mod4+ control + F7
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 17 " 
+# Mod4+ control + F8
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 18 " 
+# Mod4+ control + F9
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 19 " 
+# Mod4+ control + F10
+#
+
+
+# send to desktop 3nd row: deskop asdfghjkl;
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 20 " 
+# Mod4+ control+ shift + F1
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 21 " 
+# Mod4+ control+ shift + F2
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 22 " 
+# Mod4+ control+ shift + F3
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 23 " 
+# Mod4+ control+ shift + F4
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 24 " 
+# Mod4+ control+ shift + F5
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 25 " 
+# Mod4+ control+ shift + F6
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 26 " 
+# Mod4+ control+ shift + F7
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 27 " 
+# Mod4+ control+ shift + F8
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 28 " 
+# Mod4+ control+ shift + F9
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 29 " 
+# Mod4+ control+ shift + F10
+
+# send to desktop 4nd row: deskop zxcvbnm,.
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 30 " 
+# Mod4+ control+ shift + alt + F1
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 31 " 
+# Mod4+ control+ shift + alt + F2
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 32 " 
+# Mod4+ control+ shift + alt + F3
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 33 " 
+# Mod4+ control+ shift + alt + F4
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 34 " 
+# Mod4+ control+ shift + alt + F5
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 35 " 
+# Mod4+ control+ shift + alt + F6
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 36 " 
+# Mod4+ control+ shift + alt + F7
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 37 " 
+# Mod4+ control+ shift + alt + F8
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 38 " 
+# Mod4+ control+ shift + alt + F9
+# "xdotool set_desktop_for_window $(xdotool getactivewindow) 39 " 
+# Mod4+ control+ shift + alt + F10
+#
+#
+
+
+
+
+#
+#
+# "$HOME/scripts/ddesk/nothing/smart_window_switcher_works_with_Mod4_grave.sh 10 " 
+# Mod4 + F11
+
+# END-------- Switch to desktop 1  END--------
+
+
+# ---- Openbox Config switching -------
+
+# Switch to MAIN Openbox config
+# "/home/dex/.local/bin/switch_ob_config.sh main"
+#    Control+Mod4+Mod1+Shift + F12
+
+# Switch to DEFAULT Openbox config
+# "/home/dex/.local/bin/switch_ob_config.sh default"
+#    Control+Mod1+Shift + F12
+
+# ---- Openbox Config switching END-------
+
+
+
+
+# _skippy-xd)
+# W45 Mon, 03 at 14:46
+# ---START------------------------------------------------------------
+# ""skippy-xd""
+# --------------------------------------------------------------------
+
+# [[alt tab]]
+
+# DESCRIPTION: Skippy-xd is a simple Alt+tab switcher with a preview. Here is the repo to
+#              read more aoout it. https://github.com/felixfung/skippy-xd
+
+# Why?: Because openbox alt+tab sucks. And skippy-xd does exactly what I want
+
+# Solution?: ....
+
+# --------------------------------------------------------------------
+
+# Classic Alt+tab with skippy-xd <-- 100% I want this 
+"skippy-xd --switch --pivot Alt_L --next --config ~/.config/skippy-xd/skippy-xd.rc" 
+Alt + Tab
+
+
+# companion classic
+# THis is basically alt+tab but this one gives you preview hehehe so you hold super heheh
+"skippy-xd --expose --pivot Super_L --next --config ~/.config/skippy-xd/skippy-xd2.rc" 
+Mod4 + Tab
+
+
+# companion classic, just for compatibility so mod4+shift+tab works in preview all windows on all monitors
+# THis is basically alt+shift+tab but this one gives you preview hehehe so you hold super heheh
+"skippy-xd --expose --pivot Super_L --prev --config ~/.config/skippy-xd/skippy-xd2.rc"
+Mod4 + Shift + Tab
+
+
+# This if for the double alt tap
+"skippy-xd --switch --pivot Super_L --next --config ~/.config/skippy-xd/skippy-xd3.rc" 
+Mod4 + shift + control+ Tab
+
+
+# Classic default toggle 
+"skippy-xd --expose --config ~/.config/skippy-xd/skippy-xd.rc"
+mod4+period
+
+
+# Classic show only preview of current active window on current desktop. Very useful for terminals 
+# This is also used with capslock+super and capslock+/
+"skippy-xd --expose --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc"
+mod4+comma
+
+"skippy-xd --expose --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --desktop -1 --config ~/.config/skippy-xd/skippy-xd2.rc"
+mod4+slash
+
+# paging it's good... don't switch don't hit enter to switch that would reset the thumbnails. I use it as 
+# a companion to the classic xfce4-pannel move here https://i.imgur.com/wo7aZl8.png as you see in the image
+# it compliment what both pannels lack
+# This is used with capslock+enter
+"skippy-xd --paging --config ~/.config/skippy-xd/skippy-xd2.rc"
+XF86Calculator
+
+"skippy-xd --paging --config ~/.config/skippy-xd/skippy-xd2.rc"
+alt+F1
+
+#### DON'T READ BELLOW IT'S JUST SOME ARCHIVED STUFF
+# This key is used for capslock for mod4+capslock it's basically mod4+comma which previews only active window of
+# the same class
+# "skippy-xd --expose --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc"
+# XF86HomePage
+
+
+## I observed myself I never use  this at all
+# Classic Alt+shift+tab with skippy-xd <-- 100% I want this 
+# "skippy-xd --switch --prev --config ~/.config/skippy-xd/skippy-xd.rc"
+# ALt + Shift + Tab
+
+
+# --------------------------------------------------------------------
+# ""skippy-xd""
+# ---END--------------------------------------------------------------
+
+
+
+# END----- Send windows to Desktops, specefic locations on desktops END ----
+
+
+# ---- alt ----
+
+
+
+
+# --[]-- [ snippets simulation ] ----
+
+# abandoned
+# "/home/dex/scripts/ddesk/personal_chat/u1_Searcher.sh"
+# Mod4 + F1
+#
+# "/home/dex/scripts/ddesk/personal_chat/u2_Noter.sh"
+# Mod4 + F2
+#
+# "/home/dex/scripts/ddesk/personal_chat/u3_Tester.sh"
+# Mod4 + F3
+#
+# "/home/dex/scripts/ddesk/personal_chat/u4_Editor.sh"
+# Mod4 + F4
+#
+# "/home/dex/scripts/ddesk/personal_chat/u5_Chater.sh"
+# Mod4 + F5
+#
+# "/home/dex/scripts/ddesk/personal_chat/u6_Suggester.sh"
+# Mod4 + F6
+#
+# "/home/dex/scripts/ddesk/personal_chat/u7_Problems.sh"
+# Mod4 + F7
+#
+# "/home/dex/scripts/ddesk/personal_chat/u8_Rater.sh"
+# Mod4 + F8
+#
+# "/home/dex/scripts/ddesk/personal_chat/u9_Empty.sh"
+# Mod4 + F9
+#
+# "/home/dex/scripts/ddesk/personal_chat/u10_Idea.sh"
+# Mod4 + F10
+#
+# "/home/dex/scripts/ddesk/personal_chat/u11_System.sh"
+# Mod4 + F11
+#
+# "/home/dex/scripts/ddesk/personal_chat/u12_Watcher.sh"
+# Mod4 + F12
+# END--[]-- [ snippets simulation ] END----
+
+# highlight something with mouse or keyboard and hit it, it only fixes capitalizations and badly put commas and shit, it probably
+# does't work in nvim but I'll figure out something to cook
+"/home/dex/scripts/ddesk/correct_text_spelling.sh"
+    Mod4 + Shift + control + g
+
+# highlight something with mouse or keyboard and hit it, it only fixes capitalizations and badly put commas and shit
+"/home/dex/scripts/ddesk/correct_text.sh"
+    Mod4 + Shift + control + alt + g
+
+
+
+
+# _)
+# W39 Sat, 27 at 05:14
+# ---START------------------------------------------------------------
+# ""Computer Resource Managment""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# --------------------------------------------------------------------
+
+# status: [doesn't work at the moment but I have alternatives]
+# I gave up on this it's not working man
+# "/home/dex/scripts/cpu/simple_pause_unpause_process.sh"
+# Control + Shift + alt + p
+
+"xkill"
+Control + alt + x
+
+# To Continue/Unpause a window
+"xcontrol -c"
+  Control + alt + c
+
+# To Pause a window
+"xcontrol -p"
+  Control + alt + z
+
+
+# --------------------------------------------------------------------
+# ""Computer Resource Managment""
+# ---END--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+# _ghostty)
+# # W45 Wed, 05 at 03:23
+# # ---START------------------------------------------------------------
+# # ""ghosty""
+# # --------------------------------------------------------------------
+#
+# # [[]]
+#
+# # DESCRIPTION:
+#
+# # Why?: because qterminal dropdown, some programs like nvim with certain configs makes it laggy
+#           so we are going to use ghossty instead. I do still use 2 drop down terminals because
+#           qterminal is well made. at least for lightweights and commands.
+#
+# # Solution?:
+#
+# # --------------------------------------------------------------------
+
+
+# requires tdrop
+# This script will make a drop down window of ghostty. hit this key again to close it
+# this script will make a tmux session it is needed for ghossty to run well sadly. on lxqt/openbox archlinux
+# "~/scripts/ddesk/terminal/ghosty.sh"
+# Mod4 + g
+
+"~/scripts/ddesk/terminal/ghosty.sh"
+control + grave
+
+# workswell with mod4+f for opennign qtemrinal
+"~/scripts/ddesk/terminal/ghosty.sh"
+mod4+d
+
+
+# # --------------------------------------------------------------------
+# # ""ghosty""
+# # ---END--------------------------------------------------------------
+# 
+
+
+
+
+
+
+
+
+################################## End of xbindkeys configuration #

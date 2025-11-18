@@ -1,0 +1,26 @@
+matches:
+
+  # ---- cli expnading like fish ----
+
+        # ---- cli expnading like fish ----
+
+
+        #---------------------------------------------------
+        # Shell and Time utilities
+        #---------------------------------------------------
+        # Converts a time string from the clipboard (HH:MM:SS or MM:SS) to seconds
+  - trigger: ";;tosecs"
+    replace: "t=\"00:00$|$:00\"; IFS=: read h m s <<< \"$t\"; echo $((h*3600 + m*60 + s))"
+
+
+  - trigger: ";;timer;"
+    replace: " echo \"\\n[ [ON] [$|$] ]\\n\" ; ]timer"
+  
+  - trigger: ";;zen;"
+    replace: "zen-browser --search \"$|$\""
+
+  - trigger: ";;f;"
+    replace: " | fzf"
+  # ---- cli expnading like fish END----
+
+

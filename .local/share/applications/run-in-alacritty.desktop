@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Run in Alacritty
+Comment=Run a script or command in the Alacritty terminal
+Exec=alacritty -e %f
+Terminal=false
+MimeType=application/x-shellscript;text/plain;

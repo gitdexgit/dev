@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/xmodmap.sh
+Name=[Hotkeys] load xmodmap & xbindkeyhs
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

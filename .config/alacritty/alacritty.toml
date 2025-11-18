@@ -1,0 +1,124 @@
+
+[general]
+# import = [ "~/.config/alacritty/themes/Dracula.toml" ]
+
+# [env]
+# TERM = "xterm-256color"
+
+[window]
+# opacity = 0.85
+dynamic_title= true
+decorations = "full"
+
+# Sets the initial dimensions of the window.
+# These are measured in character cells, not pixels.
+dimensions.columns = 120
+dimensions.lines = 36
+
+# You can also add padding if you like (optional)
+padding.x = 0
+padding.y = 0
+
+[colors.primary]
+# background = '#1E1E1E'  # This is a common default (dark gray)
+background = '#000000'  # Change it to pure black
+foreground = '#d8d8d8'  # You can set your text color here
+
+
+# =========================================================
+# ============= ADD THIS SECTION FOR BLOCK CURSOR =========
+# =========================================================
+[cursor]
+# Sets the cursor shape to a solid block.
+style = 'Block'
+
+# Optional: Displays a hollow block when the Alacritty window isn't focused.
+unfocused_hollow = true
+# =========================================================
+
+
+[keyboard]
+
+# There is no such thing as protocol = kitty.... that's just ai halusination
+# protocol = "Kitty"
+
+bindings = [
+# Add these two lines for line-by-line scrolling
+{ key = "Up",   mods = "Shift", action = "ScrollLineUp" },
+{ key = "Down", mods = "Shift", action = "ScrollLineDown" },
+# C-; sends backspace (^H)
+{ key = ";", mods = "Control", chars = "\b" },
+# Allow Ctrl+V to paste text
+# turns out I need this for espanso stuff to be pasted so yeah well ctrl+V it is 
+{ key = "V", mods = "Control", action = "Paste" },
+# Scroll the terminal buffer by a full pagep
+# { key = "PageUp",   action = "ScrollPageUp" },
+# { key = "PageDown", action = "ScrollPageDown" },
+# Bind Alt+PageUp to scroll the terminal buffer up one page.
+# { key = "PageUp",   mods = "Control", action = "ScrollPageUp"   },
+# { key = "f",   mods = "Control", action = "ScrollPageUp"   },
+# Bind pageup to scroll the terminal buffer up one page
+# { key = "PageUp",   mods = "PageUp", action = "ScrollPageUp"   },
+
+# Bind Alt+PageDown to scroll the terminal buffer down one page.
+# { key = "PageDown", mods = "Control", action = "ScrollPageDown" },
+
+# You can add other custom bindings here, separated by commas.
+# # For example, to bind Alt+Home to scroll to the very top:
+# { key = "Home",     mods = "Control", action = "ScrollToTop"    },
+# # Bind Alt+End to scroll to the very bottom of the history.
+# { key = "End",      mods = "Alt", action = "ScrollToBottom" },
+# # Bind Ctrl+PageUp to scroll up by a single line.
+# { key = "PageUp",   mods = "Alt", action = "ScrollLineUp"   },
+#
+# # Bind Ctrl+PageDown to scroll down by a single line.
+# { key = "PageDown", mods = "Alt", action = "ScrollLineDown" },
+
+
+# === CUSTOM BINDINGS YOU REQUESTED ===
+##!!!!!!!!!!!! never ever do this... this will ruin nvim and also it's not universal... just adapt man adopt i as tab and ignore C-h but also add C-;
+
+
+
+
+# C-, sends tab (\t)
+# { key = ",", mods = "Control", chars = "\t" },
+
+# C-i sends nothing (disables tab behavior)
+# { key = "I", mods = "Control", chars = "" },
+
+
+]
+
+      
+# This goes into your alacritty.toml file
+
+[colors.selection]
+# Text color for the selection
+# text = '0x000000'       # Black text when selected
+
+# Background color for the selection
+# background = '0xFFCB6B'  # A nice yellow for the highlight
+
+# Alacritty Font Configuration
+# Sets the main fon-t to FiraCode Nerd Font Mono.
+# The system will automatically use Noto Color Emoji for emoji characters.
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Bold Italic"

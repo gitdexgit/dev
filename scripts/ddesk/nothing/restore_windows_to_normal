@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Script to send a sequence of keystrokes
+
+# Get the ID of the currently active window
+# This is crucial to ensure keys are sent to the correct application
+ACTIVE_WINDOW_ID=$(xdotool getactivewindow)
+
+# Optional but recommended: Explicitly activate the window
+# This helps ensure focus is correctly set before sending keys.
+xdotool windowactivate "$ACTIVE_WINDOW_ID"
+sleep 0.05 # Tiny pause for focus to truly settle
+sleep 0.05
+sleep 0.05
+# --- First sequence: Alt+Space, L, N ---
+echo "Sending Alt+Space..."
+xdotool key --window "$ACTIVE_WINDOW_ID" alt+space
+# CRITICAL: Increase sleep if the action triggered by Alt+Space takes time
+# (e.g., a menu appearing). Start with 0.5 seconds.
+sleep 0.05
+sleep 0.05
+
+echo "Sending L..."
+xdotool key --window "$ACTIVE_WINDOW_ID" l
+sleep 0.05 # Adjust delay
+
+echo "Sending N..."
+xdotool key --window "$ACTIVE_WINDOW_ID" n
+sleep 0.05 # Adjust delay
+
+sleep 0.05
+# --- Second sequence: Alt+Space, D ---
+echo "Sending Alt+Space again..."
+xdotool key --window "$ACTIVE_WINDOW_ID" alt+space
+sleep 0.05 # Adjust delay
+
+sleep 0.05
+echo "Sending D..."
+xdotool key --window "$ACTIVE_WINDOW_ID" d
+sleep 0.05 # Adjust delay
+
+echo "Sequence complete."
+exit 0

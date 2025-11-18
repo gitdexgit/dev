@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# A script to interactively kill tmux sessions
+
+# Define colors for better output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Get the list of session names into a bash array
+# The < <(...) construct is a clean way to read command output line by line
+mapfile -t sessions < <(tmux list-sessions -F '#{session_name}')
+
+# Check if there are any sessions to begin with
+if [ ${#sessions[@]} -eq 0 ]; then
+  echo -e "${YELLOW}No tmux sessions are currently running.${NC}"
+  exit 0
+fi
+
+# --- Display the list of sessions ---
+echo -e "${CYAN}--- Current Tmux Sessions ---${NC}"
+i=1
+for session in "${sessions[@]}"; do
+  printf "%-4s %s\n" "$i)" "$session"
+  ((i++))
+done
+echo "---------------------------"
+echo ""
+
+# --- Prompt user for input ---
+read -p "Enter the numbers of sessions to kill (separated by spaces): " user_input
+
+# If user just presses Enter, exit gracefully
+if [[ -z "$user_input" ]]; then
+  echo "No input received. Exiting."
+  exit 0
+fi
+
+# --- Process the input and kill sessions ---
+echo "" # Add a newline for cleaner output
+killed_count=0
+
+# Loop through each number provided by the user
+for num in $user_input; do
+  # Validate that the input is a positive integer
+  if ! [[ "$num" =~ ^[1-9][0-9]*$ ]]; then
+    echo -e "${RED}Warning: '$num' is not a valid number. Skipping.${NC}"
+    continue
+  fi
+
+  # Convert the user's 1-based number to a 0-based array index
+  index=$((num - 1))
+
+  # Check if the index is valid (within the bounds of our sessions array)
+  if [ ! -z "${sessions[$index]}" ]; then
+    session_to_kill="${sessions[$index]}"
+    echo -e "Killing session #${num}: ${GREEN}$session_to_kill${NC}..."
+    tmux kill-session -t "$session_to_kill"
+    ((killed_count++))
+  else
+    echo -e "${RED}Warning: Session #$num does not exist. Skipping.${NC}"
+  fi
+done
+
+echo ""
+if [ $killed_count -gt 0 ]; then
+    echo -e "${GREEN}Done! Killed $killed_count session(s).${NC}"
+else
+    echo -e "${YELLOW}No sessions were killed.${NC}"
+fi

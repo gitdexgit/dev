@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+Name=[Accesibility] [goodnigh mouse] idk if having this or not having it affects goodnight mouse but let's just have it as a precusion
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

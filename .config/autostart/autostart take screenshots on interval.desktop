@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/ddesk/nothing/autoshot.sh
+Name=[Workflow] [Script] autoshot.sh [ # takes screenshots of desktop at intervals and puts them in good order and makes links in the appropriate locations]
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

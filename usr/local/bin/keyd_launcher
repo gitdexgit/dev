@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# The user we want to run the commands as.
+USER="dex"
+
+# Find the user's session information.
+# This is the magic that finds the address to your screen.
+export DISPLAY=$(w "$USER" | awk '/:[0-9]/{print $2; exit}')
+export XAUTHORITY=$(eval echo "~$USER")/.Xauthority
+
+# Drop from root privileges to the user, and execute
+# whatever command was passed to this script.
+sudo -u "$USER" "$@"

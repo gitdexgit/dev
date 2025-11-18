@@ -1,0 +1,668 @@
+
+# [DISCLAIMER] I already have this in ~/.config/zsh/functions/wgetpaste. idk why I typed it here. 
+# maybe because I saw that local... blah blah... anyways
+_get_clip() {
+  # Check the session type using the standard $XDG_SESSION_TYPE variable
+  if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    # We are in a Wayland session, so use wl-paste
+    if command -v wl-paste >/dev/null; then
+      wl-paste --no-newline
+    else
+      echo "Error: You are in a Wayland session, but 'wl-paste' is not installed." >&2
+      echo "Please install the 'wl-clipboard' package." >&2
+      return 1
+    fi
+  else
+    # We assume an X11 session (or fallback), so use xclip
+    if command -v xclip >/dev/null; then
+      xclip -o -selection clipboard
+    else
+      echo "Error: You are in an X11 session, but 'xclip' is not installed." >&2
+      echo "Please install the 'xclip' package." >&2
+      return 1
+    fi
+  fi
+}
+
+
+
+# Gclip - Grep clipboard content directly (not URL content)
+# Usage: Gclip "pattern"
+#        Gclip -i "pattern"
+# Searches for patterns within clipboard text content, not URL content
+# Gclip - Grep clipboard content directly (not URL content) - case-insensitive by default
+# Usage: Gclip "pattern"              (case-insensitive by default)
+#        Gclip -s "pattern"           (case-sensitive search)
+#        Gclip -n "pattern"           (with line numbers, still case-insensitive)
+#        Gclip -s -n "pattern"        (case-sensitive with line numbers)
+# Searches for patterns within clipboard text content, not URL content
+Gclip() {
+  local clipboard_content=$(_get_clip)
+  
+  if [[ -z "$clipboard_content" ]]; then
+    echo "No content in clipboard"
+    return 1
+  fi
+
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: Gclip [-s] [grep-options] \"pattern\""
+    echo "       -s for case-sensitive (default is case-insensitive)"
+    return 1
+  fi
+
+  # Check if -s flag is present for case-sensitive search
+  local case_sensitive=false
+  local args=()
+  
+  for arg in "$@"; do
+    if [[ "$arg" == "-s" ]]; then
+      case_sensitive=true
+    else
+      args+=("$arg")
+    fi
+  done
+
+  # Build grep command based on case sensitivity
+  if [[ "$case_sensitive" == true ]]; then
+    # Case-sensitive search (don't add -i)
+    echo -n "$clipboard_content" | grep "${args[@]}"
+  else
+    # Case-insensitive search (add -i if not already in args)
+    local has_i=false
+    local final_args=()
+    for arg in "${args[@]}"; do
+      if [[ "$arg" == "-i" ]]; then
+        has_i=true
+      fi
+      final_args+=("$arg")
+    done
+    
+    if [[ "$has_i" == false ]]; then
+      final_args=(-i "${final_args[@]}")
+    fi
+    
+    echo -n "$clipboard_content" | grep "${final_args[@]}"
+  fi
+}
+# Vclip - Open clipboard content directly in vim editor
+# Usage: Vclip
+# Opens current clipboard text content in vim (not URL content)
+# If clipboard contains a URL, asks if you want to edit it as text
+Vclip() {
+  local clipboard_content=$(_get_clip)
+  
+  if [[ -z "$clipboard_content" ]]; then
+    echo "No content in clipboard"
+    return 1
+  fi
+
+  # Check if clipboard content looks like a URL
+  if [[ "$clipboard_content" =~ ^https?:// ]]; then
+    echo "Clipboard contains a URL - use Vbin instead, or Vclip to edit the URL as text"
+    read -q "response?Open URL as text in vim? (y/N) " 
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+      echo "$clipboard_content" | vim -
+    else
+      return 1
+    fi
+  else
+    # Regular text content - open in vim
+    echo "$clipboard_content" | vim -
+  fi
+}
+
+# Function to send text directly to clipboard
+Pclip() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: Pclip \"text to copy\""
+        return 1
+    fi
+    
+    local text_to_copy="$*"
+    
+    # Use the appropriate clipboard tool based on session type
+    if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+        if command -v wl-copy >/dev/null; then
+            echo -n "$text_to_copy" | wl-copy
+            echo "Text copied to clipboard ✓"
+        else
+            echo "Error: wl-copy not available for Wayland" >&2
+            return 1
+        fi
+    else
+        if command -v xclip >/dev/null; then
+            echo -n "$text_to_copy" | xclip -selection clipboard
+            echo "Text copied to clipboard ✓"
+        else
+            echo "Error: xclip not available for X11" >&2
+            return 1
+        fi
+    fi
+}
+
+
+# Function to read a file, clean its content (like 'col -b'), and send it directly to the clipboard
+ccp() {
+    # 1. Input Validation
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: Ccp <file_to_copy>" >&2
+        return 1
+    fi
+
+    local input_file="$1"
+    
+    if [[ ! -f "$input_file" ]]; then
+        echo "Error: File not found or is not a regular file: '$input_file'" >&2
+        return 1
+    fi
+
+    # 2. Determine the clipboard command and tool
+    local clipboard_tool=""
+    
+    if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+        if command -v wl-copy >/dev/null; then
+            clipboard_tool="wl-copy"
+        else
+            echo "Error: wl-copy not available for Wayland." >&2
+            return 1
+        fi
+    else
+        # Default to X11/Fallback
+        if command -v xclip >/dev/null; then
+            clipboard_tool="xclip -selection clipboard"
+        else
+            echo "Error: xclip not available for X11/Xorg session." >&2
+            return 1
+        fi
+    fi
+
+    # 3. Execute the workflow: cat file | col -b | clipboard_tool
+    # We use 'eval' here to correctly execute the clipboard command string (e.g., 'xclip -selection clipboard')
+    if cat "$input_file" | col -b | eval "$clipboard_tool"; then
+        echo "Content of '$input_file' copied to clipboard (cleaned) ✓"
+        return 0
+    else
+        echo "Error: Failed to copy file content to clipboard." >&2
+        return 1
+    fi
+}
+
+
+# Hclip - Show help for clipboard content tools
+# Usage: Hclip
+# Displays help for Gclip, Vclip, and Kcat functions
+Hclip() {
+    echo "Clipboard Content Tools (work with text in clipboard, not URLs):"
+    echo ""
+    echo "Gclip        - grep clipboard content directly"
+    echo "             (Searches for patterns within clipboard text, not URL content)"
+    echo "             Usage: Gclip [grep-options] \"pattern\""
+    echo "             Examples:"
+    echo "               Gclip \"hello\"          - search for 'hello'"
+    echo "               Gclip -i \"hello\"       - case-insensitive search"
+    echo "               Gclip -n \"error\"       - show line numbers"
+    echo "               Gclip -v \"comment\"     - invert match (show non-matches)"
+    echo ""
+    echo "Vclip        - open clipboard content in vim"
+    echo "             (Opens current clipboard text in vim editor)"
+    echo "             If clipboard contains a URL, asks if you want to edit it as text"
+    echo "             Usage: Vclip"
+    echo "             Example: Copy some text, run 'Vclip' to edit it in vim"
+    echo ""
+    echo "bpaste Info: bpaste.net is a pastebin service for sharing code snippets."
+    echo "When you paste code there, you get a shareable link. Content expires automatically."
+    echo "Note: Anyone can guess the URI to your paste, so don't rely on it being private."
+}
+
+
+Clist() {
+    if ! command -v copyq >/dev/null; then
+        echo "CopyQ not installed"
+        return 1
+    fi
+
+    # Parse arguments
+    show_numbers=false
+    show_items=false
+    item_num=""
+    
+    for arg in "$@"; do
+        if [ "$arg" = "-n" ]; then
+            show_numbers=true
+        elif [ "$arg" = "-i" ]; then
+            show_items=true
+        elif [ -z "$item_num" ] && [ "$arg" != "-n" ] && [ "$arg" != "-i" ]; then
+            item_num=$arg
+        fi
+    done
+
+    if [ -z "$item_num" ]; then
+        # List mode - show last 5 items
+        for i in $(seq 4 -1 0); do
+            item=$(copyq read $i 2>/dev/null)
+            if [ $? -eq 0 ]; then
+                if [ "$show_items" = true ]; then
+                    echo "========== Item $((5-i)) =========="
+                fi
+                if [ "$show_numbers" = true ]; then
+                    echo "$item" | nl
+                else
+                    echo "$item"
+                fi
+                if [ "$show_items" = true ]; then
+                    echo
+                fi
+            fi
+        done
+    else
+        # Selection mode - output specific item (no decorations by default)
+        if [ "$item_num" -ge 1 ] && [ "$item_num" -le 10 ]; then
+            actual_index=$((item_num - 1))
+            
+            # Try to get the item and save to temp file to check if it's an image
+            temp_file=$(mktemp)
+            if copyq read $actual_index > "$temp_file" 2>/dev/null; then
+                # Check if the file looks like an image (has image-like header)
+                file_type=$(file --mime-type -b "$temp_file")
+                if [[ "$file_type" =~ ^image/ ]]; then
+                    # It's an image
+                    if command -v timg >/dev/null; then
+                        timg "$temp_file"
+                    else
+                        echo "[Image clipboard item - timg not available to display]"
+                    fi
+                else
+                    # Text content
+                    if [ "$show_numbers" = true ]; then
+                        cat "$temp_file" | nl
+                    else
+                        cat "$temp_file"
+                    fi
+                fi
+            else
+                echo "Item $item_num not found"
+            fi
+            rm -f "$temp_file"
+        else
+            echo "Please specify a number between 1-10"
+        fi
+    fi
+}
+
+
+Cselect() {
+    if command -v copyq >/dev/null; then
+        local temp_file=$(mktemp)
+        
+        # Get items from CopyQ using command line interface
+        for i in {0..19}; do
+            if item=$(copyq read $i 2>/dev/null); then
+                # Limit the display to first 80 characters and add index for clarity
+                echo "${i}: $(echo "$item" | head -c 80 | tr '\n' ' ' | sed 's/  */ /g')" >> "$temp_file"
+            else
+                break
+            fi
+        done
+        
+        if [[ ! -s "$temp_file" ]]; then
+            echo "No items in clipboard history"
+            rm "$temp_file"
+            return 1
+        fi
+        
+        local choice=$(cat "$temp_file" | fzf --prompt="Select clipboard item: " --height=10 --layout=reverse)
+        
+        if [[ -n "$choice" ]]; then
+            # Extract the index from the choice (first number before colon)
+            local index=$(echo "$choice" | cut -d':' -f1)
+            if [[ -n "$index" && "$index" =~ ^[0-9]+$ ]]; then
+                # Copy the actual item (not the preview) back to clipboard
+                copyq select $index
+                echo "Item $index copied to clipboard"
+            fi
+        fi
+        rm "$temp_file"
+    else
+        echo "CopyQ not installed"
+    fi
+}
+
+Rselect() {
+    if command -v copyq >/dev/null && command -v rofi >/dev/null; then
+        local temp_file=$(mktemp)
+        
+        # Get items from CopyQ using command line interface
+        for i in {0..19}; do
+            if item=$(copyq read $i 2>/dev/null); then
+                # Limit the display to first 80 characters and add index for clarity
+                echo "${i}: $(echo "$item" | head -c 80 | tr '\n' ' ' | sed 's/  */ /g')" >> "$temp_file"
+            else
+                break
+            fi
+        done
+        
+        if [[ ! -s "$temp_file" ]]; then
+            echo "No items in clipboard history"
+            rm "$temp_file"
+            return 1
+        fi
+        
+        local choice=$(cat "$temp_file" | rofi -dmenu -p "Select clipboard item:" -i -l 15)
+        
+        if [[ -n "$choice" ]]; then
+            # Extract the index from the choice (first number before colon)
+            local index=$(echo "$choice" | cut -d':' -f1)
+            if [[ -n "$index" && "$index" =~ ^[0-9]+$ ]]; then
+                # Copy the actual item (not the preview) back to clipboard
+                copyq select $index
+                echo "Item $index copied to clipboard"
+            fi
+        fi
+        rm "$temp_file"
+    elif [[ ! -v copyq ]]; then
+        echo "CopyQ not installed"
+    elif [[ ! -v rofi ]]; then
+        echo "Rofi not installed"
+    fi
+}
+
+
+
+
+Fclip() {  # Terminal clip - using fzf (handles literal \n as text)
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    # Replace literal \n with a temporary marker to prevent splitting
+    local temp_marker="__LITERAL_NL__$$"
+    local preserved_content="${content//\\n/$temp_marker}"
+    
+    # Split on actual newlines only (not literal \n)
+    local lines=()
+    while IFS= read -r line; do
+        # Restore literal \n markers back to \n
+        line="${line//$temp_marker/\\n}"
+        lines+=("$line")
+    done <<< "$preserved_content"
+    
+    # Display lines in fzf (with literal \n visible as \n text)
+    local selected=$(printf '%s\n' "${lines[@]}" | fzf --prompt="Select line: " --height=10 --layout=reverse)
+    if [[ -n "$selected" ]]; then
+        # Apply the same "smart" escaping philosophy as Rclip - escape backslashes
+        local escaped_selected="${selected//\\/\\\\}"
+        
+        # Copy the escaped version to the clipboard
+        printf '%s' "$escaped_selected" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+        echo "Smart-escaped line copied to clipboard"
+    fi
+}
+
+# A "smart" function that escapes only the backslashes.
+# Perfect for `\n` but will fail on other shell special characters like spaces, $, ' etc.
+Rclip() {
+    if command -v rofi >/dev/null; then
+        local content=$(_get_clip)
+        if [[ -z "$content" ]]; then echo "No content in clipboard"; return 1; fi
+        
+        local temp_marker="__LITERAL_NL__$$"
+        local preserved_content="${content//\\n/$temp_marker}"
+        
+        local lines=()
+        while IFS= read -r line; do
+            line="${line//$temp_marker/\\n}"
+            lines+=("$line")
+        done <<< "$preserved_content"
+        
+        local selected=$(printf '%s\n' "${lines[@]}" | rofi -dmenu -p "Select line (Smart Escape):")
+        if [[ -n "$selected" ]]; then
+            # It replaces every single backslash with a double backslash.
+            local escaped_selected="${selected//\\/\\\\}"
+            
+            # Now copy the escaped version to the clipboard (WITH THE FIX)
+            echo -n "$escaped_selected" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+            echo "Smart-escaped line copied to clipboard"
+        fi
+    else
+        echo "Rofi not installed."
+    fi
+}
+
+Cgrep() {
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    if command -v fzf >/dev/null; then
+        # Create a temporary file with the clipboard content
+        local temp_file=$(mktemp)
+        echo "$content" > "$temp_file"
+        
+        # Use fzf with preview to show live search results
+        local pattern=$(fzf --prompt="Search clipboard: " \
+                           --height=10 \
+                           --layout=reverse \
+                           --preview="grep -i --color=always {q} $temp_file || echo 'No matches'" \
+                           --preview-window=down:10:wrap \
+                           --print-query \
+                           --no-select-1 \
+                           --exit-0 \
+                           --query="" <<< "")
+        
+        rm "$temp_file"
+        
+        # Extract pattern from the output (first line with --print-query)
+        if [[ -n "$pattern" && "$pattern" != $'\n'* ]]; then
+            # Remove potential extra newlines
+            pattern=$(echo "$pattern" | head -n 1 | xargs)
+            if [[ -n "$pattern" ]]; then
+                echo "Search results for: $pattern"
+                echo "=================="
+                echo "$content" | grep -i --color=always "$pattern"
+            fi
+        fi
+    else
+        # Simple fallback
+        local pattern=""
+        if [[ $# -gt 0 ]]; then
+            pattern="$1"
+        else
+            read -p "Enter search pattern: " pattern
+        fi
+        
+        if [[ -n "$pattern" ]]; then
+            echo "Search results for: $pattern"
+            echo "=================="
+            echo "$content" | grep -i --color=always "$pattern"
+        fi
+    fi
+}
+
+
+Tclip() {
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    # Check if it's JSON
+    if echo "$content" | jq . >/dev/null 2>&1; then
+        echo "Detected JSON - formatting:"
+        echo "$content" | jq .
+        return 0
+    fi
+    
+    # Check if it's XML
+    if echo "$content" | xmllint --format - >/dev/null 2>&1; then
+        echo "Detected XML - formatting:"
+        echo "$content" | xmllint --format -
+        return 0
+    fi
+    
+    echo "Unknown format - showing as-is:"
+    echo "$content"
+}
+
+# Save current clipboard to a named slot
+Sslot() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: Sslot <slot-name>"
+        return 1
+    fi
+    
+    local slot="$1"
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    mkdir -p ~/.clipboard-slots
+    echo "$content" > ~/.clipboard-slots/"$slot"
+    echo "Content saved to slot: $slot"
+}
+
+# Load from named slot
+Lslot() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: Lslot <slot-name>"
+        return 1
+    fi
+    
+    local slot="$1"
+    if [[ -f ~/.clipboard-slots/"$slot" ]]; then
+        cat ~/.clipboard-slots/"$slot" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+        echo "Slot '$slot' loaded to clipboard"
+    else
+        echo "Slot '$slot' not found"
+        return 1
+    fi
+}
+
+Fslots() {
+    if ! command -v fzf >/dev/null; then
+        echo "Fzf not installed"
+        return 1
+    fi
+    
+    if [[ ! -d ~/.clipboard-slots ]]; then
+        echo "No slots created yet in ~/.clipboard-slots/"
+        return 1
+    fi
+    
+    echo "Clipboard slots location: ~/.clipboard-slots/"
+    echo ""
+    
+    local slots=$(ls ~/.clipboard-slots/)
+    if [[ -z "$slots" ]]; then
+        echo "No slots found"
+        return 1
+    fi
+    
+    local selected=$(echo "$slots" | fzf --prompt="Select slot to load: " \
+                                       --height=10 \
+                                       --layout=reverse)
+    
+    if [[ -n "$selected" ]]; then
+        local slot_path="$HOME/.clipboard-slots/$selected"
+        if [[ -f "$slot_path" ]]; then
+            cat "$slot_path" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+            echo "Slot '$selected' loaded to clipboard"
+        fi
+    fi
+}
+
+# List all slots
+Lslots() {
+    if [[ -d ~/.clipboard-slots ]]; then
+        echo "~/.clipboard-slots"
+        ls -la ~/.clipboard-slots/
+    else
+        echo "No slots created yet"
+    fi
+}
+
+# Encrypt clipboard content
+Eclip() {
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    if ! command -v gpg >/dev/null; then
+        echo "GPG not installed"
+        return 1
+    fi
+    
+    local encrypted=$(echo "$content" | gpg --symmetric --armor)
+    echo "$encrypted" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+    echo "Content encrypted and copied to clipboard"
+}
+
+# Decrypt clipboard content
+Dclip() {
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    if ! command -v gpg >/dev/null; then
+        echo "GPG not installed"
+        return 1
+    fi
+    
+    local decrypted=$(echo "$content" | gpg --decrypt 2>/dev/null)
+    if [[ $? -eq 0 ]]; then
+        echo "$decrypted" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+        echo "Content decrypted and copied to clipboard"
+    else
+        echo "Failed to decrypt - not an encrypted message?"
+        return 1
+    fi
+}
+
+# Copy file content to clipboard
+Fcopy() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: Fcopy <file>"
+        return 1
+    fi
+    
+    if [[ -f "$1" ]]; then
+        cat "$1" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+        echo "File content copied to clipboard"
+    else
+        echo "File not found: $1"
+        return 1
+    fi
+}
+
+# Copy clipboard to file
+Csave() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: Csave <file>"
+        return 1
+    fi
+    
+    local content=$(_get_clip)
+    if [[ -z "$content" ]]; then
+        echo "No content in clipboard"
+        return 1
+    fi
+    
+    echo "$content" > "$1"
+    echo "Clipboard content saved to: $1"
+}
+
+# Clear clipboard
+Cclear() {
+    echo -n "" | xclip -selection clipboard 2>/dev/null || wl-copy 2>/dev/null
+    echo "Clipboard cleared"
+}

@@ -1,0 +1,15 @@
+
+#[NOTE] this bellow doesn't work. there is just something wrong with espanso and xterm
+
+
+
+#for example
+# filter_title: (Reddit|Google Search|eTools.ch|DuckDuckGo|Google Drive|Colab|tldraw|Excalidraw)
+# filter_title: (Reddit|^Google|Goggle Search)
+# filter_class: xterm
+# enable: true
+
+
+
+# key_delay: 10
+

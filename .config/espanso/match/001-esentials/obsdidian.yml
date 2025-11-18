@@ -1,0 +1,116 @@
+
+matches:
+
+
+
+
+
+# _)
+# W39 Thu, 25 at 07:26
+# ---START------------------------------------------------------------
+# ""Obsidian Insert in Embedding format""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+
+#TIPS: In additoin to these hotstrings bellow. I also have an xbindkeys way to
+#       achieve the same thing. it's C-A-V which will convert the link in 
+#       clipboard into a ![](<LINK>). and then I can simply C-V if I want to 
+#       past it again. other wise you can lick the bellow hotstring
+
+# --------------------------------------------------------------------
+
+
+
+
+      # this is for Obsidian Markdown youtube links or stuff like that 
+  - trigger: ";;obyt;"
+    replace: "![]({{my_link}})"
+    vars:
+      - name: "my_link"
+        type: "clipboard"
+
+
+  - trigger: ";;obem;"
+    replace: "![]({{my_link}})"
+    vars:
+      - name: "my_link"
+        type: "clipboard"
+
+
+# --------------------------------------------------------------------
+# ""Obsidian Insert in Embedding format""
+# ---END--------------------------------------------------------------
+
+
+
+
+# _)
+# W39 Thu, 25 at 07:25
+# ---START------------------------------------------------------------
+# ""Obsidian Templates""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# --------------------------------------------------------------------
+
+
+
+
+  - trigger: ";;ot;"
+    force_mode: clipboard
+    replace: |
+      ---
+      Title: '""'
+      aliases:
+        - 
+        - 
+      Number: 
+      File location: 
+      File creation: 'W{{mydate}}'
+      Last Modified: 'W{{mydate}}'
+      ---
+
+      (Make sure you write things before answering the questions then delete this line)
+
+      Tags: [ ], [ ], [ ], [ ], [ ], [ ]
+
+      Summary of what is this all about?:
+      -->
+
+      What is the problem here? Why did you write this?:
+      -->
+
+      Outline:
+      -->
+
+      Claimed Answers if any Exist:
+      -->
+
+      Where do you think this belongs to? At What category:
+      -->
+
+      Where do you think it belongs to in my obsdidian vualt?
+      -->
+
+      # (Make sure you write things before answering the questions then delete this or leave it)
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%V %a, %d at %H:%M"
+
+
+
+# --------------------------------------------------------------------
+# ""Obsidian Templates""
+# ---END--------------------------------------------------------------
+

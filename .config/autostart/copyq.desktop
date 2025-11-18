@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=copyq --start-server show # just launch this as is don\\\\\\'t worry you have rules on openbox
+Name=[Clipboard] copyq [ # Clipboard management ]
+Type=Application
+Version=1.0
+X-LXQt-Need-Tray=true

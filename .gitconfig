@@ -1,0 +1,11 @@
+[user]
+	name = gitdexgit
+	email = ttdextester@gmail.com
+[credential]
+	helper = cache
+[core]
+	excludesFile = /home/dex/.gitignore_global
+[pull]
+	rebase = false
+[advice]
+	defaultBranchName = false

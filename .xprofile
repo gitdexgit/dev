@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Enable Accessibility Toolkits for goodnight-mouse
+export GTK_MODULES=gail:atk-bridge
+
+
+# I'm not on gnome I'm on archlinux  lxqt/openbox
+# export GNOME_ACCESSIBILITY=1
+export QT_ACCESSIBILITY=1
+export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+export ACCESSIBILITY_ENABLED=1
+

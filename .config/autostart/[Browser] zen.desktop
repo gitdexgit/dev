@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/zen-browser_ws1.sh
+Name=[Browser] zen
+Type=Application
+Version=1.0

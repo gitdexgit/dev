@@ -1,0 +1,66 @@
+# I typed it here because I forget it --> #acfg#
+
+search_trigger: ";;es;"
+search_shortcut: Ctrl+Shift+Meta+j
+show_notifications: false
+# backend: clipboard
+undo_backspace: false
+inject_delay: 0
+key_delay: 0
+pre_paste_delay: 10
+post_form_delay: 100 # Reduced from 200
+post_search_delay: 100 # Reduced from 200
+
+# this is bad it preserves the replaced string
+preserve_clipboard: false
+disable_x11_fast_inject: true
+
+#==== Of of these gives me like freezes to my system it's eather xdotool backend or somehting
+# x11_use_xdotool_backend: true
+x11_use_xclip_backend: true
+
+
+
+
+# for inject to work you need umm to apply_patch or something = true or false or whatever
+# then turn inject... idk if inject will make me type better in like nvim... it's probably
+# better for like short trigger and replace but for like long amount of text, clipboard is the meta 
+# I think or not maybe I'm wrong.
+# just disable this if you need clipboard whatever man then when typing just like enable it....
+# I can probably automate it or sometihng with a click on the keyboard
+apply_patch: false
+backend: inject
+# yeah inject is so fast but I type so fast
+
+
+# ----------- ai start----------
+
+# ai told me that I can do this
+
+# backend: Clipboard
+
+# Use the super-fast inject backend ONLY for specific apps where it excels.
+# app_specific:
+#   # For all terminal emulators on Linux (adapt names if needed)
+#   - matches:
+#       - app_class: "Alacritty"
+#       - app_class: "kitty"
+#       - app_class: "gnome-terminal"
+#     backend: inject
+#     apply_patch: false # Good practice to pair this with inject
+
+# but it doens't work, I've just tested it 
+
+# ----------- ai end ----------
+
+
+# it's too fast if I do this it makes it not that fast and it actually makes it bad 
+# I don't like it I think making it fast is good 
+# disable_x11_fast_inject: true
+
+# sadly the inject backend isn't working well with the idk the ;;gc# and what not
+# idk I'll use inject for now
+# but I don't use the #gc... parts that much and I can just make them into a snippets anyways so, I can also type them
+# backend: clipboard
+
+

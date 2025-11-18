@@ -1,0 +1,7 @@
+#!/bin/bash
+
+xmodmap "$HOME/.xmodmaprc" &
+
+
+xbindkeys &
+

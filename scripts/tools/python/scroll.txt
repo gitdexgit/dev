@@ -1,0 +1,2 @@
+I removed that stupid python scuffed scrolling thing. it was a thing from stack overflow just some ai shit
+it was taking so much mb 

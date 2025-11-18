@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=export QT_QPA_PLATFORMTHEME=kde
+Name=[Dark Theme] Change Dolphin file manager from kde to dark theme. you have to have plasma and systemsettings and such installed and dark breeze theme
+Type=Application
+Version=1.0

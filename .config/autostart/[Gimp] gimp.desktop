@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/home/dex/scripts/autostart/gimp_wsI.sh
+Name=[Gimp] gimp
+Type=Application
+Version=1.0
+X-LXQt-Autostart-disabled=true

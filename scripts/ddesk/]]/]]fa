@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Launch Kitty and execute a Zsh command string.
+kitty -e zsh -i -c '
+  # 1. Run fzf.
+  #    - We removed "--type file" to search for files AND directories.
+  #    - We changed the search path from ". ~" to just "~" to search only in home.
+  selected_item=$(fd --hidden . ~ | fzf --height 80% --reverse);
+  
+  # 2. Check if an item was actually selected.
+  if [[ -n "$selected_item" ]]; then
+    # 3. CRUCIAL: "export" the variable so it is available in the new shell.
+    export FP="$selected_item"
+    
+    # 4. Give the user your custom feedback in the new terminal.
+    echo ""
+    echo "--- Things to Remember ---"
+    echo "Path stored in \$FP:"  # Fixed the missing quote here
+    echo "$FP"                  # This correctly prints the value
+    echo "--------------------------"
+
+  else
+    echo "---"
+    echo "No item selected."
+    echo "---"
+  fi
+  
+  # 5. Replace this script with a new, fully interactive zsh shell.
+  #    The $FP variable will be available because we exported it.
+  exec zsh
+'

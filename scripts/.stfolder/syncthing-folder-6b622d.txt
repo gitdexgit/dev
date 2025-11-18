@@ -1,0 +1,5 @@
+# This directory is a Syncthing folder marker.
+# Do not delete.
+
+folderID: kptfv-hlvg3
+created: 2025-10-28T23:25:21+01:00

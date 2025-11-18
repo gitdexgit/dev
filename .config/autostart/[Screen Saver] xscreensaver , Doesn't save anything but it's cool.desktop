@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=xscreensaver -no-splash &
+Hidden=false
+Name=[Avandoned-launch manually] [Screen Saver] xscreensaver , Doesn't save anything but it's cool
+Type=Application
+Version=1.0
+X-LXQt-Autostart-disabled=true

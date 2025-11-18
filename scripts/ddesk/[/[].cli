@@ -1,0 +1,3 @@
+#!/bin/bash -i
+
+alacritty --working-directory /home/dex/scripts/ddesk/]

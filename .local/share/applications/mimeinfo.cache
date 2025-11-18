@@ -1,0 +1,25 @@
+[MIME Cache]
+application/vnd.ms-htmlhelp=wine-extension-chm.desktop;
+application/winhlp=wine-extension-hlp.desktop;
+application/x-ms-application=wine-extension-application.desktop;
+application/x-ms-xbap=wine-extension-xbap.desktop;
+application/x-osu-beatmap-archive=osu-lazer.desktop;sh.ppy.osu.stable.desktop;
+application/x-osu-replay=osu-lazer.desktop;sh.ppy.osu.stable.desktop;
+application/x-osu-skin-archive=osu-lazer.desktop;sh.ppy.osu.stable.desktop;
+application/x-shellscript=run-in-alacritty.desktop;
+application/x-wine-extension-appref-ms=wine-extension-appref-ms.desktop;
+application/x-wine-extension-msp=wine-extension-msp.desktop;
+application/xaml+xml=wine-extension-xaml.desktop;
+inode/directory=org.kde.dolphin.desktop;
+text/markdown=neovim-allacrity.desktop;neovim-ghostty.desktop;neovim-kitty.desktop;neovim-xterm.desktop;
+text/plain=neovim-ghostty.desktop;run-in-alacritty.desktop;wine-extension-efu.desktop;
+text/vbscript=wine-extension-vbs.desktop;
+text/x-c++hdr=neovim-ghostty.desktop;
+text/x-c++src=neovim-ghostty.desktop;
+text/x-chdr=neovim-ghostty.desktop;
+text/x-csrc=neovim-ghostty.desktop;
+text/x-java=neovim-ghostty.desktop;
+text/x-python=neovim-ghostty.desktop;
+text/x-shellscript=neovim-ghostty.desktop;
+x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop;
+x-scheme-handler/osu=sh.ppy.osu.stable.desktop;

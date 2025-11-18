@@ -1,0 +1,37 @@
+matches:
+
+  # - trigger: ";;u1"
+  #   replace: "--------------------\nW{{mydate}}\nu1$|$"
+  #   vars:
+  #     - name: mydate
+  #       type: date
+  #       params:
+  #         format: "%U %a, %d at %H:%M"
+  # - trigger: ";;u2"
+  #   replace: "--------------------\nW{{mydate}}\nu2$|$"
+  #   vars:
+  #     - name: mydate
+  #       type: date
+  #       params:
+  #         format: "%U %a, %d at %H:%M"
+  # - trigger: ";;u3"
+  #   replace: "--------------------\nW{{mydate}}\nu3$|$"
+  #   vars:
+  #     - name: mydate
+  #       type: date
+  #       params:
+  #         format: "%U %a, %d at %H:%M"
+  # - trigger: ";;u4"
+  #   replace: "--------------------\nW{{mydate}}\nu4$|$"
+  #   vars:
+  #     - name: mydate
+  #       type: date
+  #       params:
+  #         format: "%U %a, %d at %H:%M"
+  # - trigger: ";;u5"
+  #   replace: "--------------------\nW{{mydate}}\nu5$|$"
+  #   vars:
+  #     - name: mydate
+  #       type: date
+  #       params:
+  #         format: "%U %a, %d at %H:%M"

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# A script to kill, pause, or continue a process by clicking its window.
+
+case "$1" in
+    -p|--pause)
+        echo "Click on the window to PAUSE..."
+        pid=$(xprop _NET_WM_PID | awk '{print $3}')
+        if [[ -n "$pid" ]]; then
+            kill -STOP "$pid"
+        fi
+        ;;
+
+    -c|--continue)
+        echo "Click on the window to CONTINUE..."
+        pid=$(xprop _NET_WM_PID | awk '{print $3}')
+        if [[ -n "$pid" ]]; then
+            kill -CONT "$pid"
+        fi
+        ;;
+
+    *)
+        # Default behavior: run the original xkill.
+        # "$@" passes all arguments (like -id, -frame) to the real xkill.
+        /usr/bin/xkill "$@"
+        ;;
+esac
