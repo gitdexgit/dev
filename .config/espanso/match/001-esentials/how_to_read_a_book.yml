@@ -1,0 +1,25 @@
+matches:
+
+  - trigger: ';;q1;'
+    replace: |
+     In general, what do the sources categorize in? Meaning in general for example are the sources fiction, non-fictoin and are they theoritical or practical? Are they science or what? and finally are they expository or not?
+
+  - trigger: ';;q2;'
+    replace: |
+     Be brief, What are the sources about? Here is a mini-rule to answer this question: You should be brief, avoid vague words. before answering judge on how many paragraphs you should give the sources in this Be brief summary. A rule of thumb is either 1 paragraph or 2 and if your judgement requires more then go for more paragraphs as you see fit
+
+  - trigger: ';;q3;'
+    replace: |
+      Give a detailed outline of the sources, Please give the Major parts first. those are the main branches of the sources. After giving those major parts tell us how many are there, give a number. Those major parts in the outline are the parts of the sources if the reader reads them and knows them he knows eeverything that is needed to be known about the sources. Please also include the parts of the major parts to help the reader. and if there are parts to the parts of the major parts please include them. You may judge on the outline depending on the sources' structure
+
+  - trigger: ';;q4;'
+    replace: |
+      What are the problems the sources are trying to solve?
+
+  - trigger: ';;q5;'
+    replace: |
+      Knowing the problems the sources are trying to solve, what are the claimed answers from the sources? If no claimed answers exist answer with "For this problem {{The problem}} no claimed answer is provided, it's left for the reader".
+
+  - trigger: ';;q6;'
+    replace: |
+      Can you make a simple Q&A for the most important questions and their answers that the reader really need to ask and know the answer of. As an exercise. thanks?

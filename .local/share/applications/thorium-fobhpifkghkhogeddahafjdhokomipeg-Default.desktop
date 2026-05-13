@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Type=Application
+Name=Poe - Fast, Helpful AI Chat
+Exec=/opt/thorium-browser/thorium-browser --profile-directory=Default --app-id=fobhpifkghkhogeddahafjdhokomipeg
+Icon=thorium-fobhpifkghkhogeddahafjdhokomipeg-Default
+StartupWMClass=crx_fobhpifkghkhogeddahafjdhokomipeg

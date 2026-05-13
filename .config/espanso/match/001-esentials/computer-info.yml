@@ -1,0 +1,91 @@
+matches:
+
+  - trigger: ";;specs;"
+    force_mode: clipboard
+    replace: |
+      # daily driver 1st computer specs dex@archlinux1:
+
+      general info:
+         - archlinux
+         - lxqt
+         - openbox
+         - X11
+         - Screen 0: minimum 320 x 200, current 3286 x 1080, maximum 16384 x 16384 (xrandr)
+         - laptop
+         - eDP-1  1366x768+1920+152 (xrandr)
+         - HDMI-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 531mm x 299mm
+
+      fastfetch -c all: 
+      --------------
+      OS: Arch Linux x86_64
+      Host: HP Notebook
+      BIOS (UEFI): F.49 (15.49)
+      Bootmgr: GRUB - grubx64.efi
+      Board: 81EE (62.55)
+      Chassis: Notebook
+      Kernel: Linux 6.17.1-arch1-1
+      Init System: systemd 258-4-arch
+      Uptime: 5 mins
+      Loadavg: 5.17, 3.62, 1.68
+      Processes: 340
+      Packages: 2454 (pacman), 29 (flatpak)
+      Shell: zsh 5.9
+      Editor: nvim 0.11.4
+      Display (S24B350): 1920x1080 in 24", 60 Hz [External] *
+      Display (AUO70EC): 1366x768 in 16", 60 Hz [Built-in]
+      Brightness (AUO70EC): 65% [Built-in]
+      Brightness (S24B350): 82% [Built-in]
+      Monitor (S24B350): 1920x1080 px @ 60 Hz - 531x299 mm (23.99 inches, 91.82 ppi)
+      Monitor (AUO70EC): 1366x768 px @ 60.016 Hz - 344x193 mm (15.53 inches, 100.91 ppi)
+      LM: lightdm 1.32.0 (X11)
+      DE: LXQt 2.2.0
+      WM: Openbox (X11)
+      Theme: breeze [Qt], Arc-Dark [GTK2/3], Adwaita [GTK4]
+      Icons: breeze-dark [Qt], breeze-dark [GTK2/3], Adwaita [GTK4]
+      Font: sans (11pt) [Qt], Noto Sans (9pt) [GTK2/3], Cantarell (11pt) [GTK4]
+      Cursor: breeze (24px)
+      Wallpaper: BlackWindows11Wallpaper(NoGrain).jpg
+      Terminal: alacritty 0.15.1
+      Terminal Font: FiraCode Nerd Font Mono (10pt)
+      Terminal Size: 120 columns x 36 rows (960px x 648px)
+      Terminal Theme: #D8D8D8 (FG) - #000000 (BG) [Dark]
+      CPU: Intel(R) Core(TM) i5-7200U (4) @ 3.10 GHz - 71.0°C
+      CPU Cache (L1): 2x32.00 KiB (D), 2x32.00 KiB (I)
+      CPU Cache (L2): 2x256.00 KiB (U)
+      CPU Cache (L3): 3.00 MiB (U)
+      CPU Usage: 19%
+      GPU 1: AMD Radeon R7 M340 (5) @ 1.02 GHz - 51.0°C (8.62 MiB / 3.99 GiB, 0%) [Discrete]
+      GPU 2: Intel HD Graphics 620 (24) @ 1.00 GHz [Integrated]
+      Memory: 4.47 GiB / 15.53 GiB (29%)
+      Swap (/myswapfile): 0 B / 12.00 GiB (0%)
+      Disk (/): 168.46 GiB / 288.63 GiB (58%) - ext4
+      Disk (/data/VMs): 214.81 GiB / 396.22 GiB (54%) - ext4
+      Disk (/home/dex/Backup): 22.49 GiB / 191.19 GiB (12%) - ext4
+      Battery (PABAS0241231): 0% [AC Connected]
+      Public IP: 102.96.226.60 (Casablanca, MA)
+      Local IP (bridge0): 192.168.11.119/24 (ee:bd:e4:e0:6f:5f) [Speed 100 Mbps / MTU 1500] <UP,BROADCAST,RUNNING,MULTICAST,LOWER_UP>
+      DNS: 8.8.8.8 8.8.4.4 41.214.140.4 41.214.140.5 192.168.11.1
+      Date & Time: 2025-10-09 21:25:22
+      Locale: en_US.UTF-8
+      Vulkan: 1.4.318 - Intel open-source Mesa driver [Mesa 25.2.4-arch1.1]
+      Users: dex@:0 - login time 2025-10-09 21:21:13
+      Sound: Built-in Audio Analog Stereo (48%)
+      Camera: HP Webcam: HP Webcam - sRGB (640x480 px)
+      Gamepad: keyd virtual pointer
+      Mouse 1: SynPS/2 Synaptics TouchPad
+      Mouse 2: Logitech USB-PS/2 Optical Mouse
+      Mouse 3: Telink Wireless Receiver Mouse
+      Mouse 4: keyd virtual pointer
+      Mouse 5: Razer Razer Basilisk Essential
+      Keyboard 1: Razer Razer Basilisk Essential
+      Keyboard 2: AT Translated Set 2 keyboard
+      Keyboard 3: Telink Wireless Receiver
+      Weather: +13°C - Overcast (not found)
+      Network IO (bridge0): 1.21 KiB/s (IN) - 928 B/s (OUT)
+      Disk IO (ATA Patriot Burst): 128.00 KiB/s (R) - 296.00 KiB/s (W)
+      Disk IO (hp DVDRW  DU8A6SH): 0 B/s (R) - 0 B/s (W)
+      Physical Disk (ATA Patriot Burst): 894.25 GiB [SSD, Fixed]
+      Physical Disk (hp DVDRW  DU8A6SH): 1024.00 MiB [SSD, Removable]
+      TPM: TPM 2.0 Device
+      Version: fastfetch 2.53.0 (x86_64)
+

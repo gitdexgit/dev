@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Neovim (in alacritty)
+Comment=Open with Neovim inside alacritty Terminal
+Exec=alacritty -e nvim %F
+Icon=neovim
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+MimeType=text/markdown;
+Keywords=text;editor;markdown;nvim;kitty;

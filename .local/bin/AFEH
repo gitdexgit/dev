@@ -1,0 +1,3 @@
+#!/bin/sh
+cd ~/tmpshot || exit
+feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless .

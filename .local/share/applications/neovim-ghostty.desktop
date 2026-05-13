@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Neovim (in Ghostty)
+GenericName=Text Editor
+Comment=Edit text files with Neovim inside Ghostty
+Exec=ghostty -e nvim %f
+Icon=ghostty
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+MimeType=text/plain;text/markdown;text/x-chdr;text/x-csrc;text/x-c++hdr;text/x-c++src;text/x-java;text/x-python;text/x-shellscript;
+Keywords=text;editor;nvim;ghostty;
+StartupNotify=true

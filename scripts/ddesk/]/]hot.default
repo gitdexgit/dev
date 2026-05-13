@@ -1,0 +1,12 @@
+#!/bin/bash
+
+killall xbindkeys
+
+# 1. Remove F24 from Mod3 modifier (undoes 'add Mod3 = F24')
+xmodmap -e "remove Mod3 = F24"
+
+# 2. Map keycode 66 back to Caps_Lock (undoes 'keycode 66 = F24')
+xmodmap -e "keycode 66 = Caps_Lock"
+
+# 3. Add Caps_Lock back to Lock modifier (undoes 'clear Lock')
+xmodmap -e "add Lock = Caps_Lock"

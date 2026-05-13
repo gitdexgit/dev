@@ -1,0 +1,9 @@
+# Reduces the 'ramping up' feel, making movement more instant
+acceleration_exponent: 1.0
+acceleration_time: 0
+
+# Increase speed to make it feel snappier
+speed: 200
+
+# Ensure the hint/grid overlay doesn't use too many resources
+cursor_size: 6

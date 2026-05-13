@@ -1,0 +1,8 @@
+#!/bin/bash
+
+thorium-browser https://www.google.com/
+
+sleep 1
+xdotool key Escape
+sleep 0.1
+xdotool key b

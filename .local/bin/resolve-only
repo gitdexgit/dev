@@ -1,0 +1,6 @@
+#!/bin/bash
+export DRI_PRIME=1
+export __GLX_VENDOR_LIBRARY_NAME=radeon
+export __VK_LAYER_AMD_switchable_graphics=1
+export MESA_LOADER_DRIVER_OVERRIDE=radeonsi
+/opt/resolve/bin/resolve

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=A Wine application
+MimeType=text/plain;
+Exec=env WINEPREFIX="/home/dex/.wine" wine start /ProgIDOpen Everything.FileList %f
+NoDisplay=true
+StartupNotify=true

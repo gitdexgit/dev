@@ -1,0 +1,5 @@
+#!/bin/bash
+# ~/bin/ovim
+
+export NVIM_APPNAME="obsidian_nvim"
+exec nvim "$@"

@@ -1,0 +1,61 @@
+! Remap Caps_Lock (keycode 66) to F24
+! keycode 66 = F24
+
+! Clear the Lock modifier, so Caps Lock key itself doesn't toggle it
+! clear Lock
+
+! Add F24 to an unused modifier (Mod3 is often unused)
+! add Mod3 = F24
+
+
+
+! ==========================================================
+!  1. Turn the physical Escape key (keycode 9) into a pure
+!     modifier key called Hyper_L.
+! ==========================================================
+! keycode 9 = Hyper_L
+
+! ! ==========================================================
+! !  2. Add the Hyper_L keysym to the Mod3 modifier map.
+! !     (We clear it first to be safe).
+! ! ==========================================================
+! clear Mod3
+! add Mod3 = Hyper_L
+! ==========================================================
+!  Turn Scroll Lock into a proper modifier key (Hyper_L)
+! ==========================================================
+
+! First, remove Scroll_Lock from any existing modifiers to prevent conflicts.
+! We also clear Mod5 in case anything else was on it.
+! remove Lock = Scroll_Lock
+
+! Get the keycode for your Scroll Lock key (usually 78)
+! Map this keycode to a neutral keysym. F13 is a great choice as it's
+! unused on almost all keyboards. Some people prefer 'Hyper_L'. Let's use F13.
+
+! Finally, add our new neutral keysym (F13) to an unused modifier map.
+! Mod5 is a good choice.
+
+clear Mod5
+! clear Mod6
+!
+! keycode 202 = F24
+keycode 78 = F13
+! keycode 64 = Shift_L
+
+add Mod5 = F13
+! add Mod4 = F15
+! add Mod3 = F13
+
+! add Mod6 = F13
+
+
+
+! remove Lock = ALt_R
+! keycode 135 = Hyper_L
+!
+! remove Lock = Menu
+! keycode 135 = Control_L
+
+
+

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+# Target window class and desired coordinates
+TARGET_CLASS="kitty"
+TARGET_X=13
+TARGET_Y=52
+
+# Find the window ID of the first Kitty window
+# We search for class "kitty" (WM_CLASS instance) and "Kitty" (WM_CLASS class)
+# as 'kitty' is usually the instance name.
+WINDOW_ID=$(xdotool search --class "$TARGET_CLASS" | head -n 1)
+
+# If WINDOW_ID is empty, no Kitty window was found
+if [ -z "$WINDOW_ID" ]; then
+  exit 1
+fi
+
+
+# Move the window
+xdotool windowmove "$WINDOW_ID" "$TARGET_X" "$TARGET_Y"
+
+xdotool windowactivate "$WINDOW_ID"
+exit 0

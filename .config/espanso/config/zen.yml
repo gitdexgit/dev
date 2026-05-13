@@ -1,0 +1,23 @@
+
+
+## try this in general and with enable_some_zen.yml it might be differnet than bellow
+# filter_title: Zen
+# filter_class: zen
+# enable: false
+
+## here is how to get ].f] work
+filter_title: Zen
+filter_class: zen
+extra_includes:
+  # - "../match/testing_app_sepecific.yml"
+  # - "../match/base.yml"
+extra_excludes:
+  # - "../match/001-esentials/*.yml"
+  - "../match/997-archived/*.yml"
+  - "../match/999-play/*.yml"
+  - "../match/coding/*.yml"
+  - "../match/packages/misspell-en/*.yml"
+  - "../match/packages/typofixer-en/*.yml"
+
+
+key_delay: 1

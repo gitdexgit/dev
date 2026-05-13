@@ -1,0 +1,9 @@
+set stylesheet=off
+# Toggle dark mode with a shortcut
+nmap ,d :set stylesheet!<CR>
+nmap gn :tabopen<CR>
+set hardware-acceleration-policy=always
+set smooth-scrolling=false
+shortcut-add g=https://www.google.com/search?q=$0
+shortcut-add d=https://duckduckgo.com/?q=$0&kae=d
+shortcut-add w=https://en.wikipedia.org/wiki/$0

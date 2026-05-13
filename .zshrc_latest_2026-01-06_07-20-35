@@ -1,0 +1,1244 @@
+# 1. CORE PATHS & LIBRARY LOADING
+# Load these first so they are available for the rest of the script
+fpath=($HOME/.config/zsh/completions $HOME/.config/zsh/functions $fpath)
+autoload -Uz compinit add-zsh-hook vcs_info
+
+# 2. INSTANT COMPLETION SYSTEM
+# Only run compinit once. The -C flag is the secret to Tsoding-like speed.
+export ZSH_COMPDUMP="$HOME/.cache/zcompdump"
+if [[ -n "$ZSH_COMPDUMP"(#qN.m+24) || ! -f "$ZSH_COMPDUMP" ]]; then
+  compinit -d "$ZSH_COMPDUMP"
+else
+  compinit -C -d "$ZSH_COMPDUMP"
+fi
+
+# 3. DEFERRED PLUGINS (Load after prompt appears)
+[[ -f ~/zsh-defer/zsh-defer.plugin.zsh ]] && source ~/zsh-defer/zsh-defer.plugin.zsh
+
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+load_heavy_stuff() {
+    # FZF Tab
+    [[ -f "$ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.plugin.zsh" ]] && source "$ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.plugin.zsh"
+    # Autosuggestions
+    [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+    # Syntax Highlighting
+    [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    ZSH_HIGHLIGHT_STYLES[comment]=fg=#FFFFFF,bold
+}
+zsh-defer load_heavy_stuff
+
+# 4. CACHED BINARIES (No subshells allowed!)
+# Running $(zoxide init) takes ~50ms. Reading a file takes ~1ms.
+if [[ -f ~/.cache/zoxide.zsh ]]; then
+    source ~/.cache/zoxide.zsh
+else
+    command -v zoxide > /dev/null && zoxide init zsh > ~/.cache/zoxide.zsh && source ~/.cache/zoxide.zsh
+fi
+
+if [[ -f ~/.cache/dircolors ]]; then
+    eval "$(cat ~/.cache/dircolors)"
+else
+    command -v dircolors > /dev/null && dircolors -b > ~/.cache/dircolors && eval "$(cat ~/.cache/dircolors)"
+fi
+
+# Defer Keychain (The biggest bottleneck)
+zsh-defer -c '[[ -z "$SSH_AUTH_SOCK" ]] && eval $(keychain --eval --quiet --noask ~/.ssh/githubarch)'
+
+
+
+# 5. BINDINGS & OPTIONS (Instant)
+export KEYTIMEOUT=1
+bindkey -e
+unsetopt vi
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt appendhistory sharehistory histignorealldups histignorespace autocd promptsubst interactivecomments
+
+# Arrows and Navigation
+bindkey '\e[A' up-line-or-history
+bindkey '\e[B' down-line-or-history
+bindkey '\e[C' forward-char
+bindkey '\e[D' backward-char
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+
+# Editing
+bindkey '^U' backward-kill-line
+bindkey '^K' kill-line
+bindkey '^[[3;5~' kill-word      # Ctrl+Delete
+bindkey '^[[1;5C' forward-word   # Ctrl+Right
+bindkey '^[[1;5D' backward-word  # Ctrl+Left
+bindkey '^H' backward-delete-char
+bindkey '^[[Z' undo              # Shift+Tab
+bindkey '^Y' yank
+bindkey '^J' self-insert         # Newline in prompt
+bindkey ' ' magic-space          # History expansion
+bindkey '^@' expand-or-complete  # Ctrl+Space
+
+# Custom Widgets
+fg-widget() { BUFFER="fg"; zle accept-line; }
+zle -N fg-widget
+bindkey '^[z' fg-widget          # Alt+Z for foreground
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '\ee' edit-command-line  # Alt+E to edit in Nvim
+
+# Redo/History Fixes
+bindkey -r -M viins '^R'
+bindkey -r -M vicmd '^R'
+bindkey -M vicmd '^R' redo
+bindkey -M viins '\er' fzf-history-widget
+bindkey -M vicmd '\er' fzf-history-widget
+
+# Application Shortcuts
+bindkey '^G' autosuggest-toggle
+bindkey -s '\et' "tmux-sessionizer\r"
+
+# --------------------------------------------------------------------
+# 5. SHELL OPTIONS & TERMINAL BEHAVIOR
+# --------------------------------------------------------------------
+# HISTFILE=~/.zsh_history
+# HISTSIZE=50000
+# SAVEHIST=50000
+
+setopt appendhistory sharehistory histignorealldups histignorespace
+setopt incappendhistory autocd interactivecomments notify
+setopt numericglobsort promptsubst nonomatch magicequalsubst
+setopt HIST_FCNTL_LOCK
+export ZSH_DISABLE_COMPFIX=true
+PROMPT_EOL_MARK=""
+
+# Terminal Flow Control
+stty ixon
+
+# --------------------------------------------------------------------
+# 6. PROMPT CONFIGURATION (Dual Style)
+# --------------------------------------------------------------------
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' check-for-changes false
+zstyle ':vcs_info:git:*' formats ' %F{yellow}git:(%b)%f'
+autoload -Uz add-zsh-hook
+# add-zsh-hook precmd vcs_info
+
+PROMPT_ALTERNATIVE=oneline
+NEWLINE_BEFORE_PROMPT=yes
+
+configure_prompt() {
+    local git_info='${vcs_info_msg_0_}'
+    if [[ "$PROMPT_ALTERNATIVE" == "oneline" ]]; then
+        PROMPT=$'%F{green}→%f %F{cyan}%1.%f'"$git_info"$' %F{white}×%f '
+    else
+        PROMPT=$'%F{blue}┌──(%B%n%b%F{blue})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{blue}]'"$git_info"$'\n└─%B%F{blue}$%b%F{reset} '
+    fi
+}
+# configure_prompt
+
+toggle_oneline_prompt(){
+    [[ "$PROMPT_ALTERNATIVE" == "oneline" ]] && PROMPT_ALTERNATIVE=twoline || PROMPT_ALTERNATIVE=oneline
+    configure_prompt
+    zle reset-prompt
+}
+zle -N toggle_oneline_prompt
+bindkey ^P toggle_oneline_prompt
+
+
+# Include your zi(), xxc(), Ecat() etc. here...)
+# W49 Sat, 06 at 09:28
+# ---START------------------------------------------------------------
+# ""aliases"" START
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# Solution?:
+
+# --------------------------------------------------------------------
+
+# bro just type it, idk they are here for me to learn later and remember or read the options idk
+alias mpvg='mpv --player-operation-mode=pseudo-gui'
+alias mpvyt='mpv --ytdl-format='
+alias streamlink='streamlink --player mpv'
+
+# ------ Esentials ------------
+
+alias -g ]]r='source ~/.zshrc ; source ~/.zshenv'
+alias md='mkdir -p'
+
+# force zsh to show the complete history
+alias history="history 0"
+
+alias ll='ls -alhF'
+alias la='ls -AlhF'
+alias l='ls -CF'
+alias ls='ls --color=auto'
+
+alias diff='diff --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='grep -F --color=auto' # the Fgrep is obsolete grep -F is latest
+alias egrep='grep -E --color=auto' # the egrep is obsolete grep -E is latest
+
+alias -g vim='nvim'
+
+# For configuration and editing:
+alias nvrc='nvim ~/.zshrc'
+alias nvenv='nvim ~/.zshenv'
+alias nvnv='cd ~/.config/nvim/ ; nvim .' # have to cd so that plugins work fine
+
+# really good in ~/tmpshot for rewinds. It's useful when I'm trying to solve problems it's nice to record
+# What I'm doing and like go back in time to see what I was doing. helps with understanding
+alias Afeh='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless --info "echo '%f'" .'
+alias AFEH='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless'
+
+# same as Afeh but can be used from anywhere, I named it rewind but I don't like that name.
+# alias AFEH='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless --info "echo '%f'" .'
+
+# It's so nice. it's like when I type y but I type t for thunar on current dir. It's alright I like
+# thunar I do use it
+alias t='thunar .'
+
+alias p='ps aux | grep' # easier to type because I use it sometimes to find autoshot and other processes if they are running
+
+alias m='mpv * --loop-playlist' # I type this a lot in the music tab in my dropdown term
+
+alias sudo='sudo ' # Notice The space at the end: tells the shell to perfom alias expansion on the word following sudo
+
+
+alias py='python' # idk what this for I don't use python that much
+
+alias msgbox='zenity' # just some nostalgia from ahk msgbox. This is useless I don't do bash scripting that much.
+
+# idk let's hope I don't forget this alias
+alias o='less' # I mean I forget about this I don't use less that much
+
+# I don't use this really I have like nvim stuff and I just type it but it could be handy
+alias e='chmod +x'
+
+# very uesful
+alias obo='~/scripts/ddesk/obsidian/run-obsidian-script.sh'
+
+# Useful for other languages that I might use or other people use or ask me to search
+# using them. But 99% of the time I only use US, my qwerty with modified keyd stuff.
+# sadly the @ location is affecting some layouts but I mean I can disable it temporary in
+# keyd I guess for now
+alias \00.='setxkbmap -layout us'
+alias \01.='setxkbmap -layout fr'
+alias \02.='setxkbmap -layout ara'
+alias \04.='setxkbmap us_rpd'
+
+# ----- some cool ones ----
+
+# this is cool
+alias cdd='cd $(dirname "$(fp)")' # Use nano if you prefer: alias nanc='nano ~/.zshrc'
+alias cdfp='cd $(dirname "$(fp)")' # Use nano if you prefer: alias nanc='nano ~/.zshrc'
+
+# The main alias for the CLI tool itself.
+alias ob='obsidian-cli'
+
+
+# I just have these for like you know nostalgia on old days and just to remember how I use xset. I just use it for this
+# alias ]xset='xset r rate 194 68;xset q | grep delay'
+# alias ]xset?='xset q | grep delay'
+# alias ]pqo='pacman -Qo'
+# alias ]o='pacman -Qo'
+# alias ]psi='pacman -Si'
+# alias ]pqi='pacman -Qi'
+# alias kdex='dex@192.168.11.119' # this is kinda handy for ssh no?
+# alias ]st='systemctl status'
+# alias ]ss='systemctl start'
+# alias ]sp='systemctl stop'
+# alias ]se='systemctl enable'
+
+# alais to open default apps
+# xo because it's easy to remember just the first letters man xdg that's `x` and open that's `o`
+xo() {
+  xdg-open "$@"
+}
+
+# A better ls | grep, handles no arguments and adds color. basically lsg + grep
+lsg() {
+  if [ -z "$1" ]; then
+    # If no argument is given, just do a normal ls -la
+    lsd -l --color=always
+  else
+    # If there is an argument, pipe ls to grep
+    # --color=auto highlights the match
+    lsd -la --color=always | grep "$1"
+  fi
+}
+
+# ------------------ Navigation, Enhancing cd -----------------
+
+# for the alias to work
+# Lazy-load zoxide for faster startup
+# if command -v zoxide > /dev/null; then
+
+# Initialize Zoxide without spawning a slow subshell every time
+if command -v zoxide > /dev/null; then
+    # If the cache doesn't exist, create it once.
+    [[ -f ~/.zoxide.zsh ]] || zoxide init zsh > ~/.zoxide.zsh
+    source ~/.zoxide.zsh
+# fi
+
+
+# --- Zoxide: Advanced Dynamic Functions (Final Version) ---
+
+# 1. Initialize Zoxide. This MUST come first.
+# eval "$(zoxide init zsh)"
+
+# Enhances Zoxide, requires fzf and eza (I want to replace this with lsd but I gave up)
+# uses lsd instead of colors and stuff
+zi() {
+  local fzf_opts
+  local common_fzf_options="--layout=default --preview-window='up:65%:wrap' --bind 'alt-j:preview-page-down,ctrl-f:preview-page-down,alt-k:preview-page-up,ctrl-b:preview-page-up,alt-J:preview-down,alt-K:preview-up'"
+  # Check the first argument to determine the preview style
+  case "$1" in
+    -l)
+      # Switch the outer quotes for --preview to double quotes
+      fzf_opts="$common_fzf_options --preview=\"(echo \\\"{2..}:\\\"; echo; eza --long --color=always {2..})\""
+      shift # Consume the '-l' argument
+      ;;
+
+
+-lt | -tl)
+      # Fix the quoting and add the closing parenthesis
+      # Escape only the *inner* double quotes and the parentheses, or just use single quotes for the echo string
+      fzf_opts="$common_fzf_options --preview='eza --long --tree --level=1 --color=always {2..}'"
+      shift # Consume the '-lt' argument
+      ;;
+-t)
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview='eza --tree --level=1 --color=always {2..}'"
+      shift # Consume the '-t' argument
+      ;;
+    -la | -al)
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza --long --all --color=always {2..})\""
+      shift # Consume the '-la' or '-al' argument
+      ;;
+  -lag | -lga | -alg | -agl | -agl | alg) # the g in lag adds -g to eza so it's eza -g. it adds the group premissions unlike -la
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza -g --long --all --color=always {2..})\""
+      shift # Consume the '-la' or '-al' argument
+      ;;
+    -g)
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza -g --color=always {2..})\""
+      shift # Consume the '-g' argument
+      ;;
+    -ga | -ag)
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza -g --all --color=always {2..})\""
+      shift # Consume the '-ga' or '-ag' argument
+      ;;
+    -lg | -gl)
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza -g --long --color=always {2..})\""
+      shift # Consume the '-lg' or '-gl' argument
+      ;;
+    -a)
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza --all --color=always {2..})\""
+      shift # Consume the '-a' argument
+      ;;
+    *)
+      # Default view for zii IS the tree view
+      # FIX APPLIED: Added closing ')' and simplified quoting to single quotes for echo.
+      fzf_opts="$common_fzf_options --preview=\"(echo '{2..}:'; echo; eza --tree --level=1 --color=always {2..})\""
+      ;;
+  esac
+
+  # Since 'zii' always has a preview, we always run it with the options.
+  _ZO_FZF_OPTS="$fzf_opts" __zoxide_zi "$@"
+}
+fi
+
+
+
+# I still use these for some reason lol. I could change alias f to c.f and c.h it's kinda handy not gonna lie
+alias c='cd'
+alias c.d='cd ~/Desktop' # Keep if you use it, otherwise 'cd ~/Desktop' works fine
+alias c.dd='cd ~/Downloads' # Keep if you use it, otherwise 'cd ~/Desktop' works fine
+alias c.f='cd ~/fleet' # I just go to fleet a lot
+alias c.s='cd ~/scripts' # I just go to scripts a lot
+alias c.v='cd ~/fleet/vaults' # I just go to vaults a lot
+alias c.ps='~/Pictures/Screenshots'
+alias c.p='~/Pictures'
+
+# they kinda make sense no? I do still like these because they are faster
+alias f='cd ~/fleet' # I just go to fleet a lot
+alias s='cd ~/scripts' # I just go to scripts a lot
+alias v='cd ~/fleet/vaults' # I just go to vaults a lot
+
+
+#--------------Search enhancements--------------------
+
+
+# It's like zi function but nicer. It's basically Fzf but actually pretty and nice. this
+# works well with $() so keep holding that ;;;; you know it's only 1 butotn hold
+# fp, FP, Fzf, FZF
+source $HOME/.config/zsh/functions/fp
+
+# for viewing images just type y in current dir. a combinations of the above should work. or
+# just default fzf which doesn't ignore MIME thing. and then just sushi or just feh or mpv.
+
+
+
+
+# ------------ internet aliases that are handy ---------
+
+alias i='whoami' # I just go to fleet a lot
+
+alias ip='ip --color=auto' # adds color to ip command it's alright
+
+# Function to get detailed info for a specific IP address
+# Usage: ipinfo 8.8.8.8
+ipinfo() {
+    # Check if an IP address was provided as an argument
+    if [ -z "$1" ]; then
+        # If no IP is given, show info for our own IP
+        echo "\nhere is curl ipinfo.io:\n"
+        curl ipinfo.io
+        echo "\n\nIn case ipinfo.io is down, here is curl icanhazip.com:\n"
+        curl icanhazip.com
+        echo "\nTIP: similar to 'whois', you can also type 'ipinfo <give_an_ip>'"
+    else
+        # If an IP is given, look it up
+        curl ipinfo.io/"$1"
+    fi
+}
+
+# "Clipboard Pastebin Tools:"
+# "Cbin - curl clipboard URL to terminal"
+# "Obin - curl to pager (less)"
+# "Vbin - open in vim"
+# "Gbin - grep with prompt"
+# "Pbin - upload clipboard to pastebin"
+# "Rbin - upload with -r flag"
+# "Hbin - Brings Help"
+source $HOME/.config/zsh/functions/wgetpaste
+
+
+
+# --------------- clipboard management and aliases -----------
+
+alias -g xc='| col -b | xclip -selection clipboard' # very useful to copy stuff to clipboard with xclip
+
+# Universal copy-to-clipboard function for files.
+# Handles common image types correctly and defaults to plain text.
+# Automatically uses xclip (for X11) or wl-copy (for Wayland).
+# Usage: cxclip <file_path>
+xxc() {
+  # --- 1. Input Validation ---
+  if [ -z "$1" ]; then
+    echo "Usage: cxclip <file_path>" >&2
+    return 1
+  fi
+
+  if [ ! -f "$1" ]; then
+    echo "Error: File not found: '$1'" >&2
+    return 1
+  fi
+
+  # --- 2. Determine File Type and MIME Type ---
+  local filepath="$1"
+  local ext
+  # Get lowercase extension from the filename
+  ext=$(echo "${filepath##*.}" | tr '[:upper:]' '[:lower:]')
+  local mimetype
+
+  case "$ext" in
+    png)      mimetype="image/png" ;;
+    jpg|jpeg) mimetype="image/jpeg" ;;
+    gif)      mimetype="image/gif" ;;
+    webp)     mimetype="image/webp" ;;
+    svg)      mimetype="image/svg+xml" ;;
+    bmp)      mimetype="image/bmp" ;;
+    *)
+      # Default to plain text for any other extension
+      mimetype="text/plain" ;;
+  esac
+
+  # --- 3. Choose Tool (xclip for X11, wl-copy for Wayland) and Copy ---
+  if [ -n "$WAYLAND_DISPLAY" ]; then
+    # --- Wayland Environment ---
+    if ! command -v wl-copy &> /dev/null; then
+      echo "Error: 'wl-copy' not found. Please install wl-clipboard for Wayland." >&2
+      return 1
+    fi
+
+    if [ "$mimetype" = "text/plain" ]; then
+      wl-copy < "$filepath"
+      echo "Copied '$filepath' to Wayland clipboard as plain text."
+    else
+      wl-copy -t "$mimetype" < "$filepath"
+      echo "Copied '$filepath' to Wayland clipboard as '$mimetype'."
+    fi
+
+  else
+    # --- X11 Environment ---
+    if ! command -v xclip &> /dev/null; then
+      echo "Error: 'xclip' not found. Please install xclip for X11." >&2
+      return 1
+    fi
+
+    if [ "$mimetype" = "text/plain" ]; then
+      cat "$filepath" | xclip -selection clipboard
+      echo "Copied '$filepath' to X11 clipboard as plain text."
+    else
+      cat "$filepath" | xclip -selection clipboard -t "$mimetype"
+      echo "Copied '$filepath' to X11 clipboard as '$mimetype'."
+    fi
+  fi
+}
+
+## Clipboard functions that help me do copy things to clipboard in smart ways. read the source for more info
+source $HOME/.config/zsh/functions/cp-alphabit
+## Quick Guide to use:
+# Intuitive clipboard functions: cp<Letter> <file>
+# cpA -> Absolute Path
+# cpR -> Relative Path
+# cpH -> Home-relative Path
+# cpF -> Filename
+# cpB -> Bare/Basename (no extension)
+# cpE -> Extension
+# cpC -> Content
+# cpQ --> copyq <number>, Copies the Nth item from CopyQ (using 1-based counting). Usage: cpc 2  (to copy the 2nd item)
+
+
+#----------------- Computer processes management -------------------
+
+# Enhancing the xkill command with more options. I do have handy xbindkeys if you don't like typing it in temrinal: ''=ctrl+alt: ctrl+alt+z for suspending,''+x for killing, or ''+c for continuing process.
+xkill() {
+    # Check the first argument passed to the function
+    case "$1" in
+        -p|--pause)
+            echo "Click on the window to PAUSE..."
+            # Get the PID and send the STOP signal
+            pid=$(xprop _NET_WM_PID | awk '{print $3}')
+            if [[ -n "$pid" ]]; then
+                kill -STOP "$pid" && echo "Process PID $pid paused."
+            else
+                echo "No window selected or PID not found."
+            fi
+            ;;
+
+        -c|--continue)
+            echo "Click on the window to CONTINUE..."
+            # Get the PID and send the CONT signal
+            pid=$(xprop _NET_WM_PID | awk '{print $3}')
+            if [[ -n "$pid" ]]; then
+                kill -CONT "$pid" && echo "Process PID $pid continued."
+            else
+                echo "No window selected or PID not found."
+            fi
+            ;;
+
+        *)
+            # If the argument is anything else, run the REAL xkill command.
+            # 'command' tells the shell to ignore this function and run the actual program.
+            # "$@" passes along all the original arguments.
+            echo "Running original xkill..."
+            command xkill "$@"
+            ;;
+    esac
+}
+
+
+#---------------- Time and dates management ------------------
+
+# espanso:
+# espanso is a text expander you type what's bellow and it expands it. like hotstirngs in ahk basically.
+# ======================
+# for extra aliases to time and management please visit ~/.config/espanso it has a lot of handy
+# things you can type like:
+# ==========================
+# eamples:
+# ========
+# ;;d; --> 2025-12-06_10-29-56 or ;;lm; --> W48 Sat, 06 or ;;24; --> 10:30: or
+# ;;12; --> 10:30:55 AM: or ;;.d; --> 06/12/2025
+# ===========
+# or ;;date; which outputs:
+# ===========
+# 06/12/2025
+# Sat, 06, December
+# 10:33
+#
+#
+#===========
+# or ;;t.cal; -->  while true; do cal -w ; sleep 300; clear; done
+# or ;;t.date; -->  watch -n 1 /home/dex/scripts/my_clock.sh
+
+# very useful for timers this functions is nice and works well with espanso ;;timer; --> echo "\n[ [ON] [] ]\n" ; ]timer
+alias ]timer='_my_timer_func'
+
+# very very good function that helps in tab 6:time/date
+_my_timer_func() {
+  # Print the start time and date
+  date "+%T %a, %d-%m"
+  echo "" # Add a newline
+
+  # Get the starting time in seconds since 1970-01-01
+  local start=$(date +%s)
+  local last_mins=-1 # Initialize with a value that won't match the first minute
+
+  # Loop forever until you press Ctrl+C
+  while true; do
+    # Get the current time and calculate total elapsed seconds
+    local current=$(date +%s)
+    local elapsed=$((current - start))
+
+    # Calculate hours and minutes from total elapsed seconds
+    local hours=$((elapsed / 3600))
+    local mins=$(((elapsed / 60) % 60))
+
+    # Check if the minute has changed since the last time it was printed
+    if [ "$mins" -ne "$last_mins" ]; then
+      # Print the formatted time, using \r to return to the start of the line
+      printf "\r%02d:%02d" $hours $mins
+      # Update the last printed minute
+      last_mins=$mins
+    fi
+
+    # Wait for one second
+    sleep 1
+  done
+}
+
+
+
+
+# --------------------------------------------------------------------
+# ""aliases"" END
+# ---END--------------------------------------------------------------
+
+# Explicitly autoload the Zsh function
+autoload edit-command-line
+
+# Register the Zsh function as a ZLE widget
+zle -N edit-command-line
+
+# --------------------------------------------------------------------
+# ""Enabling editing in nvim with alt+e""
+# ---END--------------------------------------------------------------
+
+# enable color support of ls, less and man, and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    [[ -f ~/.dircolors_cache ]] || dircolors -b > ~/.dircolors_cache
+    source ~/.zsh/dircolors_cache 2>/dev/null || eval "$(dircolors -b)"
+    # test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    #alias dir='dir --color=auto' # Usually covered by ls
+    #alias vdir='vdir --color=auto' # Usually covered by ls -l
+    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+    # Take advantage of $LS_COLORS for completion as well
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+fi
+
+# enable auto-suggestions based on the history
+# ARCH LINUX: Path for zsh-autosuggestions is typically different.
+# Ensure you installed it via: sudo pacman -S zsh-autosuggestions
+ZSH_AUTOSUGGESTIONS_DIR="/usr/share/zsh/plugins/zsh-autosuggestions" # Common Arch path
+if [ -f "$ZSH_AUTOSUGGESTIONS_DIR/zsh-autosuggestions.zsh" ]; then
+    . "$ZSH_AUTOSUGGESTIONS_DIR/zsh-autosuggestions.zsh"
+    # change suggestion color
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999' # This is good, visible but not intrusive
+else
+    # Fallback or warning if not found
+    # echo "Zsh Autosuggestions not found at $ZSH_AUTOSUGGESTIONS_DIR" >&2
+    # You might also check /usr/share/zsh-autosuggestions/ if the above path doesn't work
+    if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+        . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+    fi
+fi
+
+# enable command-not-found if installed
+# ARCH LINUX: Use pkgfile's command-not-found handler
+# Ensure you installed it via: sudo pacman -S pkgfile AND ran sudo pkgfile --update
+if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
+    source /usr/share/doc/pkgfile/command-not-found.zsh
+elif [ -f /usr/share/pkgfile/command-not-found.zsh ]; then # Alternative path for pkgfile hook
+    source /usr/share/pkgfile/command-not-found.zsh
+fi
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+
+#===== custom fzf flags
+
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+# zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' auto-description 'specify: %d'
+# zstyle ':completion:*' completer _expand _complete
+zstyle ':completion:*' format '%d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+
+# make less more friendly for non-text input files, see lesspipe(1)
+# Ensure you have 'lesspipe' installed on Arch: sudo pacman -S lesspipe
+
+# Lesspipe is slow; only run it if we are actually going to use less
+if [ -x /usr/bin/lesspipe ]; then
+    export LESSOPEN="| /usr/bin/lesspipe %s"
+    export LESSCLOSE="/usr/bin/lesspipe %s %s"
+fi
+
+# [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+# This is Debian-specific, can be commented out or removed on Arch if not needed.
+# if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+#     debian_chroot=$(cat /etc/debian_chroot)
+# fi
+
+# ===================================================================
+# ============= NEW DUAL-STYLE PROMPT CONFIGURATION =============
+# ===================================================================
+
+# Load the version control information module
+autoload -Uz vcs_info
+
+# --- Configure vcs_info for Git ---
+# Set the format for the Git prompt string. e.g., " git:(master)"
+zstyle ':vcs_info:git:*' formats ' %F{yellow}git:(%b)%f'
+zstyle ':vcs_info:*' check-for-changes false
+zstyle ':vcs_info:git:*' actionformats ' %F{yellow}git:(%b|%a)%f'
+
+# This adds vcs_info to the functions that run before showing a prompt
+add-zsh-hook precmd vcs_info
+
+
+# --- Main Prompt Configuration Function ---
+configure_prompt() {
+    # This variable will hold the git info, like " git:(master)"
+    local git_info='${vcs_info_msg_0_}'
+
+    case "$PROMPT_ALTERNATIVE" in
+	twoline)
+	    # THE ORIGINAL KALI PROMPT + GIT INFO
+        # This is your full-path, two-line prompt, with Git info added to the end of the first line.
+	    PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$'%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]'
+        PROMPT+="$git_info" # Add git info here
+        PROMPT+=$'\n└─%B${PROMPT_INDICATOR}%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+	    ;;
+	oneline)
+	    # THE PRIMEAGEN-STYLE PROMPT + GIT INFO
+        # This is the short-path, one-line prompt. (%1. = current directory only)
+	    PROMPT=$'%F{green}→%f %F{cyan}%1.%f'
+        PROMPT+="$git_info" # Add git info here
+        PROMPT+=' %F{white}×%f '
+	    ;;
+    esac
+}
+
+
+
+
+
+
+
+
+
+
+
+
+# ======================== END NEW PROMPT CONFIG =======================
+
+# ----- trying to remove capslock stupid letters ----
+
+# caps_lock_noop(){
+#
+# }
+#
+# zle -N caps_lock_noop
+#
+# bindkey "^[[57387u" caps_lock_noop
+# bindkey "^[[57387;2u" caps_lock_noop
+# ----- trying to remove capslock stupid letters END ----
+
+# bindkey "\e[387u" caps_lock_noop
+# bindkey "387u" caps_lock_noop
+# bindkey "\e^[[57387u" caps_lock_noop
+# The following block is surrounded by two delimiters.
+# These delimiters must not be modified. Thanks.
+# START KALI CONFIG VARIABLES
+
+PROMPT_ALTERNATIVE=oneline
+NEWLINE_BEFORE_PROMPT=yes
+# STOP KALI CONFIG VARIABLES
+
+# ===================================================================
+# ============= ZSH SYNTAX HIGHLIGHTING (CORRECT SETUP) =============
+# ===================================================================
+
+# Define the path to the plugin provided by the official Arch Linux package
+ZSH_SYNTAX_HIGHLIGHTING_FILE="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Check if the plugin file actually exists before trying to load it
+if [ -f "$ZSH_SYNTAX_HIGHLIGHTING_FILE" ]; then
+
+    # STEP 1: SOURCE THE PLUGIN. This must happen first.
+    source "$ZSH_SYNTAX_HIGHLIGHTING_FILE"
+
+    # STEP 2: NOW, CONFIGURE THE STYLES.
+    # These settings will apply to the plugin we just loaded above.
+
+    ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+    ZSH_HIGHLIGHT_STYLES[default]=none
+    ZSH_HIGHLIGHT_STYLES[unknown-token]=underline
+    ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
+    ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
+    ZSH_HIGHLIGHT_STYLES[global-alias]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
+    ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold
+    ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=green,underline
+    ZSH_HIGHLIGHT_STYLES[path]=bold
+    ZSH_HIGHLIGHT_STYLES[path_pathseparator]=
+    ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=
+    ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
+    ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue,bold
+    ZSH_HIGHLIGHT_STYLES[command-substitution]=none
+    ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=magenta,bold
+    ZSH_HIGHLIGHT_STYLES[process-substitution]=none
+    ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]=fg=magenta,bold
+    ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=green
+    ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=green
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]=fg=blue,bold
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
+    ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=fg=yellow
+    ZSH_HIGHLIGHT_STYLES[rc-quote]=fg=magenta
+    ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=magenta,bold
+    ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=magenta,bold
+    ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]=fg=magenta,bold
+    ZSH_HIGHLIGHT_STYLES[assign]=none
+    ZSH_HIGHLIGHT_STYLES[redirection]=fg=blue,bold
+    ZSH_HIGHLIGHT_STYLES[named-fd]=none
+    ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
+    ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan
+    ZSH_HIGHLIGHT_STYLES[bracket-error]=fg=red,bold
+    ZSH_HIGHLIGHT_STYLES[bracket-level-1]=fg=blue,bold
+    ZSH_HIGHLIGHT_STYLES[bracket-level-2]=fg=green,bold
+    ZSH_HIGHLIGHT_STYLES[bracket-level-3]=fg=magenta,bold
+    ZSH_HIGHLIGHT_STYLES[bracket-level-4]=fg=yellow,bold
+    ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
+    ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
+
+    # --- THIS IS THE FIX FOR YOUR COMMENT COLOR ---
+    ZSH_HIGHLIGHT_STYLES[comment]=fg=#FFFFFF,bold
+
+fi
+
+# --- END OF ZSH SYNTAX HIGHLIGHTING SETUP ---
+
+
+# if [ "$color_prompt" = yes ]; then
+#     # override default virtualenv indicator in prompt
+#     VIRTUAL_ENV_DISABLE_PROMPT=1
+#
+#     configure_prompt
+#
+#     # enable syntax-highlighting
+#     # ARCH LINUX: Path for zsh-syntax-highlighting is typically different.
+#     # Ensure you installed it via: sudo pacman -S zsh-syntax-highlighting
+#     ZSH_SYNTAX_HIGHLIGHTING_DIR="/usr/share/zsh/plugins/zsh-syntax-highlighting" # Common Arch path
+#     if [ -f "$ZSH_SYNTAX_HIGHLIGHTING_DIR/zsh-syntax-highlighting.zsh" ]; then
+#         . "$ZSH_SYNTAX_HIGHLIGHTING_DIR/zsh-syntax-highlighting.zsh"
+#         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+#         ZSH_HIGHLIGHT_STYLES[default]=none
+#         ZSH_HIGHLIGHT_STYLES[unknown-token]=underline
+#         ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=cyan,bold
+#         ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=green,underline
+#         ZSH_HIGHLIGHT_STYLES[global-alias]=fg=green,bold
+#         ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
+#         ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=blue,bold
+#         ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=green,underline
+#         ZSH_HIGHLIGHT_STYLES[path]=bold
+#         ZSH_HIGHLIGHT_STYLES[path_pathseparator]=
+#         ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]=
+#         ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
+#         ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue,bold
+#         ZSH_HIGHLIGHT_STYLES[command-substitution]=none
+#         ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]=fg=magenta,bold
+#         ZSH_HIGHLIGHT_STYLES[process-substitution]=none
+#         ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]=fg=magenta,bold
+#         ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=green
+#         ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=green
+#         ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+#         ZSH_HIGHLIGHT_STYLES[back-quoted-argument-delimiter]=fg=blue,bold
+#         ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
+#         ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
+#         ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]=fg=yellow
+#         ZSH_HIGHLIGHT_STYLES[rc-quote]=fg=magenta
+#         ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=magenta,bold
+#         ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=magenta,bold
+#         ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]=fg=magenta,bold
+#         ZSH_HIGHLIGHT_STYLES[assign]=none
+#         ZSH_HIGHLIGHT_STYLES[redirection]=fg=blue,bold
+#         ZSH_HIGHLIGHT_STYLES[comment]=fg=#FFFFFF,bold
+#         ZSH_HIGHLIGHT_STYLES[named-fd]=none
+#         ZSH_HIGHLIGHT_STYLES[numeric-fd]=none
+#         ZSH_HIGHLIGHT_STYLES[arg0]=fg=cyan
+#         ZSH_HIGHLIGHT_STYLES[bracket-error]=fg=red,bold
+#         ZSH_HIGHLIGHT_STYLES[bracket-level-1]=fg=blue,bold
+#         ZSH_HIGHLIGHT_STYLES[bracket-level-2]=fg=green,bold
+#         ZSH_HIGHLIGHT_STYLES[bracket-level-3]=fg=magenta,bold
+#         ZSH_HIGHLIGHT_STYLES[bracket-level-4]=fg=yellow,bold
+#         ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
+#         ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
+#     else
+#         # Fallback or warning if not found
+#         # echo "Zsh Syntax Highlighting not found at $ZSH_SYNTAX_HIGHLIGHTING_DIR" >&2
+#         # You might also check /usr/share/zsh-syntax-highlighting/ if the above path doesn't work
+#         if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+#              . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#              # Apply styles here too if using this fallback
+#         fi
+#     fi
+# else
+#     PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) ' # This prompt is used if no color. debian_chroot can be removed.
+# fi
+unset color_prompt force_color_prompt
+
+toggle_oneline_prompt(){
+    if [ "$PROMPT_ALTERNATIVE" = oneline ]; then
+        PROMPT_ALTERNATIVE=twoline
+    else
+        PROMPT_ALTERNATIVE=oneline
+    fi
+    configure_prompt
+    zle reset-prompt
+}
+zle -N toggle_oneline_prompt
+bindkey ^P toggle_oneline_prompt # Ctrl+P to toggle prompt style
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty|kitty) # Added kitty
+    TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
+    ;;
+*)
+    ;;
+esac
+
+# precmd() {
+#     # Print the previously configured title
+#     print -Pnr -- "$TERM_TITLE"
+#
+#     # Print a new line before the prompt, but only if it is not the first line
+#     if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
+#         if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
+#             _NEW_LINE_BEFORE_PROMPT=1
+#         else
+#             print ""
+#         fi
+#     fi
+# }
+
+_zsh_precmd_actions() {
+    # Print the previously configured title
+    print -Pnr -- "$TERM_TITLE"
+
+    # Print a new line before the prompt, but only if it is not the first line
+    if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
+        if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
+            _NEW_LINE_BEFORE_PROMPT=1
+        else
+            print ""
+        fi
+    fi
+}
+add-zsh-hook precmd _zsh_precmd_actions
+
+
+# You can add any of your personal aliases or functions below this line
+
+# 1. Free up Ctrl+R completely by unbinding it from both modes.
+bindkey -r -M viins '^R' # Unbind from INSERT mode
+bindkey -r -M vicmd '^R' # Unbind from NORMAL mode (This was the missing piece!)
+
+# 2. Bind Alt+R to the FZF history widget in BOTH modes.
+bindkey -M viins '\er' fzf-history-widget # Bind for INSERT mode
+bindkey -M vicmd '\er' fzf-history-widget # Bind for NORMAL mode
+
+
+
+# 3. Bind Ctrl+R to the native `redo` command, but ONLY in normal mode.
+bindkey -M vicmd '^R' redo
+# ---- functions i made with ai asstantce ----
+
+#------------------------------------------------------------------
+#  SMART "FZF OPEN" AND "FZF PREVIEW" FUNCTIONS
+#------------------------------------------------------------------
+
+
+
+
+# _cat:
+#
+# Kcat --- uses _get_clip and displays content of current clipboard on temrinal
+source $HOME/.config/zsh/functions/_cat
+
+
+# _cat:
+#
+# Gclip --- Grep
+#
+# Vclip
+#
+source $HOME/.config/zsh/functions/_clip
+
+# ---[FUNCTIONS]-- [ myfuncs ] [ my functions] ---------
+
+# --------------------------------------------------------------------
+#  Alacritty Dynamic Window Title
+#  This code tells Zsh to update the terminal title automatically.
+# --------------------------------------------------------------------
+
+# This function runs just BEFORE a command is executed.
+# It sets the title to the command being run.
+alacritty_preexec() {
+  # \e]0; is the "start setting title" command.
+  # $1 is the first argument, which is the command itself.
+  # \a is the "finish setting title" command.
+  print -Pn "\e]0;$1\a"
+}
+
+# This function runs just BEFORE the prompt is displayed (i.e., after a command finishes).
+# It resets the title to the current directory.
+alacritty_precmd() {
+  # %~ is Zsh's special character for the current path (e.g., ~/Code/project).
+  print -Pn "\e]0;%~\a"
+}
+
+# Add our functions to Zsh's hook arrays.
+# This tells Zsh to actually run them at the right times.
+if [[ "$TERM" == "alacritty" ]]; then
+  add-zsh-hook preexec alacritty_preexec
+  add-zsh-hook precmd alacritty_precmd
+fi
+
+# trying to memic the service command in kali linux.
+# meh just use systemctl it's not like you use it all the time
+service() {
+    if [ "$2" == "status" ]; then
+        systemctl status "$1"
+    else
+        sudo systemctl "$2" "$1"
+    fi
+}
+
+##---Things to Consider deleting the following:--------------
+
+# this is stupid but it uses obsidian-cli but I don't use it
+# obcd() {
+#     local result=$(obsidian-cli print-default --path-only)
+#     [ -n "$result" ] && cd -- "$result"
+# }
+
+
+# Smart functions to control the phone screen via ADB
+# They automatically find the device serial for the specified IP.
+
+phoneWakeup() {
+  # Find the device serial (IP:PORT) for your phone's static IP
+  local device_serial
+  device_serial=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
+
+  # Check if the device was found
+  if [ -z "$device_serial" ]; then
+    echo "Error: Phone with IP 192.168.11.118 not found."
+    echo "Is it connected via 'adb connect'?"
+    return 1 # Return with an error code
+  fi
+
+  # Send the command to the found device
+  echo "Waking up device: $device_serial"
+  adb -s "$device_serial" shell input keyevent KEYCODE_WAKEUP
+}
+
+phoneSleep() {
+  # Find the device serial (IP:PORT) for your phone's static IP
+  local device_serial
+  device_serial=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
+
+  # Check if the device was found
+  if [ -z "$device_serial" ]; then
+    echo "Error: Phone with IP 192.168.11.118 not found."
+    echo "Is it connected via 'adb connect'?"
+    return 1 # Return with an error code
+  fi
+
+  # Send the command to the found device
+  echo "Putting device to sleep: $device_serial"
+  adb -s "$device_serial" shell input keyevent KEYCODE_SLEEP
+}
+
+# Add this function to your ~/.bashrc or ~/.zshrc file
+# Add this function to your ~/.bashrc or ~/.zshrc file
+rr() {
+    echo "Please select the window or region you want to stream..."
+    local selection=$(slop -f "%x %y %w %h")
+
+    if [ -z "$selection" ]; then
+        echo "No region selected. Aborting."
+        return 1
+    fi
+
+    read -r x y w h <<< "$selection"
+
+    echo "Streaming region: Width=$w, Height=$h at position ($x, $y)"
+
+    ffplay -fflags nobuffer -flags low_delay -framedrop \
+           -hwaccel vaapi \
+           -f x11grab \
+           -framerate 30 \
+           -video_size "${w}x${h}" \
+           -i ":0.0+${x},${y}" \
+           -noborder \
+           -alwaysontop \
+           -window_title "Spy Cam"
+}
+
+# Name it something different to keep your original
+# Spy on a specific window, even across virtual desktops.
+
+rr_medium() {
+    local selection=$(slop -f "%x %y %w %h")
+    if [ -z "$selection" ]; then
+        echo "No region selected. Aborting."
+        return 1
+    fi
+
+    read -r x y w h <<< "$selection"
+
+    ffplay -f x11grab -video_size ${w}x${h} -i ":0.0+${x},${y}" \
+           -fflags nobuffer -flags low_delay -framedrop \
+           -framerate 30 -noborder -alwaysontop \
+           -window_title "Live Preview"
+}
+
+rr_light() {
+    local selection=$(slop -f "%x %y %w %h")
+    if [ -z "$selection" ]; then
+        echo "No region selected. Aborting."
+        return 1
+    fi
+
+    read -r x y w h <<< "$selection"
+
+    ffplay -f x11grab -video_size ${w}x${h} -i ":0.0+${x},${y}" \
+           -framerate 8 -noborder -alwaysontop \
+           -window_title "Light Preview" \
+           -x ${w} -y ${h}
+}
+
+
+# This stupid Ecat copies everything including images and shit trash data mumbo jumpboo
+# alias Ecat="cat **/*(.) | xclip -selection clipboard"
+
+# I just made an Ecat(){} function bellow check it out... otherwise this command I think is better. Havne't tested it yet. I used to use the mumbo jumbo Ecat one above this one
+# alias Ecat="cat **/*(.)~*.(jpg|jpeg|png|gif|bmp|mp3|mp4|zip|rar|gz|tgz|bz2|iso|exe|dll|pdf|odt|docx|xlsx) | xclip -selection clipboard"
+
+Ecat() {
+  local files
+  # Find all regular files recursively
+  files=(**/*(.))
+
+  for f in "${files[@]}"; do
+    # Check the mime-type. If it starts with 'text/', print the content.
+    if [[ $(file -b --mime-type "$f") == text/* ]]; then
+      cat "$f"
+    fi
+  done | xclip -selection clipboard
+}
+
+# autoload -U compinit
+# if [ -n "$HOME/.cache/zcompdump"(.om[1]) ]; then
+#   compinit -i -U -d "$HOME/.cache/zcompdump"
+# else
+#   # If the file doesn't exist, create it. -C stops it from reading .zshrc files
+#   compinit -i -C -U -d "$HOME/.cache/zcompdump"
+# fi
+
+# Faster compinit (Only checks for new commands once a day)
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
+compdef _files cat
+
+# 1. Set the PROMPT variable using our function
+configure_prompt
+
+
+# --- Deno Setup ---
+# If a local deno folder exists, add it to PATH and source env if it exists
+# if [ -d "$HOME/.deno" ]; then
+#     export DENO_INSTALL="$HOME/.deno"
+#     export PATH="$DENO_INSTALL/bin:$PATH"
+#     [ -f "$DENO_INSTALL/env" ] && . "$DENO_INSTALL/env"
+# fi
+
+# --- Cargo/Rust Setup ---
+# If a local cargo folder exists, source the env file
+# if [ -f "$HOME/.cargo/env" ]; then
+#     . "$HOME/.cargo/env"
+# else
+#     # If no env file, at least ensure the local bin is in PATH
+#     # for 'cargo install' packages
+#     export PATH="$HOME/.cargo/bin:$PATH"
+# fi
+
+# --- Envman Setup ---
+# [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=PCSX2
+Exec=/home/dex/Applications/pcsx2.AppImage
+Terminal=false
+Type=Application
+Icon=controller
+Categories=Game;Emulator;

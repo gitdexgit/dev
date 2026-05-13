@@ -1,0 +1,2020 @@
+# /etc/keyd/default.conf
+
+# are you ?
+# # Hello friend
+
+# ------------------------------------
+
+# are you ?
+# Readme.md:
+
+# Ok so I think the idea of q=swap(extend) is not working because I have like capslock
+# as an extra modifier. espace too as an extra modifier. right alt as an extra modifier
+# and space as an extra modifier too... so my best bet is to use oneshots effeciintly
+# and to just remove my hand from the thing. or sometimes don't make like you know
+# like right alt shouldn't have anyting to do with win_shoftcut Thing for activating 
+# windows right? so like yeah dedicate proper shit to proper stuff... and soo yeah.
+
+
+# DO:
+
+## This is an idea to make q=swap(extend) universal... kinda
+# - [ ] Wait, it's possible to make every modifier in [main] that is significant like ca
+# psloc and space and rightalt and escape has it's own swap escape back to q... default 
+# like [extend]... like when you swap to a layer and return to the main one in capslock 
+# with q=swap(extend)... right... but it gets ..... Anyways... what I want to do is. 
+# let's say, [like_extend] the swaps I make a new copy of the swaps. and just change the
+# q=swap(extend) to q=swap(like_extend)... and that's it. I'll have doublicates but it 
+# should work. this way I can maintain the swap thing and make q universal exit
+
+
+# Suggetions:
+# - idk for now, maybe clean up this config it's too big and repititave and most things
+# I don't really use tbh
+
+# - well I have q=swap(extned) right... I can make like ] or another key for space for s
+# wap back to space thing... idk... tbh Ideally capslock and space should be the same...
+# really? should they ? i'm not sure tbh... idk this needs more work... and like Obsidian
+
+# like I should ask questions why do it this way and not everything in one key idk
+
+
+
+# Sidenote: 
+
+## side note if you plug your red keyboard it won't work here. to make it work here you need to put it's keycode in here.
+
+## but why put it's keycode here? unless keyd can make the 2nd keyboard act
+
+## differently ike AHK interception, I'm not planing to write using the 2nd keyboard. soyeah.
+
+## just trying to increase optins and know how to achieve AHK interception on linux I guess 
+
+
+# --------------------------------------- 
+
+[ids]
+
+
+248a:00da
+0001:0001
+
+
+
+[global]
+
+# very important
+overload_tap_timeout = 188
+
+# very important 
+# tried 500 it's good for typing fast umm I think I like 525 more I don't like 650
+oneshot_timeout = 565
+
+[main]
+
+# main ones
+## I like the idea of putting timer next to it 
+# seems like around 126~138 is a good amount for this capslock key I think. because
+# capslock has to be fast and I have to like be like respect it. I have to click it fast
+# I think the best is like 129 or 121 you know I gotta get that muscle memory going 
+# capslock = overloadt(extend, escape, 135)
+
+## You know what
+# I think it's better to make capslock have no timer I think this is the play because
+# it's like a separate modifier by itself so yeah
+capslock = overload(extend, escape)
+
+
+
+
+# 225 is kinda not fast enough ? idk maybe I need 205
+# I think 188 should be good I just you know hit space fast just remember to hit space fast 
+space = overloadt(space_extra, space, 192)
+
+# This needs more work and thinking... because I never hit escape most of the time if I want to escape I just tap capslock. so should I get rid of escape and make escape like a oneshot or something idk... or not care about it
+escape = overload(escape_extend, escape)
+
+
+# They are alright for now.
+# I'm making a lot of mistakes maybe the umm the oneshot(shift) thing is kinda meh
+# or maybe I just need to practice with some type racer or something idk man I gotta
+# trust the system and just get good I gues
+leftshift = overload(shift,oneshot(shift))
+rightshift = overload(shift,oneshot(shift))
+leftmeta = overload(meta,oneshot(meta))
+leftalt = overload(alt,oneshot(space_extra))
+leftcontrol = overload(control,oneshot(control))
+rightmeta = overload(meta,oneshot(rightalt_extra))
+
+# for this I want it like idk we will see what's up
+
+
+
+
+# this is meh tbh
+# rightmeta = rightcontrol
+
+# this is the good one
+# rightalt = rightshift
+
+# Do I even use this at all ? 
+# rightalt+space = layer(rightalt_extra)
+
+
+# but I'll try this for now
+rightalt = overload(rightalt_extra, oneshot(rightalt_extra))
+# rightalt = overloadt(rightalt_extra, space, 188)
+# rightalt = overload(rightalt_extra, oneshot(rightalt_extra))
+# compose = overload(rightalt_space, oneshot(rightalt_space))
+# # what even the point of this man ? lol ? I should make it useful or something
+# rightcontrol = rightalt
+# rightcontrol = overload(rightalt_space, oneshot(rightalt_space))
+# I don't know if I use this at all lol
+# leftalt+rightalt = layer(rightalt_extra)
+# rightshift = backspace
+# rightshift = rightshift
+# doesn't work well with mouse clicks. I think. maybe I need to add like mouse2 mouse1 idk
+# why? because alt+mouse drag hit's backspace for some reason when I release 
+# the overloadt with 85 helps but not the best
+# leftalt = overloadt(alt, backspace, 085)
+# this is alright for now. it makes my thumbs reach control
+
+# Why even bother with escape on compose lol ? I mean it makes sense for skippy-xd and shit but like really? 
+# compose = escape
+
+# this is alright, I don't use it but, just incase I need rightalt's keycode and also
+# for another way to hit alt with right hand. because of above remaps
+
+# this is alright for now, because I changed rightmeta. maybe oneshot() this would
+# be better. but i'm not sure
+
+
+
+# leftalt+rightalt = layer(rightalt)
+#2 --- Ideas ---- 
+#just some ideas for [main] section. Maybe in the future to help improve the ergonomic project
+
+
+# --- potential layer() mappings ---- 
+
+# why do I need to do this ?
+# umm this where like my rightshift inside the xdotool will be interesting to use
+# but I know the problem with --clearmodifiers let's just work slowly and see what's
+# gonna happen in the future 
+# rightalt = layer(rightshift)
+
+
+
+# this is another option instead of rightshift to have meta really close to your
+# thumb for ease of use but I still value shift more I think.. for now
+# rightalt = rightmeta
+
+# leftmeta = rightmeta
+# leftmeta = rightmeta
+
+
+
+
+# This is not perfect the layer(rightshift) will kill the keycose I won't be able to
+# see it sadly no [alt] or no [rightalt] is provided and so. if I want to make it 
+# like [alt] in which in that section there is apostrophe = " I would have to make a
+# whole layer sadly and I tried other things... but who knows maybe in the future I 
+# will know a fix ? i'm not sure
+# rightalt = layer(rightshift)
+
+# this kinda solves it but I don't want rightalt to be leftalt
+# rightalt = layer(alt)
+
+
+# ----- This is how you hit 2 keys at the same time for extra options ----
+# just learned this today W32 Sat, 16 at 14:51 it actually works
+
+
+# wow this is also valid but it has to be hit really fast
+# leftalt+p = "
+
+
+
+# --- this is how to make a leader ---- 
+# just learned this today W32 Sat, 16 at 14:52
+# it's very useful for nvim similar things. also could extend it's functionality with
+# sxhdk 
+
+
+# rightalt = oneshot(shift)
+
+# leftshift = oneshot(shift)
+# rightshift = oneshot(shift)
+
+# compose = oneshot(meta)
+
+## btw just a side note this --> `rightalt = overload(oneshot(shift), noop)` is stupid and doesn't work
+
+## a side note don't do `leftalt = layer(alt)` it's the default anywher. it's in here but you can't see it. it's default
+
+
+# just exploring 
+# rightalt = oneshot(symbols)
+# control = oneshot(control)
+# rightmeta = oneshot(control)
+
+
+
+
+
+# --- other unsuded keys to potentially be used in the future for something ? --- 
+
+# homepage = overload(extend_homepage, escape)
+
+# calc = overload(extend_calc, escape)
+
+# mail = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/alacrity_F2_tmuxSeachMove_withTmuxSesionizer.sh)
+
+# documents = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty)
+
+
+# these work and just learning and testing for fun, you can also use keyd monitor and hit them
+# to find what they are called and map them and what not
+# nextsong = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex)
+#
+# previoussong = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex)
+#
+# playpause = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex)
+#
+
+#2 END--- Ideas END---- 
+
+# END------ Keys END-------
+
+
+# --------------- Capslock ----------------
+
+[extend]
+
+# with swap we are sacrifcing these buttons but maybe we can do like fake_all with like 
+# almost full button access
+# dot = swap(fake_control
+g = swap(window_management)
+w = swap(select_mode)
+w = C-w
+v = swap(select_mode)
+r = swap(win_shift_shortcut)
+
+# For some reason this doens't work
+space = overload(extend+alt, space)
+
+# I don't think I like this, I just like meta to be meta so we trigger extend+meta.
+# I know that my right meta does meta
+#leftmeta = oneshot(win_shift_shortcut)
+
+rightalt = overload(win_shift_shortcut, capslock)
+
+rightmeta = overload(meta, enter)
+
+# This is smart this way if you want a lot of enters just hit fking Enter
+rightshift = capslock
+
+
+
+
+
+# --- W37 Fri, 12 at 07:33 New changs
+# this is kinda meh but idk could be useful really useful i'm not sure
+# leftalt = macro(C-S-M-A-tab)
+rightbrace = pagedown
+leftbrace = pageup
+
+# rightalt = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool key Alt_R+Tab)
+# rightalt = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh skippy-xd --switch --next)
+# rightalt = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh skippy-xd --switch --pivot Alt_L --next --config ~/.config/skippy-xd/skippy-xd.rc)
+
+# This is for termux Prefix... 
+s = C-s
+
+
+
+# rightcontrol = g
+# rightmeta = g
+# menu = leftcontrol
+# w = overload(control, fake_control)
+
+# q = leftshift
+
+# making this my exit key from any like layer within extend.
+# I could also make it escape too it's an alright thing too. 
+# or I could maybe make it more useful but nah
+q = noop
+
+# leftbrace = swap(fake_shift)
+
+#let's screw around here a bit W32 Tue, 12 at 15:09
+
+# space = leftalt
+# space = overload(alt, space)
+
+# leftalt = leftcontrol
+# leftalt = overload(control, escape)
+
+# probably use thise for a oneshot or something like layer 
+compose = calc
+
+# rightalt = leftshift
+
+# shit is an interesting key, to try different things on it 
+# rightalt = overload(select_mode, capslock)
+
+# probably make this a oneshot or layer maybe i'm not sure 
+# rightmeta = rightmeta
+
+
+# --- NEW POWER-KEY 'Q' ---
+# This is a huge upgrade.
+# Hold capslock + HOLD 'q' -> acts as Alt key.
+# Hold capslock + TAP 'q' -> sends Escape.
+# d = overload(alt, escape)
+
+# 1 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh)
+1 = M-q
+
+# 2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_win_w_current_desktop_windows.sh)
+2 = M-w
+
+# 3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh dolphin)
+3 = M-e
+
+# 4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh rofi -show run)
+4 = M-r
+
+6 = A-f3
+
+# 6 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak)
+7 = M-C-S-w
+
+# make window always on top, using the window manager
+# f1 = M-f
+
+# f2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sticky_window_toggle)
+#
+# f3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+
+# minus = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+# equal = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+equal = M-equal
+minus = M-minus
+
+f4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+
+
+# --- YOUR MACRO (MOVED & IMPROVED) ---
+# Since 'd' is now the Meta key, I've moved your "select and delete" macro to 'g'.
+# It's right next to your home row and easy to press.
+
+
+# t = command(machinectl shell dex@ /usr/bin//usr/bin/alacritty --working-directory /home/dex)
+# t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex)
+
+t = macro(C-A-t)
+
+
+# o = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_next_line.sh)
+o =  
+
+# --- YOUR NAVIGATION (PRESERVED & ENHANCED) ---
+# Your core vim-style arrow keys are preserved.
+h = left
+j = down
+k = up
+l = right
+
+# I've adopted the more standard 'u' and 'o' for line navigation from the Extend example.
+# This frees up your number keys.
+u = C-u
+
+# I have this in like space_extra but like I gotta figure this shit out man 
+# v = pagedown
+
+# bro for this just use the typical ctrl+y no big deal
+# r = C-y
+
+c = M-c
+5 = A-f2
+y = C-c
+p = C-v
+0 = home
+
+e = end
+a = home
+
+# --- YOUR WORD-WISE NAVIGATION (PRESERVED) ---
+# These are great, and they don't conflict. They now work with the new home row mods!
+# e.g., hold capslock+s+b to do Shift+Ctrl+Left (select word).
+f = C-right
+b = C-left
+# --- POWERFUL NEW KEYS FROM THE EXTEND LAYER ---
+# These are huge quality-of-life improvements.
+
+# To let you toggle the *real* Caps Lock function, we'll map it to 'c'.
+# Hold capslock and tap 'c' to turn on actual CAPS LOCK.
+# rightbrace = escape
+# leftalt = M-grave
+# this is repitive
+semicolon = backspace
+apostrophe = macro(")
+comma = macro(C-S-M-A-tab)
+# d = delete
+d = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete.sh)  
+n = space
+# Don't enter with m fuck it just enter with right shift. but like what do I do with m? 
+# I mean enter with M is a love effort m
+m = enter
+
+i = tab
+# for alt-tab to swtich windows
+comma = macro(C-S-M-A-tab)
+# to seel all windows with skippy-xd toggle
+dot = mail
+# To only select windows with the same cals on the current monitor
+slash = homepage
+
+## I need one where it shows both monitors same window class... but like I can just use mouse right... i'm not sure
+# To only select windows with the same cals on the current monitor
+# LIKE_slash = homepage
+
+# To only select windows with the same cals on all monitors and virtual desktops
+tab = file
+
+# n = swap(nearby_symbols)
+
+# x = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete.sh)
+x = delete
+
+
+
+# space = swap(vim_mode)
+
+# tab = swap(space2
+
+# this is for sxhkd, to reload it do pkill -USR1 -x sxhkd and run it again I think. 
+# you can find the config in # ~/.config/sxhkd/sxhkdrc
+# this sxhkd is like you know c+x c+f you know it's a like you hit
+# and it waits and listens for the next key then depending on the
+# next key it will do something. I wonder if I can trigger it with
+# other tools that are not keyd like xbindkeys... probably.
+# t = M-A-S-c 
+
+# w = M-A-S-c 
+
+
+grave = M-A-S-c
+
+# This is an old thing I should remove it... the idea is nice it's like vimium everything it's like
+# the window picker on nvim but it's hard to make it work on linux
+# grave = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/hint-focus.py)
+# grave = layer(win_shift_shortcut)
+
+
+
+# !!!!!!!!! I HAVE space = swap(vim_mode) BUT WHATA ABOUT layer(hypr) we can test like t = layer(hypr) !!!!!!!!
+# --- SPECIAL LAYER KEY ---
+# This is the new way to access your "hyper" shortcuts.
+# Hold CapsLock and press 'e' to temporarily switch to the [hyper] layer.
+# t = layer(hyper)
+
+# !!!!!!!!! I HAVE space = swap(vim_mode) BUT WHATA ABOUT layer(hypr) we can test like t = layer(hypr) !!!!!!!!
+
+# --- OTHER BINDINGS PRESERVED ---
+# z = C-z
+# x = delete      # This is fine, but redundant since ';' is now also delete. Your choice.
+# v = C-v
+# y = C-c       
+
+
+
+
+
+[extend+control]
+# I don't know about this control bs... 
+
+# I need contrl+hjkl I think
+# k = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete_end_of_line.sh)
+
+# u = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete_home_of_line.sh)
+
+
+
+
+[extend+shift]
+# This could be really useful because I have like rightshfit
+# I could also make it like enter it via a layer
+
+q = layer(extend)
+
+
+
+
+# o = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_next_line_up.sh)
+
+# 2 = @
+# doesn't work 3 = # even if you do  3 = # it's a physical keyboard issue, maybe with no holding q or hold capslock+shfit
+# 4 = $
+# e = end
+# g = pagedown
+# x = backspace
+# d = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete.sh)
+
+
+[alt]
+
+
+
+
+capslock = mail
+
+[alt_extend]
+
+
+
+
+# I use this a lot
+# double tap alt for quick alt switch to previous window
+leftalt = macro(C-S-M-A-tab)
+
+rightshift = backspace
+rightalt = toggle(rightalt_extra)
+leftshift = space 
+
+#first row
+q = Q
+w = W 
+e = E
+r = R
+t = T
+y = Y
+u = U
+i = I
+o = O
+p = P
+[ = {
+] = }
+
+#numbers row
+` = ~
+1 = !
+2 = @
+3 = #
+4 = $
+5 = %
+6 = ^
+7 = &
+8 = *
+9 = (
+0 = )
+- = _
+= = +
+
+#second row
+a = A
+s = S
+d = D
+f = F
+g = G
+h = H
+j = J
+k = K
+l = L
+; = :
+' = "
+\ = |
+
+#third row
+z = Z
+x = X
+c = C
+v = V
+b = B
+n = N
+m = M
+, = <
+. = >
+/ = ?
+
+
+
+
+[extend+alt]
+
+
+
+# Your core vim-style arrow keys are preserved.
+h = A-left
+j = A-down
+k = A-up
+l = A-right
+
+# I've adopted the more standard 'u' and 'o' for line navigation from the Extend example.
+# This frees up your number keys.
+u = M-A-S-c
+v = pageup
+r = C-y
+y = C-c
+# p = C-v
+# 0 = home
+# e = end
+# i = tab
+# a = C-a
+# b = C-b
+# p = macro(~/)
+# o = \
+# n = /
+rightbrace = A-pageup
+backslash = A-pagedown
+leftbrace = C-backspace
+# apostrophe = C-w
+
+
+# the p = macro(~/) is the same thing right... it sends text right and faster and better than doing it in a script this way 
+# p = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sending_theHomeDir_symbole.sh)
+
+
+## Window stuff
+
+# move window to the next monitor
+1 = M-S-C-A-z
+
+# toggles always on top 
+2 = M-S-A-C-f  
+
+# toggles sticky windows 
+3 = macro(M-kpdot)
+
+# toggles dicoration
+4 = M-S-C-d
+
+# windows manipulation
+
+# close window
+# c = M-c
+
+# pin window to all distops
+s = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sticky_window_toggle)
+
+# o = (
+
+## copyq
+# copyq's tool tip.... probably better than the stupid cpaslock+u+qwerty but whatever hehehe
+c = M-v
+
+# temrinal
+
+# open terminal with tmux-sesionizer C-f for searching through tmux sessions
+# t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/alacrity_F2_tmuxSeachMove_withTmuxSesionizer.sh)
+t = macro(C-A-S-t)
+
+
+
+
+d = C-delete
+# slash = C-delete
+backspace = C-backspace
+semicolon = C-backspace
+# comma = escape
+# n = space
+# m = enter
+# dot = tab
+    
+
+apostrophe = macro(")
+
+
+
+f = macro(M-C-A-f)
+
+g = macro(M-C-S-g)
+
+
+
+# END--------------- Capslock END----------------
+
+
+[select_mode_space]
+
+
+
+q = swap(space_extra)
+# dot = swap(extend)
+# w = swap(extend)
+
+# v = pagedown
+
+
+
+# --- Selection Movement ---
+# Your standard navigation keys now automatically apply Shift.
+h = S-left
+j = S-down
+k = S-up
+l = S-right
+
+# Word-wise selection
+w = C-S-right
+b = C-S-left
+
+# Line-wise selection
+# 'e' for End of line, 'a' for Ahead (start) of line
+e = S-end
+a = S-home
+
+# Full line selection macro
+x = macro(Home S-End)
+
+# --- Actions on Selection ---
+# Use single, mnemonic keys to act on what you've just selected.
+y = C-c
+d = C-x
+p = C-v
+c = C-c
+
+
+
+
+
+
+
+
+# --[]--- Space ----------------
+[space_extra]
+
+
+# This is capslock because this is [like_extend] which is works using space
+# capslock = overloadt(space_extra_caps, escape)
+
+capslock = layer(space_extra_caps)
+# capslock = enter
+rightshift = backspace
+# with swap we are sacrifcing these buttons but maybe we can do like fake_all with like 
+# almost full button access
+# dot = swap(fake_control
+# t = swap(window_management_space)
+# s = oneshot(shift)
+
+
+
+
+# _)
+# W40 Tue, 30 at 10:04
+# ---START------------------------------------------------------------
+# ""tmux prefix""
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# Solution?:
+
+# --------------------------------------------------------------------
+
+# this is for tmux I can make this even smarter to make it a perma like tmux where everything
+# i hit is followed by a control right after the prefix right? that would be sick so I don't have
+# to keep hitting space over and over 
+w = C-s
+
+
+# --------------------------------------------------------------------
+# ""tmux prefix""
+# ---END--------------------------------------------------------------
+
+
+
+
+
+
+
+# Makes sense for visual mode instead of W = C-a but I don't use this bs yet
+# v = swap(select_mode_space)
+e = swap(space_extra_caps)
+q = noop
+# r = swap(win_shift_shortcut)
+r = overload(rightalt_extra, oneshot(rightalt_extra))
+
+# I don't think I like this, I just like meta to be meta so we trigger extend+meta.
+# I know that my right meta does meta
+#leftmeta = oneshot(win_shift_shortcut)
+
+# rightalt = overloadt(win_shift_shortcut, capslock, 188)
+rightalt = enter
+
+rightmeta = toggle(rightalt_extra)
+
+rightshift = sackspace
+leftshift = space
+
+
+
+
+# --- W37 Fri, 12 at 07:33 New changs
+# this is kinda meh but idk could be useful really useful i'm not sure
+# I do capslock + comma and I want it to stay that way I think
+# leftalt = macro(C-S-M-A-tab)
+leftalt = macro(C-S-M-A-tab)
+
+
+# -- grave+space already does this man ? 
+# rightbrace = M-grave
+
+
+
+# -- just thinking of ways to delete stuff 
+# leftbrace and right brace should be pageup and pagedown no? and v would be visual mode or something
+# leftbrace = C-w
+# -- I think this is way better 
+# w = C-w
+
+
+# rightalt = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool key Alt_R+Tab)
+# rightalt = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh skippy-xd --switch --next)
+# rightalt = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh skippy-xd --switch --pivot Alt_L --next --config ~/.config/skippy-xd/skippy-xd.rc)
+
+# This is for termux Prefix... 
+# s = C-s
+
+
+
+# rightcontrol = g
+# rightmeta = g
+# menu = leftcontrol
+# w = overload(control, fake_control)
+
+# q = leftshift
+
+# making this my exit key from any like layer within extend.
+# I could also make it escape too it's an alright thing too. 
+# or I could maybe make it more useful but nah
+q = noop
+
+# leftbrace = swap(fake_shift)
+
+#let's screw around here a bit W32 Tue, 12 at 15:09
+
+# space = leftalt
+# space = overload(alt, space)
+
+
+# leftalt = leftcontrol
+# leftalt = overload(control, escape)
+
+# probably use thise for a oneshot or something like layer 
+compose = calc
+
+# rightalt = leftshift
+
+# shit is an interesting key, to try different things on it 
+# rightalt = overload(select_mode, capslock)
+
+# probably make this a oneshot or layer maybe i'm not sure 
+# rightmeta = rightmeta
+
+
+# --- NEW POWER-KEY 'Q' ---
+# This is a huge upgrade.
+# Hold capslock + HOLD 'q' -> acts as Alt key.
+# Hold capslock + TAP 'q' -> sends Escape.
+# d = overload(alt, escape)
+
+
+
+# 1 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh)
+#
+# 2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_win_w_current_desktop_windows.sh)
+#
+# 3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh dolphin)
+#
+# 4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh rofi -show run)
+#
+# 6 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak)
+
+# make window always on top, using the window manager
+f1 = M-f
+
+f2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sticky_window_toggle)
+
+f3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+
+# minus = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+# equal = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+equal = M-equal
+minus = M-minus
+
+f4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+
+# --- YOUR MACRO (MOVED & IMPROVED) ---
+# Since 'd' is now the Meta key, I've moved your "select and delete" macro to 'g'.
+# It's right next to your home row and easy to press.
+
+
+# t = command(machinectl shell dex@ /usr/bin//usr/bin/alacritty --working-directory /home/dex)
+# t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex)
+
+# don't launch terminal in space I don't like it 
+# t = macro(C-A-t)
+# t = macro(C-A-t)
+
+
+
+# o = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_next_line.sh)
+
+# --- POWERFUL NEW KEYS FROM THE EXTEND LAYER ---
+# These are huge quality-of-life improvements.
+
+
+# b = f8
+# c = backspace
+# z = macro(C-S-M-A-tab)
+
+
+
+# --- YOUR NAVIGATION (PRESERVED & ENHANCED) ---
+# Your core vim-style arrow keys are preserved.
+# u = 7
+# i = 8
+
+j = 7
+k = 8
+l = 9
+semicolon = 0
+# semicolon = backspace
+# semicolon = 0
+
+f = 4
+d = 3
+s = 2
+a = 1
+g = 5
+h = 6
+
+u = ~
+[ = +
+] = _
+p = =
+apostrophe = -
+\ = =
+
+
+
+# i = /
+# o = *
+
+n = space
+
+# h = backspace
+# h = 0
+# p = 0
+# m = enter
+
+x = delete
+# comma = 2
+# dot = 3
+
+
+
+# I've adopted the more standard 'u' and 'o' for line navigation from the Extend example.
+# This frees up your number keys.
+# u = C-z
+# v = pagedown
+v = M-v
+
+# bro for this just use the typical ctrl+y no big deal
+# r = C-y
+
+c = M-c
+# 5 = A-f2
+
+# let's try these but to be honest I think only having them on capslock is the play 
+y = C-c
+# p = C-v
+
+# I'm too used to e and a man screw 0 and $ they are too far and give trouble
+# 0 = home
+
+# e = end
+# a = home
+
+
+
+# To let you toggle the *real* Caps Lock function, we'll map it to 'c'.
+# Hold capslock and tap 'c' to turn on actual CAPS LOCK.
+# rightbrace = escape
+# leftbrace = backspace
+# this is repitive
+# apostrophe = backspace
+
+
+# I find myself making a lot of mistakes with this tbh
+# Because I do hit the apostrophe key alot with space. and I end up with I"m maybe that's not a bad thing and I should just 
+# make a trigger replace for i"m and I"m
+
+## I get it yeah yeah removing it is the way 
+# apostrophe = macro(")
+
+# This is space_extend... I don't need this 
+# I think I need this I'll try it for now... I want this universal comma with things and what not seems a nice thing to have
+comma = macro(C-S-M-A-tab)
+# d = delete
+# n = space
+# Don't enter with m fuck it just enter with right shift. but like what do I do with m? 
+# I mean enter with M is a love effort m
+# m = enter
+
+
+# space = swap(vim_mode)
+
+# tab = escape
+# tab = swap(space2
+                                                
+
+
+
+
+
+
+
+
+# this is a low effort 
+# i = A-tab
+# i = homepage
+# dot = mail
+# slash = homepage
+# n = swap(nearby_symbols)
+
+# x = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete.sh)
+
+
+
+
+# this is for sxhkd, to reload it do pkill -USR1 -x sxhkd and run it again I think. 
+# you can find the config in # ~/.config/sxhkd/sxhkdrc
+# this sxhkd is like you know c+x c+f you know it's a like you hit
+# and it waits and listens for the next key then depending on the
+# next key it will do something. I wonder if I can trigger it with
+# other tools that are not keyd like xbindkeys... probably.
+# t = M-A-S-c 
+
+# w = M-A-S-c 
+
+# grave = M-A-S-c
+
+
+# nice window-picker idea like in nvim but it's not good enough
+# grave = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/hint-focus.py)
+# grave = layer(win_shift_shortcut)
+
+
+# !!!!!!!!! I HAVE space = swap(vim_mode) BUT WHATA ABOUT layer(hypr) we can test like t = layer(hypr) !!!!!!!!
+# --- SPECIAL LAYER KEY ---
+# This is the new way to access your "hyper" shortcuts.
+# Hold CapsLock and press 'e' to temporarily switch to the [hyper] layer.
+# t = layer(hyper)
+
+# !!!!!!!!! I HAVE space = swap(vim_mode) BUT WHATA ABOUT layer(hypr) we can test like t = layer(hypr) !!!!!!!!
+
+# --- OTHER BINDINGS PRESERVED ---
+# z = C-z
+# x = delete      # This is fine, but redundant since ';' is now also delete. Your choice.
+# v = C-v
+# y = C-c       
+
+
+grave = M-S-z
+1 = M-1
+2 = M-2
+3 = M-3
+4 = M-4
+5 = M-5
+6 = M-6
+7 = M-7
+8 = M-8
+9 = M-9
+0 = M-0
+
+# this don't even work btw lol
+# - = M--
+# = = M-=
+
+
+
+
+q = M-f1
+w = M-f2
+e = M-f3
+r = M-f4
+t = M-f5
+y = M-f6
+u = M-f7
+i = M-f8
+o = M-f9
+p = M-f10
+
+
+z = M-S-f1
+x = M-S-f2
+c = M-S-f3
+v = M-S-f4
+b = M-S-f5
+n = M-S-f6
+m = M-S-f7
+
+
+
+[space_extra+control]
+
+k = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete_end_of_line.sh)
+
+u = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete_home_of_line.sh)
+
+
+[space_extra+meta]
+
+h = macro(M-left)
+j = macro(M-down)
+k = macro(M-up)
+l = macro(M-right)
+
+
+
+
+
+
+
+[space_extra+shift]
+
+q = layer(space_extra)
+
+b = M-S-b
+m = M-S-m
+t = M-S-t
+h = M-S-h
+d = M-S-d
+r = M-S-r
+q = M-S-q
+v = M-S-v
+c = M-S-c
+o = M-S-o
+g = M-S-g
+n = M-S-n
+s = M-S-s
+p = M-S-p
+w = M-S-w
+a = M-S-a
+l = M-S-l
+k = M-S-k
+f = M-S-f
+z = M-S-z
+x = M-S-x
+
+1 = M-C-1
+2 = M-C-2
+3 = M-C-3
+4 = M-C-4
+5 = M-C-5
+6 = M-C-6
+7 = M-C-7
+8 = M-C-8
+9 = M-C-9
+0 = M-C-0
+
+
+
+
+[space_extra_caps]
+
+
+q = swap(space_extra)
+
+h = left
+j = down
+k = up
+l = right
+
+semicolon = backspace
+
+f = C-right
+b = C-left
+
+c = M-c
+5 = A-f2
+y = C-c
+p = C-v
+0 = home
+e = end
+a = home
+
+u = C-u
+
+s = C-a
+
+
+
+[space_extra+alt]
+
+h = A-left
+j = A-down
+k = A-up
+l = A-right
+
+
+
+u = M-A-S-c
+v = C-v
+# b = Enter
+c = C-c
+# v = g
+
+
+
+# Your core vim-style arrow keys are preserved.
+
+# I've adopted the more standard 'u' and 'o' for line navigation from the Extend example.
+# This frees up your number keys.
+# v = pageup
+r = C-y
+y = C-c
+# p = C-v
+0 = home
+e = end
+# i = tab
+a = C-a
+# b = C-b
+p = macro(~/)
+o = \
+n = /
+rightbrace = A-pageup
+backslash = A-pagedown
+leftbrace = C-backspace
+# apostrophe = C-w
+
+# the p = macro(~/) is the same thing right... it sends text right and faster and better than doing it in a script this way 
+# p = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sending_theHomeDir_symbole.sh)
+
+
+
+# windows manipulation
+
+# close window
+# c = M-c
+
+# pin window to all distops
+s = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sticky_window_toggle)
+
+# o = (
+
+
+
+# temrinal
+
+# open terminal with tmux-sesionizer C-f for searching through tmux sessions
+# t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/alacrity_F2_tmuxSeachMove_withTmuxSesionizer.sh)
+
+t = macro(C-A-S-t)
+
+
+
+d = C-delete
+# slash = C-delete
+backspace = C-backspace
+semicolon = C-backspace
+# comma = escape
+# n = space
+# m = enter
+# dot = tab
+
+
+apostrophe = macro(")
+
+# END--------------- Capslock END----------------
+
+
+
+
+
+# -------- Side note aobut :c] -----
+# if you make it [vim_mode:C] it's kinda wanky with scripts but [vim_mod:C] probably has other advantages ? i'm not sure... maybe the ability to repeat keys or whatever
+# o = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool key Home)
+# I still don't know what to put here for this 3rd layer
+# idk aobut this one
+
+
+# END-------- Side note aobut :c] END-----
+
+
+# ----------- ESCAPE ----------
+
+[hyper]
+
+w = M-A-S-c 
+
+
+
+# END----------- ESCAPE END----------
+
+
+
+# -------- Fake Control due to keyboard limitations ----- 
+
+
+
+
+[select_mode]
+
+
+
+
+q = swap(extend)
+# dot = swap(extend)
+# w = swap(extend)
+
+
+# v = pagedown
+
+
+
+# --- Selection Movement ---
+# Your standard navigation keys now automatically apply Shift.
+h = S-left
+j = S-down
+k = S-up
+l = S-right
+
+# Word-wise selection
+w = C-S-right
+b = C-S-left
+
+# Line-wise selection
+# 'e' for End of line, 'a' for Ahead (start) of line
+e = S-end
+a = S-home
+
+# Full line selection macro
+x = macro(Home S-End)
+
+# --- Actions on Selection ---
+# Use single, mnemonic keys to act on what you've just selected.
+y = C-c
+d = C-x
+p = C-v
+c = C-c
+
+
+
+
+
+
+
+
+
+
+[window_management]
+
+q = swap(extend)
+# katakanahiragana = xdotool click 6 
+# xdotool click 6 = scroll left
+s = katakanahiragana
+
+# Katakana = xdotool click 5
+# xdotool click 5 = scroll down
+d = katakana
+
+# Hiragana = xdotool click 7
+# xdotool click 7 = scroll right
+f = hiragana
+
+# katakanahiragana = xdotool click 6 
+# xdotool click 6 = scroll left
+s = katakanahiragana
+
+# XF86TouchpadToggle = xdotool click 4 
+# xdotool click 4 = scroll up
+e = zenkakuhankaku
+
+
+
+
+# --- Mouse Movement with xdotool ---
+# move_relative <x> <y>
+
+# xdotool mousemove_relative -- -20 0
+h = yen
+
+# xdotool mousemove_relative -- 0 20
+j = muhenkan
+
+# xdotool mousemove_relative -- 0 -20
+k = kpjpcomma
+
+# xdotool mousemove_relative -- 20 0
+l = ro
+
+
+
+# screenshot 
+y = sysrq
+
+
+# buttons
+
+n = leftmouse
+b = rightmouse
+m = middlemouse
+
+minus =  mouseback
+equal =  mouseforward
+
+0 =  mouse2
+9 =  mouse1
+
+
+
+
+# -------- just ideas ------------- 
+# [fake_shift]
+
+# -------- Just ideas.... this is good for  right alt I think or something 
+# we can achieve this better I like the idea but we can do better I think with like
+# enough practice and what not 
+# [nearby_symbols]
+#
+# a = ~
+# q = ! 
+# w = @ 
+# e = # 
+# r = $ 
+# t = & 
+# y = ^ 
+# u = & 
+# i = *
+# o = (
+# p = )
+# leftbrace = _
+# rightbrace = +
+#
+# s = [
+# d = ]
+# f = {
+# g = }
+# n = "
+# b = |
+# z = ?
+# c = >
+# v = <
+# m = :
+# x = -
+# space = =
+#
+# q = swap(extend)
+
+
+
+# ------- test --------
+
+
+
+[control]
+
+leftshift = leftshift
+
+# this fixes the ctrl+a then backspace not working 
+backspace = C-backspace
+
+# tmux prefix
+control = macro(C-s)
+
+# tbh it's better to just not toggle control for control... it's already good with oneshot
+# and the like overload as is I think. 
+# leftcontrol = capslock
+# control = toggle(control)
+
+
+
+
+[shift] 
+
+# I'll try this for now  if it doesn't does't work I'll try the capslock and if it doesn't work then it is what it is 
+# rightshift = capslock
+rightshift = backspace
+
+
+rightalt = enter
+leftshift = space
+# leftalt = space
+
+
+[meta]
+
+leftmeta = oneshot(win_shift_shortcut)
+compose = toggle(win_shift_shortcut)
+rightmeta = toggle(win_shift_shortcut)
+
+# no need fore such a thing 
+# i = M-i
+capslock = homepage
+
+#compose = toggle(meta)
+# {}())[(())))((()()()()()() 
+
+
+[alt12_mode:A]
+
+# leftshift = A-tab
+# capslock = tab
+# i = tab
+# capslock = layerm(shift, tab)
+# capslock = layerm(shift, tab)
+
+
+# leftcontrol = tab
+[rightalt_extra]
+
+
+rightshift = backspace
+leftshift = space
+rightmeta = toggle(rightalt_extra)
+rightalt = toggle(rightalt_extra)
+
+
+
+
+# Reloading keyd config
+
+f9 = M-C-A-f
+f12 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh keyd reload)
+
+space = backspace
+
+a = ! 
+s = @
+d = #
+f = $
+g = %
+h = ^
+j = &
+k = *
+l = (
+semicolon = )
+apostrophe = macro(_)
+\ = +
+
+
+
+
+[rightalt_space]
+
+# idk man feels like space is the way 
+compose = toggle(rightalt_space)
+rightcontrol = toggle(rightalt_space)
+
+# I think it doesn't work cuz of keyboard 
+# leftshift = mail
+
+
+leftcontrol = layerm(tt_rightalt_space, mail)
+
+
+
+# Numpad layout on the right hand
+u = &
+i = *
+o = (
+j = $
+k = %
+l = ^
+m = !
+comma = @ 
+dot = .
+n = )
+
+d = .
+f = :
+s = ;
+
+
+
+semicolon = -
+leftbrace = +
+rightbrace = *
+apostrophe = =
+backslash = %
+leftshift = ?
+y = #
+c = #
+b = _
+slash = /
+x = \
+z = /
+rightmeta = enter
+compose = enter
+
+
+# This is the secondary layer, active only while holding RightAlt AND Space.
+[rightalt_leftalt]
+
+# --- Numpad Layout (Left Hand) ---
+# Your original idea, which is a standard and effective layout.
+q = 1
+w = 2
+e = 3
+r = 4
+t = 5
+y = 6
+u = 7
+i = 8
+o = 9
+p = 0
+
+# --- Math Operators --- a = -
+s = chat
+d = *
+f = /
+g = =
+
+# --- Nvim Macros (preserved) ---
+z = C-z
+x = macro(ZZ)
+c = macro(ZQ)
+
+
+h = left
+j = down
+k = up
+l = right
+
+n = space
+m = enter
+
+
+
+
+
+[rightalt_leftshift]
+
+g = swap(window_management)
+w = swap(select_mode) r = swap(win_shift_shortcut)
+# This is for tmux
+s = C-s
+
+leftalt = M-grave
+# leftalt = overload(control, escape)
+
+q = noop
+
+# space = leftalt
+space = overload(alt, space)
+
+
+
+# probably use thise for a oneshot or something like layer 
+# compose = capslock
+
+# rightalt = leftshift
+rightalt = overload(shift, capslock)
+
+# probably make this a oneshot or layer maybe i'm not sure 
+rightmeta = rightmeta
+rightmeta = overload(meta, enter)
+
+
+
+
+
+# --- NEW POWER-KEY 'Q' ---
+# This is a huge upgrade.
+# Hold capslock + HOLD 'q' -> acts as Alt key.
+# Hold capslock + TAP 'q' -> sends Escape.
+# d = overload(alt, escape)
+
+1 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh)
+
+2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_win_w_current_desktop_windows.sh)
+
+3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh dolphin)
+
+4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh rofi -show run)
+
+6 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak)
+
+# make window always on top, using the window manager
+f1 = M-f
+
+f2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sticky_window_toggle)
+
+f3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+
+minus = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+
+f4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+equal = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+# --- YOUR NAVIGATION (PRESERVED & ENHANCED) ---
+# Your core vim-style arrow keys are preserved.
+h = left
+j = down
+k = up
+l = right
+
+# I've adopted the more standard 'u' and 'o' for line navigation from the Extend example.
+# This frees up your number keys.
+u = C-z
+v = pagedown
+# r = C-y
+c = M-c
+5 = A-f2
+y = C-c
+p = C-v
+0 = home
+e = end
+a = home
+
+# --- YOUR WORD-WISE NAVIGATION (PRESERVED) ---
+# These are great, and they don't conflict. They now work with the new home row mods!
+# e.g., hold capslock+s+b to do Shift+Ctrl+Left (select word).
+f = C-right
+b = C-left
+
+# --- YOUR MACRO (MOVED & IMPROVED) ---
+# Since 'd' is now the Meta key, I've moved your "select and delete" macro to 'g'.
+# It's right next to your home row and easy to press.
+
+
+# t = command(machinectl shell dex@ /usr/bin//usr/bin/alacritty --working-directory /home/dex)
+# t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex)
+t = macro(C-A-t)
+
+
+
+o = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_next_line.sh)
+
+# --- POWERFUL NEW KEYS FROM THE EXTEND LAYER ---
+# These are huge quality-of-life improvements.
+slash = delete
+semicolon = space
+apostrophe = enter
+comma = macro(C-S-M-A-tab)
+d = delete
+n = space
+m = enter
+i = tab
+dot = space
+# n = swap(nearby_symbols)
+
+x = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/keyd/keyd_select_line_delete.sh)
+
+
+
+# To let you toggle the *real* Caps Lock function, we'll map it to 'c'.
+# Hold capslock and tap 'c' to turn on actual CAPS LOCK.
+rightbrace = escape
+leftbrace = backspace
+
+# this is for sxhkd, to reload it do pkill -USR1 -x sxhkd and run it again I think. 
+# you can find the config in # ~/.config/sxhkd/sxhkdrc
+# this sxhkd is like you know c+x c+f you know it's a like you hit
+# and it waits and listens for the next key then depending on the
+# next key it will do something. I wonder if I can trigger it with
+# other tools that are not keyd like xbindkeys... probably.
+# t = M-A-S-c 
+
+# w = M-A-S-c 
+
+# space = swap(vim_mode)
+
+
+tab = file
+
+# this was chat
+# tab = chat
+# tab = swap(space2
+
+grave = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/hint-focus.py)
+# grave = layer(win_shift_shortcut)
+#leftmeta = oneshot(win_shift_shortcut)
+
+
+# !!!!!!!!! I HAVE space = swap(vim_mode) BUT WHATA ABOUT layer(hypr) we can test like t = layer(hypr) !!!!!!!!
+# --- SPECIAL LAYER KEY ---
+# This is the new way to access your "hyper" shortcuts.
+# Hold CapsLock and press 'e' to temporarily switch to the [hyper] layer.
+# t = layer(hyper)
+
+# !!!!!!!!! I HAVE space = swap(vim_mode) BUT WHATA ABOUT layer(hypr) we can test like t = layer(hypr) !!!!!!!!
+
+# --- OTHER BINDINGS PRESERVED ---
+# z = C-z
+# x = delete      # This is fine, but redundant since ';' is now also delete. Your choice.
+# v = C-v
+# y = C-c       
+
+
+
+
+
+
+
+
+
+
+
+[win_shift_shortcut]
+
+# I think this should never have a q=swap({{back_to_original}}
+# exit it the normal way or just make 1 universal way to do it
+# anyways why do you even need this to begin with? 
+
+compose = toggle(win_shift_shortcut)
+rightmeta = toggle(win_shift_shortcut)
+
+space = overload(win_shift_shortcut_space, space)
+
+b = M-S-b
+m = M-S-m
+t = M-S-t
+h = M-S-h
+d = M-S-d
+r = M-S-r
+q = M-S-q
+v = M-S-v
+c = M-S-c
+o = M-S-o
+g = M-S-g
+n = M-S-n
+s = M-S-s
+p = M-S-p
+w = M-S-w
+a = M-S-a
+l = M-S-l
+k = M-S-k
+f = M-S-f
+z = M-S-z
+
+
+1 = M-1
+2 = M-2
+3 = M-3
+4 = M-4
+5 = M-5
+6 = M-6
+7 = M-7
+8 = M-8
+9 = M-9
+0 = M-0
+
+
+[win_shift_shortcut_space]
+
+# same shit here
+# I think this should never have a q=swap({{back_to_original}}
+# exit it the normal way or just make 1 universal way to do it
+# anyways why do you even need this to begin with? 
+
+1 = M-C-1
+2 = M-C-2
+3 = M-C-3
+4 = M-C-4
+5 = M-C-5
+6 = M-C-6
+7 = M-C-7
+8 = M-C-8
+9 = M-C-9
+0 = M-C-0
+
+
+q = M-1
+w = M-2
+e = M-3
+r = M-4
+t = M-5
+y = M-6
+u = M-7
+i = M-8
+o = M-9
+p = M-0
+
+
+[escape_extend]
+
+s = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/scripts &)
+
+m = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Music &)
+
+h = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Home &)
+
+b = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Backup &)
+
+q = noop
+
+# sadlty these don't work
+# and yes I did [escape_extend+alt] didn't work well
+# space = leftalt
+# space = swap(escape_extend_alt_like)
+# grave = swap(escape_extend_alt_like)
+
+1 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh)
+
+2 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_win_w_current_desktop_windows.sh)
+
+3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh dolphin)
+
+4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh rofi -show run)
+
+6 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/rofi_alt_per_tab_scuffed.bak)
+
+
+
+
+# f1 = M-f
+
+f1 = M-S-C-A-z
+
+
+f2 = M-S-A-C-f
+
+# f3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/sticky_window_toggle)
+f3 = macro(M-kpdot)
+
+# f3 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+
+f4 = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/flameshotdelayed.sh)
+
+minus = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 900 600)
+
+= = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh xdotool mousemove 2600 400)
+
+# Dude I have like space+i that does this and capslock+i that does this too like wtf... 
+
+
+p = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/projects &)
+
+g = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/git &)
+
+f = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/fleet &)
+
+v = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Videos &)
+
+tab = chat
+
+t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh /home/dex/scripts/ddesk/nothing/alacrity_F2_tmuxSeachMove_withTmuxSesionizer.sh)
+
+grave = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/)
+
+y = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/syncthing &)
+
+o = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/syncthing/phone_sync &)
+
+a = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Audio &)
+
+n = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Android &)
+
+i = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Pictures &)
+
+r = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/share &)
+
+
+
+d = oneshot(escape_d)
+
+
+# --- no because C-i in temrinal is tab
+# i = A-tab
+
+
+
+# so this [escape_extend_alt_like] is not working ... great
+[escape_extend_alt_like]
+
+
+
+
+p = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/power &)
+
+# t = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/tests)
+t = macro(C-A-T)
+
+d = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Desktop &)
+
+s = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh dolphin /home/dex/Pictures/Screenshots &)
+
+
+
+
+
+
+
+[escape_d]
+
+w = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Downloads &)
+
+c = command(sudo -u dex -H /home/dex/scripts/dex_session_launcher.sh alacritty --working-directory /home/dex/Documents &)

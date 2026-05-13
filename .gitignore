@@ -1,0 +1,6 @@
+*.dat
+.gitconfig
+.config/gh/
+*.lock
+.copyq_s
+*.BFjzvo

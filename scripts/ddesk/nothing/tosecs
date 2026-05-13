@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# tosecs v2.0 - A smart time-to-seconds converter
+# Handles HH:MM:SS, MM:SS, and raw seconds.
+
+# Get the time string from the first argument
+time_str="$1"
+
+if [ -z "$time_str" ]; then
+    echo "Usage: tosecs <time_string>"
+    exit 1
+fi
+
+# Count the number of colons in the string
+colons=${time_str//[^:]} # This removes all characters that ARE NOT colons
+num_colons=${#colons}    # Get the length of the remaining string (just the colons)
+
+if (( num_colons == 2 )); then
+    # --- HH:MM:SS format ---
+    IFS=: read h m s <<< "$time_str"
+    echo $((10#$h*3600 + 10#$m*60 + 10#$s)) # 10# prevents octal errors with 08, 09
+elif (( num_colons == 1 )); then
+    # --- MM:SS format ---
+    IFS=: read m s <<< "$time_str"
+    echo $((10#$m*60 + 10#$s))
+else
+    # --- Assume raw seconds ---
+    echo "$time_str"
+fi

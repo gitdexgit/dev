@@ -1,0 +1,86 @@
+[note]
+language = "en"
+default-title = ""
+filename = "{{format-date now '%Y%m%d%H%M'}}"
+extension = "md"
+template = "/home/dex/work/Attatchements/Templates/default.md"
+
+# I tried this This works for the autosuggestion temporary `scratch.md` to remove sources but it screws the aliases bellow
+# exclude = [
+#     "sources",
+#     "sources/**"
+# ]
+
+[format.markdown]
+wiki-links = true
+hashtags = true
+colon-tags = true
+
+[tool]
+editor = "nvim"
+fzf-preview = "bat -p --color always {-1}"
+fzf-options = "--layout=default --preview-window='up:65%:wrap' --bind 'alt-w:toggle-wrap,alt-j:preview-page-down,alt-k:preview-page-up,alt-J:preview-down,alt-K:preview-up'"
+
+[alias]
+
+# 1. Search everything
+all = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}}') | fzf --preview 'bat -p --color always {}' | xargs -r zk edit"
+
+# 2. Search everything - Sorted by Last Modified (Newest first)
+allm = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}}') | xargs ls -t | fzf --preview 'bat -p --color always {}' | xargs -r zk edit"
+
+# 3. Search everything - Including Tags in the search
+# This doesn't work well, I need to like filter everything by tag
+# allt = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}} {{tags}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}} {{tags}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}} {{tags}}') | fzf --preview 'bat -p --color always {1}' | awk '{print $1}' | xargs -r zk edit"
+
+
+ls = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}}') | fzf --preview 'bat -p --color always {}' | xargs -r zk edit"
+l = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}}') | fzf --preview 'bat -p --color always {}' | xargs -r zk edit"
+lm = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}}') | xargs ls -t | fzf --preview 'bat -p --color always {}' | xargs -r zk edit"
+# these don't work yet
+# lt = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}} {{tags}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}} {{tags}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}} {{tags}}') | fzf --preview 'bat -p --color always {1}' | awk '{print $1}' | xargs -r zk edit"
+# tag = "(zk --notebook-dir /home/dex/work list -q --format '{{abs-path}} {{tags}}'; zk --notebook-dir /home/dex/archive_fossil list -q --format '{{abs-path}} {{tags}}'; zk --notebook-dir /home/dex/wiki list -q --format '{{abs-path}} {{tags}}') | fzf --preview 'bat -p --color always {1}' | awk '{print $1}' | xargs -r zk edit"
+
+
+# --- THE GLOBAL SEARCHES ---
+# # These point to the "Virtual" notebook we just created
+# all  = "zk --notebook-dir ~/.global_zk edit --interactive $@"
+# allm = "zk --notebook-dir ~/.global_zk edit --interactive --sort modified- $@"
+# allt = "zk --notebook-dir ~/.global_zk edit --interactive --tag $@"
+
+# --- GLOBAL SEARCH (The one you wanted) ---
+# all = "zk edit --notebook-dir /home/dex/work --notebook-dir /home/dex/archive_fossil --notebook-dir /home/dex/wiki --interactive $@"
+
+# --- Interactive Essentials ---
+# Fixed 'a' and 'w' to use the notebook-dir flag so they work from anywhere
+a = "zk edit --notebook-dir /home/dex/archive_fossil --interactive $@"
+w = "zk edit --notebook-dir /home/dex/wiki --interactive $@"
+c = "zk edit --notebook-dir /home/dex/work --interactive current_struggles $@"
+s = "zk edit --notebook-dir /home/dex/work --interactive sources $@"
+
+# --- Interactive based on folder ---
+i = "zk edit --interactive $@"
+ci = "zk edit --interactive current_struggles $@"
+si = "zk edit --interactive sources $@"
+ai = "zk edit --notebook-dir /home/dex/archive_fossil --interactive $@"
+wi = "zk edit --notebook-dir /home/dex/wiki --interactive $@"
+
+# --- Interactive based on last modified ---
+m = "zk edit --interactive --sort modified"
+cm = "zk edit --interactive current_struggles $@ --sort modified"
+sm = "zk edit --interactive sources $@ --sort modified"
+am = "zk edit --notebook-dir /home/dex/archive_fossil --interactive --sort modified $@"
+wm = "zk edit --notebook-dir /home/dex/wiki --interactive --sort modified $@"
+
+# --- Interactive based on tag ---
+t = "zk edit --interactive --tag $@"
+ct = "zk edit --interactive current_struggles --tag $@"
+st = "zk edit --interactive sources --tag $@"
+at = "zk edit --notebook-dir /home/dex/archive_fossil --interactive --tag $@"
+wt = "zk edit --notebook-dir /home/dex/wiki --interactive --tag $@"
+
+
+[lsp]
+[lsp.diagnostics]
+wiki-title = "hint"
+dead-link = "error"

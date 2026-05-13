@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=GNOME Clocks (Arc-Dark)
+Comment=Time management and world clock application with Arc-Dark theme
+Exec=env GTK_THEME=Arc-Dark gnome-clocks
+Icon=org.gnome.Clocks
+Terminal=false
+Type=Application
+Categories=Utility;Clock;GNOME;
+StartupNotify=true
+Keywords=clock;time;alarm;timer;stopwatch;

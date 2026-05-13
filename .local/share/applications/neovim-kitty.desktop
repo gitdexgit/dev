@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Neovim (in Kitty)
+Comment=Open with Neovim inside Kitty Terminal
+Exec=kitty nvim %F
+Icon=neovim
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+MimeType=text/markdown;
+Keywords=text;editor;markdown;nvim;kitty;

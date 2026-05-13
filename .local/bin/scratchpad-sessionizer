@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+# ─── Config ───────────────────────────────────────────────────────────────────
+TDROP_ARGS="-ma -w 90% -h 85% -x 5% -y 4%"
+
+declare -A SESSIONS=(
+    [scratch]="scratch"
+    [duck]="duck"
+    [btop]="btop"
+    [cpu]="cpu"
+    [config]="config"
+    [wiki]="wiki"
+    [task]="task"
+    [draft]="draft"
+)
+
+declare -A SPECIAL=(
+    [dropdown]="tdrop $TDROP_ARGS -n dropdown_terminal urxvtc -name dropdown_terminal -title Dropdown"
+)
+
+# ─── Build list: tdrop targets first (sorted), then native scratchpad ─────────
+
+tdrop_lines=""
+for name in $(echo "${!SESSIONS[@]} ${!SPECIAL[@]}" | tr ' ' '\n' | sort); do
+    tdrop_lines+="[TDROP] $name"$'\n'
+done
+
+# Native i3 scratchpad windows — skip anything matching our tdrop titles
+other_scratch=$(i3-msg -t get_tree 2>/dev/null \
+    | jq -r '.. | select(.name? == "__i3_scratch")
+              | recurse(.nodes[], .floating_nodes[])
+              | select(.window != null)
+              | .name' 2>/dev/null \
+    | grep -v '^\s*$' \
+    | grep -vF "[TDROP]")
+
+# Combine: tdrop on top, native below
+all=$(printf '%s' "$tdrop_lines"; echo "$other_scratch" | awk 'NF && !seen[$0]++')
+
+# ─── Pick (bottom-up, no preview) ─────────────────────────────────────────────
+selected=$(echo "$all" | fzf \
+    --ansi \
+    --no-sort \
+    --tac \
+    --prompt="  Jump to: " \
+    --pointer="▶" \
+    --height=100% \
+    --border=none \
+    --no-preview \
+    --color="prompt:#5fafff,pointer:#ff5faf,hl:#ffaf5f,hl+:#ffaf5f" \
+)
+
+[ -z "$selected" ] && exit 0
+
+# ─── Dispatch ─────────────────────────────────────────────────────────────────
+if [[ "$selected" == \[TDROP\]* ]]; then
+    name="${selected#\[TDROP\] }"
+
+    if [[ -n "${SESSIONS[$name]+_}" ]]; then
+        sess="${SESSIONS[$name]}"
+        tdrop $TDROP_ARGS \
+            -n "alacritty_${sess}" \
+            alacritty \
+                --class "alacritty_${sess}" \
+                -T "$sess" \
+                -e tmux new-session -A -s "$sess"
+
+    elif [[ -n "${SPECIAL[$name]+_}" ]]; then
+        eval "${SPECIAL[$name]}"
+    fi
+else
+    i3-msg "[title=\"$selected\"] scratchpad show"
+fi
+

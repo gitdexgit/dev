@@ -1,0 +1,95 @@
+
+
+[general]
+# import = [ "~/.config/alacritty/themes/Dracula.toml" ]
+
+# [env]
+# TERM = "xterm-256color"
+
+[window]
+# padding = { x = 2, y = 2 }
+opacity = 1.0
+dynamic_title= true
+decorations = "full"
+
+# Sets the initial dimensions of the window.
+# These are measured in character cells, not pixels.
+dimensions.columns = 120
+dimensions.lines = 36
+
+# You can also add padding if you like (optional)
+# padding.x = 0
+# padding.y = 0
+
+[colors.primary]
+# background = '#1E1E1E'  # This is a common default (dark gray)
+background = '#000000'  # Change it to pure black
+foreground = '#d8d8d8'  # You can set your text color here
+
+# [logging]
+# level = "Error"
+
+[debug]
+# this is for the sake of nested tmux tabs so it doesn't annoy me with this error
+# this error is annoying https://i.imgur.com/o34KDTY.png this is the fix for now.
+log_level = "Off"
+
+# =========================================================
+# ============= ADD THIS SECTION FOR BLOCK CURSOR =========
+# =========================================================
+[cursor]
+# Sets the cursor shape to a solid block.
+style = 'Block'
+
+# Optional: Displays a hollow block when the Alacritty window isn't focused.
+unfocused_hollow = true
+# =========================================================
+
+
+[keyboard]
+
+
+bindings = [
+# This is for paste I like pasting with control+v easy
+{ key = "V", mods = "Control", action = "Paste" },
+# This is for like alt+j and alt+k I like them to universally be scroll up or down half
+# a page in copy modes or normal modes or in preview modes in plugins and fzf and what not.
+# Stuff like that.
+{ key = "K", mods = "Alt", mode = "Vi|~Search", action = "ScrollHalfPageUp" },
+{ key = "J", mods = "Alt", mode = "Vi|~Search", action = "ScrollHalfPageDown" }
+]
+
+
+# This goes into your alacritty.toml file
+
+
+
+[colors.selection]
+# Text color for the selection
+# text = '0x000000'       # Black text when selected
+
+# Background color for the selection
+# background = '0xFFCB6B'  # A nice yellow for the highlight
+
+# Alacritty Font Configuration
+# Sets the main fon-t to FiraCode Nerd Font Mono.
+# The system will automatically use Noto Color Emoji for emoji characters.
+
+[font]
+size = 9.0
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Bold Italic"

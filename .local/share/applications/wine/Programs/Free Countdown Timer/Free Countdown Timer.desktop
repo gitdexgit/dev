@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Free Countdown Timer
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Free\\ Countdown\\ Timer\\\\Free\\ Countdown\\ Timer.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/Program Files (x86)/FreeCountdownTimer
+Icon=95A6_FreeCountdownTimer.0
+StartupWMClass=freecountdowntimer.exe

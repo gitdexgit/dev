@@ -1,0 +1,11 @@
+#!/bin/bash
+export DISPLAY=:0
+export XAUTHORITY=/home/dex/.Xauthority
+FILE=/home/dex/.mouse-held
+if [ -f "$FILE" ]; then
+    xdotool mouseup 1
+    rm "$FILE"
+else
+    xdotool mousedown 1
+    touch "$FILE"
+fi

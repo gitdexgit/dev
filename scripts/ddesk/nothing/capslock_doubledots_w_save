@@ -1,0 +1,27 @@
+#!/bin/bash
+
+
+# this needs some xdotool key names that i don't know of... i need the name of this ';' then i'll do shit+; to give :... then w... then enter... but also esc everything.... and then bind tis to capslock + w 
+
+
+# Simple script to type "+y" literally with delays using xdotool
+
+# --- Configuration ---
+
+
+sleep 0.05
+sleep 0.05
+# --- Action ---
+# Simulate pressing the keys for "+y"
+
+xdotool key Escape
+# Type the first double quote (")
+sleep 0.05
+sleep 0.05
+xdotool key colon
+sleep 0.05
+
+# Type the plus sign (+) (Shift+equal on US layout)
+xdotool key w
+sleep 0.05
+xdotool key Enter

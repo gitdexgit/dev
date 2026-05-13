@@ -1,0 +1,85 @@
+matches:
+
+  - trigger: ";;;y;"
+    force_mode: clipboard
+    replace: "/me Gives a Thumbs Up (y)"
+
+  - trigger: ";;;y]"
+    force_mode: clipboard
+    replace: "^Thumbs Up (y)"
+
+  - trigger: ";;;k]"
+    force_mode: clipboard
+    replace: "OK (y)"
+
+  - trigger: ";;;k;"
+    force_mode: clipboard
+    replace: "✔"
+
+  - trigger: ";;;ok;"
+    force_mode: clipboard
+    replace: "[OK]"
+
+  - trigger: ";;;task;"
+    force_mode: clipboard
+    replace: "- [ ] "
+
+  - trigger: ";;;b;"
+    force_mode: clipboard
+    replace: "- [ ] "
+
+  - trigger: ";;;block;"
+    force_mode: clipboard
+    replace: "- [ ] "
+
+  - trigger: ";;;todo;"
+    force_mode: clipboard
+    replace: "- [ ] "
+
+  - trigger: ";;;d;"
+    force_mode: clipboard
+    replace: "[x] "
+
+  - trigger: ";;;done;"
+    force_mode: clipboard
+    replace: "- [x] "
+
+  - trigger: ";;;t;"
+    force_mode: clipboard
+    replace: "b(^_^)d"
+
+  - trigger: ";;;t]"
+    force_mode: clipboard
+    replace: "Nice! b(^_^)d"
+
+  - trigger: ";;;c]"
+    force_mode: clipboard
+    replace: "^Gives a 🍪(Cookie) to $|$ !"
+
+  - trigger: ";;;c;"
+    force_mode: clipboard
+    replace: "me ^Gives a Thanks Cookie 🍪! Ty for the help"
+
+  - trigger: ";;;cookie;"
+    force_mode: clipboard
+    replace: "🍪"
+
+  - trigger: ";;;cat;"
+    force_mode: clipboard
+    replace: "🐱"
+
+  - trigger: ";;;x;"
+    force_mode: clipboard
+    replace: "❌"
+
+  - trigger: ";;;sparkles;"
+    force_mode: clipboard
+    replace: "✨"
+    
+  - trigger: ";;;heart;"
+    force_mode: clipboard
+    replace: "❤"
+
+  - trigger: ";;;f;"
+    force_mode: clipboard
+    replace: "(^^)"

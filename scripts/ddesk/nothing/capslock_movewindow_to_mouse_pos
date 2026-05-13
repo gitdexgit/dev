@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# 1. Get the current i3 socket path dynamically
+# This fixes the "No such file or directory" error
+I3_SOCK=$(i3 --get-socketpath)
+
+# 2. Get mouse location
+eval $(xdotool getmouselocation --shell)
+
+# 3. Move the window using the detected socket
+i3-msg -s "$I3_SOCK" "move absolute position $X $Y"

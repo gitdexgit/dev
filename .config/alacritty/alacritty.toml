@@ -1,0 +1,73 @@
+[general]
+
+import = [
+  # "/usr/lib/node_modules/alacritty-themes/themes/3024.dark.toml"
+]
+
+[window]
+opacity = 1
+dynamic_title = true
+decorations = "full"
+
+  [window.dimensions]
+  columns = 120
+  lines = 36
+
+# [colors]
+# selection = { }
+
+[colors.primary]
+background = "#000000"
+foreground = "#d8d8d8"
+
+
+
+
+
+[debug]
+log_level = "Off"
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Alt"
+mode = "Vi|~Search"
+action = "ScrollHalfPageUp"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Alt"
+mode = "Vi|~Search"
+action = "ScrollHalfPageDown"
+
+[font]
+size = 9
+
+  [font.normal]
+  family = "JetBrainsMono Nerd Font Mono"
+  style = "Regular"
+
+  [font.bold]
+  family = "JetBrainsMono Nerd Font Mono"
+  style = "Bold"
+
+  [font.italic]
+  family = "JetBrainsMono Nerd Font Mono"
+  style = "Italic"
+
+  [font.bold_italic]
+  family = "JetBrainsMono Nerd Font Mono"
+  style = "Bold Italic"
+
+[[keyboard.bindings]]
+key = "Back"
+mods = "Control"
+chars = "\u0017"

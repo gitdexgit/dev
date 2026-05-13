@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Windows Presentation Foundation Host
+MimeType=application/x-ms-xbap;
+Exec=env WINEPREFIX="/home/dex/.local/share/wineprefixes/osu-stable" wine start /ProgIDOpen Windows.Xbap %f
+NoDisplay=true
+StartupNotify=true
+Icon=E538_PresentationHost.0

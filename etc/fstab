@@ -1,0 +1,17 @@
+# Static information about the filesystems.
+# <file system>                             <dir>               <type>  <options>                                                                                               <dump>  <pass>
+
+# /dev/sda8 (Root - System & Apps)
+UUID=7ecf98ff-cc8b-48c8-a7f3-f2732fa94928   /                   ext4    rw,relatime                                                                                             0       1
+
+# /dev/sda7 (Boot)
+UUID=6DCD-159B                              /boot               vfat    rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro   0       2
+
+# /dev/sda1 (Creative Workspace - Unity/Blender)
+UUID=3ffd4b6e-3677-4792-b859-37055d5cb68b   /home/dex/Workspace ext4    defaults,nofail                                                                                         0       2
+
+# /dev/sda2 (VMs)
+UUID=1b17b037-fe5d-41d2-9eb0-5a321a0bb9e9   /data/VMs           ext4    defaults,nofail                                                                                         0       2
+
+# Swap
+/data/VMs/myswapfile                                 none                swap    sw                                                                                                      0       0

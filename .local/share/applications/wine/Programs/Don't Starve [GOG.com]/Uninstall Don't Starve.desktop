@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Uninstall Don't Starve
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Don\\'t\\ Starve\\ [GOG.com]\\\\Uninstall\\ Don\\'t\\ Starve.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/GOG Games/Dont Starve
+Icon=A6D7_unins000.0
+StartupWMClass=unins000.exe

@@ -1,0 +1,285 @@
+#!/bin/bash
+
+# --- Debug Function ---
+DEBUG_LOG_FILE="/tmp/rofi_switcher_debug.log"
+DEBUG_ENABLED=true # Set to false to disable logging
+
+DEBUG() {
+    if [ "$DEBUG_ENABLED" = true ] && [ -n "$1" ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S.%N') - $1" >> "$DEBUG_LOG_FILE"
+    fi
+}
+# --- End Debug Function ---
+
+# Initialize log file here, after DEBUG is defined
+if [ "$DEBUG_ENABLED" = true ]; then
+    if ! touch "$DEBUG_LOG_FILE" 2>/dev/null || ! [ -w "$DEBUG_LOG_FILE" ]; then
+        DEBUG_LOG_FILE_ALT="$HOME/rofi_switcher_debug.log"
+        if ! touch "$DEBUG_LOG_FILE_ALT" 2>/dev/null || ! [ -w "$DEBUG_LOG_FILE_ALT" ]; then
+            echo "Error: Cannot write to debug log file $DEBUG_LOG_FILE_ALT or $DEBUG_LOG_FILE. Disabling debug." >&2
+            DEBUG_ENABLED=false # Disable if no log file is writable
+        else
+             DEBUG_LOG_FILE="$DEBUG_LOG_FILE_ALT" # Update the main log file variable
+             echo "--- New Script Run (logging to $DEBUG_LOG_FILE) ---" > "$DEBUG_LOG_FILE"
+        fi
+    else
+        echo "--- New Script Run (logging to $DEBUG_LOG_FILE) ---" > "$DEBUG_LOG_FILE"
+    fi
+fi
+
+# Now it's safe to call DEBUG - this is the first call.
+DEBUG "Script started."
+
+# --- Configuration ---
+AWK_SCRIPT_PATH="$HOME/bin/parse_wmctrl_line.awk"
+ROFI_PROMPT="Switch (current monitor):"
+EXCLUDE_WM_CLASS_INSTANCE=("lxqt-panel" "pcmanfm-qt")
+EXCLUDE_WINDOW_TITLE_CONTAINS=()
+
+# Check if AWK script exists (this DEBUG call is now safe)
+if [ ! -f "$AWK_SCRIPT_PATH" ]; then
+    DEBUG "FATAL: AWK script $AWK_SCRIPT_PATH not found."
+    rofi -e "Error: Helper AWK script missing."
+    exit 1
+fi
+DEBUG "AWK script path set to: $AWK_SCRIPT_PATH"
+
+
+# --- Get mouse location ---
+if ! mouse_loc_output=$(xdotool getmouselocation --shell); then
+    DEBUG "FATAL: xdotool getmouselocation command failed."
+    rofi -e "Error: xdotool failed."
+    exit 1
+fi
+eval "$mouse_loc_output"
+MOUSE_X=$X
+MOUSE_Y=$Y
+DEBUG "Mouse X: $MOUSE_X, Mouse Y: $MOUSE_Y (Screen: $SCREEN, Window: $WINDOW)"
+if [ -z "$MOUSE_X" ] || [ -z "$MOUSE_Y" ]; then
+    DEBUG "Warning: Failed to get valid mouse location. Using 0,0 as fallback."
+    MOUSE_X=0
+    MOUSE_Y=0
+fi
+
+# --- Get current monitor geometry based on mouse position ---
+CURRENT_MONITOR_GEOM=""
+XRANDR_OUTPUT=$(xrandr --query)
+DEBUG "xrandr output captured."
+while read -r line; do
+    DEBUG "Checking xrandr line: '$line'"
+    if [[ "$line" =~ connected && "$line" =~ ([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+) ]]; then
+        MON_W_CANDIDATE=${BASH_REMATCH[1]}
+        MON_H_CANDIDATE=${BASH_REMATCH[2]}
+        MON_X_CANDIDATE=${BASH_REMATCH[3]}
+        MON_Y_CANDIDATE=${BASH_REMATCH[4]}
+        DEBUG "  Parsed candidate geometry: ${MON_W_CANDIDATE}x${MON_H_CANDIDATE}+${MON_X_CANDIDATE}+${MON_Y_CANDIDATE}"
+        if (( MOUSE_X >= MON_X_CANDIDATE && MOUSE_X < (MON_X_CANDIDATE + MON_W_CANDIDATE) && \
+              MOUSE_Y >= MON_Y_CANDIDATE && MOUSE_Y < (MON_Y_CANDIDATE + MON_H_CANDIDATE) )); then
+            CURRENT_MONITOR_GEOM="${MON_W_CANDIDATE}x${MON_H_CANDIDATE}+${MON_X_CANDIDATE}+${MON_Y_CANDIDATE}"
+            DEBUG "  SUCCESS: Mouse is on this monitor: $CURRENT_MONITOR_GEOM"
+            break
+        fi
+    else
+        DEBUG "  Line did not match 'connected' and geometry regex." # This DEBUG is now safe
+    fi
+done <<< "$(echo "$XRANDR_OUTPUT" | grep -E ' connected ')_</_<!-- Regular expression to match lines with monitor geometry -->"
+
+if [ -z "$CURRENT_MONITOR_GEOM" ]; then
+    DEBUG "Initial monitor detection (mouse-based) failed."
+    PRIMARY_MONITOR_LINE=$(echo "$XRANDR_OUTPUT" | grep ' connected primary ')
+    if [[ "$PRIMARY_MONITOR_LINE" =~ ([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+) ]]; then
+         CURRENT_MONITOR_GEOM="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}+${BASH_REMATCH[3]}+${BASH_REMATCH[4]}"
+         DEBUG "Fell back to PRIMARY monitor: $CURRENT_MONITOR_GEOM"
+    else
+        DEBUG "Primary monitor not found. Falling back to first connected."
+        FIRST_MONITOR_LINE=$(echo "$XRANDR_OUTPUT" | grep ' connected ' | head -n1)
+         if [[ "$FIRST_MONITOR_LINE" =~ ([0-9]+)x([0-9]+)\+([0-9]+)\+([0-9]+) ]]; then
+            CURRENT_MONITOR_GEOM="${BASH_REMATCH[1]}x${BASH_REMATCH[2]}+${BASH_REMATCH[3]}+${BASH_REMATCH[4]}"
+            DEBUG "Fell back to FIRST CONNECTED monitor: $CURRENT_MONITOR_GEOM"
+        else
+            DEBUG "FATAL: Could not determine any monitor geometry."
+            rofi -e "Error: Could not determine monitor geometry."
+            exit 1
+        fi
+    fi
+fi
+if ! IFS='x+' read -r MON_W MON_H MON_X MON_Y <<< "$CURRENT_MONITOR_GEOM"; then
+    DEBUG "FATAL: Failed to parse final monitor geometry string: '$CURRENT_MONITOR_GEOM'"
+    rofi -e "Error: Failed to parse monitor geometry."
+    exit 1
+fi
+if [ -z "$MON_W" ] || [ -z "$MON_H" ] || [ -z "$MON_X" ] || [ -z "$MON_Y" ]; then
+    DEBUG "FATAL: Monitor geometry variables not set correctly from '$CURRENT_MONITOR_GEOM'."
+    rofi -e "Error: Monitor geometry variables not set."
+    exit 1
+fi
+DEBUG "Using Monitor Geometry: W=$MON_W H=$MON_H X=$MON_X Y=$MON_Y"
+
+# --- Get all windows and filter them ---
+WINDOW_IDS_ARRAY=()
+WINDOW_TITLES_FOR_ROFI=""
+CURRENT_WM_DESKTOP=$(xdotool get_desktop)
+DEBUG "Current WM Desktop: $CURRENT_WM_DESKTOP"
+
+WMCTRL_OUTPUT=$(wmctrl -lxG)
+DEBUG "wmctrl -lxG output captured."
+
+while IFS= read -r line; do
+    DEBUG "Processing wmctrl line: $line" # This is likely your line 52 or around there
+    
+    # Use single awk call to parse the line
+    eval "$(echo "$line" | awk -f "$AWK_SCRIPT_PATH")"
+
+    # Now use the _PARSED variables
+    WIN_ID="$WIN_ID_PARSED"
+    WIN_DESKTOP="$WIN_DESKTOP_PARSED"
+    WIN_X="$WIN_X_PARSED"
+    WIN_Y="$WIN_Y_PARSED"
+    WIN_W="$WIN_W_PARSED"
+    WIN_H="$WIN_H_PARSED"
+    WIN_CLASS_FULL="$WIN_CLASS_FULL_PARSED"
+    WIN_CLASS_INSTANCE="$WIN_CLASS_INSTANCE_PARSED"
+    WIN_CLASS_RESOURCE="$WIN_CLASS_RESOURCE_PARSED"
+    WIN_TITLE="$WIN_TITLE_PARSED"
+
+    if ! [[ "$WIN_ID" =~ ^0x[0-9a-fA-F]+$ ]]; then
+        DEBUG "  Skipping line with invalid WIN_ID parsed: '$WIN_ID' from original line: $line"
+        continue
+    fi
+    
+    if [ -z "$WIN_TITLE" ] || [[ "$WIN_TITLE" =~ ^[[:space:]]*$ ]]; then
+        DEBUG "  Window ID $WIN_ID has empty or whitespace-only title from awk. Using placeholder."
+        WIN_TITLE="[Untitled Window - ID: $WIN_ID]"
+    fi
+
+    DEBUG "  Parsed (AWK): ID=$WIN_ID, ClassFull='$WIN_CLASS_FULL', ClassInst='$WIN_CLASS_INSTANCE', ClassRes='$WIN_CLASS_RESOURCE', Title='$WIN_TITLE'"
+
+    # --- Exclusion Logic ---
+    EXCLUDE_THIS_WINDOW=false
+    for class_to_exclude in "${EXCLUDE_WM_CLASS_INSTANCE[@]}"; do
+        if [[ "$WIN_CLASS_INSTANCE" == "$class_to_exclude" ]] || [[ "$WIN_CLASS_RESOURCE" == "$class_to_exclude" ]]; then
+            DEBUG "  EXCLUDING (WM_CLASS): Window class '$WIN_CLASS_FULL' matches '$class_to_exclude'."
+            EXCLUDE_THIS_WINDOW=true
+            break
+        fi
+    done
+    if $EXCLUDE_THIS_WINDOW; then continue; fi
+
+    for title_part_to_exclude in "${EXCLUDE_WINDOW_TITLE_CONTAINS[@]}"; do
+        if [[ "$WIN_TITLE" == *"$title_part_to_exclude"* ]]; then
+            DEBUG "  EXCLUDING (Title): Window title '$WIN_TITLE' contains '$title_part_to_exclude'."
+            EXCLUDE_THIS_WINDOW=true
+            break
+        fi
+    done
+    if $EXCLUDE_THIS_WINDOW; then continue; fi
+    # --- End Exclusion Logic ---
+
+    if [[ "$WIN_DESKTOP" -ne "$CURRENT_WM_DESKTOP" && "$WIN_DESKTOP" -ne "-1" ]]; then
+        DEBUG "  Skipping: Window on different desktop ($WIN_DESKTOP vs current $CURRENT_WM_DESKTOP)."
+        continue
+    fi
+    
+    TYPE_INFO=$(timeout 0.5s xprop -id "$WIN_ID" _NET_WM_WINDOW_TYPE)
+    if [ $? -eq 124 ]; then 
+        DEBUG "  WARNING: xprop timed out for window ID $WIN_ID. Assuming unsuitable type."
+        TYPE_INFO="" 
+    fi
+
+    IS_SUITABLE_TYPE=false
+    if [[ "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_NORMAL ]]; then
+        IS_SUITABLE_TYPE=true
+        DEBUG "  Window type is NORMAL."
+    elif [[ "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_DIALOG ]]; then
+        IS_SUITABLE_TYPE=true
+        DEBUG "  Window type is DIALOG."
+    elif [[ ! "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_ && -z "$TYPE_INFO" ]]; then # If xprop returned empty for the atom
+        IS_SUITABLE_TYPE=true
+        DEBUG "  No specific _NET_WM_WINDOW_TYPE found or xprop failed/timed out cleanly, assuming suitable."
+    else 
+        if [[ "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_DESKTOP ]]; then
+            DEBUG "  EXCLUDING (Type): Window type is DESKTOP."
+        elif [[ "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_DOCK ]]; then
+            DEBUG "  EXCLUDING (Type): Window type is DOCK/PANEL."
+        elif [[ "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_TOOLBAR ]]; then
+            DEBUG "  EXCLUDING (Type): Window type is TOOLBAR."
+        elif [[ "$TYPE_INFO" =~ _NET_WM_WINDOW_TYPE_SPLASH ]]; then
+            DEBUG "  EXCLUDING (Type): Window type is SPLASH."
+        else
+            DEBUG "  Skipping: Window type is not explicitly included or excluded (Type info: $TYPE_INFO)"
+        fi
+        continue 
+    fi
+    if ! $IS_SUITABLE_TYPE; then continue; fi
+    
+    # WIN_X, WIN_Y, etc. are already set from the awk parsing
+    WIN_CENTER_X=$((WIN_X + WIN_W / 2))
+    WIN_CENTER_Y=$((WIN_Y + WIN_H / 2))
+
+    if (( WIN_CENTER_X >= MON_X && WIN_CENTER_X < (MON_X + MON_W) && \
+          WIN_CENTER_Y >= MON_Y && WIN_CENTER_Y < (MON_Y + MON_H) )); then
+        
+        if [ -z "$WIN_TITLE" ] || [[ "$WIN_TITLE" =~ ^[[:space:]]*$ ]]; then # Should be caught by earlier placeholder
+            DEBUG "  CRITICAL SKIP: Window ID $WIN_ID has an unusable empty title even after placeholder. Skipping."
+            continue
+        fi
+
+        DEBUG "  ADD: Window '$WIN_TITLE' (ID: $WIN_ID) is on the target monitor."
+        WINDOW_IDS_ARRAY+=("$WIN_ID")
+        WINDOW_TITLES_FOR_ROFI+="${WIN_TITLE}\n"
+    else
+        DEBUG "  SKIP: Window '$WIN_TITLE' not on target monitor."
+    fi
+done <<< "$WMCTRL_OUTPUT"
+
+# --- Show rofi and activate selected window ---
+if [ ${#WINDOW_IDS_ARRAY[@]} -gt 0 ]; then
+    NUM_IDS=${#WINDOW_IDS_ARRAY[@]}
+    NUM_TITLES=$(echo -ne "${WINDOW_TITLES_FOR_ROFI}" | wc -l) 
+    
+    DEBUG "Number of IDs stored: $NUM_IDS"
+    DEBUG "Number of title lines for Rofi: $NUM_TITLES"
+    if [ "$NUM_IDS" -ne "$NUM_TITLES" ]; then
+        DEBUG "CRITICAL MISMATCH: Number of IDs ($NUM_IDS) does not match number of titles ($NUM_TITLES)."
+        DEBUG "Titles for Rofi:\n$WINDOW_TITLES_FOR_ROFI"
+        DEBUG "IDs Array: ${WINDOW_IDS_ARRAY[*]}"
+        rofi -e "Internal Error: ID/Title count mismatch."
+        exit 1
+    fi
+
+    DEBUG "Window titles being sent to Rofi:\n$WINDOW_TITLES_FOR_ROFI"
+    CHOSEN_INDEX_STR=$(echo -e "${WINDOW_TITLES_FOR_ROFI}" | rofi -dmenu -i -p "$ROFI_PROMPT" -format 'i')
+    DEBUG "Rofi -format 'i' output (selected index string): '$CHOSEN_INDEX_STR'"
+
+    if [ -n "$CHOSEN_INDEX_STR" ] && [[ "$CHOSEN_INDEX_STR" =~ ^[0-9]+$ ]]; then
+        CHOSEN_INDEX=$((CHOSEN_INDEX_STR))
+        if [ "$CHOSEN_INDEX" -ge 0 ] && [ "$CHOSEN_INDEX" -lt "${#WINDOW_IDS_ARRAY[@]}" ]; then
+            SELECTED_ID="${WINDOW_IDS_ARRAY[$CHOSEN_INDEX]}"
+            SELECTED_TITLE_FOR_DEBUG=$(echo -e "$WINDOW_TITLES_FOR_ROFI" | sed -n "$((CHOSEN_INDEX + 1))p")
+            DEBUG "Selected by index $CHOSEN_INDEX: ID='$SELECTED_ID', Title was likely '$SELECTED_TITLE_FOR_DEBUG'"
+            
+            if [[ "$SELECTED_ID" =~ ^0x[0-9a-fA-F]+$ ]]; then
+                DEBUG "Activating window ID: $SELECTED_ID"
+                wmctrl -i -a "$SELECTED_ID"
+                if [ $? -ne 0 ]; then
+                    DEBUG "wmctrl activation command failed for ID $SELECTED_ID."
+                    rofi -e "Error: Failed to activate window."
+                fi
+            else
+                DEBUG "FATAL INTERNAL ERROR: Extracted ID '$SELECTED_ID' from stored list is not a valid hex ID."
+                rofi -e "Internal Error: Invalid window ID."
+            fi
+        else
+            DEBUG "Error: Rofi returned an out-of-bounds index: $CHOSEN_INDEX. Array size: ${#WINDOW_IDS_ARRAY[@]}"
+            rofi -e "Error: Rofi selection index out of bounds."
+        fi
+    elif [ -n "$CHOSEN_INDEX_STR" ]; then
+        DEBUG "Rofi output was not a valid index: '$CHOSEN_INDEX_STR'."
+    else
+        DEBUG "Rofi returned empty. Selection cancelled by user."
+    fi
+else
+    DEBUG "No windows found on the current monitor for the current desktop to show in Rofi."
+    rofi -e "No matching windows on this monitor/desktop."
+fi
+DEBUG "Script finished."

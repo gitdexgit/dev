@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Script to simulate holding Ctrl+Left when Ctrl+h is held.
+
+FLAG_FILE="/tmp/ctrl_h_held.flag"
+INITIAL_DELAY=0.4  # Seconds before repeat starts (e.g., 400ms)
+REPEAT_RATE_DELAY=0.05 # Seconds between repeats (e.g., 50ms, for 20 repeats/sec)
+
+# 1. Send the initial key press
+xdotool keydown --clearmodifiers ctrl+Left
+xdotool keyup ctrl+Left # Send one full press-release immediately
+
+# 2. Create the flag file to indicate the key is "held"
+touch "$FLAG_FILE"
+
+# 3. Wait for the initial delay before starting auto-repeat
+sleep "$INITIAL_DELAY"
+
+# 4. Loop and send key presses as long as the flag file exists
+while [ -f "$FLAG_FILE" ]; do
+  xdotool keydown --clearmodifiers ctrl+Left
+  xdotool keyup ctrl+Left
+  sleep "$REPEAT_RATE_DELAY"
+done
+
+# 5. The flag file was removed (meaning key was released), so ensure keyup
+#    This is a bit redundant since we do keyup in the loop, but as a safeguard.
+#    More importantly, if the loop was interrupted, we might need a separate keyup.
+#    However, the xbindkeys release trigger should handle the final keyup.
+
+exit 0

@@ -1,0 +1,15 @@
+[Desktop Entry]
+Categories=Utility;
+Comment=An X compositor
+Exec=pkill picom
+GenericName=X compositor
+Icon=compton
+Keywords=compositor;composite manager;window effects;transparency;opacity;
+Name=Picom
+NoDisplay=false
+StartupNotify=false
+Terminal=false
+TryExec=picom
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

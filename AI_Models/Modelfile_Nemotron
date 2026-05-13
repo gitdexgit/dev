@@ -1,0 +1,2 @@
+FROM /home/dex/AI_Models/nemotron_logic.gguf
+PARAMETER temperature 0.4

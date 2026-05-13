@@ -1,0 +1,1323 @@
+# ~/.xbindkeys
+
+
+# For the benefit of emacs users: -*- shell-script -*-
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 1.8.7
+#
+# If you edit this file, do not forget to uncomment any lines
+# that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# To specify a key, you can use 'xbindkeys --key' or
+# 'xbindkeys --multikey' and put one of the two lines in this file.
+#
+# The format of a command line is:
+#    "command to start"
+#       associated key
+#
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+#
+
+# ==================================== Exceptions ============================
+# ========= FROM ME ========
+# EXCEPTIONS: The following can't be used sadly because of reasons in the workflow:
+
+# Mod4 + control+ Shift + alt + u this can't be used <-- openbox/keyd change that if you want to use it
+
+# =============================================================================
+
+# The release modifier is not a standard X modifier, but you can
+# use it if you want to catch release events instead of press events
+
+# By defaults, xbindkeys does not pay attention with the modifiers
+# NumLock, CapsLock and ScrollLock.
+# Uncomment the lines above if you want to pay attention to them.
+
+#keystate_numlock = enable
+# keystate_capslock = enable
+#keystate_scrolllock= enable
+
+# Examples of commands:
+
+# "xbindkeys_show"
+#   control+Shift + q
+
+# set directly keycode (here control + f with my keyboard)
+# "xterm"
+#   c:41 + m:0x4
+
+# specify a mouse button
+# "xterm"
+#   control + b:2
+
+#"xterm -geom 50x20+20+20"
+#   Shift+Mod2+alt + s
+#
+## set directly keycode (here control+alt+mod2 + f with my keyboard)
+#"xterm"
+#  alt + c:0x29 + m:4 + mod2
+#
+## Control+Shift+a  release event starts rxvt
+#"rxvt"
+#  release+control+Shift + a
+#
+## Control + mouse button 2 release event starts rxvt
+#"rxvt"
+#  Control + b:2 + Release
+
+
+###############Forbidden###############
+# Disclaimer:
+# We don't use mod4+h or mod4+l... Because they conflict other programs or my other programs.
+# I forget which programs but just don't do it. Yeah next Time I should specify what exactly they conflict with
+###############Forbidden###############
+
+# idk if this works I don't want to test or try the wakeup key on this old keyboard. Maybe later
+"true"
+XF86WakeUp
+
+
+# _Disclaimer)
+# W39 Sat, 27 at 05:23
+# ---START------------------------------------------------------------
+# ""Disclaimer""
+
+# DESCRIPTION: Before you use the following xbindkeys, this configuration assumes the
+#              user(me) already has the following:
+
+# Why?: Because it's advanced and works for me and this configuration is personal and for me
+
+# --------------------------------------------------------------------
+
+# Requirements to have before running xbindkeys with this following config:
+# - xbindkeys
+# - xdotool
+# - wmctrl
+# - rofi
+# - alacritty (or other terminal emulator)
+# - skippy-xd
+# - keyd
+# - flameshot
+# - scrot
+# - xclip
+# - wgetpaste
+# - iupload (custom script)
+# - copyq
+# - picom
+# - jgmenu
+# - pavucontrol
+# - xfce4-appfinder
+# - Custom scripts in ~/scripts/ddesk/ directory
+# - Custom binaries in ~/.local/bin/
+# - Japanese keyboard layout support (for mouse movement keys)
+# - Multiple monitor setup (for some positioning scripts)
+# - Openbox window manager (implied by some comments)
+# - Artha/GoldenDict-ng (for dictionary functions)
+# - brightness-controller (custom tool)
+
+# --------------------------------------------------------------------
+# ""Disclaimer""
+# ---END--------------------------------------------------------------
+
+##################### Configurations start here everything before this is just descriptions and disclaimers ##################################
+
+
+# _Reloads)
+# W51 Tue, 16 at 23:21
+# ---START------------------------------------------------------------
+# ""Reloads"" START
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION: Reloads shortcuts to reload things
+
+# Why?: To keep reloads hotkeys in one place
+
+# Solution?: It saves the hassle of running commands or using the mouse to reload programs
+#            which makes the workflows feel sluggish and not smooth.
+
+# --------------------------------------------------------------------
+
+"killall xbindkeys && sleep 0.1 && xbindkeys &"
+Mod4 + Shift + control + r
+
+# [Do Not] put in [openbox] play it safe. Same with W-Left and W-Right
+# This fucking shit doesn't fking work on i3. Fuck. Now I need
+# an alternative or a way or something... whatever man
+# "/home/dex/scripts/bash/window_rules/restart_win_pos.sh"
+# Mod4 + control + r
+
+# --------------------------------------------------------------------
+# ""Reloads"" END
+# ---END--------------------------------------------------------------
+
+# Please talk a little bit slowly thanks.
+"/home/dex/scripts/sts/fast-type.sh"
+Mod4 + p
+
+"/home/dex/scripts/sts/slow-type.sh"
+Mod4 + shift + p
+
+# I don't even use the normal thing that much to be honest.
+# "warpd --normal"
+# Mod4 + alt + c
+
+# Move the mouse from 1st monitor to right monitor
+# "xdotool mousemove 900 600"
+# Mod4 + minus
+#
+# "xdotool mousemove 2600 400"
+# Mod4 + equal
+
+# good bye xfce4-settings I hated it. no need for find cursor anyways
+# "xfce4-find-cursor & sleep 0.4; kill $!"
+# alt+shift+F1
+
+# I don't use this grid bullshit.
+# "warpd --grid"
+# Mod4 + alt + g
+
+
+# screen is fine, But I never use it... lol just move mouse right screen and yeah.
+# Maybe this is more valuable if you have a lot of monitors so leave it here. but
+# for me I only have 2 monitors so it's not that valuable to me.
+# "warpd --screen"
+# Mod4 + alt + z
+
+# --------------------------------------------------------------------
+# ""mouse movements for keyd to move the mouse around"" END
+# ---END--------------------------------------------------------------
+
+
+# _windows management)
+# W51 Tue, 16 at 23:35
+# ---START------------------------------------------------------------
+# ""windows management hotkeys to manage and help the WM"" START
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION: I move windows a lot and these help me manage windows
+
+# Why?: Because It's what it is. If you don't move windows around you are not doing it
+#       right. And moving windows with you mouse is a waste of time.
+
+# Solution?: To moving mouse with your hand and resizing with your hand. In a floating WM
+
+# --------------------------------------------------------------------
+
+
+# Window hider, this is a toggle.
+# hides and unhides if it's hidden for the current active window.
+# the script is simple
+# Really handy to hide window from SKIP_TASKBAR which hides it from alt+tab dialogue preview and
+# such programs
+# "~/.local/bin/window-hider.sh"
+# mod4+control+alt+h
+
+# ----- resizing windows almost relatively with keyboard ------------------
+
+# Reduce width (left)
+# "~/scripts/ddesk/resize_window.sh h -40"
+# Mod4 + control + alt + h
+
+# Increase width (right)
+# "scripts/ddesk/resize_window.sh h 40"
+# Mod4 + control + alt + l
+
+# # Decrease height (up)
+# "scripts/ddesk/resize_window.sh v -40"
+# Mod4 + control + alt + k
+
+# Increase height (down)
+# "scripts/ddesk/resize_window.sh v 40"
+# Mod4 + control + alt + j
+
+
+# ----- moving the whole window relatively around -------------
+
+# Reduce width (left)
+# "$HOME/scripts/ddesk/move_window2.sh x -40"
+# Mod4 + control + alt + Shift + h
+
+# Increase width (right)
+# "$HOME/scripts/ddesk/move_window2.sh x 40"
+# Mod4 + control + alt + Shift + l
+
+# # Decrease height (up)
+# "$HOME/scripts/ddesk/move_window2.sh y -40"
+# Mod4 + control + alt + Shift + k
+
+# Increase height (down)
+# "$HOME/scripts/ddesk/move_window2.sh y 40"
+# Mod4 + control + alt + Shift + j
+
+# also in openbox I have W-C-A-h and W-C-A-l which work well with W-S-h W-S-l for resizing windows
+
+# ----- Ways to move window to the right monitor with maximum size-------
+
+
+# This if for i3
+# "wmctrl -r :ACTIVE: -e 0,1921,159,1363,766"
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+Mod4+alt+l
+
+#control+shift+scrolldown
+"wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+  control+shift + b:5
+
+
+"wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+  control+mod4  + b:5
+
+
+# This if for i3
+# "wmctrl -r :ACTIVE: -e 0,1921,159,1363,766"
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+Mod4+alt+Right
+
+
+# This if for i3
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+Mod4+alt+Up
+
+# This if for i3
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+Mod4+alt+k
+
+#control+shift+scrollup
+"wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+  control+alt + b:4
+
+
+# This if for i3
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+Mod4+alt+Down
+
+# This if for i3
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+Mod4+alt+j
+
+#control+shift+scrolldown
+"wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+  control+alt + b:5
+
+# This if for i3
+# "wmctrl -r :ACTIVE: -e 0,0,84,1918,977"
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+Mod4+alt+Left
+
+# This if for i3
+# "wmctrl -r :ACTIVE: -e 0,0,84,1918,977"
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+Mod4+alt+h
+
+#control+shift+scrollup
+"wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+  control+shift + b:4
+
+"wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+  control+mod4 + b:4
+
+
+
+#top left
+"wmctrl -r :ACTIVE: -e 0,3,16,716,419"
+Mod4+alt+u
+
+# top right
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,721,16,716,419"
+Mod4+alt+o
+
+#bottom right
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,721,457,716,396"
+Mod4+alt+period
+
+#bottom right
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,456,716,396"
+Mod4+alt+m
+
+"i3-msg 'floating enable, border none, move position 0 0, resize set 1440 900'"
+alt + F11
+
+"~/scripts/i3/toggle-border.sh"
+alt + Shift + F11
+
+# This if for i3
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,3,19,1435,855"
+Mod4+alt+f
+
+# normal in the middle
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+Mod4+alt+slash
+
+#middle top
+# alternative on 1440x900
+# "wmctrl -r :ACTIVE: -e 0,361,18,716,419"
+# Mod4+alt+i
+
+#middle bottom
+# alternative on 1440x900
+"wmctrl -r :ACTIVE: -e 0,330,147,790,504"
+Mod4+alt+backslash
+
+# ----- ways to move window to your current cursor position
+# I just you know. Reminds me of the old days on windows, works on i3 floats
+"/home/dex/scripts/ddesk/nothing/capslock_movewindow_to_mouse_pos"
+control + Mod4 + q
+
+
+# ----------- quick Cycle between windows of the same window class regardless of desktop -----------
+
+# "sleep 0.1;~/scripts/ddesk/nothing/cycle_windows_same_class_alt_grave.sh"
+# mod4 + alt + grave
+#
+# "~/scripts/ddesk/nothing/cycle_windows_same_class_alt_grave.sh reverse"
+# mod4 + alt + shift + grave
+# alt+Shift+grave
+
+# --------------------------------------------------------------------
+# ""windows management hotkeys to manage and help the WM"" END
+# ---END--------------------------------------------------------------
+
+
+# _40 desktops)
+# W51 Tue, 16 at 23:51
+# ---START------------------------------------------------------------
+# ""move around 40 desktops right up left down"" START
+# --------------------------------------------------------------------
+
+# [[40 desktops]]
+
+# DESCRIPTION: I use 40 desktops, And this system works and moving relatively is I think I want to do
+#              I might not use it all the time but I like having options. Maybe in the future I'll remove it
+#              This only works with 40 desktops I think.
+
+# Why?: Because why not. Sometimes I feel like moving relative to what I see on this panel
+#       "https://i.imgur.com/xxcWibJ.png". I rarely do this but I use some of them. I like
+#       using alt 1 tap then moving to the letter of the desktop. Most of the time I'm just
+#       using desktops from 1 to 10. I like to see them as like tree. I like it this way because
+#       it's useful for like ssh and for like keeping things in one box.
+
+# Solution?: Clutter and too many windows in 1 desktop.
+
+# --------------------------------------------------------------------
+
+
+"xdotool set_desktop --relative -- 1"
+Control + Alt + Right
+
+# "xdotool set_desktop --relative -- 1"
+# Control + Alt + d
+
+"xdotool set_desktop --relative -- -1"
+Control + Alt + Left
+
+# "xdotool set_desktop --relative -- -1"
+# Control + Alt + a
+
+# "xdotool set_desktop --relative -- -10"
+# Control + Alt + Up
+#
+# "xdotool set_desktop --relative -- -10"
+# Control + Alt + w
+
+# "xdotool set_desktop --relative -- -10"
+# Mod4 + w
+
+# "xdotool set_desktop --relative -- 10"
+# Mod4 + s
+
+# "xdotool set_desktop --relative -- 10"
+# Control + Alt + Down
+#
+# "xdotool set_desktop --relative -- 10"
+# Control + Alt + s
+
+# "xdotool set_desktop --relative -- 10"
+# Mod4 + Alt + s
+
+# --------------------------------------------------------------------
+# ""move around 40 desktops right up left down"" END
+# ---END--------------------------------------------------------------
+
+
+# ---- flameshot, ways to take screenshots ----------
+
+# classic simple
+# "flameshot gui"
+# Print
+
+# Capture and restore focus to fix i3/flameshot bug
+"WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
+Print
+
+
+# copies directly to the clipboard. Might use it maybe (by maybe = never lol)
+# "flameshot gui --clipboard --accept-on-select"
+# mod4+control+c
+#
+
+
+
+
+# Fix focus bug for "copy to clipboard" shortcut
+# "WID=$(xdotool getactivewindow); flameshot gui --clipboard --accept-on-select; xdotool windowfocus $WID"
+#   mod4+control+c
+
+# I still prefer scrot because it's so fast, as opposed to `flameshot -gui
+# --clipboard --accept-on-select` so I'm going to use scrot when I want to
+# quickly coppy some image on my screen really fast. I just need to remember
+# the command lol because I'm too used to hititng print
+"scrot -s -o - | xclip -selection clipboard -t image/png"
+control+alt+c
+
+# fancy option selection, custom selection personal little thing
+"~/.local/bin/screenshot-menu"
+Mod4 + Print
+
+"~/scripts/video/record-area.sh"
+  Shift + Print
+
+"~/scripts/video/record-pause.sh"
+  Mod4 + Control + 3
+
+"~/scripts/video/record-stop.sh"
+  Mod4 + Control + 4
+
+
+
+
+# This is useless to me
+# "~/.local/bin/screenshot-menu"
+# mod4+alt+p
+
+# This is a hassle to hit but it's purpose is to be used by keyd. Related to keyd
+# "flameshot gui -s --pin"
+# Alt + control + shift + Print
+
+
+# It's smart to not apply the same logic for the i3 fix for the flameshot scrrenshto taking
+"flameshot gui -s --pin"
+Alt + Print
+
+# This I think is what capslock+r uses to pin. Related to keyd.
+# Tip:
+# ####
+# There is also capslock+r which will take a screenshot and then once you release
+# it will pin it no need to hit ok or enter.
+
+
+
+
+# ----------- Take fleeting notes in nvim workflow, note_taking ------------
+
+# This is a hotkey that suits this because it's something I use quite a lot. It will save
+# the hassle of like you know having to hit 4 keys each time. But, you know it became a habit
+# by not hhh.
+# "/home/dex/scripts/ddesk/nothing/fleet.note.sh"
+# Mod4 + alt + f
+
+# Dead. Using scratch.md instead
+# This became habit. But I should start using W-A-f more
+# "/home/dex/scripts/ddesk/nothing/fleet.note.sh"
+# control + alt + f
+
+# "alacritty -e tmux new-session -A -s scratch"
+# control + alt + f
+
+# dead, using scratch.md instead.
+# "/home/dex/scripts/ddesk/nothing/inbox.note.sh"
+# control + alt + i
+
+
+# ---------- Ways to upload things and upload stuff for references and easy quick sharing and previews ---------------
+
+
+# C-A-u
+# usage: iupload is a script I made in .local/bin/iupoad. it's in
+#       ~/scripts/tools/python/imgur it's exactly in:
+#       ~/scripts/tools/python/imgur/venv/bin/imgur-uploader
+# TIP: you can also run iupload with arguments. read .local/bin/iupload for
+#       more info
+"iupload"
+mod4 + alt + i
+
+
+# Upload contents of the clipboard--has to be text like-- to wgetpaste paste bin like
+# and give back link into the clipboard first register to be ready to be pasted for sharing.
+"xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt"
+mod4 + alt + p
+
+# # I'll keep this just because of habit but the control+alt+p makes way more sense.
+# "xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt"
+# Mod4 + control + Shift + p
+
+# ------- Way to open terminal -----------
+
+# This is stupid I dont use this
+# open terminal with tmux-sessionizer ready with terminal sticky on all windows.
+# "scripts/ddesk/tmux/stickyTerm.sh"
+# mod4 + control + alt + Shift + t
+
+# TIP:
+# mod4+semicolon, is available in openbox too for newterm.sh
+
+# this is also stupid I don't use this.... So either I do it manually or not
+# open terminal with tmux-sessionizer ready.
+# "scripts/ddesk/tmux/newTerm.sh"
+# control + alt + Shift + t
+
+# TIP:
+# C-A-T is the default way to open a terminal I have it in openbox. I like it.
+
+
+# _Activate windows)
+# ---START------------------------------------------------------------
+# ""Activate windows""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?: Because if I enabled the detect which monitor this thing is on.
+#       it will not work well sadly. So things that are always on 2nd
+#       monitor I'll just deal with them with `wmctrl -a _<leter>` and
+#       that's it really... until I understand what the heck is causing
+#       the problem
+
+# --------------------------------------------------------------------
+
+# so study the scripts that are in play in # "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _a_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# and then see if you can make something universal or something or tbh... why not just make each like window activation is make it it's own like script why not... idk you do you
+
+
+# btop yeah I get it _a_ is not btop but you know I like _a_ because it's close. you can think of it as in like aprocess
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _a_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# "wmctrl -a _a_"
+# Mod4 + Shift + a
+
+# free
+# "wmctrl -a 'Recent - Thunar'"
+# Mod4 + alt + r
+
+# Switched to this
+# "wmctrl -a 'Recent - Thunar'"
+# Mod4 + shift + r
+
+# "wmctrl -a Notes"
+# Mod4 + shift + i
+
+# "wmctrl -a _a_"
+# Mod5 + a
+
+# "wmctrl -a Dictionary"
+# Mod5 + s
+
+# "wmctrl -x -a Sublime"
+# Mod4 + shift + v
+
+# Copyq
+# "wmctrl -x -a copyq"
+# Mod4 + Shift + c
+
+# "wmctrl -a 'DesktopSwitch Settings' "
+# Mod4 + control + d
+
+# "wmctrl -x -a copyq"
+# Mod5 + d
+
+# [TMUX] conf
+# "wmctrl -a _f_"
+# Mod4 + Shift + f
+
+# "wmctrl -a _f_"
+# Mod5 + f
+
+#---- really core
+# "wmctrl -x -a qterminal"
+# Mod4 + Shift + q
+
+# "wmctrl -x -a qterminal"
+# Mod5  + q
+
+# "wmctrl -x -a com.mitchellh.ghostty"
+# Mod4 + Shift + d
+#
+# "wmctrl -x -a com.mitchellh.ghostty"
+# Mod5 + d
+
+# KeePassXC
+# "wmctrl -x -a KeePassXC"
+# Mod4 + Shift + p
+#
+# "wmctrl -x -a copyq"
+# Mod4 + Shift + o
+
+# "wmctrl -a wiki"
+# Mod4 + Shift + w
+
+# "wmctrl -x -a alacritty"
+# Mod4 + Shift + i
+
+
+# "wmctrl -x -a KeePassXC"
+# Mod5 + p
+
+# pannel I guess
+# "wmctrl -x -a Xfce4-panel && xdotool set_desktop_for_window $(xdotool search --class lxqt-panel) -1"
+# Mod4 + Shift + x
+
+# "wmctrl -x -a Xfce4-panel && xdotool set_desktop_for_window $(xdotool search --class lxqt-panel) -1"
+# Mod5 + x
+
+# pannel I guess
+# "wmctrl -x -a lxqt-panel && xdotool set_desktop_for_window $(xdotool search --class lxqt-panel) -1"
+# Mod4 + Shift + p
+#
+# "wmctrl -x -a lxqt-panel && xdotool set_desktop_for_window $(xdotool search --class lxqt-panel) -1"
+# Mod5 + p
+
+#gnome-clocks
+# "wmctrl -x -a 'org.gnome.clocks'"
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'org.gnome.clocks' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + alt + g
+
+# "wmctrl -x -a 'org.gnome.clocks'"
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'org.gnome.clocks' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod5 + g
+
+# scrcpy --otg
+# "wmctrl -x -a 'scrcpy'"
+# Mod4 + Shift + e
+
+# "wmctrl -x -a 'scrcpy'"
+# Mod5 + e
+
+# "wmctrl -a KMagnifier"
+# Mod4 + control + Shift + k
+#
+
+# goldendict
+# "wmctrl -a GoldenDict-ng"
+# Control + alt + g
+
+# "wmctrl -a GoldenDict-ng"
+# Mod4 + Shift + i
+
+# "wmctrl -a GoldenDict-ng"
+# Mod5 + g
+
+# "wmctrl -a GoldenDict-ng"
+# mod4 + shift + o
+
+# "wmctrl -a GoldenDict-ng"
+# Mod5 + alt + g
+
+# "thunar; wmctrl -x -a 'Thunar'"
+# Mod4 + alt + j
+
+# "wmctrl -x -a qterminal"
+# Mod5 + x
+
+# "wmctrl -a 'ksnip'"
+# Mod4 + Shift + bracketleft
+#
+# "wmctrl -a 'ksnip'"
+# Mod5 + bracketleft
+
+# I don't want I would want something like this
+# "wmctrl -a mpv"
+# Mod4 + Shift + m
+
+# I don't use this that often
+# musc.... just something I give title _m_ to it which stands for music
+# "wmctrl -a mpv"
+# "wmctrl -a _m_"
+# Mod4 + control + m
+
+# "wmctrl -a mpv"
+# Mod5 + m
+
+# "wmctrl -a _l_"
+# Mod4 + Shift + semicolon
+#
+# "wmctrl -a _l_"
+# Mod5 + l
+
+# [redendent]
+# Return to the previous dekstop
+# "$HOME/scripts/ddesk/nothing/move_to_last_desktop.sh"
+# Mod4 + Shift + z
+
+# activating zen window to quickly move to browser
+# "wmctrl -x -a zen"
+# Mod4 + shift + z
+
+# b stands for browser.
+# "wmctrl -x -a zen"
+# Mod4 + z
+
+# "wmctrl -x -a zen"
+# Mod4 + shift + z
+
+# "wmctrl -x -a zen"
+# Mod4 + shift + z
+
+# a differnet browser ? well easy just mod4+shift+b. ofc I use zen mainly on this system but you know I could.
+# make firefox the mdo4+b. anyway mod4+shift+b is saved for slot 2 for 2nd browser. anyways firefox is a must
+# browser on all OSes
+# "wmctrl -l -x | awk '/firefox/ && $2 == 0 { print $1; exit }' | xargs -r wmctrl -i -a"
+
+# this doesn't work lol
+# "wmctrl -l -x | awk '/firefox/ && $2 == 0 { print $1; exit }' | xargs -r wmctrl -i -a"
+# "wmctrl -a btop"
+# Mod4 + shift + b
+
+# "wmctrl -x -a legcord"
+# Mod4 + control + d
+
+# "wmctrl -x -a legcord"
+# Mod5  + d
+
+# "$HOME/scripts/ddesk/nothing/move_to_last_desktop.sh"
+# Mod5 + z
+
+# Virtual Machine Manager
+# "wmctrl -a 'Virtual Machine Manager'"
+# Mod4 + Shift + v
+
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'Virtual Machine Manager' && sleep 0.1 && xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod5 + v
+
+"~/.local/bin/mic-toggle.sh"
+mod4 + shift + m
+
+
+# unique exception This is 2nd repeatetion
+# scrcpy visuals
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'scrcpy' && sleep 0.1 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + control  + e
+
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'scrcpy' && sleep 0.1 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod5 + Shift + control + e
+
+# unique exceiption
+# restart_keyd_applicaton_focus.sh"
+# "~/scripts/ddesk/keyd/restart_keyd_applicaton_focus.sh"
+
+# this became uselss and I don't care really about keyd-aplicaton maper that much and tbh I just use a differnet browser to solve the problem
+# "xdotool keyup Super Shift Alt Control; sleep 0.1; xdotool key XF86Mail; sleep 0.1; xdotool key q ; sleep 0.05 ; xdotool key Super"
+# Mod4 + Shift + r
+
+# "~/scripts/ddesk/keyd/restart_keyd_applicaton_focus.sh"
+# Mod5 + r
+
+# Audacity
+# I don't use audacity as much or any like voice recording things... like there are voice recording solutions and what not... I'm not sure like how like this plays but whatever. I prefer like just notes writing and whatever.
+# maybe when I'm trying to like improve the way I talk and pronounce things maybe and understanding sounds or whatever... you know learning auditory english
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a 'Audacity' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + t
+
+# "wmctrl -a task"
+# Mod4 + Shift + t
+
+# "wmctrl -x -a Audacity"
+# Mod4 + Shift + y
+
+# switch to Obsidian
+# I never use this tbh
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a obsidian && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + o
+
+# switch to Terminal _ob_ Obsidian
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _o_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + control + o
+
+# what even is this I don't use this
+# # _dt_ date and time terminal alone
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a '_dt_' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + semicolon
+
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _y_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + y
+
+# I don't use this that often
+# Thunderbird for mail
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a Thunderbird && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + e
+
+# I don't use this that much
+# GIMP
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a GIMP && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + i
+
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a GIMP && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod5 + i
+
+# pulsmixer
+# "wmctrl -a _mi_"
+# Mod4 + control + Shift + m
+
+
+# kazam
+"wmctrl -x -a Kazam"
+Mod4 + control + k
+
+
+# I never use these anyways
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a VLC && wmctrl -x -a Thunar && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + backslash
+#
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a irssi && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + apostrophe
+
+# what even is this lol
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _f_ fleet && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + e
+
+# # this should be paint
+# # Activating scrcpy The Phone. I should probably do one for VNC you know tigervnc through adb port forwarding or ssh port forwarding... ssh is more secure
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'Redmi Note 8' && sleep 0.1 && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + p
+
+# I don't use this man just space+7 no big deal mate
+# Activate the window QEMU/KVM The VM runing
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a 'QEMU/KVM' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + x
+
+# This changed a lot this is not as it used to be
+# Terminals _d_ _t_ and clock _l_
+# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _t_ -x -a Clocks -a '_dt_' && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
+# Mod4 + Shift + h
+
+
+# --------------------------------------------------------------------
+# ""Activate windows""
+# ---END--------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+# ---- Miscs ----
+
+
+
+#==== Moved to openbox because of performance so my system feels snappy
+# Run this from openbox it's faster
+# "alacritty --working-directory ~/"
+# Control + Alt + t
+
+"~/scripts/yt/yt_get_current_player_timestamps.sh"
+Control + Alt + t
+
+# "xterm"
+# Control + Mod4 + t
+
+# Very useful I use it a lot, this is kinda ergonomic
+"rofi -show drun -show-icons"
+alt + F2
+
+"xfce4-appfinder -c"
+alt + F3
+
+
+
+
+# Past in an embeded format
+"/home/dex/scripts/ddesk/clipboard-manipulation/obyt-but-hotkey.sh"
+Control + shift + Alt + v
+
+"scripts/ddesk/clipboard-manipulation/remove-new-lines-add-space.sh"
+Control + Alt + v
+
+#===END
+
+
+"autoshot-toggle"
+control + mod4 + a
+
+
+# Pause/Resume
+"autoshot-pause"
+control + mod4 + 1
+
+
+# "autoshot-stop"
+# control + mod4 + 2
+
+# Turns on sound mixer, there is also ]mixer to trigger it as well.
+"GTK_THEME=Arc-Dark pavucontrol"
+control + mod4 + 7
+
+"env ADW_DEBUG_COLOR_SCHEME=prefer-dark gnome-sound-recorder"
+control + mod4 + 8
+
+"env GTK_THEME=Arc-Dark gnome-clocks"
+control + mod4 + 9
+
+# Turns off the screens of both monntors, works on old monitors
+# I prefer the turn_screen_off.sh to trigger it.
+"alacritty -e  xset dpms force off"
+Mod4 + Shift + alt + control + 0
+
+
+
+
+# ---- Miscs END----
+
+
+# change the name of the window
+"/home/dex/scripts/ddesk/nothing/rename_window.sh > /tmp/rename_window.log 2>&1"
+Mod4 + control + t
+
+# Change the name of the workspace
+# https://github.com/gitdexgit/rncw
+"rncd"
+Mod4 + alt + t
+
+
+# _skippy-xd)
+# W45 Mon, 03 at 14:46
+# ---START------------------------------------------------------------
+# ""skippy-xd""
+# --------------------------------------------------------------------
+
+# [[alt tab]]
+
+# DESCRIPTION: Skippy-xd is a simple Alt+tab switcher with a preview. Here is the repo to
+#              read more aoout it. https://github.com/felixfung/skippy-xd
+
+# Why?: Because openbox alt+tab sucks. And skippy-xd does exactly what I want
+
+# Solution?: ....
+
+# --------------------------------------------------------------------
+
+# Classic Alt+tab with skippy-xd <-- 100% I want this
+# This is good on a floating window but on i3. this is meh
+# "skippy-xd --switch --pivot Alt_L --next --config ~/.config/skippy-xd/skippy-xd.rc"
+# Alt + Tab
+
+# companion classic
+# THis is basically alt+tab but this one gives you preview hehehe so you hold super heheh
+# To be honest I removed hte pivot I don't pivot a lot or use it like alt tab.
+# I'm on i3 baby the concept of alt tab for me is way way you know differnet.
+# "skippy-xd --expose --config ~/.config/skippy-xd/skippy-xd2.rc"
+# Mod4 + Tab
+
+# Unusable on i3...
+# companion classic, just for compatibility so mod4+shift+tab works in preview all windows on all monitors
+# THis is basically alt+shift+tab but this one gives you preview hehehe so you hold super heheh
+# "skippy-xd --expose --config ~/.config/skippy-xd/skippy-xd2.rc"
+# Mod4 + Shift + Tab
+
+# Show all windows of the current workspace. Similar to rofi windowcd
+"WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
+mod4+comma
+
+# Show windows of the same class of the current workspace. Basically rofi windowcd but only for current class of windows
+"WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --desktop -1 --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
+mod4+slash
+
+# Unusable on i3...
+# "WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
+# mod4+control+alt+comma
+# Classic show only preview of current active window on current desktop. Very useful for terminals
+# This is also used with capslock+super and capslock+/
+# "WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
+# mod4+period
+
+"skippy-xd --expose --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow))"
+mod4+control+alt+period
+
+"skippy-xd --expose --desktop -1 --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc"
+mod4+period
+# mod4+control+alt+slash
+
+# Same of mod4+period.
+"skippy-xd --expose --desktop -1 --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc"
+mod4+control+alt+slash
+
+# better than hitting calculator key
+"skippy-xd --paging --config ~/.config/skippy-xd/skippy-xd2.rc"
+alt+F1
+
+# --------------------------------------------------------------------
+# ""skippy-xd""
+# ---END--------------------------------------------------------------
+
+
+# END----- Send windows to Desktops, specefic locations on desktops END ----
+
+
+# ---- alt ----
+
+# --[]-- [ snippets simulation ] ----
+
+# abandoned
+# "/home/dex/scripts/ddesk/personal_chat/u1_Searcher.sh"
+# Mod4 + F1
+#
+# "/home/dex/scripts/ddesk/personal_chat/u2_Noter.sh"
+# Mod4 + F2
+#
+# "/home/dex/scripts/ddesk/personal_chat/u3_Tester.sh"
+# Mod4 + F3
+#
+# "/home/dex/scripts/ddesk/personal_chat/u4_Editor.sh"
+# Mod4 + F4
+#
+# "/home/dex/scripts/ddesk/personal_chat/u5_Chater.sh"
+# Mod4 + F5
+#
+# "/home/dex/scripts/ddesk/personal_chat/u6_Suggester.sh"
+# Mod4 + F6
+#
+# "/home/dex/scripts/ddesk/personal_chat/u7_Problems.sh"
+# Mod4 + F7
+#
+# "/home/dex/scripts/ddesk/personal_chat/u8_Rater.sh"
+# Mod4 + F8
+#
+# "/home/dex/scripts/ddesk/personal_chat/u9_Empty.sh"
+# Mod4 + F9
+#
+# "/home/dex/scripts/ddesk/personal_chat/u10_Idea.sh"
+# Mod4 + F10
+#
+# "/home/dex/scripts/ddesk/personal_chat/u11_System.sh"
+# Mod4 + F11
+#
+# "/home/dex/scripts/ddesk/personal_chat/u12_Watcher.sh"
+# Mod4 + F12
+# END--[]-- [ snippets simulation ] END----
+
+# highlight something with mouse or keyboard and hit it, it only fixes capitalizations and badly put commas and shit, it probably
+# does't work in nvim but I'll figure out something to cook
+"/home/dex/scripts/ddesk/correct_text_spelling.sh"
+    Mod4 + Shift + control + g
+
+# Uses language tool free API to only correct capitalization mistakes and commas.
+# highlight something with mouse or keyboard and hit it, it only fixes capitalizations and badly put commas and shit
+"/home/dex/scripts/ddesk/correct_text.sh"
+    Mod4 + Shift + control + alt + g
+
+# Highlight something with mouse and then it will all be capitalized.
+"/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
+Mod4 + Shift + control + u
+
+"/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
+Mod4 + Shift + control + l
+
+# qwen 1.5b local
+# My llm fix grammar tool locally on my computer
+"~/scripts/ai/fix_text_from_clipboard.sh"
+Mod4 + control + g
+
+
+
+
+# _)
+# W39 Sat, 27 at 05:14
+# ---START------------------------------------------------------------
+# ""Computer Resource Managment""
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# --------------------------------------------------------------------
+
+# status: [doesn't work at the moment but I have alternatives]
+# I gave up on this it's not working man
+# "/home/dex/scripts/cpu/simple_pause_unpause_process.sh"
+# Control + Shift + alt + p
+
+# nice for some reason this doesn't work on this Speed star keyboard... wow good. Now I have to type xkill
+# whatever man
+# "xkill"
+# Control + alt + x
+
+# Control + alt + x doesn't fucking work
+"xkill"
+mod4+shift+x
+
+# To Continue/Unpause a window
+"xcontrol -c"
+Control + alt + c
+
+# To Pause a window
+"xcontrol -p"
+Control + alt + z
+
+# --------------------------------------------------------------------
+# ""Computer Resource Managment""
+# ---END--------------------------------------------------------------
+
+# _ghostty)
+# # W45 Wed, 05 at 03:23
+# # ---START------------------------------------------------------------
+# # ""ghosty""
+# # --------------------------------------------------------------------
+#
+# # [[]]
+#
+# # DESCRIPTION:
+#
+# # Why?: because qterminal dropdown, some programs like nvim with certain configs makes it laggy
+#           so we are going to use ghossty instead. I do still use 2 drop down terminals because
+#           qterminal is well made. at least for lightweights and commands.
+#
+# # Solution?:
+#
+# # --------------------------------------------------------------------
+
+
+# "qterminal -d"
+# Mod4 + F12
+
+
+######### !IMPORTANT ##################
+# I changed the layout bellow, with tdrop I only use the window manager i3 so I moved them to i3 config
+# That's why most of what is bellow is commented out
+#
+# ### extra details
+# It is way faster and efficient to run the commands directly there. It's like having tabs on my keyboard
+# No need to have so many tabs open on my qterminal esessential tabs are on my keyboard anyways and it's
+# super fast. the fastest terminal ppossible is with the scratch I like that a lot. But it's possible to
+# have other stuff
+#########################################
+
+
+
+# I have mod4+g in openbox and I have this too.
+# What ends up happening is that now I have 2
+# ghostty dropdown terminals
+# "~/scripts/ddesk/terminal/alacritty.sh"
+# mod4+shift+f
+
+
+
+
+# "~/scripts/ddesk/terminal/urxvtc.sh"
+# mod4+control+f
+
+# "~/scripts/ddesk/terminal/urxvtc.sh"
+# mod4+BackSpace
+
+# I know you want to try out W-S-a but it doesn't work in i3 idk why.
+# mod4+shift+a
+
+# "~/scripts/ddesk/terminal/ghostty.sh"
+# control+grave
+
+# "qterminal -d"
+# mod4+shift+g
+
+
+# "qterminal -d"
+# mod4+shift+g
+
+# This is no need to be using alacritty... Alacritty is not meant to be used
+# as a dropdown terminal
+# "~/scripts/ddesk/terminal/alacritty.sh"
+# mod4 + shift +a
+
+
+# You cannot put C-grave in openbox
+# "~/scripts/ddesk/terminal/alacritty.sh"
+# control+grave
+
+# # --------------------------------------------------------------------
+# # ""ghosty""
+# # ---END--------------------------------------------------------------
+#
+
+# _)
+# W04 Mon, 19 at 05:45
+# ---START------------------------------------------------------------
+# ""rofi"" START
+# --------------------------------------------------------------------
+
+# [[]]
+
+# DESCRIPTION:
+
+# Why?:
+
+# Solution?:
+
+# --------------------------------------------------------------------
+
+# intead of using the pannel terminal, this brings the terminal in a rofi like to you.
+# it has some problems, maybe but runs basic commands like turning off the computer.
+# really awesome it's a pannel terminal rofi like with history and search sugguestions.
+# also good for launching scripts with good naming.
+"~/scripts/rofi/rofi-run.sh"
+mod4+F1
+
+# rofi-dmenu
+"/home/dex/scripts/rofi/rofi-dmenu.sh"
+mod4+alt+d
+
+#--rofi things to complement skippy-xd on i3:
+
+# show only current windows on current workspace
+"rofi -show windowcd"
+mod4+t
+
+"~/scripts/rofi/quick-search-i3.sh"
+mod4+y
+
+"~/scripts/rofi/rofi-web-search.sh"
+mod4+shift+y
+
+# context menu using rofi, I can't live without it for sending windows to different desktops.
+# sadly i3 does't have it so we will make do with rofi.
+"/home/dex/scripts/i3/i3-window-mover.sh"
+Alt + space
+
+# --------------------------------------------------------------------
+# ""rofi"" END
+# ---END--------------------------------------------------------------
+
+# I like mod4+v and mod4+b for split v and split h to be next to each other also for the sake of holding "a" in kyed you know modifiers
+# "boomer"
+# Mod4 + b
+
+
+################################## End of xbindkeys configuration #

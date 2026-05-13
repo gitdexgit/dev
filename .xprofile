@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# ~/.Xprofile
+xset r rate 240 68
+xset dpms 1800 1800 1800
+xset s off -dpms
+
+# If HDMI-1 is connected, turn off the laptop screen (eDP-1)
+if xrandr | grep "HDMI-1 connected"; then
+    xrandr --output eDP-1 --off --output HDMI-1 --auto --primary
+fi
+
+
+## These accessibility settings are meant for goodnight_mouse a cool project that should be merged with warpd and done beter
+# Enable Accessibility Toolkits for goodnight-mouse with the following block:
+# export GNOME_ACCESSIBILITY=1
+# export GTK_MODULES=gail:atk-bridge
+# Some accessibility stuff on for some programs I stopped used
+# export QT_ACCESSIBILITY=1
+# export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+# export ACCESSIBILITY_ENABLED=1
+

@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# This script checks if the active window is Kitty, and if so,
+# simulates CapsLock then backspaces to remove "387u".
+# It assumes xdotool is installed and you are using X11.
+
+# Get the ID of the currently active window
+ACTIVE_WINDOW_ID=$(xdotool getactivewindow)
+
+# Get the window class name of the active window
+# The class name is often a reliable way to identify the application
+WINDOW_CLASS=$(xdotool getwindowclassname "$ACTIVE_WINDOW_ID")
+
+# Check if the window class is "kitty"
+# (You can verify this by running 'xdotool getactivewindow getwindowclassname'
+# in a terminal when Kitty is active)
+if [ "$WINDOW_CLASS" == "kitty" ]; then
+    # --- Actions to perform ONLY IF the window is Kitty ---
+
+    # Simulate the CapsLock key press
+    # This is needed because we will map this *script* to the CapsLock key,
+    # preventing the normal CapsLock from reaching Kitty initially.
+    xdotool key Caps_Lock
+
+    # Wait a very short moment for Kitty to output "387u"
+    # You might need to adjust this value (e.g., 0.05, 0.1, 0.15)
+    # depending on how quickly Kitty registers the key and outputs.
+    # Start with 0.1 seconds.
+    sleep 0.1
+
+    # Simulate pressing Backspace 4 times to remove the "387u"
+    xdotool key BackSpace
+    xdotool key BackSpace
+    xdotool key BackSpace
+    xdotool key BackSpace
+
+    # Optional: add a small delay between backspaces if needed, e.g.:
+    # for i in {1..4}; do xdotool key BackSpace; sleep 0.01; done
+
+    # You could add a visual cue here for debugging if needed, e.g.
+    # notify-send "Kitty CapsLock fixed"
+
+else
+    # --- Action to perform IF the window is NOT Kitty ---
+
+    # Simulate the CapsLock key press so it works normally in other apps
+    xdotool key Caps_Lock
+
+    # Optional: add a visual cue for debugging if needed, e.g.
+    # notify-send "CapsLock in other app"
+fi

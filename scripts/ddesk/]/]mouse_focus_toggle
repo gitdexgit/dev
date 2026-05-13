@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Script to toggle Openbox's 'focus follows mouse' setting
+
+CONFIG_FILE="$HOME/.config/openbox/rc.xml" # Path to your Openbox config
+# For LXQt, this is often lxqt-rc.xml, ensure this is the correct active file.
+# If you copied the system /etc/xdg/openbox/rc.xml to ~/.config/openbox/rc.xml, that's fine.
+# If LXQt uses ~/.config/openbox/lxqt-rc.xml, change this variable.
+
+BACKUP_FILE="${CONFIG_FILE}.bak_followmouse_toggle" # Optional backup
+
+# Define namespace URI and a prefix for it
+NAMESPACE_URI="http://openbox.org/3.4/rc"
+NS_PREFIX="ob" # You can choose any prefix, 'ob' is for Openbox
+
+# Ensure xmlstarlet is installed
+if ! command -v xmlstarlet &> /dev/null; then
+    echo "xmlstarlet could not be found. Please install it."
+    exit 1
+fi
+
+# 1. Read the current value of <followMouse>, accounting for namespace
+CURRENT_STATE=$(xmlstarlet sel -N ${NS_PREFIX}="${NAMESPACE_URI}" -t -v "//${NS_PREFIX}:openbox_config/${NS_PREFIX}:focus/${NS_PREFIX}:followMouse" "$CONFIG_FILE" 2>/dev/null)
+
+# Check if reading was successful
+if [ -z "$CURRENT_STATE" ]; then
+    echo "Error: Could not read current <followMouse> state from $CONFIG_FILE"
+    echo "Debug Info: Ensure file exists, has correct permissions, and XPath/namespace is correct."
+    echo "Attempted XPath: //${NS_PREFIX}:openbox_config/${NS_PREFIX}:focus/${NS_PREFIX}:followMouse"
+    echo "Namespace: ${NS_PREFIX}=${NAMESPACE_URI}"
+    # To test directly in terminal:
+    # xmlstarlet sel -N ob="http://openbox.org/3.4/rc" -t -v "//ob:openbox_config/ob:focus/ob:followMouse" "$HOME/.config/openbox/rc.xml"
+    exit 1
+fi
+
+NEW_STATE=""
+NOTIFICATION_MSG=""
+
+# 2. Determine the new state
+if [ "$CURRENT_STATE" = "yes" ]; then
+    NEW_STATE="no"
+    NOTIFICATION_MSG="Focus Follows Mouse: OFF (Click to Focus)"
+elif [ "$CURRENT_STATE" = "no" ]; then
+    NEW_STATE="yes"
+    NOTIFICATION_MSG="Focus Follows Mouse: ON"
+else
+    echo "Error: Unknown current state '$CURRENT_STATE' for <followMouse> in $CONFIG_FILE."
+    exit 1
+fi
+
+# Optional: Create a backup
+# cp "$CONFIG_FILE" "$BACKUP_FILE"
+
+# 3. Update the XML file with the new state, accounting for namespace
+xmlstarlet ed -L -N ${NS_PREFIX}="${NAMESPACE_URI}" \
+    -u "//${NS_PREFIX}:openbox_config/${NS_PREFIX}:focus/${NS_PREFIX}:followMouse" \
+    -v "$NEW_STATE" "$CONFIG_FILE"
+
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to update $CONFIG_FILE with xmlstarlet."
+    # mv "$BACKUP_FILE" "$CONFIG_FILE" # If using backup
+    exit 1
+fi
+
+# 4. Tell Openbox to reconfigure
+openbox --reconfigure
+
+if [ $? -eq 0 ]; then
+    echo "Openbox reconfigured. Focus follows mouse is now: $NEW_STATE"
+    if command -v notify-send &> /dev/null; then
+        notify-send "Openbox Focus Mode" "$NOTIFICATION_MSG" -i input-mouse
+    fi
+else
+    echo "Error: 'openbox --reconfigure' failed."
+fi
+
+exit 0

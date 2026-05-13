@@ -1,0 +1,119 @@
+#!/bin/bash
+
+# User's original comments:
+#what to do now?
+# I still need to make it disable telink wireless keyboard because i keep holding shift and what not right... to disable the keyboard... but i don't undersatnd this script as much because i'm not the one who wrote it right.. so yeah but for now i'll just remove my hand from my mouse
+
+# --- Configuration ---
+INITIAL_X=3800
+INITIAL_Y=800
+# MOVE_KEY="m" # No longer needed
+# FLING_OFFSET_X=1000 # No longer needed
+# FLING_OFFSET_Y=0    # No longer needed
+
+# MENU_APPEAR_DELAY=0.2 # No longer needed
+# POST_MOVE_KEY_DELAY=0.1 # No longer needed
+# POST_FLING_DELAY=0.05   # No longer needed
+POST_INITIAL_MOVE_DELAY=0.05
+POST_MINIMIZE_DELAY=0.1 # Small delay after minimizing, if needed
+
+# --- Mouse Device Identification ---
+echo "Attempting to identify Razer mouse..."
+# User-provided specific grep chain for Razer Basilisk Essential (non-keyboard pointer)
+MOUSE_DEVICE_ID=$(xinput list | grep -E "↳ Razer Razer Basilisk Essential\s+id=" | grep "slave  pointer" | grep -oP 'id=\K\d+' | head -n 1)
+
+# Alternative robust grep (less reliant on the leading arrow symbol):
+# MOUSE_DEVICE_ID=$(xinput list | grep "Razer Razer Basilisk Essential" | grep -v "Keyboard" | grep "slave  pointer" | grep -oP 'id=\K\d+' | head -n 1)
+
+if [ -z "$MOUSE_DEVICE_ID" ]; then
+    echo "Warning: Specific Razer mouse '↳ Razer Razer Basilisk Essential' not found with the primary grep."
+    echo "Attempting alternative grep for 'Razer Razer Basilisk Essential' (non-keyboard)..."
+    MOUSE_DEVICE_ID_ALT=$(xinput list | grep "Razer Razer Basilisk Essential" | grep -v "Keyboard" | grep "slave  pointer" | grep -oP 'id=\K\d+' | head -n 1)
+    if [ -n "$MOUSE_DEVICE_ID_ALT" ]; then
+        MOUSE_DEVICE_ID="$MOUSE_DEVICE_ID_ALT"
+        echo "Found Razer mouse with alternative grep: ID $MOUSE_DEVICE_ID"
+    fi
+fi
+
+# Fallback to Virtual core pointer if specific Razer mouse still not found
+if [ -z "$MOUSE_DEVICE_ID" ]; then
+    echo "Warning: Razer mouse not found by specific name."
+    VIRTUAL_CORE_POINTER_ID=$(xinput list | grep 'Virtual core pointer' | grep -oP 'id=\K\d+' | head -n 1)
+    if [ -n "$VIRTUAL_CORE_POINTER_ID" ]; then
+        echo "Falling back to disabling Virtual core pointer: ID $VIRTUAL_CORE_POINTER_ID"
+        MOUSE_DEVICE_ID="$VIRTUAL_CORE_POINTER_ID"
+    else
+        echo "ERROR: Could not find a suitable pointer device ID to disable (Razer or Virtual Core)."
+        exit 1
+    fi
+fi
+
+# --- Function to re-enable mouse (used by trap and at script end) ---
+MOUSE_ID_THAT_WAS_DISABLED=""
+re_enable_mouse() {
+    if [ -n "$MOUSE_ID_THAT_WAS_DISABLED" ]; then
+        echo "Re-enabling pointer device (ID: $MOUSE_ID_THAT_WAS_DISABLED)..."
+        xinput enable "$MOUSE_ID_THAT_WAS_DISABLED"
+    fi
+}
+
+# --- Main Script Logic ---
+WID=$(xdotool getactivewindow)
+if [ -z "$WID" ]; then
+    echo "ERROR: Could not get active window ID."
+    exit 1
+fi
+
+# Disable the identified pointer device
+if [ -n "$MOUSE_DEVICE_ID" ]; then
+    echo "Attempting to disable pointer device (ID: $MOUSE_DEVICE_ID) for script duration..."
+    xinput disable "$MOUSE_DEVICE_ID"
+    MOUSE_ID_THAT_WAS_DISABLED="$MOUSE_DEVICE_ID"
+    trap re_enable_mouse EXIT INT TERM
+else
+    echo "Critical Warning: No pointer device ID was set for disabling, but script is proceeding."
+    echo "This shouldn't happen. User mouse input WILL interfere."
+fi
+
+# --- Critical Section (where mouse should be disabled) ---
+echo "Moving window $WID to $INITIAL_X, $INITIAL_Y"
+xdotool windowmove "$WID" "$INITIAL_X" "$INITIAL_Y"
+sleep "$POST_INITIAL_MOVE_DELAY"
+
+# Ensure window has focus before attempting to minimize it
+# (though windowminimize usually works directly with WID)
+xdotool windowfocus --sync "$WID"
+xdotool windowactivate --sync "$WID" # May or may not be needed, but good for consistency
+
+echo "Minimizing window $WID"
+xdotool windowminimize "$WID"
+sleep "$POST_MINIMIZE_DELAY"
+
+# --- REMOVED FLING LOGIC ---
+# xdotool keydown alt key space keyup alt
+# sleep "$MENU_APPEAR_DELAY"
+
+# xdotool key "$MOVE_KEY"
+# sleep "$POST_MOVE_KEY_DELAY"
+
+# eval $(xdotool getmouselocation --shell) # Not needed anymore
+# ORIG_MOUSE_X=$X # Not needed anymore
+# ORIG_MOUSE_Y=$Y # Not needed anymore
+
+# xdotool mousemove_relative -- "$FLING_OFFSET_X" "$FLING_OFFSET_Y"
+# sleep "$POST_FLING_DELAY"
+
+# xdotool click 1
+# --- End of Critical Section ---
+
+# Explicitly re-enable mouse and clear trap for normal exit
+re_enable_mouse
+trap - EXIT INT TERM # Clear the trap
+
+# --- REMOVED MOUSE MOVE BACK LOGIC ---
+# (Mouse wasn't moved programmatically in this version, so no need to move it back)
+# if [ -n "$ORIG_MOUSE_X" ] && [ -n "$ORIG_MOUSE_Y" ]; then
+#    xdotool mousemove "$ORIG_MOUSE_X" "$ORIG_MOUSE_Y"
+# fi
+
+echo "Done. Window moved and minimized."

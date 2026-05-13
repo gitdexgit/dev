@@ -1,0 +1,11 @@
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+
+
+QT_QPA_PLATFORMTHEME=qt5ct
+# I'm not sure how to use this thing ? I'm really not sure... because this bellow isn't working son
+# QT_QPA_PLATFORMTHEME=kde
+# export QT_QPA_PLATFORMTHEME=kde
+

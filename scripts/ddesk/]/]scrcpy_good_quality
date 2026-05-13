@@ -1,0 +1,3 @@
+#!/bin/bash
+
+alacritty -e  scrcpy -b 16M -m 1920

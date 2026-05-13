@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#Define paths
+VENV_PYTHON="$HOME/tools/pocket-tts/.venv/bin/python"
+SCRIPT_PATH="$HOME/tools/pocket-tts/pocket_daemon.py"
+
+$VENV_PYTHON $SCRIPT_PATH "$@"
+

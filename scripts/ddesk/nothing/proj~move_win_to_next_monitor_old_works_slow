@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# --- Optimized script to move the active window to the next monitor ---
+
+# 1. Get the ID of the currently active window.
+WID=$(xdotool getactivewindow)
+
+if [ -z "$WID" ]; then
+  exit 1
+fi
+
+# 2. Get information about all connected monitors ONCE.
+#    And parse all necessary info (name, width, height, offset_x, offset_y)
+#    We'll store this in associative arrays for easy lookup by monitor name or index.
+declare -A MONITOR_DATA_BY_NAME # Associative array: MONITOR_DATA_BY_NAME[DP-1]="1920x1080+0+0"
+declare -a MONITOR_NAMES_ORDERED # Indexed array to maintain order: MONITOR_NAMES_ORDERED[0]="DP-1"
+
+# Read xrandr output line by line
+XRANDR_OUTPUT=$(xrandr --query) # Store the output of xrandr
+
+while IFS= read -r line; do
+  # Check if the line indicates a connected monitor and contains geometry
+  if [[ "$line" == *" connected"* && "$line" =~ ([0-9]+x[0-9]+\+[0-9]+\+[0-9]+) ]]; then
+    MONITOR_NAME=$(echo "$line" | awk '{print $1}') # Get the monitor name (first word)
+    MONITOR_GEOMETRY="${BASH_REMATCH[1]}"         # Get the full geometry string (e.g., 1920x1080+0+0)
+
+    MONITOR_NAMES_ORDERED+=("$MONITOR_NAME")
+    MONITOR_DATA_BY_NAME["$MONITOR_NAME"]="$MONITOR_GEOMETRY"
+  fi
+done <<< "$XRANDR_OUTPUT" # Process the stored xrandr output
+
+NUM_MONITORS=${#MONITOR_NAMES_ORDERED[@]}
+
+if [ "$NUM_MONITORS" -le 1 ]; then
+  exit 0
+fi
+
+# 3. Determine which monitor the active window is currently on.
+eval $(xdotool getwindowgeometry --shell "$WID") # Sets $X, $Y, $WIDTH, $HEIGHT
+
+WINDOW_CENTER_X=$((X + WIDTH / 2))
+# WINDOW_CENTER_Y=$((Y + HEIGHT / 2)) # If needed for Y checks
+
+CURRENT_MONITOR_INDEX=-1
+
+for i in "${!MONITOR_NAMES_ORDERED[@]}"; do
+  MONITOR_NAME="${MONITOR_NAMES_ORDERED[$i]}"
+  MONITOR_GEOMETRY="${MONITOR_DATA_BY_NAME[$MONITOR_NAME]}" # Get geometry from our stored data
+
+  # Parse monitor geometry: WIDTHxHEIGHT+OFFSET_X+OFFSET_Y
+  # Using bash string manipulation for speed instead of many 'cut' calls
+  MONITOR_WIDTH_PART="${MONITOR_GEOMETRY%%x*}" # 1920
+  REST_AFTER_WIDTH="${MONITOR_GEOMETRY#*x}"   # 1080+0+0
+
+  # HEIGHT_PART="${REST_AFTER_WIDTH%%+*}"     # 1080 (Uncomment if MONITOR_HEIGHT is needed)
+  REST_AFTER_HEIGHT="${REST_AFTER_WIDTH#*+}"  # 0+0
+
+  MONITOR_OFFSET_X="${REST_AFTER_HEIGHT%%+*}" # 0
+  MONITOR_OFFSET_Y="${REST_AFTER_HEIGHT#*+}"   # 0
+
+  # MONITOR_HEIGHT=$HEIGHT_PART # Uncomment if needed for Y checks
+
+  if (( WINDOW_CENTER_X >= MONITOR_OFFSET_X && WINDOW_CENTER_X < (MONITOR_OFFSET_X + MONITOR_WIDTH_PART) )); then
+    CURRENT_MONITOR_INDEX=$i
+    break
+  fi
+done
+
+if [ "$CURRENT_MONITOR_INDEX" -eq -1 ]; then
+  CURRENT_MONITOR_INDEX=0 # Fallback
+fi
+
+# 4. Calculate the index of the next monitor.
+NEXT_MONITOR_INDEX=$(( (CURRENT_MONITOR_INDEX + 1) % NUM_MONITORS ))
+TARGET_MONITOR_NAME="${MONITOR_NAMES_ORDERED[$NEXT_MONITOR_INDEX]}"
+
+# 5. Get the geometry of the target monitor from our stored data.
+TARGET_MONITOR_GEOMETRY="${MONITOR_DATA_BY_NAME[$TARGET_MONITOR_NAME]}"
+
+# Parse target monitor's offset using bash string manipulation
+TARGET_REST_AFTER_WIDTH="${TARGET_MONITOR_GEOMETRY#*x}"
+TARGET_REST_AFTER_HEIGHT="${TARGET_REST_AFTER_WIDTH#*+}"
+TARGET_OFFSET_X="${TARGET_REST_AFTER_HEIGHT%%+*}"
+TARGET_OFFSET_Y="${TARGET_REST_AFTER_HEIGHT#*+}"
+
+# 6. Move the window.
+xdotool windowmove "$WID" "$TARGET_OFFSET_X" "$TARGET_OFFSET_Y"
+
+# Optional: Focus
+# xdotool windowfocus "$WID"
+# xdotool windowactivate "$WID"
+
+exit 0

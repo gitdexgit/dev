@@ -1,0 +1,51 @@
+# ===================================================================
+# fd ignore file (.fdignore)
+#
+# Placed in your home directory, this will be used globally.
+# For more info: https://github.com/sharkdp/fd#ignoring-files
+# ===================================================================
+
+# General cache, state, and temporary directories
+# The single '*Cache*' pattern is powerful and matches any file or
+# directory with 'Cache' in its name, anywhere in the path.
+*Cache*
+*cache*
+*.obsidian*
+*cacache*
+.cache/
+.oldconfig/
+.var/
+.wine/
+
+# General local data directories
+# Note: These are broad. Be careful if you have projects in here you DO want to search.
+.local/share/
+.local/state/
+.oldlocal/share/
+
+# Specific project/path ignores
+git/arch_dex/.local/share/
+git/arch_dex/.local/state/
+Downloads/MEGA/OSRO*
+
+# Development & Tooling
+# ---------------------
+# Editors & IDEs
+.vscode-oss/
+
+# Programming Languages & Environments
+.cargo/
+go/
+opt/python/myenv/
+
+# Android
+Android/Sdk/
+
+**/.git/objects/
+
+.npm/_npx/
+
+.config/thorium/
+.config/Cursor/logs/
+.config/discord
+

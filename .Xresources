@@ -1,0 +1,67 @@
+! ------------------------------------------------------------------------------
+! THE REAL TSODING (REXIM) CONFIG - JETBRAINS MONO EDITION (FOR DEX)
+! ------------------------------------------------------------------------------
+
+! --- Performance & Identity ---
+URxvt.termName:         rxvt-256color
+URxvt.depth:            32
+URxvt.scrollBar:        false
+URxvt.internalBorder:   8
+URxvt.saveLines:        0       ! Let tmux handle scrollback for max speed
+
+! --- The Font (JetBrains Mono Nerd Font) ---
+! Using pixelsize=14 matches Alacritty size 9 and skips DPI math overhead
+URxvt.font: xft:JetBrainsMono Nerd Font Mono:pixelsize=14:antialias=true:hinting=true
+URxvt.boldFont: xft:JetBrainsMono Nerd Font Mono:style=Bold:pixelsize=14:antialias=true:hinting=true
+
+! --- Perl Configuration ---
+URxvt.perl-lib:        /home/dex/.urxvt/ext
+URxvt.perl-ext-common: default,font-size,matcher,clipboard
+
+! --- FONT SIZE SETTINGS ---
+! Keeps window dimensions fixed while zooming
+URxvt.font-size.save-window-geometry: 1
+
+! --- Keybindings ---
+! Ctrl + Equal to increase, Ctrl + Minus to decrease
+URxvt.keysym.C-minus:   perl:font-size:decrease
+URxvt.keysym.C-equal:   perl:font-size:increase
+URxvt.keysym.C-0:       perl:font-size:reset
+
+! Force Home and End to match Alacritty/Xterm sequences
+URxvt.keysym.Home: \033[1~
+URxvt.keysym.End:  \033[4~
+URxvt.keysym.Control-Home: \033[1;5H
+URxvt.keysym.Control-End:  \033
+
+! Map Ctrl+Delete to Alt+d (kill-word)
+URxvt.keysym.Control-Delete: \033d
+
+! Clipboard bindings
+URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
+URxvt.keysym.Control-v:         perl:clipboard:paste
+
+URxvt.iso14755:                 false
+
+! --- Gruber-Darker (Official Tsoding Colors) ---
+URxvt.foreground: #e4e4ef
+URxvt.background: #181818
+URxvt.color0:  #2E3436
+URxvt.color1:  #a40000
+URxvt.color2:  #4E9A06
+URxvt.color3:  #C4A000
+URxvt.color4:  #3465A4
+URxvt.color5:  #75507B
+URxvt.color6:  #ce5c00
+URxvt.color7:  #babdb9
+URxvt.color8:  #555753
+URxvt.color9:  #EF2929
+URxvt.color10: #8AE234
+URxvt.color11: #FCE94F
+URxvt.color12: #729FCF
+URxvt.color13: #AD7FA8
+URxvt.color14: #fcaf3e
+URxvt.color15: #EEEEEC
+
+! --- removing alt+s ---
+URxvt.keysym.M-s: \033s

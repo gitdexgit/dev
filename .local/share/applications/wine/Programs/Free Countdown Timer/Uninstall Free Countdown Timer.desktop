@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Uninstall Free Countdown Timer
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Free\\ Countdown\\ Timer\\\\Uninstall\\ Free\\ Countdown\\ Timer.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/Program Files (x86)/FreeCountdownTimer
+Icon=60C4_uninstall.0
+StartupWMClass=unins000.exe

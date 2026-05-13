@@ -1,0 +1,317 @@
+#!/bin/zsh
+
+# --- Global Excludes for Fuzzy File Finder Functions ---
+# Define common excludes used by both fp_tree and fp_list.
+# 'readonly' prevents accidental modification inside functions.
+
+# Check if the variable is NOT set before defining it.
+if [[ -z $fd_excludes ]]; then
+  readonly fd_excludes=(
+    --exclude '*.png'
+    --exclude '*.jpg'
+    --exclude '*.jpeg'
+    --exclude '*.gif'
+    --exclude '*.mp4'
+    --exclude '*.mp3'
+    --exclude '*.zip'
+    --exclude '*.tar.gz'
+    --exclude '*.o'
+    --exclude '*.so'
+    --exclude '*.a'
+    --exclude '*.class'
+    --exclude '*.iso'
+    --exclude '*.db'
+    --exclude '*.bin'
+    --exclude '*.git'      # Added from fp_list original list
+    --exclude '*.gitkeep'  # Added from fp_list original list
+  )
+fi
+
+# --- Fuzzy File Finder Functions ---
+
+# fp_tree: Fuzzy file finder with intelligent TREE preview (used by fp and Fzf)
+# Always uses a tree view with a long format for wide terminals.
+fp_tree() {
+  local missing_tools=()
+  command -v bat &>/dev/null || missing_tools+=('bat')
+  command -v lsd &>/dev/null || missing_tools+=('lsd')
+  command -v file &>/dev/null || missing_tools+=('file')
+  command -v fd &>/dev/null || missing_tools+=('fd')
+  if ((${#missing_tools[@]} > 0)); then
+    echo "Missing tools: ${missing_tools[*]} (fd is required)" >&2
+    return 1
+  fi
+
+  # --- Argument Parsing ---
+  local search_term="$1" # Assume any argument is a search term
+
+  local custom_fzf_options=(
+    --preview-window=up:65%:wrap
+    --bind 'alt-j:preview-page-down,ctrl-f:preview-page-down,alt-k:preview-page-up,ctrl-b:preview-page-up,alt-J:preview-down,alt-K:preview-up'
+  )
+
+  # Get terminal width for optimal lsd display. Fallback to 80 if tput fails.
+  local term_width=$(tput cols 2>/dev/null || echo 80)
+
+  # Use fd to find files, utilizing the global fd_excludes array.
+  fd --hidden "${search_term}" . "${fd_excludes[@]}" | fzf --height 80% --border "${custom_fzf_options[@]}" \
+    --bind '?:toggle-preview' \
+    --preview "zsh -c '
+      # The variables passed to the zsh -c script
+      local file_path=\"\$1\"
+      local term_width=\"\$2\"
+
+      if [ -d \"\$file_path\" ]; then
+        # Use lsd with tree view for a nice directory preview.
+        echo \"\033[1;36mDirectory: \$file_path\033[0m\"
+
+        # Check if term_width is greater than 100 for long listing format
+        if [ \"\$term_width\" -gt 100 ]; then
+          # Wide terminal: Detailed long format with tree
+          lsd -l --tree --color=always --depth=2 \"\$file_path\" 2>/dev/null | head -200
+        else
+          # Narrow terminal: Simple tree view
+          lsd --tree --color=always --depth=2 --icon=always \"\$file_path\" 2>/dev/null | head -200
+        fi
+
+      elif [ -f \"\$file_path\" ]; then
+        # First, detect file type to handle images and binary files properly
+        local mime_type
+        local file_info
+
+        # Use file command to detect mime type
+        file_info=\"\$(file -b --mime-type \"\$file_path\" 2>/dev/null)\"
+        mime_type=\"\$file_info\"
+
+        # Check file type
+        case \"\$mime_type\" in
+          image/*)
+            # For images, show file info and dimensions (if available)
+            echo \"\033[1;36mImage File: \$(basename \"\$file_path\")\033[0m\"
+            echo \"MIME Type: \$mime_type\"
+            if command -v identify >/dev/null 2>&1; then
+              identify -format \"Dimensions: %wx%h\\n\" \"\$file_path\" 2>/dev/null || true
+            fi
+            file -b \"\$file_path\" 2>/dev/null || true
+            echo \"\"
+            echo \"\033[33m(Image preview not shown - excluded by default)\033[0m\"
+            ;;
+          video/*|audio/*|application/pdf)
+            # For media files and PDFs, show file info
+            echo \"\033[1;35mMedia/PDF File: \$(basename \"\$file_path\")\033[0m\"
+            echo \"MIME Type: \$mime_type\"
+            file -b \"\$file_path\" 2>/dev/null || true
+            echo \"\"
+            echo \"\033[33m(Preview not shown - excluded by default)\033[0m\"
+            ;;
+          application/octet-stream|application/x-executable|application/x-mach-binary)
+            # For binary/executable files
+            echo \"\033[1;31mBinary/Executable File: \$(basename \"\$file_path\")\033[0m\"
+            file -b \"\$file_path\" 2>/dev/null || true
+            echo \"\"
+            echo \"\033[33m(Binary content not shown)\033[0m\"
+            ;;
+          text/*|application/json|application/xml|application/javascript|application/x-sh)
+            # For text files, try bat first
+            bat --color=always --style=numbers --line-range=:200 \"\$file_path\" 2>/dev/null
+            if [ \$? -ne 0 ]; then
+              # Fallback to display text content if bat fails
+              echo \"\033[1;34mText File (showing first 200 lines):\033[0m\"
+              head -200 \"\$file_path\" 2>/dev/null
+              if [ \$? -ne 0 ]; then
+                # If head also fails, print a specific error and file info
+                echo \"\033[31m--- Failed to read file content ---\033[0m\" >&2
+                file \"\$file_path\" # Show file info as a last resort
+              fi
+            fi
+            ;;
+          *)
+            # For unknown file types, try bat first, then file command
+            bat --color=always --style=numbers --line-range=:200 \"\$file_path\" 2>/dev/null
+            if [ \$? -ne 0 ]; then
+              # Not a readable text file, show file info
+              echo \"\033[1;33mUnknown File Type: \$(basename \"\$file_path\")\033[0m\"
+              file -b \"\$file_path\" 2>/dev/null || echo \"Unable to determine file type\"
+            fi
+            ;;
+        esac
+      fi
+    ' zsh {} \"\$term_width\""
+}
+
+# fp_list: Fuzzy file finder with simple LIST preview
+# Uses lsd -la --color=always for directory preview.
+fp_list() {
+  local missing_tools=()
+  command -v bat &>/dev/null || missing_tools+=('bat')
+  command -v lsd &>/dev/null || missing_tools+=('lsd')
+  command -v file &>/dev/null || missing_tools+=('file')
+  command -v fd &>/dev/null || missing_tools+=('fd')
+  if ((${#missing_tools[@]} > 0)); then
+    echo "Missing tools: ${missing_tools[*]} (fd is required)" >&2
+    return 1
+  fi
+
+  # --- Argument Parsing ---
+  local search_term="$1"
+  local lsd_list_flags="-la --color=always" # Fixed flags for simple list view
+
+  # --------------------------
+
+  local custom_fzf_options=(
+    --preview-window=up:65%:wrap
+    --bind 'alt-j:preview-page-down,ctrl-f:preview-page-down,alt-k:preview-page-up,ctrl-b:preview-page-up,alt-J:preview-down,alt-K:preview-up'
+  )
+
+  # Use fd to find files, utilizing the global fd_excludes array.
+  fd --hidden "${search_term}" . "${fd_excludes[@]}" | fzf --height 80% --border "${custom_fzf_options[@]}" \
+    --bind '?:toggle-preview' \
+    --preview "zsh -c '
+      local file_path=\"\$1\"
+      local lsd_list_flags=\"\$2\"
+
+      if [ -d \"\$file_path\" ]; then
+        # Simple list view: lsd -la (fixed flags)
+        echo \"\033[1;36mDirectory: \$file_path\033[0m\"
+        lsd \$lsd_list_flags \"\$file_path\" 2>/dev/null | head -200
+
+      elif [ -f \"\$file_path\" ]; then
+        # File preview logic (same as fp_tree)
+        local mime_type
+        local file_info
+
+        file_info=\"\$(file -b --mime-type \"\$file_path\" 2>/dev/null)\"
+        mime_type=\"\$file_info\"
+
+        case \"\$mime_type\" in
+          image/*)
+            echo \"\033[1;36mImage File: \$(basename \"\$file_path\")\033[0m\"
+            echo \"MIME Type: \$mime_type\"
+            if command -v identify >/dev/null 2>&1; then
+              identify -format \"Dimensions: %wx%h\\n\" \"\$file_path\" 2>/dev/null || true
+            fi
+            file -b \"\$file_path\" 2>/dev/null || true
+            echo \"\"
+            echo \"\033[33m(Image preview not shown - excluded by default)\033[0m\"
+            ;;
+          video/*|audio/*|application/pdf)
+            echo \"\033[1;35mMedia/PDF File: \$(basename \"\$file_path\")\033[0m\"
+            echo \"MIME Type: \$mime_type\"
+            file -b \"\$file_path\" 2>/dev/null || true
+            echo \"\"
+            echo \"\033[33m(Preview not shown - excluded by default)\033[0m\"
+            ;;
+          application/octet-stream|application/x-executable|application/x-mach-binary)
+            echo \"\033[1;31mBinary/Executable File: \$(basename \"\$file_path\")\033[0m\"
+            file -b \"\$file_path\" 2>/dev/null || true
+            echo \"\"
+            echo \"\033[33m(Binary content not shown)\033[0m\"
+            ;;
+          text/*|application/json|application/xml|application/javascript|application/x-sh)
+            bat --color=always --style=numbers --line-range=:200 \"\$file_path\" 2>/dev/null
+            if [ \$? -ne 0 ]; then
+              echo \"\033[1;34mText File (showing first 200 lines):\033[0m\"
+              head -200 \"\$file_path\" 2>/dev/null
+              if [ \$? -ne 0 ]; then
+                echo \"\033[31m--- Failed to read file content ---\033[0m\" >&2
+                file \"\$file_path\"
+              fi
+            fi
+            ;;
+          *)
+            bat --color=always --style=numbers --line-range=:200 \"\$file_path\" 2>/dev/null
+            if [ \$? -ne 0 ]; then
+              echo \"\033[1;33mUnknown File Type: \$(basename \"\$file_path\")\033[0m\"
+              file -b \"\$file_path\" 2>/dev/null || echo \"Unable to determine file type\"
+            fi
+            ;;
+        esac
+      fi
+    ' zsh {} \"\$lsd_list_flags\""
+}
+
+
+
+
+
+# fp_dir: Fuzzy directory finder (only searches for directories)
+# Uses the intelligent TREE preview logic from fp_tree.
+fp_dir() {
+  local missing_tools=()
+  command -v bat &>/dev/null || missing_tools+=('bat')
+  command -v lsd &>/dev/null || missing_tools+=('lsd')
+  command -v file &>/dev/null || missing_tools+=('file')
+  command -v fd &>/dev/null || missing_tools+=('fd')
+  if ((${#missing_tools[@]} > 0)); then
+    echo "Missing tools: ${missing_tools[*]} (fd is required)" >&2
+    return 1
+  fi
+
+  # --- Argument Parsing ---
+  local search_term="$1"
+
+  local custom_fzf_options=(
+    --preview-window=up:65%:wrap
+    --bind 'alt-j:preview-page-down,ctrl-f:preview-page-down,alt-k:preview-page-up,ctrl-b:preview-page-up,alt-J:preview-down,alt-K:preview-up'
+  )
+
+  # Get terminal width for intelligent lsd display (from fp_tree).
+  local term_width=$(tput cols 2>/dev/null || echo 80)
+
+  # This is the fzf command with the key change: '--type d'
+  # It uses the global fd_excludes (to exclude .git dirs, etc.)
+  fd --hidden --type d "${search_term}" . "${fd_excludes[@]}" | fzf --height 80% --border "${custom_fzf_options[@]}" \
+    --bind '?:toggle-preview' \
+    --preview "zsh -c '
+      # The variables passed to the zsh -c script
+      local file_path=\"\$1\"
+      local term_width=\"\$2\"
+
+      # Use the intelligent TREE preview logic from fp_tree
+      if [ -d \"\$file_path\" ]; then
+        # Use lsd with tree view for a nice directory preview.
+        echo \"\033[1;36mDirectory: \$file_path\033[0m\"
+
+        # Check if term_width is greater than 100 for long listing format
+        if [ \"\$term_width\" -gt 100 ]; then
+          # Wide terminal: Detailed long format with tree
+          lsd -l --tree --color=always --depth=2 \"\$file_path\" 2>/dev/null | head -200
+        else
+          # Narrow terminal: Simple tree view
+          lsd --tree --color=always --depth=2 --icon=always \"\$file_path\" 2>/dev/null | head -200
+        fi
+      else
+        echo \"\033[31mError: Expected directory, but found file.\033[0m\"
+        file \"\$file_path\" 2>/dev/null || true
+      fi
+    ' zsh {} \"\$term_width\""
+}
+
+
+# Optional: Add a convenient alias/wrapper for the new function
+fdir() {
+  fp_dir "$@"
+}
+
+# Optional: Add a convenient alias/wrapper for the new function
+fdr() {
+  fp_dir "$@"
+}
+
+# The original fp is now a simple wrapper for fp_tree for clarity (tree view)
+FP() {
+  fp_tree "$@"
+}
+
+fp() {
+  fp_list "$@"
+}
+
+Fzf() {
+  fp_list "$@"
+}
+
+# Fzf is now an alias for fp_tree, as requested (tree view)
+FZF() {
+  fp_tree "$@"
+}

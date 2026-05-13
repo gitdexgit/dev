@@ -1,0 +1,41 @@
+[opener]
+# The "--player-operation-mode=pseudo-gui" flag fixes the "no window" issue
+mpv = [
+	{ run = 'mpv --player-operation-mode=pseudo-gui "$@"', orphan = true, for = "unix", desc = "Open with MPV" }
+]
+feh = [
+	{ run = 'feh "$@"', orphan = true, for = "unix", desc = "Open with feh" }
+]
+zathura = [
+	{ run = 'zathura "$@"', orphan = true, for = "unix", desc = "Open with zathura" }
+]
+
+[open]
+prepend_rules = [
+	# Video/Audio (including your screencasts)
+	{ url = "*.mp4",  use = "mpv" },
+	{ url = "*.webm", use = "mpv" },
+	{ url = "*.mkv",  use = "mpv" },
+	{ url = "*.m4a",  use = "mpv" },
+	{ url = "*.mp3",  use = "mpv" },
+	{ mime = "video/*", use = "mpv" },
+	{ mime = "audio/*", use = "mpv" },
+
+	# Documents
+	{ url = "*.pdf",  use = "zathura" },
+	{ url = "*.epub", use = "zathura" },
+
+	# Images
+	{ mime = "image/*", use = "feh" }
+]
+
+[manager]
+# The default is [1, 3, 4].
+# This makes the preview (the 3rd number) much wider:
+ratio = [ 1, 2, 7 ]
+
+[preview]
+max_width  = 3000
+max_height = 3000
+image_filter = "lanczos" # This makes scaled images look sharper
+image_quality = 90

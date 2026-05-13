@@ -1,0 +1,45 @@
+# ~/.config/espanso/match/clipboard.yml
+
+matches:
+
+
+  - triggers: 
+      - ";;espanso;"
+      - ";;espanso trigger"
+    replace: |
+      - triggers:
+          - ";;$|$"
+        replace: ""
+        force_mode: 
+        label: 
+        search_terms: 
+        paragraph: 
+        word: 
+        left_word: 
+        right_word: 
+        propagate_case: 
+        uppercase_style: 
+        image_path: 
+        vars: 
+        form: 
+     
+  - triggers: 
+      - ";;espanso;"
+      - ";;espanso regex"
+    replace: |
+      - regex: ";;$|$"
+        replace: ""
+        force_mode: 
+        label: 
+        search_terms: 
+        paragraph: 
+        word: 
+        left_word: 
+        right_word: 
+        propagate_case: 
+        uppercase_style: 
+        image_path: 
+        vars: 
+        form: 
+
+  # ---- help End---

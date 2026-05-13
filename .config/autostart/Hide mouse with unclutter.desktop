@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=unclutter --timeout 3 --ignore-buttons 4,5 --jitter 10 --fork
+Name=[Mouse Hide] Hide mouse with unclutter
+Type=Application
+Version=1.0
+X-LXQt-X11-Only=true

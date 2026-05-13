@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Launch Kitty and execute a Zsh command string.
+kitty -e zsh -i -c '
+  # 1. Run fzf to search the ENTIRE system.
+  #    - The search path is now "/" (the root directory).
+  #    - "2>/dev/null" silences any "Permission denied" errors.
+  selected_item=$(fd --hidden . / 2>/dev/null | fzf --height 80% --reverse);
+  
+  # 2. Check if an item was actually selected.
+  if [[ -n "$selected_item" ]]; then
+    # 3. Export the variable so it is available in the new shell.
+    export FP="$selected_item"
+    
+    # 4. Give the user your custom feedback.
+    echo ""
+    echo "--- Things to Remember ---"
+    echo "Path stored in \$FP:"
+    echo "$FP"
+    echo "--------------------------"
+
+  else
+    echo "---"
+    echo "No item selected."
+    echo "---"
+  fi
+  
+  # 5. Replace this script with a new, fully interactive zsh shell.
+  exec zsh
+'

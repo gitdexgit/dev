@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Rofi Window Switcher
+Comment=A custom Rofi window switcher
+Exec=/home/dex/scripts/ddesk/nothing/rofi_smart_window_switcher_works_with_Mod4_grave.sh
+Icon=org.gnome.Clocks
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true
+Keywords=rofi;window;switcher;

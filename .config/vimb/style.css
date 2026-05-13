@@ -1,0 +1,71 @@
+/* Dark background base */
+html {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+body {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+/* Text elements */
+h1, h2, h3, h4, h5, h6, p, li, td, th, div, span, a {
+    color: #e0e0e0 !important;
+    background-color: transparent !important;
+}
+
+/* Links */
+a {
+    color: #7db6ff !important;
+}
+
+a:visited {
+    color: #bb86fc !important;
+}
+
+/* Input fields */
+input, textarea, select {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+/* Buttons */
+button {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+/* Code blocks */
+pre, code {
+    background-color: #252525 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Tables */
+table, tr, td, th {
+    background-color: #1a1a1a !important;
+    border-color: #444 !important;
+}
+
+/* Don't invert media - keep original colors */
+img, video, iframe, canvas, picture, svg {
+    filter: none !important;
+}
+
+/* Sidebar/navigation elements */
+nav, aside, header, footer {
+    background-color: #1f1f1f !important;
+}
+
+/* Wikipedia/site-specific fixes */
+.mw-body, .parabase {
+    background-color: #1a1a1a !important;
+}
+
+/* Prevent white flashes */
+* {
+    background-color: inherit !important;
+}

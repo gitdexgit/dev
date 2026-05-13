@@ -1,0 +1,11 @@
+#!/bin/bash
+
+killall xbindkeys 
+sleep, 0.1
+killall xbindkeys 
+sleep, 0.1
+killall xbindkeys 
+sleep, 0.1
+sleep, 0.1
+sleep, 0.1
+xbindkeys &

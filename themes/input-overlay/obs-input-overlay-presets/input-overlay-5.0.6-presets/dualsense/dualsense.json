@@ -1,0 +1,287 @@
+{
+    "default_width": 0,
+    "default_height": 0,
+    "space_h": 0,
+    "space_v": 0,
+    "flags": 6,
+    "overlay_width": 1344,
+    "overlay_height": 788,
+    "elements": [
+        {
+            "type": 0,
+            "pos": [
+                0,
+                0
+            ],
+            "id": "PS5 DualSense texture",
+            "z_level": 0,
+            "mapping": [
+                1,
+                1,
+                1344,
+                788
+            ]
+        },
+        {
+            "type": 5,
+            "pos": [
+                389,
+                517
+            ],
+            "id": "Left analog stick",
+            "z_level": 1,
+            "mapping": [
+                1359,
+                1,
+                157,
+                156
+            ],
+            "stick_radius": 30,
+            "side": 0
+        },
+        {
+            "type": 5,
+            "pos": [
+                810,
+                516
+            ],
+            "id": "Right analog stick",
+            "z_level": 1,
+            "mapping": [
+                1359,
+                1,
+                157,
+                156
+            ],
+            "stick_radius": 30,
+            "side": 1
+        },
+        {
+            "type": 8,
+            "pos": [
+                136,
+                281
+            ],
+            "id": "D-Pad",
+            "z_level": 1,
+            "mapping": [
+                1,
+                1013,
+                229,
+                220
+            ]
+        },
+        {
+            "type": 6,
+            "pos": [
+                990,
+                0
+            ],
+            "id": "PS5 Left Trigger L2",
+            "z_level": 1,
+            "mapping": [
+                922,
+                792,
+                187,
+                104
+            ],
+            "direction": 1,
+            "trigger_mode": false,
+            "side": 1
+        },
+        {
+            "type": 6,
+            "pos": [
+                167,
+                0
+            ],
+            "id": "PS5 Right Trigger R2",
+            "z_level": 1,
+            "mapping": [
+                1112,
+                792,
+                187,
+                104
+            ],
+            "direction": 1,
+            "trigger_mode": false,
+            "side": 0
+        },		
+        {
+            "type": 2,
+            "pos": [
+                1047,
+                431
+            ],
+            "id": "Button PS5 X",
+            "z_level": 1,
+            "mapping": [
+                0,
+                792,
+                99,
+                91
+            ],
+            "code": 0
+        },
+        {
+            "type": 2,
+            "pos": [
+                1150,
+                345
+            ],
+            "id": "Button PS5 Circle",
+            "z_level": 1,
+            "mapping": [
+                305,
+                792,
+                98,
+                90
+            ],
+            "code": 1
+        },		
+        {
+            "type": 2,
+            "pos": [
+                946,
+                349
+            ],
+            "id": "Button PS5 Square",
+            "z_level": 1,
+            "mapping": [
+                102,
+                793,
+                98,
+                90
+            ],
+            "code": 2
+        },
+        {
+            "type": 2,
+            "pos": [
+                1050,
+                257
+            ],
+            "id": "Button PS5 Triangle",
+            "z_level": 1,
+            "mapping": [
+                203,
+                792,
+                99,
+                91
+            ],
+            "code": 3
+        },
+        {
+            "type": 2,
+            "pos": [
+                332,
+                225
+            ],
+            "id": "Button PS5 Start",
+            "z_level": 1,
+            "mapping": [
+                874,
+                792,
+                45,
+                66
+            ],
+            "code": 4
+        },
+        {
+            "type": 2,
+            "pos": [
+                634,
+                507
+            ],
+            "id": "Button PS5 PS Button",
+            "z_level": 1,
+            "mapping": [
+                1551,
+                16,
+                86,
+                54
+            ],
+            "code": 5
+        },		
+        {
+            "type": 2,
+            "pos": [
+                968,
+                225
+            ],
+            "id": "Button PS5 Select",
+            "z_level": 1,
+            "mapping": [
+                827,
+                792,
+                44,
+                66
+            ],
+            "code": 6
+        },
+        {
+            "type": 2,
+            "pos": [
+                650,
+                587
+            ],
+            "id": "Button PS5 Mute",
+            "z_level": 1,
+            "mapping": [
+                1661,
+                21,
+                54,
+                29
+            ],
+            "code": 15
+        },
+        {
+            "type": 2,
+            "pos": [
+                390,
+                138
+            ],
+            "id": "Button PS5 TouchPad",
+            "z_level": 1,
+            "mapping": [
+                1368,
+                329,
+                572,
+                313
+            ],
+            "code": 20
+        },
+        {
+            "type": 2,
+            "pos": [
+                146,
+                75
+            ],
+            "id": "PS5 Left Bumper L1",
+            "z_level": 1,
+            "mapping": [
+                409,
+                792,
+                206,
+                108
+            ],
+            "code": 9
+        },
+        {
+            "type": 2,
+            "pos": [
+                992,
+                75
+            ],
+            "id": "PS5 Right Bumper R1",
+            "z_level": 1,
+            "mapping": [
+                618,
+                792,
+                206,
+                108
+            ],
+            "code": 10
+        }
+    ]
+}

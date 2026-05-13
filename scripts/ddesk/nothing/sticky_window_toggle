@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Get the ID of the currently active window
+WID=$(xdotool getactivewindow)
+# If no window is active, exit gracefully
+if [ -z "$WID" ]; then
+    exit 0
+fi
+
+# The value that signifies "all desktops" (0xFFFFFFFF in decimal)
+# xdotool get_desktop_for_window returns this in decimal.
+STICKY_VALUE_DECIMAL="-1"
+# Or you can use hex for setting, but decimal is fine too
+# STICKY_VALUE_HEX="0xFFFFFFFF"
+
+
+# Get the current desktop of the active window
+CURRENT_WINDOW_DESKTOP=$(xdotool get_desktop_for_window "$WID")
+
+if [ "$CURRENT_WINDOW_DESKTOP" = "$STICKY_VALUE_DECIMAL" ]; then
+    # Window is currently on all desktops (sticky)
+    # So, move it to the current actual desktop (un-stick it)
+    CURRENT_ACTUAL_DESKTOP=$(xdotool get_desktop)
+    echo "$CURRENT_ACTUAL_DESKTOP"= >> /home/dex/testing_sticky_toggle.log
+    xdotool set_desktop_for_window "$WID" "$CURRENT_ACTUAL_DESKTOP"
+    # Optional: send a notification
+    # notify-send "Window Un-stickied" "Moved to Desktop $((CURRENT_ACTUAL_DESKTOP + 1))"
+else
+    # Window is on a specific desktop (or not found, but we check WID earlier)
+    # So, make it appear on all desktops (stick it)
+    xdotool set_desktop_for_window "$WID" "$STICKY_VALUE_DECIMAL" # Or use STICKY_VALUE_HEX
+    # Optional: send a notification
+    # notify-send "Window Stickied" "Now on all desktops"
+fi
+
+
+
+
+exit 0

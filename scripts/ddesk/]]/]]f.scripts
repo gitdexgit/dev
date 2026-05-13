@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Launch Kitty and execute a Zsh command string.
+# All the logic happens inside this single string.
+kitty -e zsh -i -c '
+  # 1. Run fzf to let the user select a file.
+  #    Store the result in a temporary variable.
+  selected_file=$(fd --hidden --type file . ~/scripts | fzf --height 80% --reverse);
+  
+  # 2. Check if a file was actually selected.
+  if [[ -n "$selected_file" ]]; then
+    # 3. CRUCIAL: "export" the variable. This makes it available
+    #    to the new shell we are about to start with "exec".
+    export FP="$selected_file"
+    
+    # 4. Give the user some feedback in the new terminal.
+    #    We escape the first $ so it prints "$FP", not the value of FP in this script.
+    echo ""
+    echo "--- Things to Remember ---"
+
+    echo "File path stored in \$FP"
+    echo "$FP"
+
+    echo "--- Things to Remember END---"
+  else
+    echo "---"
+    echo "No file selected."
+    echo "---"
+  fi
+  
+  # 5. Replace this script with a new, fully interactive zsh shell.
+  #    Because we used "export", the $FP variable will exist here.
+  exec zsh
+'

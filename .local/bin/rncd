@@ -1,0 +1,39 @@
+#!/usr/bin/bash
+
+##### requirements #####
+# 1. rncw (https://github.com/gitdexgit/rncw) for non-i3 WMs
+# 2. i3-msg (comes with i3)
+# 3. rofi, xdotool, xprop, jq
+
+# --- 1. DETECT IF WE ARE ON i3 ---
+# We check if i3-msg is successful in reaching the socket
+if i3-msg -t get_version >/dev/null 2>&1; then
+    IS_I3=true
+else
+    IS_I3=false
+fi
+
+# --- 2. GET CURRENT WORKSPACE INFO ---
+if [ "$IS_I3" = true ]; then
+    # i3-specific way to get focused workspace name
+    current_name=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name')
+    idx=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).num')
+else
+    # Your standard EWMH way
+    idx=$(xdotool get_desktop)
+    current_name=$(xprop -root _NET_DESKTOP_NAMES | perl -ne 'print "$1\n" while /"(.*?)"/g' | sed -n "$((idx + 1))p")
+fi
+
+# --- 3. PROMPT VIA ROFI ---
+new_name=$(rofi -dmenu -p "Rename Workspace $idx:" -mesg "Current: $current_name" -filter "$current_name" -lines 0 -theme-str 'window {width: 500px;}')
+
+# --- 4. EXECUTE RENAME ---
+if [[ -n "$new_name" ]]; then
+    if [ "$IS_I3" = true ]; then
+        # Use i3's internal message system
+        i3-msg "rename workspace to \"$new_name\""
+    else
+        # Use your custom rncw tool for other WMs
+        rncw "$new_name"
+    fi
+fi

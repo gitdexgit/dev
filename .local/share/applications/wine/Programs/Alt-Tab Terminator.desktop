@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Alt-Tab Terminator
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Alt-Tab\\ Terminator.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/Program Files/Alt-Tab Terminator
+Icon=D8D0_AltTabTer.0
+StartupWMClass=alttabter.exe

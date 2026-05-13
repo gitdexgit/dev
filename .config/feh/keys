@@ -1,0 +1,16 @@
+# Panning (Vim motions)
+scroll_up k
+scroll_down j
+scroll_left h
+scroll_right l
+
+# Next/Prev Image (Like 'next' and 'previous' in many CLI tools)
+next_img n space Right
+prev_img p BackSpace Left
+
+# Zooming
+zoom_in i
+zoom_out o
+
+# Fit to window
+zoom_default f

@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+
+# Create a temporary directory for thumbnails
+THUMB_DIR="/tmp/rofi-window-thumbs"
+mkdir -p "$THUMB_DIR"
+
+# Clear all old thumbnails to avoid mismatches
+rm -f "$THUMB_DIR"/*.png 2>/dev/null
+
+# Function to create thumbnail with verification
+create_thumbnail() {
+    local wid="$1"
+    local wclass="$2" 
+    local wtitle="$3"
+    local thumb_path="$4"
+    
+    # Get window info to verify it exists and get its title
+    local current_title=$(xdotool getwindowname "$wid" 2>/dev/null || echo "")
+    
+    if [[ -z "$current_title" ]]; then
+        echo "Window $wid no longer exists" >&2
+        return 1
+    fi
+    
+    # Take screenshot with verification
+    if import -window "$wid" -resize 200x200 "$thumb_path" 2>/dev/null; then
+        # Verify the thumbnail was created and is not empty
+        if [ -f "$thumb_path" ] && [ -s "$thumb_path" ]; then
+            echo "✓ Created verified thumbnail for: $wclass - $wtitle" >&2
+            return 0
+        else
+            echo "✗ Thumbnail creation failed (empty file): $wclass - $wtitle" >&2
+            rm -f "$thumb_path" 2>/dev/null
+            return 1
+        fi
+    else
+        echo "✗ Import failed for: $wclass - $wtitle" >&2
+        return 1
+    fi
+}
+
+# Function to generate rofi input directly
+generate_rofi_input() {
+    # Create temporary file to store rofi entries
+    local rofi_entries=$(mktemp)
+    local count=0
+    
+    # Get current window list and process immediately
+    wmctrl -l -x | while read -r line; do
+        # Parse line manually to handle spaces correctly
+        WID=$(echo "$line" | awk '{print $1}')
+        WDESKTOP=$(echo "$line" | awk '{print $2}')
+        WCLASS_FULL=$(echo "$line" | awk '{print $3}')
+        WCLASS=$(echo "$WCLASS_FULL" | cut -d. -f1)
+        
+        # Get everything after the 3rd field (class), then split on first space
+        MACHINE_TITLE=$(echo "$line" | cut -d' ' -f4- | sed 's/^[[:space:]]*//')
+        WMACHINE=$(echo "$MACHINE_TITLE" | awk '{print $1}')
+        WTITLE=$(echo "$MACHINE_TITLE" | cut -d' ' -f2-)
+        
+        echo "Processing: $WID -> $WCLASS: $WTITLE" >&2
+        
+        # Skip windows with no title or special windows
+        if [[ -z "$WTITLE" || "$WTITLE" == "rofi" ]]; then
+            echo "Skipping: $WTITLE" >&2
+            continue
+        fi
+        
+        # Define thumbnail path with unique identifier
+        THUMB_PATH="$THUMB_DIR/${WID}_$(date +%N).png"
+        
+        # Create thumbnail with verification
+        if create_thumbnail "$WID" "$WCLASS" "$WTITLE" "$THUMB_PATH"; then
+            # Create display title
+            if [ ${#WTITLE} -gt 35 ]; then
+                SHORT_TITLE="${WTITLE:0:35}..."
+            else
+                SHORT_TITLE="$WTITLE"
+            fi
+            
+            # Format: "Class: Title • Desktop X [WID]"
+            if [ "$WDESKTOP" = "-1" ]; then
+                DISPLAY_TITLE="$WCLASS: $SHORT_TITLE • All Desktops [$WID]"
+            else
+                DISPLAY_TITLE="$WCLASS: $SHORT_TITLE • Desktop $WDESKTOP [$WID]"
+            fi
+            
+            # Write directly to avoid any buffering issues
+            printf "%s\0icon\x1f%s\n" "$DISPLAY_TITLE" "$THUMB_PATH"
+            ((count++))
+        fi
+    done | tee "$rofi_entries"
+    
+    local final_count=$(wc -l < "$rofi_entries" 2>/dev/null || echo 0)
+    echo "Total windows ready for rofi: $final_count" >&2
+    
+    # Clean up
+    rm -f "$rofi_entries" 2>/dev/null
+}
+
+# Show rofi and get selection
+CHOSEN_TEXT=$(generate_rofi_input | rofi -dmenu \
+                                         -p "Switch To:" \
+                                         -i \
+                                         -show-icons \
+                                         -no-custom \
+                                         -theme-str 'window { width: 98%; height: 95%; }' \
+                                         -theme-str 'listview { columns: 2; lines: 3; }' \
+                                         -theme-str 'element { orientation: vertical; padding: 20px; }' \
+                                         -theme-str 'element-icon { size: 600px; }' \
+                                         -theme-str 'element-text { horizontal-align: 0.5; margin: 10px; }')
+
+# Extract window ID and switch
+if [[ -n "$CHOSEN_TEXT" ]]; then
+    CHOSEN_WID=$(echo "$CHOSEN_TEXT" | grep -o '\[0x[0-9a-fA-F]*\]' | tr -d '[]')
+    
+    if [[ -n "$CHOSEN_WID" && "$CHOSEN_WID" =~ ^0x[0-9a-fA-F]+$ ]]; then
+        echo "Switching to window: $CHOSEN_WID" >&2
+        
+        # Get window desktop
+        WINDOW_DESKTOP=$(wmctrl -l | grep "^$CHOSEN_WID" | awk '{print $2}')
+        
+        # Switch desktop if needed
+        if [ "$WINDOW_DESKTOP" != "-1" ]; then
+            xdotool set_desktop "$WINDOW_DESKTOP" 2>/dev/null
+            sleep 0.1
+        fi
+        
+        # Activate window
+        if xdotool windowactivate "$CHOSEN_WID" 2>/dev/null; then
+            echo "✓ Successfully switched to window" >&2
+        elif wmctrl -i -a "$CHOSEN_WID" 2>/dev/null; then
+            echo "✓ Successfully switched to window (wmctrl)" >&2
+        else
+            echo "✗ Failed to switch to window" >&2
+        fi
+    fi
+else
+    echo "No window selected" >&2
+fi
+
+# Clean up old thumbnails
+find "$THUMB_DIR" -name "*.png" -mmin +5 -delete 2>/dev/null

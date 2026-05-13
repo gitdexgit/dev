@@ -1,0 +1,16 @@
+#!/bin/bash
+TARGET="autoshot.sh"
+PIDS=$(pgrep -f "$TARGET")
+
+[ -z "$PIDS" ] && exit 0
+
+# Check first PID status
+STATUS=$(ps -p $(echo $PIDS | awk '{print $1}') -o stat=)
+
+if [[ "$STATUS" == *T* ]]; then
+    pkill -CONT -f "$TARGET"
+    dunstify -i media-playback-start -u low "Autoshot" "▶ Resumed"
+else
+    pkill -STOP -f "$TARGET"
+    dunstify -i media-playback-pause -u low "Autoshot" "⏸ Paused"
+fi

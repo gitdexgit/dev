@@ -1,0 +1,44 @@
+#!/bin/bash
+# --- Configuration ---
+TARGET_WINDOW_NAME="kali on QEMU/KVM"
+
+# --- Functions ---
+die() { echo "Error: $*" >&2; exit 1; }
+
+get_primary_position() {
+    xrandr | awk '/ connected.*primary/ {
+        split($4, pos, "+")
+        print pos[2], pos[3]
+        exit
+    }'
+}
+
+# --- Main Execution ---
+
+# 1. Find window
+WINDOW_ID=$(xdotool search --sync --name "$TARGET_WINDOW_NAME" 2>/dev/null | head -n1)
+[ -n "$WINDOW_ID" ] || die "Window not found"
+
+# 2. Get position
+read X Y < <(get_primary_position)
+[ -n "$X" ] || die "Could not get monitor position"
+
+# 3. Move and prepare window
+(
+    xdotool set_desktop_for_window "$WINDOW_ID" $(xdotool get_desktop)
+    xdotool windowstate "$WINDOW_ID" remove fullscreen maximized_vert maximized_horz
+    xdotool windowmove --sync "$WINDOW_ID" "$X" "$Y"
+    xdotool windowactivate --sync "$WINDOW_ID"
+) 2>/dev/null
+
+# 4. Set fullscreen and send keys
+(
+    xdotool windowstate "$WINDOW_ID" add fullscreen
+    xdotool windowactivate --sync "$WINDOW_ID"
+) 2>/dev/null
+
+# sleep 0.1
+xdotool key alt+ctrl+shift+3
+
+echo "Success! Key sequence sent to fullscreen window."
+exit 0

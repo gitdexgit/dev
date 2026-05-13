@@ -1,0 +1,12 @@
+keycode  10 = plus 1
+keycode  11 = bracketleft 2
+keycode  12 = braceleft 3
+keycode  13 = parenleft 4
+keycode  14 = ampersand 5
+keycode  15 = equal 6
+keycode  16 = parenright 7
+keycode  17 = braceright 8
+keycode  18 = bracketright 9
+keycode  19 = asterisk 0
+keycode  20 = exclam minus
+keycode  21 = bar equal

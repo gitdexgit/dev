@@ -1,0 +1,6 @@
+#!/bin/bash
+
+## if you downloaded new stuff from kiwix-app
+# Make sure to run `kiwix-manage ~/KiwixLibrary/library.xml add ~/.local/share/kiwix-desktop/*.zim`
+
+kiwix-serve --library --port 8080 ~/KiwixLibrary/library.xml &

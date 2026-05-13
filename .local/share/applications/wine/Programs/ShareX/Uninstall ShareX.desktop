@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Uninstall ShareX
+Exec=env WINEPREFIX="/home/dex/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\ShareX\\\\Uninstall\\ ShareX.lnk
+Type=Application
+StartupNotify=true
+Path=/home/dex/.wine/dosdevices/c:/Program Files/ShareX
+Icon=F168_unins000.0
+StartupWMClass=unins000.exe

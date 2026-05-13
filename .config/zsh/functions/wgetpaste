@@ -1,0 +1,273 @@
+# /home/dex/.config/zsh/functions/wgetpaste.zsh
+
+# -----------------------------------------------------------------------------
+#  Clipboard Command-Line Tools (inspired by Espanso triggers)
+# -----------------------------------------------------------------------------
+
+# Helper function to get clipboard content reliably
+# Automatically uses wl-paste on Wayland or xclip on X11
+# Returns clipboard content without adding newlines
+_get_clip() {
+  # Check the session type using the standard $XDG_SESSION_TYPE variable
+  if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    # We are in a Wayland session, so use wl-paste
+    if command -v wl-paste >/dev/null; then
+      wl-paste --no-newline
+    else
+      echo "Error: You are in a Wayland session, but 'wl-paste' is not installed." >&2
+      echo "Please install the 'wl-clipboard' package." >&2
+      return 1
+    fi
+  else
+    # We assume an X11 session (or fallback), so use xclip
+    if command -v xclip >/dev/null; then
+      xclip -o -selection clipboard
+    else
+      echo "Error: You are in an X11 session, but 'xclip' is not installed." >&2
+      echo "Please install the 'xclip' package." >&2
+      return 1
+    fi
+  fi
+}
+
+# Rbin - Upload clipboard content to pastebin (raw format)
+# Usage: Copy text to clipboard, then run 'Rbin'
+# Creates a new pastebin link with raw output format
+Rbin() {
+  _get_clip | wgetpaste -r -C
+}
+
+# Pbin - Upload clipboard content to pastebin (normal format)
+# Usage: Copy text to clipboard, then run 'Pbin'
+# Creates a new pastebin link with normal formatting
+# This makes sense too like Pastebin like Pbin
+Pbin() {
+  _get_clip | wgetpaste -C
+}
+
+# This makes sense like Upload bin
+Ubin() {
+  _get_clip | wgetpaste -C
+}
+
+# Gbin - Grep content from a URL (downloads and searches)
+# Usage: Gbin -i "error"           (uses clipboard URL with -i flag)
+#        Gbin "some pattern"       (uses clipboard URL)
+#        Gbin https://url "pattern" (uses provided URL)
+#        Gbin https://url -i "pattern" (uses provided URL with flags)
+# Downloads content from URL and searches within it using grep
+Gbin() {
+  local url="" pattern=""
+  
+  if [[ $# -eq 0 ]]; then
+    # No arguments - use clipboard URL and prompt for pattern
+    url=$(_get_clip)
+    if [[ -z "$url" ]]; then 
+      echo "No URL in clipboard and no arguments provided" >&2
+      return 1
+    fi
+    
+    # Validate URL format
+    if [[ ! "$url" =~ ^https?:// ]]; then
+      echo "invalid"
+      echo "type Gclip to grep clipboard content directly"
+      return 1
+    fi
+    
+    local grep_input
+    read 'grep_input?Grep > '
+    if [[ -z "$grep_input" ]]; then
+      echo "No pattern entered. Aborting." >&2
+      return 1
+    fi
+    
+    grep ${(z)grep_input} <(curl -sL "$url")
+    
+  elif [[ $# -eq 1 ]] && [[ "$1" =~ ^https?:// ]]; then
+    # One argument that looks like a URL - prompt for pattern
+    url="$1"
+    local grep_input
+    read 'grep_input?Grep > '
+    if [[ -z "$grep_input" ]]; then
+      echo "No pattern entered. Aborting." >&2
+      return 1
+    fi
+    
+    grep ${(z)grep_input} <(curl -sL "$url")
+    
+  elif [[ $# -ge 2 ]] && [[ "$1" =~ ^https?:// ]]; then
+    # First argument is URL, rest are grep patterns
+    url="$1"
+    shift  # Remove URL from arguments
+    grep "$@" <(curl -sL "$url")
+    
+  elif [[ $# -ge 1 ]]; then
+    # No URL provided, assume clipboard and all args are grep patterns
+    url=$(_get_clip)
+    if [[ -z "$url" ]]; then 
+      echo "No URL in clipboard" >&2
+      return 1
+    fi
+    
+    # Validate URL format
+    if [[ ! "$url" =~ ^https?:// ]]; then
+      echo "invalid"
+      echo "type Gclip to grep clipboard content directly"
+      return 1
+    fi
+    
+    grep "$@" <(curl -sL "$url")
+  fi
+}
+
+# Vbin - Open URL content in vim editor
+# Usage: Vbin                    (uses clipboard URL)
+#        Vbin https://example.com (uses provided URL)
+# Downloads content from URL and opens it in vim for editing/viewing
+Vbin() {
+  local url=""
+  
+  if [[ $# -gt 0 ]]; then
+    # URL provided as argument
+    url="$1"
+  else
+    # Get URL from clipboard
+    url=$(_get_clip)
+  fi
+  
+  if [[ -z "$url" ]]; then
+    echo "invalid\n"
+    echo "==> type Vclip to open contents of current clipboard in vim"
+    return 1
+  fi
+
+  # Validate URL format (basic check)
+  if [[ ! "$url" =~ ^https?:// ]]; then
+    echo "invalid\n"
+    echo "==> type Vclip to open contents of current clipboard in vim"
+    return 1
+  fi
+
+  # The '-' tells vim to read from standard input (stdin)
+  curl -sL "$url" | vim -
+}
+
+# Cbin - Download and display URL content in terminal
+# Usage: Copy URL to clipboard, then run 'Cbin'
+# Downloads content from clipboard URL and prints it to terminal
+Cbin() {
+    local url=$(_get_clip)
+    if [[ -z "$url" ]]; then return 1; fi # Exit if clipboard is empty
+
+    curl -sL "$url"
+}
+
+# Obin - Download and display URL content in pager (less)
+# Usage: Copy URL to clipboard, then run 'Obin'
+# Downloads content from clipboard URL and shows it in scrollable pager
+Obin() {
+    local url=$(_get_clip)
+    if [[ -z "$url" ]]; then return 1; fi # Exit if clipboard is empty
+
+    curl -sL "$url" | less
+}
+
+# Hbin - Show help for all clipboard tools
+# Usage: Hbin
+# Displays comprehensive help for all available functions
+Hbin() {
+    echo "Clipboard Pastebin Tools:"
+    echo ""
+    echo "Cbin         - curl clipboard URL to terminal"
+    echo "             (Downloads and displays content from URL in clipboard)"
+    echo "             Example: Copy 'https://bpa.st/raw/ABC123', run 'Cbin'"
+    echo ""
+    echo "Obin         - curl clipboard URL to pager (less)"
+    echo "             (Downloads content and shows in scrollable pager)"
+    echo "             Example: Copy 'https://bpa.st/raw/ABC123', run 'Obin'"
+    echo ""
+    echo "Vbin         - open URL content in vim"
+    echo "             (Downloads content from clipboard URL and opens in vim)"
+    echo "             Usage: Vbin [optional-URL]"
+    echo "             Example: Vbin https://bpa.st/raw/DEF456"
+    echo ""
+    echo "Gbin         - grep URL content"
+    echo "             (Downloads content from URL and searches within it)"
+    echo "             Usage: Gbin [URL] [grep-patterns]"
+    echo "             Example: Gbin https://bpa.st/raw/ABC123 error"
+    echo ""
+    echo "Pbin         - upload clipboard content to pastebin"
+    echo "             (Takes current clipboard content and creates new pastebin link)"
+    echo "             Example: Copy some code, run 'Pbin' to get shareable link"
+    echo ""
+    echo "Rbin         - upload clipboard content to pastebin (raw)"
+    echo "             (Same as Pbin but with -r flag for raw output)"
+    echo "             Example: Copy some text, run 'Rbin' for raw link"
+    echo ""
+    echo "Sbin         - scrape URL content to clipboard"
+    echo "             (Downloads content from URL and copies it back to clipboard)"
+    echo "             Usage: Sbin [optional-URL]"
+    echo "             Example: Sbin https://bpa.st/raw/GHI789"
+    echo ""
+}
+
+# Sbin - Scrape URL content and copy back to clipboard
+# Usage: Sbin                    (uses clipboard URL)
+#        Sbin https://bpa.st/... (uses provided URL)
+# Downloads content from URL and copies it to clipboard (useful for bpaste links)
+Sbin() {
+  local url=""
+  local content=""
+  
+  if [[ $# -gt 0 ]]; then
+    # URL provided as argument
+    url="$1"
+  else
+    # Get URL from clipboard
+    url=$(_get_clip)
+  fi
+  
+  if [[ -z "$url" ]]; then
+    echo "No URL found (neither in arguments nor clipboard)" >&2
+    return 1
+  fi
+
+  # Validate URL format (check if it's a bpaste URL)
+  if [[ ! "$url" =~ ^https?://bpa\.st ]]; then
+    echo "invalid - not a bpaste URL"
+    echo "type Sbin with a valid https://bpa.st   URL"
+    return 1
+  fi
+
+  # Download the content
+  content=$(curl -sL "$url")
+  
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to fetch content from URL" >&2
+    return 1
+  fi
+
+  if [[ -z "$content" ]]; then
+    echo "No content found at URL" >&2
+    return 1
+  fi
+
+  # Copy content to clipboard
+  if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    if command -v wl-copy >/dev/null; then
+      echo -n "$content" | wl-copy
+      echo "Content copied to clipboard ✓"
+    else
+      echo "Error: wl-copy not available for Wayland" >&2
+      return 1
+    fi
+  else
+    if command -v xclip >/dev/null; then
+      echo -n "$content" | xclip -selection clipboard
+      echo "Content copied to clipboard ✓"
+    else
+      echo "Error: xclip not available for X11" >&2
+      return 1
+    fi
+  fi
+}

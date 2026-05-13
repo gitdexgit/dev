@@ -1,0 +1,56 @@
+# very important
+
+bind ^Z suspend main
+set autoindent
+set tabsize 4
+set tabstospaces
+set mouse
+set smarthome
+
+# This is needed in order for tmux to function well with my nano. or else I have
+# to make tmux defaults and I don't want to sacrifice my alt+6... maybe
+unbind M-6 main
+bind M-C copy main
+
+# set linenumbers
+set positionlog
+set trimblanks
+set constantshow
+
+
+include "/usr/share/nano/sh.nanorc"
+include "/usr/share/nano/man.nanorc"
+include "/usr/share/nano/python.nanorc"
+include "/usr/share/nano/yaml.nanorc"
+include "/usr/share/nano/xml.nanorc"
+include "/usr/share/nano/sql.nanorc"
+include "/usr/share/nano/tcl.nanorc"
+include "/usr/share/nano/ruby.nanorc"
+include "/usr/share/nano/php.nanorc"
+include "/usr/share/nano/perl.nanorc"
+include "/usr/share/nano/nanorc.nanorc"
+include "/usr/share/nano/makefile.nanorc"
+include "/usr/share/nano/markdown.nanorc"
+include "/usr/share/nano/lua.nanorc"
+include "/usr/share/nano/json.nanorc"
+include "/usr/share/nano/javascript.nanorc"
+include "/usr/share/nano/java.nanorc"
+include "/usr/share/nano/html.nanorc"
+include "/usr/share/nano/go.nanorc"
+include "/usr/share/nano/email.nanorc"
+include "/usr/share/nano/elisp.nanorc"
+include "/usr/share/nano/css.nanorc"
+include "/usr/share/nano/conky.nanorc"
+include "/usr/share/nano/c.nanorc"
+include "/usr/share/nano/cmake.nanorc"
+include "/usr/share/nano/awk.nanorc"
+include "/usr/share/nano/autoconf.nanorc"
+include "/usr/share/nano/changelog.nanorc"
+include "/usr/share/nano/lua.nanorc"
+
+
+
+
+
+
+

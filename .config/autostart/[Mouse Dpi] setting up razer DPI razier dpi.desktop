@@ -1,0 +1,5 @@
+[Desktop Entry]
+Exec=razer-cli --dpi 800
+Name=[Mouse Dpi] setting up razer DPI razier dpi
+Type=Application
+Version=1.0

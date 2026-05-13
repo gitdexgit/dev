@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Define colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+# Filter: Only grab sessions that are composed entirely of digits [0-9]
+mapfile -t sessions < <(tmux list-sessions -F '#{session_name}' | grep -E '^[0-9]+$')
+
+if [ ${#sessions[@]} -eq 0 ]; then
+  echo -e "${YELLOW}No numeric disposable sessions found.${NC}"
+  exit 0
+fi
+
+echo -e "${CYAN}--- Disposable Numeric Sessions ---${NC}"
+i=1
+for session in "${sessions[@]}"; do
+  printf "%-4s %s\n" "$i)" "$session"
+  ((i++))
+done
+echo "-----------------------------------"
+
+read -p "Enter numbers to kill (space separated) or 'all': " user_input
+
+if [[ -z "$user_input" ]]; then
+  echo "Exiting."
+  exit 0
+fi
+
+# Logic to handle "all"
+if [[ "$user_input" == "all" ]]; then
+    for session in "${sessions[@]}"; do
+        tmux kill-session -t "$session"
+    done
+    echo -e "${GREEN}All numeric sessions killed.${NC}"
+    exit 0
+fi
+
+# Standard processing for specific numbers
+for num in $user_input; do
+  index=$((num - 1))
+  if [ ! -z "${sessions[$index]}" ]; then
+    session_to_kill="${sessions[$index]}"
+    tmux kill-session -t "$session_to_kill"
+    echo -e "Killed: ${GREEN}$session_to_kill${NC}"
+  else
+    echo -e "${RED}Warning: #$num is invalid.${NC}"
+  fi
+done

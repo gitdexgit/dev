@@ -1,0 +1,12 @@
+#!/bin/bash
+# Check if the daemon is actually running
+if [[ ! -p /tmp/tts_pipe ]]; then
+    notify-send "TTS Error" "Daemon not found. Run pocket_daemon.py first."
+    exit 1
+fi
+
+if [ $# -gt 0 ]; then
+echo "$*" > /tmp/tts_pipe
+else
+    cat - > /tmp/tts_pipe
+fi

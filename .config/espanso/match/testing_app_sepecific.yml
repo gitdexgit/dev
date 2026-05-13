@@ -1,0 +1,11 @@
+matches:
+  - trigger: ":contact"
+    replace: |
+      Hi,
+      Thank you for contacting us!
+      Best regards,
+      The Support Team
+
+
+
+

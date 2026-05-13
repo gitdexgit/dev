@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# 1. Save the current window ID before Rofi or Flameshot takes focus
+PREV_WINDOW=$(xdotool getactivewindow)
+
+# A rofi-based screenshot menu.
+# Uses flameshot for everything except the multi-monitor scrot command.
+
+# Define the directory where screenshots will be saved
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$SCREENSHOT_DIR" # Ensure the directory exists
+
+# Define the user-friendly options
+options="  Capture Area (Save to File)\n📋  Capture Area (Copy to Clipboard)\n  Capture Fullscreen (Save to File)\n  Capture All Monitors (Save to File)\n  Capture Area (Pin to Screen)"
+
+# Use rofi to get the user's choice
+choice=$(echo -e "$options" | rofi -dmenu -i -p "Screenshot ")
+
+# Execute the command based on the choice
+case "$choice" in
+    "  Capture Area (Save to File)")
+        flameshot gui --path "$SCREENSHOT_DIR"
+        ;;
+    "📋  Capture Area (Copy to Clipboard)")
+        flameshot gui --clipboard
+        ;;
+    "  Capture Fullscreen (Save to File)")
+        flameshot full --path "$SCREENSHOT_DIR"
+        ;;
+    "  Capture All Monitors (Save to File)")
+        scrot --multidisp --silent "$SCREENSHOT_DIR/screenshot_%Y-%m-%d_%H-%M-%S.png"
+        ;;
+    "  Capture Area (Pin to Screen)")
+        flameshot gui --pin
+        ;;
+esac
+
+# 2. Force focus back to the original window after the action is complete
+if [ -n "$PREV_WINDOW" ]; then
+    xdotool windowfocus "$PREV_WINDOW"
+fi

@@ -1,0 +1,14 @@
+[[mgr.prepend_keymap]]
+on   = [ "t", "t" ]
+run  = "tab_create --current"
+desc = "Create a new tab in current directory"
+
+[[mgr.prepend_keymap]]
+on   = [ "t", "p" ]
+run  = "plugin toggle-pane min-preview"
+desc = "Hide or show preview pane"
+
+[[mgr.prepend_keymap]]
+on   = [ "t", "m" ]
+run  = "plugin toggle-pane max-preview"
+desc = "Maximize or restore preview pane"
