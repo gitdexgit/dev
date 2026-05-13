@@ -63,8 +63,6 @@ HOME_TARGETS=(
     ".vimrc"
     "scripts"
     "AI_Models"
-    ".Xmodmap.prog"
-    ".Xmodmap.norm"
     ".oh-my-zsh/custom" # Syncs only the custom folder
     ".tmux"
     ".themes"

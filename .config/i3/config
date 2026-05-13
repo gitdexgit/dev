@@ -319,9 +319,6 @@ bindsym $mod+Shift+b exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n
 # bindsym $mod+Control+x exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_btop" alacritty --class "alacritty_btop" -T "btop" -e tmux new-session -A -s btop
 
 
-# toggle programmer keyboard symbols. Changes ~1234567890%` to $+[{(&=)}]*!| only to this user no keyd.
-bindsym $mod+F10 exec ~/scripts/toggle_prog_keys.sh
-
 bindsym Control+$mod+x [class="Com.github.xournalpp.xournalpp"] scratchpad show, move position center
 
 # vesktop
