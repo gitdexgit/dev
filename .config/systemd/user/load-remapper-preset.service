@@ -1,0 +1,13 @@
+[Unit]
+Description=Load my custom Razer Basilisk preset
+Wants=input-remapper.service
+After=input-remapper.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 5
+# This is the command tailored for your specific device and preset
+ExecStart=/usr/bin/input-remapper-control --device "Razer Razer Basilisk Essential" --preset "Sniper button and capslock activation for keyd and for xbindkeys"
+
+[Install]
+WantedBy=default.target

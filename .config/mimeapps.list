@@ -44,7 +44,7 @@ image/jpeg=org.gnome.eog.desktop;lximage-qt.desktop;gpicview.desktop;gimp.deskto
 x-scheme-handler/unityhub=unityhub.desktop;
 application/json=neovim-allacrity.desktop;
 x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop;
-application/x-shellscript=kitty-open.desktop;run-in-alacritty.desktop;
+application/x-shellscript=kitty-open.desktop;run-in-alacritty.desktop;neovim-allacrity.desktop;
 video/x-matroska=mpv.desktop;org.xfce.Parole.desktop;
 
 [Default Applications]
@@ -82,5 +82,5 @@ application/x-pkt=CiscoPacketTracer-9.0.0.desktop
 application/x-pkz=CiscoPacketTracer-9.0.0.desktop
 application/x-pksz=CiscoPacketTracer-9.0.0.desktop
 video/mp4=mpv.desktop
-application/x-shellscript=run-in-alacritty.desktop
+application/x-shellscript=neovim-allacrity.desktop
 text/x-csrc=neovim-allacrity.desktop

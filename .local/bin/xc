@@ -1,0 +1,9 @@
+#!/bin/bash
+# ~/.local/bin/xc
+if [ -t 0 ]; then
+    # Stdin is a terminal -> act as prefix: xc command
+    "$@" | col -b | xclip -selection clipboard
+else
+    # Stdin is a pipe -> act as filter: command | xc
+    col -b | xclip -selection clipboard
+fi

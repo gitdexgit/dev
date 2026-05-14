@@ -69,6 +69,7 @@ HOME_TARGETS=(
     "themes"
     "Documents/Bookmarks"
     ".config/yazi"
+    ".config/systemd"
     ".config/warpd"
     ".config/zk"
     ".config/feh"

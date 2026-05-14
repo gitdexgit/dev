@@ -279,6 +279,7 @@ alias j='jobs'
 alias f='fg'
 alias d='date'
 alias tt='timew'
+alias ww='wokeup'
 
 # maintainance
 alias nvrc='nvim ~/.zshrc'
@@ -339,7 +340,11 @@ alias dell='ssh dell'
 alias ads='adb shell'
 
 alias ip='ip --color=auto'
-alias -g xc='| col -b | xclip -selection clipboard'
+
+# BAD:
+# Just use ~/.local/bin/xc and just type <cmd> | xc like a normal human man.
+#
+# alias -g xc='| col -b | xclip -selection clipboard'
 
 
 alias s='cd ~/scripts'

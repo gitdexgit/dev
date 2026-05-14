@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# wokeup — track awake duration
+# alias: ww
+# usage: wokeup
+
+WOKEUP_FILE="$HOME/.wokeup"
+
+read -rp "Just woke up? [y/n]: " answer
+
+case "$answer" in
+  y|Y)
+    date +%s > "$WOKEUP_FILE"
+    echo "Recorded. Wake time: $(date '+%H:%M:%S on %Y-%m-%d')"
+    ;;
+  n|N)
+    if [[ ! -f "$WOKEUP_FILE" ]]; then
+      echo "No record found. Run 'ww' → y to start tracking."
+      exit 1
+    fi
+
+    wake_epoch=$(cat "$WOKEUP_FILE")
+    now_epoch=$(date +%s)
+    diff=$(( now_epoch - wake_epoch ))
+
+    hours=$(( diff / 3600 ))
+    minutes=$(( (diff % 3600) / 60 ))
+
+    echo "Awake: ${hours}h ${minutes}m"
+    ;;
+  *)
+    echo "Bad input. Use y or n."
+    exit 1
+    ;;
+esac

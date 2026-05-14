@@ -1,0 +1,21 @@
+[Unit]
+Description=Tmux - persistent terminal multiplexer
+After=network.target
+
+[Service]
+# This type is for scripts that do a setup task and then exit.
+Type=oneshot
+
+# This is the crucial part. It tells systemd that even though the 
+# ExecStart process has exited, the service should be considered "active".
+# This prevents systemd from cleaning up the forked tmux server process.
+RemainAfterExit=yes
+
+# The command to start the server. It will fork into the background and exit.
+ExecStart=/usr/bin/tmux -f /home/dex/.tmux.conf
+
+# The command to gracefully kill the background server.
+ExecStop=/usr/bin/tmux kill-server
+
+[Install]
+WantedBy=default.target

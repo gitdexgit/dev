@@ -200,6 +200,11 @@ assign [class="ai"]              $ws2
 # WINDOW RULES (floating)
 # =====================================================================
 
+
+# This tells i3: "Don't tile dmenu, let it float on top"
+# Float dmenu and pin to top-center
+for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
+
 for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
 
 # Automatically send Zeal to the "background" (scratchpad) when it opens
@@ -268,7 +273,14 @@ for_window [instance="dropdown_terminal"] floating enable, move position center,
 
 
 
+###
+### .file manager for keyd stuff
+###
 
+# Downloads shortcut (Control+Alt+F24)
+bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /home/dex/Workspace/Downloads/
+
+# ------------
 
 # Terminal (Alacritty via daemon)
 # Open alacritty terminal but attach to tmux-sessionizer and we make sure we never open a new tmux-session because it's stuck at picker. Really fast and handy. should be default
@@ -284,8 +296,11 @@ bindsym $mod+Shift+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.
 # Terminal (urxvtc — clean, no tmux)
 # bindsym $mod+Shift+Return exec --no-startup-id urxvtc
 
-# Launcher
-bindsym $mod+d exec --no-startup-id dmenu_run
+# Launcher (default)
+# bindsym $mod+d exec --no-startup-id dmenu_run
+
+# Launcher (Personal) this run my ~/.local/bin/drun which allows for piping <cmd1> | <cmd2>... hehehe useful for xc --e.g-> xprop | xc
+bindsym $mod+d exec --no-startup-id drun
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -349,7 +364,9 @@ bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% 
 
 # bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move scratchpad
 
-bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^dropdown_terminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move scratchpad
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^dropdown_terminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move scratchpad
+
+bindsym Mod1+BackSpace [class="(?i)alacritty|urxvt|qterminal|copyq|vesktop|keepassxc|xournalpp"] move scratchpad; [floating] move scratchpad
 
 
 # =====================================================================

@@ -623,6 +623,12 @@ mod4 + alt + p
 # "wmctrl -a _a_"
 # Mod4 + Shift + a
 
+
+
+
+
+
+
 # free
 # "wmctrl -a 'Recent - Thunar'"
 # Mod4 + alt + r
@@ -1124,30 +1130,123 @@ alt+F1
 # Mod4 + F12
 # END--[]-- [ snippets simulation ] END----
 
+
+####
+#### .Grammar stuff
+####
+
+
+# I don't really use this that much but it feels like it's needed. I mean I can always open nvim and do it with defaults
+# Highlight something with mouse and then it will all be capitalized.
+"/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
+Mod4 + Shift + control + u
+
+# I don't really use this that much but it feels like it's needed. I mean I can always open nvim and do it with defaults
+# Highlight something with mouse and then it will all be lowercase.
+"/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
+Mod4 + Shift + control + l
+
+# Yeah some what use this when speaking and stuff
+#
 # highlight something with mouse or keyboard and hit it, it only fixes capitalizations and badly put commas and shit, it probably
 # does't work in nvim but I'll figure out something to cook
 "/home/dex/scripts/ddesk/correct_text_spelling.sh"
     Mod4 + Shift + control + g
 
+# Never really use this that much tbh.
+#
 # Uses language tool free API to only correct capitalization mistakes and commas.
 # highlight something with mouse or keyboard and hit it, it only fixes capitalizations and badly put commas and shit
 "/home/dex/scripts/ddesk/correct_text.sh"
     Mod4 + Shift + control + alt + g
 
-# Highlight something with mouse and then it will all be capitalized.
-"/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
-Mod4 + Shift + control + u
 
-"/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
-Mod4 + Shift + control + l
 
+####
+#### .LLM copy something then hit hotkey and it gives you something in clipboard. You paste it or view(copyq).
+####
+
+
+# INSPIRED:
+# by the .Grammar stuff section in this xbindkeys
+#
 # qwen 1.5b local
-# My llm fix grammar tool locally on my computer
+# My LLM fix grammar tool is located locally on my computer.
+#
+# the 'g' stands for grammar. If you have internet or you don't want to use language tools api then use this.
 "~/scripts/ai/fix_text_from_clipboard.sh"
 Mod4 + control + g
 
 
+# qwen 1.5b local
+# So this is a like my personal wiki but searches my ~/wiki where I store answers that are interesting.
+# and cool or answers that I have been done with.
+#
+# the 'w' stands for wiki. It is literally searching the place where I store answers locally, in case I need them.
+# way better to store it locally because it takes less time to find it or grep it or fzf bassed on the question lol
+# or describe it to llm and you would most likely find something.
+"~/scripts/ai/wiki_search.sh"
+Mod4 + control + w
 
+# qwen 1.5b local
+# This will rephrase what I wrote to caveman like.
+#
+# the 'r' stands for rephrase.
+"~/scripts/ai/cav.sh"
+Mod4 + control + r
+
+# qwen 1.5b local
+# This is like me doing commits hehehe lazycommits
+#
+# the 'l' because 'c' is occupied and also because 'l' reminds me of lazygit. sadly 'g' is occupied too
+"~/scripts/ai/commit.sh"
+Mod4 + control + l
+
+# qwen-coder 1.5b local
+# suggestions me var names and functions names and such
+#
+# the 'n' stands for names
+"~/scripts/ai/names_suggestion.sh"
+Mod4 + control + n
+
+# qwen-coder 1.5b local
+# suggestions search engine queries for internet and stuff
+#
+# it should be 's' but I made it 'y' so it works well with mod4 y and what not hehehee.
+"~/scripts/ai/search_queries_suggestion.sh"
+Mod4 + control + y
+
+# qwen-coder 3b local
+# reason through problem LOGIC+ASM+ANS caveman  ← fix
+#
+# the 'd' is because it reminds me of duck, so it's like just like default caveman but on my pc
+"~/scripts/ai/think.sh"
+Mod4 + control + d
+
+# qwen-coder 3b local
+# questions maker
+#
+# the 'q' in the hotkey stands for questions
+"~/scripts/ai/atomic_question_maker.sh"
+Mod4 + control + q
+
+# qwen-coder 3b local
+# Lean by giving the LLM your question and answer and it will help you learn by checking first if correct and what not.
+#
+# the 'e' in the hotkey stands for evaluate
+"~/scripts/ai/learn.sh"
+Mod4 + control + e
+
+# qwen 1.5b
+# task warrior. the 't' and 'a' and 's' are already in use so... k it is I guess.
+"~/scripts/ai/taskdump.sh"
+Mod4 + control + k
+
+# qwen 1.5b
+# clarify basically asks me "tell me more" and what not for detail. So I can copy paste the detail to like idk.
+# It just tries to help me out in generating the detail for you know less vagueness
+"~/scripts/ai/clarify.sh"
+Mod4 + control + i
 
 # _)
 # W39 Sat, 27 at 05:14
