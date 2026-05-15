@@ -70,6 +70,8 @@ HOME_TARGETS=(
     "Documents/Bookmarks"
     ".config/yazi"
     ".config/systemd"
+    ".emacs.d/"
+    ".emacs"
     ".config/warpd"
     ".config/zk"
     ".config/feh"

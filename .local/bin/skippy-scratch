@@ -1,0 +1,6 @@
+#!/bin/bash
+# Save focus
+
+# Show ONLY floating windows
+skippy-xd --expose --wm-status float --toggle
+

@@ -1,0 +1,7 @@
+#!/bin/bash
+PREV_WID=$(xdotool getactivewindow)
+
+# Added: --wm-class "!qterminal"
+skippy-xd --expose --wm-status "!float" --wm-class "!qterminal" --toggle
+
+xdotool windowfocus "$PREV_WID"

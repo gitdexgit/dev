@@ -119,7 +119,8 @@ workspace 43 output eDP-1
 # =====================================================================
 
 
-
+# 1. Start the daemon on login
+exec --no-startup-id skippy-xd --start-daemon
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
@@ -160,21 +161,26 @@ exec --no-startup-id i3-back
 
 # trey icon for tdrop terminals.
 # exec --no-startup-id yad --notification --image="/usr/share/icons/Papirus/16x16/apps/draftsight.svg" --text="Click to send Super+Backspace" --command="xdotool key super+shift+g"
-exec --no-startup-id yad --notification --image="edit-clear" --text="Click to send Super+Backspace" --command="xdotool key alt+BackSpace"
+# exec --no-startup-id yad --notification --image="edit-clear" --text="Click to send Super+Backspace" --command="xdotool key alt+BackSpace"
 
-exec --no-startup-id yad --notification --image="document-edit" --text="Click to toggle Xournal++" --command="xdotool key ctrl+super+x"
+
+
 
 exec --no-startup-id yad --notification --image="document-edit" --text="Click to toggle Xournal++" --command="xdotool key ctrl+super+x"
 exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+z"
-
 exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
+exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
+
+exec --no-startup-id yad --notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+shift+t"
+
+exec --no-startup-id yad --notification --image="vesktop" --text="Click to send Super+Backspace" --command="xdotool key super+control+v"
+exec --no-startup-id yad --notification --image="copyq" --text="Click to send Super+Backspace" --command="xdotool key super+control+c"
 
 # exec --no-startup-id yad --notification --image="/usr/share/icons/Papirus/64x64/apps/duckduckgo.svg" --text="Click to send Super+Backspace" --command="xdotool key super+shift+d"
 # exec --no-startup-id yad --notification --image="yast-release-notes" --text="Click to send Super+Backspace" --command="xdotool key super+shift+f"
 # exec --no-startup-id yad --notification --image="text-wiki" --text="Click to send Super+Backspace" --command="xdotool key super+alt+BackSpace"
 # exec --no-startup-id yad --notification --image="cpu" --text="Click to send Super+Backspace" --command="xdotool key super+shift+BackSpace"
 # exec --no-startup-id yad --notification --image="preferences-system" --text="Click to send Super+Backspace" --command="xdotool key super+control+BackSpace"
-exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
 # exec --no-startup-id yad --notification --image="Alacritty" --text="Click to send Super+Backspace" --command="xdotool key control+grave"
 # exec --no-startup-id yad --notification --image="qterminal" --text="Click to send Super+Backspace" --command="xdotool key super+F12"
 # exec --no-startup-id yad --notification --image="urxvt" --text="Click to send Super+Backspace" --command="xdotool key super+BackSpace"
@@ -205,7 +211,6 @@ assign [class="ai"]              $ws2
 # Float dmenu and pin to top-center
 for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
 
-for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
 
 # Automatically send Zeal to the "background" (scratchpad) when it opens
 # for_window [class="Zeal"] move scratchpad
@@ -213,11 +218,20 @@ for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratc
 # for_window [class="Zeal"] move position center
 
 
+for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
+
 # Zeal
-for_window [class="Zeal"] floating enable, move position center, move scratchpad
+# for_window [class="Zeal"] floating enable, move position center, move scratchpad
+
+for_window [class="Zeal"] floating enable, move scratchpad
+for_window [class="Zeal"] floating enable, move scratchpad
+for_window [class="vesktop"] floating enable, move scratchpad
+
+# for_window [class="vesktop"] floating enable, border pixel 2, resize set 1368 px 810 px, move position 36 45, move scratchpad
+
 
 # 2. Window Rule (Add to WINDOW RULES section)
-for_window [class="vesktop"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
+# for_window [class="vesktop"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
 
 
@@ -225,9 +239,11 @@ for_window [class="vesktop"] floating enable, border pixel 2, resize set 95 ppt 
 # for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
 # CopyQ
-for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
+for_window [class="copyq"] floating enable, move scratchpad
+# for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
-for_window [class="KeePassXC"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
+for_window [class="KeePassXC"] floating enable, move scratchpad
+# for_window [class="KeePassXC"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 # for_window [class="org.mozilla.Thunderbird"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
 
@@ -317,6 +333,7 @@ bindsym $mod+F12 exec --no-startup-id qterminal -d
 # Scratch (Mod+Shift+f)
 bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_work" alacritty --class "alacritty_work" -T "work" -e tmux new-session -A -s work
 
+
 # Draft  (Mod+Shift+g)
 # bindsym $mod+Shift+g exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_draft" alacritty --class "alacritty_draft" -T "draft" -e tmux new-session -A -s draft
 
@@ -338,8 +355,10 @@ bindsym Control+$mod+x [class="Com.github.xournalpp.xournalpp"] scratchpad show,
 
 # vesktop
 # 3. Keybinding (Add to SCRATCHPAD section)
-bindsym Control+$mod+v [class="vesktop"] scratchpad show, move position center
-bindsym $mod+Shift+v [class="vesktop"] scratchpad show, move position center
+bindsym Control+$mod+v [class="vesktop"] scratchpad show
+# bindsym $mod+Shift+v [class="vesktop"] scratchpad show, move position center
+
+
 
 
 # Config  (Mod+Ctrl+BackSpace)
@@ -366,8 +385,8 @@ bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% 
 
 # bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^dropdown_terminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move scratchpad
 
-bindsym Mod1+BackSpace [class="(?i)alacritty|urxvt|qterminal|copyq|vesktop|keepassxc|xournalpp"] move scratchpad; [floating] move scratchpad
-
+# bindsym Mod1+BackSpace [class="(?i)alacritty|urxvt|qterminal|copyq|vesktop|keepassxc|xournalpp"] move scratchpad; [floating] move scratchpad
+bindsym Mod1+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
 
 # =====================================================================
 # KEYBINDINGS — FOCUS & MOVEMENT
@@ -399,8 +418,23 @@ bindsym $mod+apostrophe focus output HDMI-1
 bindsym $mod+backslash  focus output eDP-1
 
 
+
+bindsym F19              exec --no-startup-id xdotool mousemove_relative -- 0 -10
+bindsym Control+F19      exec --no-startup-id xdotool mousemove_relative -- -10 0
+bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
+bindsym Control+Mod4+F19 exec --no-startup-id xdotool mousemove_relative -- 10 0
+
+
+
+
+
+
+
 # Alt-tab (previous window via i3-back)
-bindsym Mod1+Tab        [con_mark=_back] focus
+# bindsym Mod1+Tab        [con_mark=_back] focus
+bindsym Mod1+Tab [con_mark=_back] focus; [class="vesktop" floating] move position 36 45; [class="Zeal" floating] move position center; [class="copyq" floating] move position center;
+
+
 
 # Back-and-forth workspace shortcuts:
 bindsym $mod+grave workspace back_and_forth
@@ -435,7 +469,12 @@ bindsym $mod+g focus child
 # =====================================================================
 
 # This tells i3: "Specifically find the window with class 'Zeal' and toggle it"
-bindsym $mod+z [class="Zeal"] scratchpad show, move position center
+bindsym $mod+Shift+z [class="Zeal"] scratchpad show, move position center
+
+# 2. Bind key to show ONLY floating windows
+# Change $mod+z to your preferred key
+# bindsym $mod+z exec --no-startup-id skippy-xd --wm-status float
+bindsym $mod+z exec --no-startup-id skippy-scratch
 
 
 # ctrl+mod4+z does't work...

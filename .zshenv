@@ -12,6 +12,11 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export PYENV_ROOT="$HOME/.pyenv"
 
+
+
+# Just getting essential keys so that it just makes sense.
+export FZF_DEFAULT_OPTS="--bind 'ctrl-left:backward-word,ctrl-right:forward-word,ctrl-delete:kill-word,ctrl-k:kill-line'"
+
 # --- GLOBAL FZF CONFIG ---
 # export FZF_DEFAULT_OPTS="
 #   --layout=default

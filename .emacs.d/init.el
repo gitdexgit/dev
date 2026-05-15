@@ -1,0 +1,6 @@
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+(load-theme 'gruber-darker t)
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode 1)
