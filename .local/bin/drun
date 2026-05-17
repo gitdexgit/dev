@@ -1,9 +1,8 @@
 #!/bin/bash
 if pgrep -x dmenu > /dev/null; then
-    # If running, bring to front/focus
+    # If dmenu is open, focus it
     i3-msg '[class="(?i)dmenu"] focus'
 else
-    # Not running, launch normally
-    cmd=$(dmenu_path | dmenu "$@")
-    [ -n "$cmd" ] && exec bash -c "$cmd"
+    # Launch dmenu_run and exit this script immediately
+    dmenu_run "$@"
 fi

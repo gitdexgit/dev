@@ -590,6 +590,10 @@ function y() {
     rm -f -- "$tmp"
 }
 
+
+
+
+
 # Zoxide interactive with previews
 if command -v zoxide >/dev/null; then
     zi() {
@@ -697,4 +701,32 @@ compdef _watson_custom_completion watson
 
 # fzf MUST be last so its ** widget isn't overwritten by fzf-tab
 source <(fzf --zsh)
+
+
+# --- OLLAMA COMPLETION (MANUAL) ---
+_ollama() {
+  local line state
+  _arguments -C "1: :->cmds" "*::arg:->args"
+  case $state in
+    cmds)
+      _values "ollama command" \
+        "run[Run a model]" "stop[Stop a model]" "serve[Start ollama]" \
+        "create[Create model]" "show[Show info]" "list[List models]" \
+        "pull[Pull model]" "push[Push model]" "cp[Copy model]" "rm[Remove model]"
+      ;;
+    args)
+      case $line[1] in
+        run|stop|show|rm|cp|push)
+          local -a models
+          models=($(ollama list | awk 'NR>1 {print $1}'))
+          _describe -t models 'models' models
+          ;;
+      esac
+      ;;
+  esac
+}
+compdef _ollama ollama
+
+# fzf-tab preview for models (shows system prompt/info on hover)
+zstyle ':fzf-tab:complete:ollama:*' fzf-preview 'ollama show --system $word 2>/dev/null'
 

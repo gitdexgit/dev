@@ -167,7 +167,7 @@ exec --no-startup-id i3-back
 
 
 exec --no-startup-id yad --notification --image="document-edit" --text="Click to toggle Xournal++" --command="xdotool key ctrl+super+x"
-exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+z"
+exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
 exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
 exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
 
