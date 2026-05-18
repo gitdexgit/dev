@@ -12,9 +12,18 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export PYENV_ROOT="$HOME/.pyenv"
 
+# Just makes the ctrl-r nicer
+export FZF_CTRL_R_OPTS="
+  --no-preview
+  --layout=reverse
+  --height=40%
+"
 
-
-
+# IDEA: Add preview for tmux sessions
+#
+# WORKING:
+# Hit ctrl-r to refrech preview
+# once in a [TMUX] Hit a number to move window around.
 export FZF_DEFAULT_OPTS="
   --ansi
   --preview-window='up:65%:wrap'
@@ -24,7 +33,15 @@ export FZF_DEFAULT_OPTS="
   --bind 'alt-J:preview-page-down,alt-K:preview-page-up'
   --bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up'
   --bind 'alt-w:toggle-wrap'
+  --bind 'focus:refresh-preview'
+  --bind 'ctrl-r:refresh-preview'
+  --bind '1:execute-silent(bash ~/.config/fzf/win.sh {} 1)+refresh-preview'
+  --bind '2:execute-silent(bash ~/.config/fzf/win.sh {} 2)+refresh-preview'
+  --bind '3:execute-silent(bash ~/.config/fzf/win.sh {} 3)+refresh-preview'
+  --bind '4:execute-silent(bash ~/.config/fzf/win.sh {} 4)+refresh-preview'
+  --bind '5:execute-silent(bash ~/.config/fzf/win.sh {} 5)+refresh-preview'
 "
+
 
 # --- GLOBAL FZF CONFIG ---
 # export FZF_DEFAULT_OPTS="
@@ -67,3 +84,12 @@ path=(
 # Only set TERM if not in tmux
 [[ -z "$TMUX" ]] && export TERM=xterm-256color
 . "$HOME/.cargo/env"
+
+
+# API key for aider. Testing out this aider program.
+if [[ -d ~/.key ]]; then
+    for f in ~/.key/*(N.); do
+        export "${f:t}"="$(< "$f")"
+    done
+fi
+

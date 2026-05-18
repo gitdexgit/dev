@@ -300,7 +300,9 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 
 # Terminal (Alacritty via daemon)
 # Open alacritty terminal but attach to tmux-sessionizer and we make sure we never open a new tmux-session because it's stuck at picker. Really fast and handy. should be default
-bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e tmux-sessionizer || alacritty -qq -e tmux-sessionizer
+# bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e tmux-sessionizer || alacritty -qq -e tmux-sessionizer
+
+bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e zsh -c tmux-sessionizer || alacritty -qq -e zsh -c tmux-sessionizer
 
 # Open default alacritty temrinal. Just the same as you would open dmenu and type alacritty
 bindsym $mod+Shift+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window || alacritty -qq

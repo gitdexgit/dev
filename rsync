@@ -69,6 +69,7 @@ HOME_TARGETS=(
     "themes"
     "Documents/Bookmarks"
     ".config/yazi"
+    ".dotfiles"
     ".config/fzf"
     ".config/systemd"
     # ".emacs.d/"

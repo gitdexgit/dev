@@ -151,7 +151,12 @@ bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 bindkey '^H' backward-delete-char
 bindkey "^[[3~" delete-char
-bindkey '^[[Z' undo
+
+# Undo/Redo (Nano style + Kali style)
+bindkey '^[[Z' undo       # Shift-Tab
+bindkey '^[u' undo        # Alt-u
+bindkey '^[e' redo        # Alt-e
+
 bindkey '^Y' yank
 bindkey '^J' self-insert
 bindkey ' ' magic-space
@@ -174,8 +179,7 @@ bindkey '\en' edit-command-line
 # bindkey -M viins '\er' fzf-history-widget
 # bindkey -M vicmd '\er' fzf-history-widget
 # 1. Fix History: Move FZF history to Alt+R
-bindkey '^[r' redo
-
+bindkey '^[r' history-incremental-search-backward
 
 
 # Application Shortcuts
@@ -408,6 +412,12 @@ alias i='hostname -i'
 alias I='hostname -I'
 alias II='ip addr show | grep "inet " | grep -v 127.0.0.1'
 alias h='whoami'
+
+
+# The "Essential" Git Duo
+alias gst='git status'
+alias lgt='lazygit'
+
 
 alias mon-on='xrandr --output HDMI-1 --auto --primary --output eDP-1 --auto --right-of HDMI-1'
 alias mon-off='xrandr --output eDP-1 --off --output HDMI-1 --auto --primary'

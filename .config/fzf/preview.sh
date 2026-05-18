@@ -4,11 +4,20 @@ item="$1"
 case "$item" in
   "[TMUX] "*)
     session="${item#\[TMUX\] }"
-    meta=$(tmux display-message -p -t "$session" \
-      "Session: #S | Windows: #{session_windows} | Active: #W" 2>/dev/null)
-    printf '\033[1;34m%s\033[0m\n' "$meta"
+    windows=$(tmux list-windows -t "$session" \
+      -F "#{window_index}:#{window_name}#{?window_active,*,}" 2>/dev/null | tr '\n' ' ')
+    printf '\033[1;34m%s\033[0m\n' "$windows"
     echo "------------------------------------"
-    tmux capture-pane -ep -t "$session" 2>/dev/null
+
+    current=$(tmux display-message -p '#S' 2>/dev/null)
+    if [[ "$session" != "$current" && -n "$FZF_PREVIEW_COLUMNS" ]]; then
+      orig=$(tmux display-message -p -t "$session" "#{window_width}" 2>/dev/null)
+      tmux resize-window -t "$session" -x "$FZF_PREVIEW_COLUMNS" 2>/dev/null
+      tmux capture-pane -ep -t "$session" 2>/dev/null
+      tmux resize-window -t "$session" -x "$orig" 2>/dev/null
+    else
+      tmux capture-pane -ep -t "$session" 2>/dev/null
+    fi
     ;;
   *)
     if [ -f "$item" ]; then
