@@ -1,112 +1,102 @@
 #!/bin/bash
 
-# --- 1. Define the COMPLETE list of sessions to manage ---
-# REMOVED: "dropdown" and "main"
-# SESSIONS array — cpu removed
-SESSIONS=("config" "task" "btop" "jobs" "logs" "wiki" "sync" "duck")
+echo "--- Starting ---"
 
-# --- 2. Cleanup Phase ---
-echo "--- Starting Cleanup ---"
-for SESS in "${SESSIONS[@]}"; do
-    if tmux has-session -t "$SESS" 2>/dev/null; then
-        tmux kill-session -t "$SESS"
-    fi
-done
+# IDEA:
+# Is to always start clean every time I run this script. But I guess I can do it manually
+#
+# Define the COMPLETE list of sessions to manage:
+# SESSIONS=("999" "config" "session" "btop" "jobs" "sync" "duck")
 
-# --- 3. Session Creation Phase ---
+# Restarting sessions from 0:
+# echo "--- Starting Cleanup ---"
+# for SESS in "${SESSIONS[@]}"; do
+#     if tmux has-session -t "$SESS" 2>/dev/null; then
+#         tmux kill-session -t "$SESS"
+#     fi
+# done
 
-# --- Duck Session ---
-tmux new-session -d -s "duck" -c "$HOME/work" -n "aha"
+tmux new-session -d -s "999" -c "$HOME" -n "zsh"
+
+tmux new-session -d -s "config"
+
+####
+#### .duck
+####
+
+tmux new-session -d -s "duck" -c "$HOME/work" -n "duck"
 tmux send-keys -t "duck":1 "nvim aha.md" C-m
-tmux new-window -t "duck":2 -c "$HOME/work" -n "questions"
+tmux new-window -t "duck":2 -c "$HOME/wiki" -n "wiki"
 tmux send-keys -t "duck":2 "nvim questions.md" C-m
-tmux new-window -t "duck":3 -c "$HOME/work" -n "duck"
-tmux send-keys -t "duck":3 "nvim duck.md" C-m
 
-# --- Draft Session ---
-# tmux new-session -d -s "draft" -c "$HOME/work" -n "draft"
-# tmux send-keys -t "draft":1 "nvim draft.md" C-m
+# TODO:
+# I think session should be like this:
+# the sessions: https://i.imgur.com/jFl4mYR.png
+# window 1: https://i.imgur.com/QqAWvIU.png
+# window 2: https://i.imgur.com/QPUMzkI.png
+# window 3: https://i.imgur.com/xRJtfpZ.png
+# window 4: https://i.imgur.com/TnDak4a.png
+# window 5: https://i.imgur.com/geIH4TR.png
+# window 6: https://i.imgur.com/HqVM12A.png
+# ....So add the code here to auto run it like the pictures.
 #
-# tmux new-window -t "draft":2 -c "$HOME/work" -n "evaluate"
-# tmux send-keys -t "draft":2 "nvim evaluate.md" C-m
-#
-# tmux new-window -t "draft":3 -c "$HOME/work/current_struggles/" -n "send"
-#
-# tmux new-window -t "draft":4 -c "$HOME/work" -n "session end"
-# tmux send-keys -t "draft":4 "lazygit" C-m
 
-# --- Scratch Session ---
-# tmux new-session -d -s "scratch" -c "$HOME/work" -n "scratch"
-# tmux send-keys -t "scratch":1 "nvim scratch.md" C-m
-# tmux new-window -t "scratch":2 -c "$HOME/work" -n "zk"
-# tmux send-keys -t "scratch":2 "zk c"
-# tmux new-window -t "scratch":3 -c "$HOME/work" -n "zkc"
-# tmux send-keys -t "scratch":3 "zkc" C-m
-# tmux new-window -t "scratch":4 -c "$HOME/work/one_file/current_struggles/" -n "all_in_one_currunt_struggles"
-# tmux send-keys -t "scratch":4 "cat all_currunt_struggles_notes.md | grep -i \"\""
-# tmux new-window -t "scratch":5 -c "$HOME/work/one_file/current_struggles/" -n "all_in_one_sources"
-# tmux send-keys -t "scratch":5 "cat all_in_one_sources | grep -i \"\" # <-- This doesn't exist yet"
+####
+#### .session
+####
 
-# --- Wiki Session ---
-tmux new-session -d -s "wiki" -c "$HOME/wiki" -n "wiki"
-tmux send-keys -t "wiki":1 "ls" C-m
+SESS="session"
+WDIR="/home/dex/work"
 
-# 2. Create the session (starts with Pane 0)
-tmux new-session -d -s "task" -n "task"
+# Window 1: session (3 panes)
+tmux new-session -d -s "$SESS" -n "session"
+tmux split-window -v -t "$SESS":1
+tmux select-pane -t "$SESS":1.0
+tmux split-window -h -t "$SESS":1.0
+tmux send-keys -t "$SESS":1.0 '(echo "running" && ssleep 1h && dunstify -u critical -t 0 "Timer" "1 hour passed" && echo "done")' C-m
+tmux send-keys -t "$SESS":1.1 "timer" C-m
+tmux send-keys -t "$SESS":1.2 'echo -e "\n[ [ON] [session just woke up] ]\n" ; timer' C-m
 
-# 3. Split the whole screen into Top and Bottom halves
-# Top will be Pane 0, Bottom will be Pane 1
-# tmux split-window -v -t "task"
+# Window 2: clock (2 panes)
+tmux new-window -t "$SESS":2 -n "clock"
+tmux split-window -h -t "$SESS":2
+tmux send-keys -t "$SESS":2.0 "aclock" C-m
+tmux send-keys -t "$SESS":2.1 "oo; d; cal; ww" C-m
 
-# 4. Split the TOP half horizontally (Top Left | Top Right)
-# Pane 0 = Calendar, Pane 2 = Clock
-# tmux split-window -h -t "task":1.0
+# Window 3: taskwarrior (4 panes)
+tmux new-window -t "$SESS":3 -n "taskwarrior"
+tmux split-window -v -t "$SESS":3
+tmux select-pane -t "$SESS":3.0
+tmux split-window -h -t "$SESS":3.0
+tmux split-window -h -t "$SESS":3.1
+tmux send-keys -t "$SESS":3.0 "t" C-m
+tmux send-keys -t "$SESS":3.1 "t start 1" C-m
+tmux send-keys -t "$SESS":3.2 "t start 1" C-m
+tmux send-keys -t "$SESS":3.3 'watch -n 3 -c "task rc._forcecolor:on"' C-m
 
-# 5. Split the BOTTOM half horizontally (Bottom Left | Bottom Right)
-# Pane 1 = Watson Status, Pane 3 = Workspace
-# tmux split-window -h -t "task":1.1
+# Window 4: timewarrior (3 panes)
+tmux new-window -t "$SESS":4 -n "timewarrior"
+tmux split-window -v -t "$SESS":4
+tmux select-pane -t "$SESS":4.0
+tmux split-window -h -t "$SESS":4.0
+tmux send-keys -t "$SESS":4.0 "watch -n 3 -c timew" C-m
+tmux send-keys -t "$SESS":4.1 "tt s" C-m
+tmux send-keys -t "$SESS":4.2 "watch -n 3 -c timew summary" C-m
 
-# 6. Split the BOTTOM RIGHT (Pane 3) vertically (Top | Bottom)
-# Pane 3 = Timer, Pane 4 = Controls
-# tmux split-window -v -t "task":1.3
+# Window 5: tasks
+tmux new-window -t "$SESS":5 -n "tasks" -c "$WDIR"
+tmux send-keys -t "$SESS":5 "vim tasks.md" C-m
 
+# Window 6: sessions
+tmux new-window -t "$SESS":6 -n "sessions" -c "$WDIR"
+tmux send-keys -t "$SESS":6 "vim sessions.md" C-m
 
-# --- SEND THE COMMANDS ---
-
-# Top Left: Calendar
-# tmux send-keys -t "task":1.0 "while true; do cal -w; sleep 300; clear; done" C-m
-
-# Top Right: Clock
-# tmux send-keys -t "task":1.2 "aclock" C-m
-#
-# # Bottom Left: Watson Status
-# tmux send-keys -t "task":1.1 " while true; do cal -w ; sleep 300; clear; done" C-m
-#
-# # Bottom Right Top: Timer
-# tmux send-keys -t "task":1.3 "watch -n 3 task" C-m
-#
-# # Focus the Watson Status pane
-# tmux select-pane -t "task":1.1
-
-# --- Autoshot Session ---
-# tmux new-session -d -s "autoshot" -n "shots"
-# tmux split-window -h -t "autoshot":1.1
-# tmux split-window -v -t "autoshot":1.2
-# tmux send-keys -t "autoshot":1.1 "watch -n 1 \"ps -eo pid,stat,args | grep '[a]utoshot.sh'\"" C-m
-# tmux send-keys -t "autoshot":1.2 "autoshot-stop"
-# tmux send-keys -t "autoshot":1.3 "autoshot-start"
+tmux select-window -t "$SESS":1
 
 
-# --- Utilities---
-# tmux new-session -d -s "cpu" -n "sensors-cpupower" -c "$HOME"
-# tmux split-window -h -t "cpu":1.1
-# tmux split-window -v -t "cpu":1.2
-# tmux split-window -h -t "cpu":1.3
-# tmux send-keys -t "cpu":1.1 "watch sensors" C-m
-# tmux send-keys -t "cpu":1.2 "watch -n 5 cpupower frequency-info" C-m
-# tmux send-keys -t "cpu":1.3 "sudo cpupower frequency-set -u 2800mhz"
-# tmux send-keys -t "cpu":1.4 "sudo cpupower frequency-set -g performance"
-
+####
+#### .btop
+####
 
 tmux new-session -d -s "btop" -n "btop" -c "$HOME"
 
@@ -137,33 +127,17 @@ tmux send-keys -t "btop":3.3 "sudo cpupower frequency-set -g performance"
 
 tmux select-pane -t "btop":1.2
 
+####
+#### .jobs
+####
 
-
-# Dropdown session creation was removed from here
-tmux new-session -d -s "config"
-
-# tmux new-session -d -s "mixer" -n "pulsemixer"
-# tmux send-keys -t "mixer":1.1 "pulsemixer"
-
-# --- Jobs ---
-# 1. Create the session and the first window (logs)
-# This creates window index 0 by default
 tmux new-session -d -s "jobs" -n "logs"
-
-# 2. Send keys to the "logs" window
-# We target by name "session:window" to avoid index errors
 tmux send-keys -t "jobs:logs" "journalctl -f" C-m
 
-# 3. Create the second window (pocket-tts)
-# The -t "jobs" flag tells it which session to add the window to
-# tmux new-window -t "jobs" -n "pocket-tts"
+####
+#### .sync
+####
 
-# 4. Send keys to the "pocket-tts" window
-# tmux send-keys -t "jobs:pocket-tts" "pocket-tts" # C-m
-# tmux new-session -d -s "logs" -n "journalctl"
-# tmux send-keys -t "logs":1 "journalctl -f" C-m
-
-# --- Sync Session ---
 tmux new-session -d -s "sync" -n "dev" -c "$HOME/dev"
 tmux send-keys -t "sync":1 "sleep 1m ; git status" C-m
 
@@ -173,46 +147,7 @@ tmux send-keys -t "sync":2 "sleep 2m ; git status" C-m
 tmux new-window -t "sync":3 -n "wiki" -c "$HOME/wiki"
 tmux send-keys -t "sync":3 "sleep 3m ; git status" C-m
 
-
-
-
-# --- Brightness Session (4 Panes Grid) ---
-# tmux new-session -d -s "brightness" -n "brightness"
-#
-# # 1. Split Left/Right
-# tmux split-window -h -t "brightness":1.1
-#
-# # 2. Split the first pane (Left) down
-# tmux split-window -v -t "brightness":1.1
-#
-# # 3. Split the second pane (Right) down
-# tmux split-window -v -t "brightness":1.2
-
-# 4. FIX THE BOX: This makes all 4 panes equal sizes
-# tmux select-layout -t "brightness":1 tiled
-
-
-# tmux new-window -t "sync":4 -n "archive" -c "$HOME/archive_fossil/"
-# tmux send-keys -t "sync":4 "sleep 4m ; git status" C-m
-
-# --- Phone ---
-# tmux new-session -d -s "phone" -c "$HOME" -n "scrcpy"
-# tmux split-window -t "phone":1.1 -h
-# tmux send-keys -t "phone":1.1 "adb devices"
-# tmux send-keys -t "phone":1.2 "scrcpy -m1200 -b5M --max-fps=30 --no-audio --stay-awake"
-# tmux new-window -t "phone":2 -c "$HOME" -n "adb"
-
-
-# --- WINDOW 1: Brightness Controls ---
-# tmux new-session -d -s "brightness" -n "brightness-"
-
-# Top Left (1.1): HDMI Decrease
-# tmux send-keys -t "brightness":1.1 "xrandr --output HDMI-1 --brightness 0.7"
-# # Top Right (1.2): eDP Decrease
-# tmux send-keys -t "brightness":1.2 "xrandr --output eDP-1 --brightness 0.5"
-# # Bottom Left (1.3): HDMI Increase
-# tmux send-keys -t "brightness":1.3 "xrandr --output HDMI-1 --brightness 1.0"
-# # Bottom Right (1.4): eDP Increase
-# tmux send-keys -t "brightness":1.4 "xrandr --output eDP-1 --brightness 1.0"
+tmux new-window -t "sync":4 -n "archive_fossil" -c "$HOME/archive_fossil/"
+tmux send-keys -t "sync":3 "sleep 3m ; git status" C-m
 
 echo "--- Session Creation Complete ---"

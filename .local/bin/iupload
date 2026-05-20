@@ -43,5 +43,16 @@ echo "Uploading $FILE_TO_UPLOAD..."
 # Run the uploader with the determined file path
 /home/dex/scripts/tools/python/imgur/venv/bin/imgur-uploader "$FILE_TO_UPLOAD"
 
+
+
 # Deactivate the virtual environment, since we're done with it
 deactivate
+
+
+notify-send -t 400 \
+-h string:bgcolor:#95F034 \
+-h string:fgcolor:#000000 \
+"Upload to Imagur" "done" &
+
+
+

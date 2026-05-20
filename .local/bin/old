@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# old — age tracker
+# alias: oo
+
+BIRTH="2001-08-08"
+birth_epoch=$(date -d "$BIRTH" +%s)
+now_epoch=$(date +%s)
+
+# Calculations
+diff=$(( now_epoch - birth_epoch ))
+days=$(( diff / 86400 ))
+
+y_now=$(date +%Y)
+m_now=$(( 10#$(date +%m) ))
+years=$(( y_now - 2001 ))
+
+# Adjust year if birthday hasn't happened yet this year
+[ "$(date +%m%d)" -lt "0808" ] && years=$(( years - 1 ))
+
+# Total months passed
+months=$(( (y_now - 2001) * 12 + (m_now - 8) ))
+
+# Output
+echo "Days passed: $days"
+echo "Months passed: $months"
+echo "Age: $years"

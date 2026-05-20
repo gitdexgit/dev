@@ -389,8 +389,8 @@ Mod4+alt+backslash
 
 # ----- ways to move window to your current cursor position
 # I just you know. Reminds me of the old days on windows, works on i3 floats
-"/home/dex/scripts/ddesk/nothing/capslock_movewindow_to_mouse_pos"
-control + Mod4 + q
+# "/home/dex/scripts/ddesk/nothing/capslock_movewindow_to_mouse_pos"
+# control + Mod4 + q
 
 
 # ----------- quick Cycle between windows of the same window class regardless of desktop -----------
@@ -1228,7 +1228,9 @@ Mod4 + control + d
 #
 # the 'q' in the hotkey stands for questions
 "~/scripts/ai/atomic_question_maker.sh"
-Mod4 + control + q
+Mod4 + alt + q
+
+
 
 # qwen-coder 3b local
 # Lean by giving the LLM your question and answer and it will help you learn by checking first if correct and what not.

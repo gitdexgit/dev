@@ -1,0 +1,5 @@
+#!/bin/bash
+export JSC_SIGNAL_FOR_GC=12
+export WEBKIT_DISABLE_DMABUF_RENDERER=1
+export GDK_BACKEND=x11
+exec /usr/bin/emacs "$@"

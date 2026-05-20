@@ -123,6 +123,7 @@ workspace 43 output eDP-1
 exec --no-startup-id skippy-xd --start-daemon
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec --no-startup-id qalculate-gtk
 exec --no-startup-id dunst
 exec --no-startup-id zeal
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
@@ -140,10 +141,11 @@ exec --no-startup-id sh -c "sleep 5; gromit-mpx"
 # Razer DPI
 exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"
 exec --no-startup-id sh -c "sleep 10; xournalpp"
+exec --no-startup-id sleep 15 && vesktop
 
 # Firefox profiles
 exec --no-startup-id sleep 5  && firefox -P default-release --class default-release
-exec --no-startup-id sleep 10 && firefox -P ai --class ai
+# exec --no-startup-id sleep 10 && firefox -P ai --class ai
 
 # Alacritty daemon (silent — suppresses copy log noise)
 exec --no-startup-id alacritty -qq --daemon --socket /tmp/alacritty-daemon.sock
@@ -210,7 +212,8 @@ assign [class="ai"]              $ws2
 # This tells i3: "Don't tile dmenu, let it float on top"
 # Float dmenu and pin to top-center
 for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
-
+# Send Qalculate to scratchpad automatically
+for_window [class="Qalculate-gtk"] floating enable, move scratchpad
 
 # Automatically send Zeal to the "background" (scratchpad) when it opens
 # for_window [class="Zeal"] move scratchpad
@@ -308,6 +311,9 @@ bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock c
 bindsym $mod+Shift+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window || alacritty -qq
 
 
+# Toggle Qalculate scratchpad
+bindsym Control+$mod+q [class="Qalculate-gtk"] scratchpad show, move position center
+
 # USELESS:
 # I no longe use urxvtc. It's not worth it. alacritty is way worth it for a little bit extra price.
 #
@@ -345,7 +351,7 @@ bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n
 bindsym $mod+Shift+d exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_duck" alacritty --class "alacritty_duck" -T "duck" -e tmux new-session -A -s duck
 
 # Task session
-bindsym $mod+Shift+t exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_task" alacritty --class "alacritty_task" -T "task" -e tmux new-session -A -s task
+bindsym $mod+Shift+t exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_task" alacritty --class "alacritty_task" -T "session" -e tmux new-session -A -s session
 
 # Btop  (Mod+Shift+b)
 bindsym $mod+Shift+b exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_btop" alacritty --class "alacritty_btop" -T "btop" -e tmux new-session -A -s btop

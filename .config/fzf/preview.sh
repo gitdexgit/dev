@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 item="$1"
-
 case "$item" in
   "[TMUX] "*)
     session="${item#\[TMUX\] }"
@@ -8,16 +7,7 @@ case "$item" in
       -F "#{window_index}:#{window_name}#{?window_active,*,}" 2>/dev/null | tr '\n' ' ')
     printf '\033[1;34m%s\033[0m\n' "$windows"
     echo "------------------------------------"
-
-    current=$(tmux display-message -p '#S' 2>/dev/null)
-    if [[ "$session" != "$current" && -n "$FZF_PREVIEW_COLUMNS" ]]; then
-      orig=$(tmux display-message -p -t "$session" "#{window_width}" 2>/dev/null)
-      tmux resize-window -t "$session" -x "$FZF_PREVIEW_COLUMNS" 2>/dev/null
-      tmux capture-pane -ep -t "$session" 2>/dev/null
-      tmux resize-window -t "$session" -x "$orig" 2>/dev/null
-    else
-      tmux capture-pane -ep -t "$session" 2>/dev/null
-    fi
+    tmux capture-pane -ep -t "$session" 2>/dev/null | fold -w "${FZF_PREVIEW_COLUMNS:-80}"
     ;;
   *)
     if [ -f "$item" ]; then

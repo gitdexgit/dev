@@ -12,6 +12,8 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export PYENV_ROOT="$HOME/.pyenv"
 
+
+
 # Just makes the ctrl-r nicer
 export FZF_CTRL_R_OPTS="
   --no-preview
@@ -35,11 +37,11 @@ export FZF_DEFAULT_OPTS="
   --bind 'alt-w:toggle-wrap'
   --bind 'focus:refresh-preview'
   --bind 'ctrl-r:refresh-preview'
-  --bind '1:execute-silent(bash ~/.config/fzf/win.sh {} 1)+refresh-preview'
-  --bind '2:execute-silent(bash ~/.config/fzf/win.sh {} 2)+refresh-preview'
-  --bind '3:execute-silent(bash ~/.config/fzf/win.sh {} 3)+refresh-preview'
-  --bind '4:execute-silent(bash ~/.config/fzf/win.sh {} 4)+refresh-preview'
-  --bind '5:execute-silent(bash ~/.config/fzf/win.sh {} 5)+refresh-preview'
+  --bind 'f1:execute-silent(bash ~/.config/fzf/win.sh {} 1)+refresh-preview'
+  --bind 'f2:execute-silent(bash ~/.config/fzf/win.sh {} 2)+refresh-preview'
+  --bind 'f3:execute-silent(bash ~/.config/fzf/win.sh {} 3)+refresh-preview'
+  --bind 'f4:execute-silent(bash ~/.config/fzf/win.sh {} 4)+refresh-preview'
+  --bind 'f5:execute-silent(bash ~/.config/fzf/win.sh {} 5)+refresh-preview'
 "
 
 

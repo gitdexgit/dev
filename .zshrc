@@ -284,6 +284,10 @@ alias f='fg'
 alias d='date'
 alias tt='timew'
 alias ww='wokeup'
+alias woke-up='wokeup'
+alias oo='old'
+alias yearsold='old'
+alias years-old='old'
 
 # maintainance
 alias nvrc='nvim ~/.zshrc'
@@ -365,6 +369,8 @@ alias so='cd ~/work/sources/'
 
 
 alias acal='while true; do cal -w ; sleep 300; clear; done'
+
+alias cal='cal -w'
 
 
 
