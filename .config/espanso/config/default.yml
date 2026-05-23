@@ -5,8 +5,10 @@ search_shortcut: Ctrl+Shift+Meta+j
 show_notifications: false
 # backend: clipboard
 undo_backspace: false
+
 inject_delay: 0
 key_delay: 0
+
 pre_paste_delay: 10
 post_form_delay: 100 # Reduced from 200
 post_search_delay: 100 # Reduced from 200

@@ -479,17 +479,10 @@ Control + Alt + Left
 Print
 
 
-# copies directly to the clipboard. Might use it maybe (by maybe = never lol)
-# "flameshot gui --clipboard --accept-on-select"
-# mod4+control+c
-#
 
 
 
 
-# Fix focus bug for "copy to clipboard" shortcut
-# "WID=$(xdotool getactivewindow); flameshot gui --clipboard --accept-on-select; xdotool windowfocus $WID"
-#   mod4+control+c
 
 # I still prefer scrot because it's so fast, as opposed to `flameshot -gui
 # --clipboard --accept-on-select` so I'm going to use scrot when I want to
@@ -575,9 +568,6 @@ mod4 + alt + i
 "xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt"
 mod4 + alt + p
 
-# # I'll keep this just because of habit but the control+alt+p makes way more sense.
-# "xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt"
-# Mod4 + control + Shift + p
 
 # ------- Way to open terminal -----------
 
@@ -857,14 +847,7 @@ mod4 + shift + m
 # "wmctrl -x -a Audacity"
 # Mod4 + Shift + y
 
-# switch to Obsidian
-# I never use this tbh
-# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -x -a obsidian && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
-# Mod4 + Shift + o
 
-# switch to Terminal _ob_ Obsidian
-# "/home/dex/scripts/esentials/SaveCurrentDesktop.sh && wmctrl -a _o_ && /home/dex/scripts/esentials/CheckIf-SaveCurrentDesktop.sh-ChangedIfYesMakeItPrevious.sh"
-# Mod4 + Shift + control + o
 
 # what even is this I don't use this
 # # _dt_ date and time terminal alone
@@ -961,12 +944,16 @@ alt + F3
 
 
 
-# Past in an embeded format
+# Past in an embeded format ![<img>] for obsidian
 "/home/dex/scripts/ddesk/clipboard-manipulation/obyt-but-hotkey.sh"
 Control + shift + Alt + v
 
+# Remove \n from selection.
 "scripts/ddesk/clipboard-manipulation/remove-new-lines-add-space.sh"
 Control + Alt + v
+
+
+
 
 #===END
 

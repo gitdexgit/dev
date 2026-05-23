@@ -26,6 +26,7 @@ foreground = "#d8d8d8"
 
 [debug]
 log_level = "Off"
+render_timer = false
 
 [cursor]
 style = "Block"

@@ -11,6 +11,25 @@
 
 matches:
 
+
+  - trigger: ";;qq;"
+    replace: |
+      q:
+      $|$
+
+      a:
+
+  - trigger: ";;q;"
+    force_mode: clipboard
+    vars:
+      - name: clip
+        type: clipboard
+    replace: |
+      q:
+      {{clip}}
+
+      a:
+
   #------------ Essentials -------------
   # very handy just spam ;;;; just keep holding it. and it works so you only need to hold 1 button
 
@@ -76,6 +95,39 @@ matches:
 
   - trigger: "bash;;p;"
     replace: "```bash\n{{content}}\n```\n\n"
+    force_clipboard: true
+    paste_shortcut: "Ctrl+V"
+    vars:
+      - name: content
+        type: shell
+        params:
+          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
+
+
+  - trigger: "py;;p;"
+    replace: "```py\n{{content}}\n```\n\n"
+    force_clipboard: true
+    paste_shortcut: "Ctrl+V"
+    vars:
+      - name: content
+        type: shell
+        params:
+          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
+
+
+
+  - trigger: "js;;p;"
+    replace: "```js\n{{content}}\n```\n\n"
+    force_clipboard: true
+    paste_shortcut: "Ctrl+V"
+    vars:
+      - name: content
+        type: shell
+        params:
+          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
+
+  - trigger: "ts;;p;"
+    replace: "```ts\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
     vars:

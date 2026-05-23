@@ -196,7 +196,9 @@ exec --no-startup-id sleep 12 && i3-msg workspace 1
 # =====================================================================
 
 assign [class="default-release"] $ws1
-assign [class="ai"]              $ws2
+
+# useless
+# assign [class="^ai$"]              $ws2
 
 
 # assign [class="KeePassXC"]       $ws9
@@ -214,6 +216,10 @@ assign [class="ai"]              $ws2
 for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
 # Send Qalculate to scratchpad automatically
 for_window [class="Qalculate-gtk"] floating enable, move scratchpad
+
+
+for_window [instance="godot"] floating enable
+for_window [title="Godot"] floating enable
 
 # Automatically send Zeal to the "background" (scratchpad) when it opens
 # for_window [class="Zeal"] move scratchpad
@@ -256,10 +262,9 @@ for_window [class="KeePassXC"] floating enable, move scratchpad
 # for_window [class="copyq"] border pixel 0
 
 # for_window [class="KeePassXC"] floating enable, border pixel 0, resize set 1440 900, focus, exec --no-startup-id "i3-msg move absolute position 0 0"
-for_window [class="KeePassXC"] focus, exec --no-startup-id "i4-msg move absolute position 0 0"
+for_window [class="KeePassXC"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
 
 for_window [instance="floating_thunar"]   floating enable
-for_window [class="dropdown_terminal"]    floating enable
 
 
 # for_window [class="alacritty_scratch"]    floating enable, border pixel 0, move position center
@@ -269,20 +274,20 @@ for_window [class="dropdown_terminal"]    floating enable
 # for_window [class="alacritty_btop"]       floating enable, border pixel 0, move position center
 # for_window [class="alacritty_config"]     floating enable, border pixel 0, move position center
 # for_window [class="alacritty_cpu"]        floating enable, border pixel 0, move position center
-# for_window [class="alacritty_wiki"]       floating enable, border pixel 0, move position center
-# for_window [instance="dropdown_terminal"] floating enable, border pixel 0, move position center
+# for_window [class="alacritty_sync"]       floating enable, border pixel 0, move position center
+# for_window [instance="alacritty_main"] floating enable, border pixel 0, move position center
 #
 
 # for_window [class="alacritty_scratch"]    floating enable, move position center
-for_window [class="alacritty_work"] floating enable, move position center
+for_window [class="alacritty_work"]      floating enable, move position center, border pixel 0
 for_window [class="alacritty_draft"]      floating enable, move position center, border pixel 0
 for_window [class="alacritty_duck"]       floating enable, move position center, border pixel 0
 for_window [class="alacritty_task"]       floating enable, move position center, border pixel 0
 for_window [class="alacritty_btop"]       floating enable, move position center, border pixel 0
 for_window [class="alacritty_config"]     floating enable, move position center, border pixel 0
 for_window [class="alacritty_cpu"]        floating enable, move position center, border pixel 0
-for_window [class="alacritty_wiki"]       floating enable, move position center, border pixel 0
-for_window [instance="dropdown_terminal"] floating enable, move position center, border pixel 0
+for_window [class="alacritty_sync"]       floating enable, move position center, border pixel 0
+for_window [class="alacritty_main"]    floating enable, move position center, border pixel 0
 
 
 # =====================================================================
@@ -376,22 +381,22 @@ bindsym $mod+Control+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5
 # bindsym $mod+Shift+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_cpu" alacritty --class "alacritty_cpu" -T "cpu" -e tmux new-session -A -s cpu
 
 # Wiki  (Mod+Alt+BackSpace)
-bindsym $mod+Mod1+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_wiki" alacritty --class "alacritty_wiki" -T "wiki" -e tmux new-session -A -s wiki
+bindsym $mod+Mod1+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_sync" alacritty --class "alacritty_sync" -T "sync" -e tmux new-session -A -s sync
 
 # urxvtc dropdown  (Mod+BackSpace)
-bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "dropdown_terminal" alacritty --class "dropdown_terminal" -T "999" -e tmux new-session -A -s 999
-# bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "dropdown_terminal" urxvtc -name "dropdown_terminal" -title "Dropdown"
+bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" alacritty --class "alacritty_main" -T "main" -e tmux new-session -A -s main
+# bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" urxvtc -name "alacritty_main" -title "Dropdown"
 
 # urxvtc dropdown  (Mod+BackSpace)
-# bindsym $mod+i exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "dropdown_terminal" urxvtc -name "dropdown_terminal" -title "Dropdown"
+# bindsym $mod+i exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" urxvtc -name "alacritty_main" -title "Dropdown"
 
 ## The issue with this one is that, it makes mod4+grave switch between workspace 40 and the current workspace for back and forth. It's annoying to have.
 # Mass hide all tdrop windows to Workspace 42
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move to workspace 40
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^alacritty_main|^qterminal"] move to workspace 40
 
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move scratchpad
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^alacritty_main|^qterminal"] move scratchpad
 
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^dropdown_terminal" instance="^alacritty_|^dropdown_terminal|^qterminal"] move scratchpad
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^alacritty_main" instance="^alacritty_|^alacritty_main|^qterminal"] move scratchpad
 
 # bindsym Mod1+BackSpace [class="(?i)alacritty|urxvt|qterminal|copyq|vesktop|keepassxc|xournalpp"] move scratchpad; [floating] move scratchpad
 bindsym Mod1+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh

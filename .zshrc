@@ -318,6 +318,7 @@ alias define='sdcv'
 alias -g ]]r='source ~/.zshrc ; source ~/.zshenv'
 alias md='mkdir -p'
 alias history="history 0"
+alias hh="history 0"
 
 
 
@@ -354,6 +355,7 @@ alias ip='ip --color=auto'
 #
 # alias -g xc='| col -b | xclip -selection clipboard'
 
+alias xcg='xclip -selection clipboard -t image/png -o > /tmp/clip.png'
 
 alias s='cd ~/scripts'
 alias a='cd ~/archive_fossil/'
