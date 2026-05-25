@@ -421,6 +421,8 @@ alias I='hostname -I'
 alias II='ip addr show | grep "inet " | grep -v 127.0.0.1'
 alias h='whoami'
 
+alias ops='ollama ps'
+alias dps='docker ps'
 
 # The "Essential" Git Duo
 alias gst='git status'

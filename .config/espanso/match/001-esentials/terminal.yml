@@ -14,8 +14,8 @@ matches:
 
 
   - trigger: ";;timer;"
-    replace: " echo \"\\n[ [ON] [$|$] ]\\n\" ; ]timer"
-  
+    replace: " echo \"\\n [$|$] \\n\" ; timer"
+
   - trigger: ";;zen;"
     replace: "zen-browser --search \"$|$\""
 

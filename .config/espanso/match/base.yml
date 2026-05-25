@@ -27,11 +27,27 @@ matches:
     replace: |
       q:
       {{clip}}
-
       a:
 
   #------------ Essentials -------------
   # very handy just spam ;;;; just keep holding it. and it works so you only need to hold 1 button
+
+
+  - trigger: ";;`bash;"
+    replace: "```bash\n$|$\n```"
+    propagate_case: false
+
+  - trigger: ";;`py;"
+    replace: "```py\n$|$\n```"
+    propagate_case: false
+
+  - trigger: ";;`c;"
+    replace: "```c\n$|$\n```"
+    propagate_case: false
+
+  - trigger: ";;`lua;"
+    replace: "```lua\n$|$\n```"
+    propagate_case: false
 
   - trigger: ";;`;"
     replace: "```\n$|$\n```"

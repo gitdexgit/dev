@@ -148,7 +148,7 @@ exec --no-startup-id sleep 5  && firefox -P default-release --class default-rele
 # exec --no-startup-id sleep 10 && firefox -P ai --class ai
 
 # Alacritty daemon (silent — suppresses copy log noise)
-exec --no-startup-id alacritty -qq --daemon --socket /tmp/alacritty-daemon.sock
+# exec --no-startup-id alacritty -qq --daemon --socket /tmp/alacritty-daemon.sock
 
 # urxvt daemon
 exec --no-startup-id urxvtd -q -o -f
@@ -310,10 +310,18 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 # Open alacritty terminal but attach to tmux-sessionizer and we make sure we never open a new tmux-session because it's stuck at picker. Really fast and handy. should be default
 # bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e tmux-sessionizer || alacritty -qq -e tmux-sessionizer
 
-bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e zsh -c tmux-sessionizer || alacritty -qq -e zsh -c tmux-sessionizer
+# bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e zsh -c tmux-sessionizer || alacritty -qq -e zsh -c tmux-sessionizer
+# bindsym $mod+Return exec alacritty -e zsh -c tmux-sessionizer
+
+# Update binding
+bindsym $mod+Return exec alacritty --class alacritty_float -e zsh -c tmux-sessionizer
+
+for_window [class="alacritty_float"] floating enable, resize set 90 ppt 90 ppt, move position center
 
 # Open default alacritty temrinal. Just the same as you would open dmenu and type alacritty
-bindsym $mod+Shift+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window || alacritty -qq
+# bindsym $mod+Shift+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window || alacritty -qq
+
+bindsym $mod+Shift+Return exec alacritty
 
 
 # Toggle Qalculate scratchpad
