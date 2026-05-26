@@ -11,6 +11,8 @@
 
 matches:
 
+  - trigger: ";;timer;"
+    replace: "echo \"\\n [$|$] \\n\" ; timer"
 
   - trigger: ";;qq;"
     replace: |

@@ -42,6 +42,8 @@ export FZF_DEFAULT_OPTS="
   --bind 'f3:execute-silent(bash ~/.config/fzf/win.sh {} 3)+refresh-preview'
   --bind 'f4:execute-silent(bash ~/.config/fzf/win.sh {} 4)+refresh-preview'
   --bind 'f5:execute-silent(bash ~/.config/fzf/win.sh {} 5)+refresh-preview'
+  --bind 'alt-,:execute-silent(bash ~/.config/fzf/winc.sh {} prev)+refresh-preview'
+  --bind 'alt-.:execute-silent(bash ~/.config/fzf/winc.sh {} next)+refresh-preview'
 "
 
 

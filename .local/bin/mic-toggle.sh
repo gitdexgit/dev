@@ -1,14 +1,22 @@
 #!/bin/bash
 
-# Toggle the mute status of the default source (microphone)
+# Toggle mute
 pactl set-source-mute @DEFAULT_SOURCE@ toggle
-
-# Optional: Send a notification so you know the status
-# Requires 'libnotify' package
 MUTE_STATUS=$(pactl get-source-mute @DEFAULT_SOURCE@)
 
+# Unique name for yad process
+ICON_NAME="mic_indicator"
+
 if [[ $MUTE_STATUS == *"yes"* ]]; then
+    # Muted: Kill icon
+    pkill -f "yad --notification --name=$ICON_NAME"
     notify-send -t 1000 -u critical "Microphone" "MUTED 🔇"
 else
+    # Live: Start icon if not running
+    if ! pgrep -f "yad --notification --name=$ICON_NAME" > /dev/null; then
+        yad --notification --name="$ICON_NAME" \
+            --image="audio-input-microphone" \
+            --text="Mic Live" &
+    fi
     notify-send -t 1000 "Microphone" "LIVE 🎤"
 fi
