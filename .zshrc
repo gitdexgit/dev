@@ -1,10 +1,22 @@
+
+
+if [[ -z $DISPLAY && $TTY == /dev/tty1 ]]; then
+  exec startx
+fi
+
+
 # --- [SPACE FIX] ---
 [[ -n "$TMUX" ]] && echo ""
+
+
 
 # --- [0] AUTO-TMUX STARTUP ---
 if [[ -z "$TMUX" ]] && [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1; then
     tmux new-session
 fi
+
+alias perf='sudo cpupower frequency-set -g performance && echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference'
+
 
 # 1. CORE PATHS & LIBRARY LOADING
 fpath=($HOME/.config/zsh/completions $HOME/.config/zsh/functions $fpath)
@@ -411,6 +423,27 @@ alias stask='cd ~/watson && ./s && cd -'
 alias st='cd ~/watson && ./s && cd -'
 alias -g S='cd ~/watson && ./s && cd -'
 
+
+
+# Remote Access (VPN + Security)
+alias tailscale-on='sudo systemctl start tailscaled fail2ban'
+alias tailscale-off='sudo systemctl stop tailscaled fail2ban'
+
+
+alias vpn-on='sudo systemctl start proton.VPN.service'
+alias vpn-off='sudo systemctl stop proton.VPN.service'
+
+
+# AI
+alias ai-on='sudo systemctl start ollama'
+alias ai-off='sudo systemctl stop ollama'
+
+# VMs
+alias vm-on='sudo systemctl start libvirtd virtlogd'
+alias vm-off='sudo systemctl stop libvirtd virtlogd'
+
+
+
 alias e='exit'
 alias ee='exit'
 alias eee='exit'
@@ -749,4 +782,6 @@ compdef _ollama ollama
 
 # fzf-tab preview for models (shows system prompt/info on hover)
 zstyle ':fzf-tab:complete:ollama:*' fzf-preview 'ollama show --system $word 2>/dev/null'
+
+
 

@@ -944,17 +944,6 @@ alt + F3
 
 
 
-# Past in an embeded format ![<img>] for obsidian
-"/home/dex/scripts/ddesk/clipboard-manipulation/obyt-but-hotkey.sh"
-Control + shift + Alt + v
-
-# Remove \n from selection.
-"scripts/ddesk/clipboard-manipulation/remove-new-lines-add-space.sh"
-Control + Alt + v
-
-
-
-
 #===END
 
 

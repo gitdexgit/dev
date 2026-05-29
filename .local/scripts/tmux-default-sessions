@@ -17,7 +17,7 @@ echo "--- Starting ---"
 #     fi
 # done
 
-tmux new-session -d -s "999" -c "$HOME" -n "zsh"
+tmux new-session -d -s "main" -c "$HOME" -n "zsh"
 tmux new-session -d -s "wiki" -c "$HOME/wiki/" -n "zsh"
 
 tmux new-session -d -s "config"
@@ -29,14 +29,13 @@ tmux new-session -d -s "config"
 tmux new-session -d -s "work" -c "$HOME/work" -n "learn"
 tmux send-keys -t "work":1 "nvim aha.md" C-m
 
-tmux new-window -t "work":2 -c "$HOME/work" -n "duck"
-tmux send-keys -t "work":2 "nvim duck.md" C-m  # Fixed index here
-
-tmux new-window -t "work":3 -c "$HOME/work/buffer" -n "./buffer"
-tmux send-keys -t "work":3 "ls" C-m
+tmux new-window -t "work":2 -c "$HOME/work/buffer" -n "~/work/buffer"
+tmux send-keys -t "work":2 "ls" C-m
 
 # Fixed typo in path below
-tmux new-window -t "work":4 -c "$HOME/work/attachements/" -n "./attachments"
+tmux new-window -t "work":3 -c "$HOME/work/attachements/" -n "~/work/attachments"
+
+tmux new-window -t "work":4 -c "$HOME/wiki/" -n "~/wiki"
 
 tmux select-window -t "work":1
 
@@ -83,21 +82,26 @@ tmux send-keys -t "$SESS":2.3 "oo; d; ww" C-m
 
 
 # Window 3: taskwarrior (2 panes)
-tmux new-window -t "$SESS":3 -n "taskwarrior"
-tmux split-window -v -t "$SESS":3.1      # Splits 3.1 into 3.1 (top) and 3.2 (bottom)
-tmux send-keys -t "$SESS":3.1 'watch -n 3 -c "task rc._forcecolor:on"' C-m
+# tmux new-window -t "$SESS":3 -n "taskwarrior"
+# tmux split-window -v -t "$SESS":3.1      # Splits 3.1 into 3.1 (top) and 3.2 (bottom)
+# tmux send-keys -t "$SESS":3.1 'watch -n 3 -c "task rc._forcecolor:on"' C-m
 
 
 # Window 4: timewarrior (3 panes)
-tmux new-window -t "$SESS":4 -n "timewarrior"
-tmux split-window -v -t "$SESS":4      # Splits 4.1 -> 4.1 (top), 4.2 (bottom)
-tmux split-window -h -t "$SESS":4.1    # Splits 4.1 -> 4.1 (top-left), 4.3 (top-right)
-tmux send-keys -t "$SESS":4.1 "watch -n 3 -c timew" C-m
-tmux send-keys -t "$SESS":4.3 "watch -n 3 -c timew summary" C-m
+# tmux new-window -t "$SESS":4 -n "timewarrior"
+# tmux split-window -v -t "$SESS":4      # Splits 4.1 -> 4.1 (top), 4.2 (bottom)
+# tmux split-window -h -t "$SESS":4.1    # Splits 4.1 -> 4.1 (top-left), 4.3 (top-right)
+# tmux send-keys -t "$SESS":4.1 "watch -n 3 -c timew" C-m
+# tmux send-keys -t "$SESS":4.3 "watch -n 3 -c timew summary" C-m
 
 # Window 5: tasks
-tmux new-window -t "$SESS":5 -n "tasks and sessions" -c "$WDIR"
-tmux send-keys -t "$SESS":5.1 "vim tasks.md sessions.md" C-m
+tmux new-window -t "$SESS":3 -n "tasks and sessions" -c "$WDIR"
+tmux send-keys -t "$SESS":3.1 "vim tasks.md sessions.md" C-m
+
+tmux new-window -t "$SESS":4 -n "kill-time" -c "$WDIR"
+tmux split-window -v -t "$SESS":4.1
+tmux send-keys -t "$SESS":4.1 "echo "\n [] \n" ; timer"
+
 
 tmux select-window -t "$SESS":1
 

@@ -120,15 +120,16 @@ workspace 43 output eDP-1
 
 
 # 1. Start the daemon on login
-exec --no-startup-id skippy-xd --start-daemon
+# exec --no-startup-id skippy-xd --start-daemon
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id qalculate-gtk
+# exec --no-startup-id qalculate-gtk
 exec --no-startup-id dunst
-exec --no-startup-id zeal
+# exec --no-startup-id zeal
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
 exec --no-startup-id xbindkeys
 exec --no-startup-id xset s off -dpms
+exec_always sh -c "sleep 2; xset r rate 240 68"
 exec --no-startup-id xsetroot -solid "#000000"
 
 # CopyQ — launch daemon and show the window on startup
@@ -141,7 +142,7 @@ exec --no-startup-id sh -c "sleep 5; gromit-mpx"
 # Razer DPI
 exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"
 exec --no-startup-id sh -c "sleep 10; xournalpp"
-exec --no-startup-id sleep 15 && vesktop
+# exec --no-startup-id sleep 15 && vesktop
 
 # Firefox profiles
 exec --no-startup-id sleep 5  && firefox -P default-release --class default-release
@@ -151,7 +152,7 @@ exec --no-startup-id sleep 5  && firefox -P default-release --class default-rele
 # exec --no-startup-id alacritty -qq --daemon --socket /tmp/alacritty-daemon.sock
 
 # urxvt daemon
-exec --no-startup-id urxvtd -q -o -f
+# exec --no-startup-id urxvtd -q -o -f
 
 ## It has problems in i3... Especially if you have tdrop... after some usage you start getting windows tearing and everything... So I guess I'm no longer using skippy-xd... Not that I use it that much tbh
 # Skippy-XD (expose-style window switcher)
@@ -169,14 +170,14 @@ exec --no-startup-id i3-back
 
 
 exec --no-startup-id yad --notification --image="document-edit" --text="Click to toggle Xournal++" --command="xdotool key ctrl+super+x"
-exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
-exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
+# exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
+# exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
 exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
 
 exec --no-startup-id yad --notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+shift+t"
 
-exec --no-startup-id yad --notification --image="vesktop" --text="Click to send Super+Backspace" --command="xdotool key super+control+v"
-exec --no-startup-id yad --notification --image="copyq" --text="Click to send Super+Backspace" --command="xdotool key super+control+c"
+# exec --no-startup-id yad --notification --image="vesktop" --text="Click to send Super+Backspace" --command="xdotool key super+control+v"
+# exec --no-startup-id yad --notification --image="copyq" --text="Click to send Super+Backspace" --command="xdotool key super+control+c"
 
 # exec --no-startup-id yad --notification --image="/usr/share/icons/Papirus/64x64/apps/duckduckgo.svg" --text="Click to send Super+Backspace" --command="xdotool key super+shift+d"
 # exec --no-startup-id yad --notification --image="yast-release-notes" --text="Click to send Super+Backspace" --command="xdotool key super+shift+f"
