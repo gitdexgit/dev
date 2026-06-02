@@ -70,7 +70,7 @@ tmux split-window -h -t "$SESS":1.2
 # Use C-m at end to trigger Enter
 tmux send-keys -t "$SESS":1.3 "timer" C-m
 tmux send-keys -t "$SESS":1.2 '(echo "running" && ssleep 1h && dunstify -u critical -t 0 "Timer" "1 hour passed" && echo "done")' C-m
-tmux send-keys -t "$SESS":1.1 'echo -e "\n[ [ON] [] ]\n" ; timer' C-m
+tmux send-keys -t "$SESS":1.1 'echo -e "\n[Just started tmux-default-sessoins]\n" ; timer' C-m
 
 # Window 2: clock (3 panes - split top, full bottom)
 tmux new-window -t "$SESS":2 -n "clock"
@@ -78,7 +78,8 @@ tmux split-window -h -t "$SESS":2.1     # Splits 2.1 into 2.1 (top) and 2.2 (bot
 tmux split-window -v -t "$SESS":2.2     # Splits 2.1 into 2.1 (top-left) and 2.3 (top-right)
 tmux send-keys -t "$SESS":2.1 "aclock" C-m
 tmux send-keys -t "$SESS":2.2 "acal" C-m
-tmux send-keys -t "$SESS":2.3 "oo; d; ww" C-m
+tmux send-keys -t "$SESS":2.3 "ww" C-m
+
 
 
 # Window 3: taskwarrior (2 panes)
@@ -98,9 +99,6 @@ tmux send-keys -t "$SESS":2.3 "oo; d; ww" C-m
 tmux new-window -t "$SESS":3 -n "tasks and sessions" -c "$WDIR"
 tmux send-keys -t "$SESS":3.1 "vim tasks.md sessions.md" C-m
 
-tmux new-window -t "$SESS":4 -n "kill-time" -c "$WDIR"
-tmux split-window -v -t "$SESS":4.1
-tmux send-keys -t "$SESS":4.1 "echo "\n [] \n" ; timer"
 
 
 tmux select-window -t "$SESS":1

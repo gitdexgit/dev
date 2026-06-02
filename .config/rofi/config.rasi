@@ -1,7 +1,14 @@
 
-@import "/usr/share/rofi/themes/Arc-Dark.rasi"
+// @import "/usr/share/rofi/themes/Arc-Dark.rasi"
+@import "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
 
 configuration {
+
+
+kb-move-front:  "Control+a,Home";
+kb-move-end:    "Control+e,End";
+kb-row-first:   "Control+Home";
+kb-row-last:    "Control+End";
 
 
 drun-cache: true;
@@ -33,12 +40,13 @@ case-sensitive: false;
       directories-first: true;
       sorting-method:    "name";
   }
+
 }
 
 
 
 /* kb-accept-custom (Control+Return) - THIS IS OFTEN THE TERMINAL OPENER */
-// kb-accept-custom: "Control+Return"; 
+// kb-accept-custom: "Control+Return";
 
 //@theme "/usr/share/rofi/themes/dmenu.rasi"
 

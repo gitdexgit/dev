@@ -123,13 +123,15 @@ workspace 43 output eDP-1
 # exec --no-startup-id skippy-xd --start-daemon
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec --no-startup-id espanso daemon
+exec --no-startup-id flameshot
 # exec --no-startup-id qalculate-gtk
 exec --no-startup-id dunst
 # exec --no-startup-id zeal
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
 exec --no-startup-id xbindkeys
 exec --no-startup-id xset s off -dpms
-exec_always sh -c "sleep 2; xset r rate 240 68"
+exec_always --no-startup-id sh -c "setxkbmap us; xset r rate 240 68"
 exec --no-startup-id xsetroot -solid "#000000"
 
 # CopyQ — launch daemon and show the window on startup
@@ -253,6 +255,8 @@ for_window [class="copyq"] floating enable, move scratchpad
 # for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
 for_window [class="KeePassXC"] floating enable, move scratchpad
+for_window [class="obs"] floating enable, move scratchpad
+for_window [class="scrcpy"] floating enable, move scratchpad
 # for_window [class="KeePassXC"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 # for_window [class="org.mozilla.Thunderbird"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
@@ -264,6 +268,7 @@ for_window [class="KeePassXC"] floating enable, move scratchpad
 
 # for_window [class="KeePassXC"] floating enable, border pixel 0, resize set 1440 900, focus, exec --no-startup-id "i3-msg move absolute position 0 0"
 for_window [class="KeePassXC"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
+for_window [class="osb"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
 
 for_window [instance="floating_thunar"]   floating enable
 
@@ -353,7 +358,7 @@ bindsym $mod+F12 exec --no-startup-id qterminal -d
 
 
 # Scratch (Mod+Shift+f)
-bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_work" alacritty --class "alacritty_work" -T "work" -e tmux new-session -A -s work
+bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_work" alacritty --class "alacritty_work" -T "work" -e tmux new-session -A -s work -c ~/work
 
 
 # Draft  (Mod+Shift+g)
@@ -362,10 +367,12 @@ bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n
 
 
 # Duck  (Mod+Shift+d)
-bindsym $mod+Shift+d exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_duck" alacritty --class "alacritty_duck" -T "duck" -e tmux new-session -A -s duck
+bindsym $mod+Shift+d exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_duck" alacritty --class "alacritty_duck" -T "duck" -e tmux new-session -A -s duck -c ~/work
+
+
 
 # Task session
-bindsym $mod+Shift+t exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_task" alacritty --class "alacritty_task" -T "session" -e tmux new-session -A -s session
+bindsym $mod+Shift+t exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_task" alacritty --class "alacritty_task" -T "session" -e tmux new-session -A -s session ~/work
 
 # Btop  (Mod+Shift+b)
 bindsym $mod+Shift+b exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_btop" alacritty --class "alacritty_btop" -T "btop" -e tmux new-session -A -s btop
@@ -454,7 +461,8 @@ bindsym Control+Mod4+F19 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
 # Alt-tab (previous window via i3-back)
 # bindsym Mod1+Tab        [con_mark=_back] focus
-bindsym Mod1+Tab [con_mark=_back] focus; [class="vesktop" floating] move position 36 45; [class="Zeal" floating] move position center; [class="copyq" floating] move position center;
+# bindsym Mod1+Tab [con_mark=_back] focus; [class="vesktop" floating] move position 36 45; [class="Zeal" floating] move position center; [class="copyq" floating] move position center;
+bindsym Mod1+Tab [con_mark=_back] focus
 
 
 
@@ -505,6 +513,8 @@ bindsym $mod+z exec --no-startup-id skippy-scratch
 # Shortcut to show/hide the CopyQ window
 bindsym $mod+Control+c [class="copyq"] scratchpad show, move position center
 bindsym $mod+Control+p [class="KeePassXC"] scratchpad show
+bindsym $mod+Control+o [class="obs"] scratchpad show
+bindsym $mod+Control+s [class="scrcpy"] scratchpad show
 # bindsym $mod+Control+e [class="org.mozilla.Thunderbird"] scratchpad show
 
 bindsym $mod+q           move scratchpad

@@ -9,7 +9,7 @@ while true; do
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $(tr -d '\n' < ~/.key/OPENROUTER_API_KEY)" \
     -d '{
-      "model": "nousresearch/hermes-3-llama-3.1-405b:free",
+      "model": "deepseek/deepseek-v4-flash",
       "messages": [{"role": "user", "content": "test"}],
       "max_tokens": 10
     }')

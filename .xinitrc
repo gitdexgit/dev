@@ -1,6 +1,9 @@
 # Load X resources (keyboard speed, colors)
 # [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
+# Set keyboard layout first (important!)
+setxkbmap us
+
 # Fix keyboard repeat (Fast)
 xset r rate 240 68
 

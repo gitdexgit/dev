@@ -503,7 +503,8 @@ alias timer='_my_timer_func'
 # xo() { xdg-open "$@" }
 open() { xdg-open "$@" }
 
-lg()  { [[ -z "$1" ]] && lsd -l --color=always || lsd -la --color=always | grep "$1" }
+lg()  { [[ -z "$1" ]] && lsd -l --color=always || lsd -la --color=always | grep -i "$1" }
+
 lsg() { lg "$@" }
 
 ollama-stop() {
