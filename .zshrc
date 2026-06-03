@@ -1,12 +1,23 @@
+# In the future try out fast-syntax-highlighting thing instead of zsh-syntax-highlighting
+
+# Also get good and like try to like read bellow and try to like make it less bloat
+# and smart... take inspiration from tsooding and the prime gen
+# Also go to your scripts and reduce the scripts bloot and what not... you know... and try to like idk...
+# put everything useful from scripts to ~/.local/bin and remove those like scripts thing. The script thign
+# naming and what not. It was only meant for like xbindkeys and AHK thing but whatever you know.. you can just
+# name the executable like [test and what not you know.. and have everything in 1 file it's way better this way at
+# leat this is what I think
 
 
-if [[ -z $DISPLAY && $TTY == /dev/tty1 ]]; then
-  exec startx
-fi
+# IDK why have this... in my ~/.xinitrc I believe it solves it so no need for this thing in zsh
+# if [[ -z $DISPLAY && $TTY == /dev/tty1 ]]; then
+#   exec startx
+# fi
 
 
 # --- [SPACE FIX] ---
-[[ -n "$TMUX" ]] && echo ""
+# No need for tmux fixes and things like that
+# [[ -n "$TMUX" ]] && echo ""
 
 
 
@@ -182,6 +193,7 @@ bindkey '^[z' fg-widget
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '\en' edit-command-line
+bindkey '\ee' edit-command-line
 
 # History search
 # bindkey -r -M viins '^R'
@@ -316,13 +328,6 @@ alias mpvg='mpv --player-operation-mode=pseudo-gui'
 alias mpvyt='mpv --ytdl-format='
 alias streamlink='streamlink --player mpv'
 
-# Toggle laptop on and restart Gromit
-alias laptop-on='xrandr --output eDP-1 --auto --right-of HDMI-1 && pkill gromit-mpx 2>/dev/null; sleep 1; gromit-mpx >/dev/null 2>&1 &!'
-
-# Toggle laptop off and restart Gromit
-alias laptop-off='xrandr --output eDP-1 --off && pkill gromit-mpx; sleep 1; gromit-mpx >/dev/null 2>&1 &!'
-
-
 
 alias refresh_urxvt='xrdb -merge ~/.Xresources && killall urxvtd && echo "URxvt Refreshed!"'
 alias define='sdcv'
@@ -330,7 +335,6 @@ alias define='sdcv'
 alias -g ]]r='source ~/.zshrc ; source ~/.zshenv'
 alias md='mkdir -p'
 alias history="history 0"
-alias hh="history 0"
 
 
 
@@ -343,6 +347,7 @@ alias sudo='sudo '
 alias py='python'
 alias msgbox='zenity'
 alias o='less'
+alias ost='ollama-stop'
 alias wireshark-dark='QT_STYLE_OVERRIDE=kvantum-dark wireshark'
 alias obo='~/scripts/ddesk/obsidian/run-obsidian-script.sh'
 
@@ -386,16 +391,6 @@ alias acal='while true; do cal -w ; sleep 300; clear; done'
 
 alias cal='cal -w'
 
-
-
-
-alias zkc='file=$(find ~/work/current_struggles -type f | fzf --delimiter / --with-nth -1 --layout=default --preview-window="up:65%:wrap" --preview "bat --color=always --style=numbers --line-range=:500 {}" --bind "alt-w:toggle-wrap,alt-j:preview-page-down,alt-k:preview-page-up,alt-J:preview-down,alt-K:preview-up") && [ -n "$file" ] && nvim "$file"'
-alias zks='file=$(find ~/work/sources -type f | fzf --delimiter / --with-nth -1 --layout=default --preview-window="up:65%:wrap" --preview "bat --color=always --style=numbers --line-range=:500 {}" --bind "alt-w:toggle-wrap,alt-j:preview-page-down,alt-k:preview-page-up,alt-J:preview-down,alt-K:preview-up") && [ -n "$file" ] && nvim "$file"'
-
-
-alias zkw='file=$(find ~/wiki/ \( -name .git -o -name .zk \) -prune -o -type f -name "*.md" -print | fzf --delimiter / --with-nth -1 --layout=default --preview-window="up:65%:wrap" --preview "bat --color=always --style=numbers --line-range=:500 {}" --bind "alt-w:toggle-wrap,alt-j:preview-page-down,alt-k:preview-page-up,alt-J:preview-down,alt-K:preview-up") && [ -n "$file" ] && nvim "$file"'
-
-alias zka='file=$(find ~/archive_fossil/ \( -name .git -o -name .zk \) -prune -o -type f -print | fzf --delimiter / --with-nth -1 --layout=default --preview-window="up:65%:wrap" --preview "bat --color=always --style=numbers --line-range=:500 {}" --bind "alt-w:toggle-wrap,alt-j:preview-page-down,alt-k:preview-page-up,alt-J:preview-down,alt-K:preview-up") && [ -n "$file" ] && nvim "$file"'
 
 alias scratch='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
 alias scr='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
@@ -476,8 +471,8 @@ alias c.ps='~/Pictures/Screenshots'
 alias c.p='~/Pictures'
 
 alias q='qalc'
-alias ]timer='_my_timer_func'
-alias timer='_my_timer_func'
+# alias ]timer='_my_timer_func'
+# alias timer='_my_timer_func'
 
 
 
@@ -501,102 +496,37 @@ alias timer='_my_timer_func'
 
 
 # xo() { xdg-open "$@" }
-open() { xdg-open "$@" }
-
-lg()  { [[ -z "$1" ]] && lsd -l --color=always || lsd -la --color=always | grep -i "$1" }
-
-lsg() { lg "$@" }
-
-ollama-stop() {
-  curl -sd "{\"model\": \"$1\", \"keep_alive\": 0}" http://localhost:11434/api/generate > /dev/null
-  echo "Unloaded model: $1"
-}
+# open() { xdg-open "$@" }
+alias open='xdg-open'
 
 
-ipinfo() {
-    if [[ -z "$1" ]]; then
-        echo "\nhere is curl ipinfo.io:\n"; curl ipinfo.io
-        echo "\n\nIn case ipinfo.io is down, here is curl icanhazip.com:\n"; curl icanhazip.com
-        echo "\nTIP: similar to 'whois', you can also type 'ipinfo <give_an_ip>'"
-    else
-        curl ipinfo.io/"$1"
-    fi
-}
+# lg()  { [[ -z "$1" ]] && lsd -l --color=always || lsd -la --color=always | grep -i "$1" }
+
+# lsg() { lg "$@" }
+
 
 # This is when I want to copy images to clipboard from terminal. You can't do that with just xc
-xxc() {
-    [[ -z "$1" ]] && { echo "Usage: xxc <file_path>" >&2; return 1 }
-    [[ ! -f "$1" ]] && { echo "Error: File not found: '$1'" >&2; return 1 }
-    local filepath="$1" ext mimetype
-    ext=$(echo "${filepath##*.}" | tr '[:upper:]' '[:lower:]')
-    case "$ext" in
-        png)      mimetype="image/png" ;;
-        jpg|jpeg) mimetype="image/jpeg" ;;
-        gif)      mimetype="image/gif" ;;
-        webp)     mimetype="image/webp" ;;
-        svg)      mimetype="image/svg+xml" ;;
-        bmp)      mimetype="image/bmp" ;;
-        *)        mimetype="text/plain" ;;
-    esac
-    if [[ -n "$WAYLAND_DISPLAY" ]]; then
-        command -v wl-copy &>/dev/null || { echo "Error: 'wl-copy' not found." >&2; return 1 }
-        [[ "$mimetype" == "text/plain" ]] && wl-copy < "$filepath" || wl-copy -t "$mimetype" < "$filepath"
-        echo "Copied '$filepath' to Wayland clipboard as '$mimetype'."
-    else
-        command -v xclip &>/dev/null || { echo "Error: 'xclip' not found." >&2; return 1 }
-        [[ "$mimetype" == "text/plain" ]] && xclip -selection clipboard < "$filepath" \
-            || xclip -selection clipboard -t "$mimetype" < "$filepath"
-        echo "Copied '$filepath' to X11 clipboard as '$mimetype'."
-    fi
-}
 
-xkill() {
-    case "$1" in
-        -p|--pause)
-            echo "Click on the window to PAUSE..."
-            local pid=$(xprop _NET_WM_PID | awk '{print $3}')
-            [[ -n "$pid" ]] && kill -STOP "$pid" && echo "Process PID $pid paused." || echo "No window selected."
-            ;;
-        -c|--continue)
-            echo "Click on the window to CONTINUE..."
-            local pid=$(xprop _NET_WM_PID | awk '{print $3}')
-            [[ -n "$pid" ]] && kill -CONT "$pid" && echo "Process PID $pid continued." || echo "No window selected."
-            ;;
-        *)
-            command xkill "$@"
-            ;;
-    esac
-}
 
-_my_timer_func() {
-    date "+%T %a, %d-%m"; echo ""
-    local start=$(date +%s) last_mins=-1
-    while true; do
-        local elapsed=$(( $(date +%s) - start ))
-        local hours=$(( elapsed / 3600 )) mins=$(( (elapsed / 60) % 60 ))
-        [[ "$mins" -ne "$last_mins" ]] && { printf "\r%02d:%02d" $hours $mins; last_mins=$mins }
-        sleep 1
-    done
-}
 
 # keep this one
 # service() {
 #     [[ "$2" == "status" ]] && systemctl status "$1" || sudo systemctl "$2" "$1"
 # }
 
-phoneWakeup() {
-    local dev=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
-    [[ -z "$dev" ]] && { echo "Error: Phone not found."; return 1 }
-    echo "Waking up device: $dev"
-    adb -s "$dev" shell input keyevent KEYCODE_WAKEUP
-}
-
-phoneSleep() {
-    local dev=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
-    [[ -z "$dev" ]] && { echo "Error: Phone not found."; return 1 }
-    echo "Putting device to sleep: $dev"
-    adb -s "$dev" shell input keyevent KEYCODE_SLEEP
-}
+# phoneWakeup() {
+#     local dev=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
+#     [[ -z "$dev" ]] && { echo "Error: Phone not found."; return 1 }
+#     echo "Waking up device: $dev"
+#     adb -s "$dev" shell input keyevent KEYCODE_WAKEUP
+# }
+#
+# phoneSleep() {
+#     local dev=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
+#     [[ -z "$dev" ]] && { echo "Error: Phone not found."; return 1 }
+#     echo "Putting device to sleep: $dev"
+#     adb -s "$dev" shell input keyevent KEYCODE_SLEEP
+# }
 
 
 # Keep these comments
@@ -627,14 +557,7 @@ phoneSleep() {
 #            -framerate 8 -noborder -alwaysontop -window_title "Light Preview" -x ${w} -y ${h}
 # }
 
-weather() { curl -s "wttr.in/$1" }
 
-Ecat() {
-    local files=(**/*(.))
-    for f in "${files[@]}"; do
-        [[ $(file -b --mime-type "$f") == text/* ]] && cat "$f"
-    done | xclip -selection clipboard
-}
 
 function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -670,13 +593,6 @@ if command -v zoxide >/dev/null; then
 fi
 
 
-ssleep() {
-    # Convert units to seconds (handles 30m, 1h, etc.)
-    local sec=$(echo "$1" | sed 's/s//; s/m/*60/; s/h/*3600/; s/d/*86400/' | bc)
-    for ((i=0; i<sec; i++)); do
-        sleep 1
-    done
-}
 
 
 # -------------------------------------------------------------------

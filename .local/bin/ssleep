@@ -1,0 +1,3 @@
+#!/bin/bash
+sec=$(echo "$1" | sed 's/s//; s/m/*60/; s/h/*3600/; s/d/*86400/' | bc)
+for ((i=0; i<sec; i++)); do sleep 1; done

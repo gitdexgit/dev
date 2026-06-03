@@ -1,0 +1,2 @@
+#!/bin/bash
+[ -z "$1" ] && lsd -l --color=always || lsd -la --color=always | grep -i "$1"

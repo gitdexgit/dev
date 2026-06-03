@@ -1,0 +1,5 @@
+#!/bin/bash
+xrandr --output eDP-1 --off
+pkill gromit-mpx
+sleep 1
+gromit-mpx >/dev/null 2>&1 &!

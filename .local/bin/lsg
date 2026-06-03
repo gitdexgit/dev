@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    lsd -l --color=always
+else
+    lsd -la --color=always | grep -i "$1"
+fi

@@ -1,0 +1,10 @@
+#!/bin/bash
+case "$1" in
+    -p|--pause)
+        pid=$(xprop _NET_WM_PID | awk '{print $3}')
+        [ -n "$pid" ] && kill -STOP "$pid" ;;
+    -c|--continue)
+        pid=$(xprop _NET_WM_PID | awk '{print $3}')
+        [ -n "$pid" ] && kill -CONT "$pid" ;;
+    *) /usr/bin/xkill "$@" ;;
+esac

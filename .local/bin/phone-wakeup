@@ -1,0 +1,4 @@
+#!/bin/bash
+dev=$(adb devices | grep '192.168.11.118:' | awk '{print $1}')
+[ -z "$dev" ] && { echo "Phone not found"; exit 1; }
+adb -s "$dev" shell input keyevent KEYCODE_WAKEUP

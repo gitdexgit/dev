@@ -1,0 +1,3 @@
+#!/bin/bash
+file=$(find ~/work/current_struggles -type f | fzf --delimiter / --with-nth -1 --layout=default --preview-window="up:65%:wrap" --preview "bat --color=always --style=numbers --line-range=:500 {}" --bind "alt-w:toggle-wrap,alt-j:preview-page-down,alt-k:preview-page-up,alt-J:preview-down,alt-K:preview-up")
+[ -n "$file" ] && nvim "$file"

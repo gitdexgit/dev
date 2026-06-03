@@ -1,0 +1,4 @@
+#!/bin/bash
+for f in **/*(.); do
+    [ "$(file -b --mime-type "$f")" == "text/*" ] && cat "$f"
+done | xclip -selection clipboard

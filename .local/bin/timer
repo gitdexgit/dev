@@ -1,0 +1,11 @@
+#!/bin/bash
+date "+%T %a, %d-%m"; echo ""
+start=$(date +%s)
+last_mins=-1
+while true; do
+    elapsed=$(( $(date +%s) - start ))
+    hours=$(( elapsed / 3600 ))
+    mins=$(( (elapsed / 60) % 60 ))
+    [ "$mins" -ne "$last_mins" ] && { printf "\r%02d:%02d" $hours $mins; last_mins=$mins; }
+    sleep 1
+done

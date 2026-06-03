@@ -1,0 +1,10 @@
+#!/bin/bash
+# Get running models, pick one
+model=$(ollama ps | awk 'NR>1 {print $1}' | fzf --prompt="Stop model> " --height=10% --reverse)
+
+# Exit if nothing picked
+[ -z "$model" ] && exit 0
+
+# Kill model
+curl -sd "{\"model\": \"$model\", \"keep_alive\": 0}" http://localhost:11434/api/generate > /dev/null
+echo "Unloaded model: $model"
