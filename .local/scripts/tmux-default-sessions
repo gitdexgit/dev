@@ -33,8 +33,7 @@ tmux new-window -t "work":2 -c "$HOME/work/buffer" -n "~/work/buffer"
 tmux send-keys -t "work":2 "ls" C-m
 
 # Fixed typo in path below
-tmux new-window -t "work":3 -c "$HOME/work/attachements/" -n "~/work/attachments"
-
+tmux new-window -t "work":3 -c "$HOME/work/attachments/" -n "~/work/attachments"
 tmux new-window -t "work":4 -c "$HOME/wiki/" -n "~/wiki"
 
 tmux select-window -t "work":1
