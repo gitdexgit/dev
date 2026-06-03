@@ -553,20 +553,27 @@ Alt + Print
 # ---------- Ways to upload things and upload stuff for references and easy quick sharing and previews ---------------
 
 
-# C-A-u
-# usage: iupload is a script I made in .local/bin/iupoad. it's in
-#       ~/scripts/tools/python/imgur it's exactly in:
-#       ~/scripts/tools/python/imgur/venv/bin/imgur-uploader
-# TIP: you can also run iupload with arguments. read .local/bin/iupload for
-#       more info
+####
+#### .Uploading stuff shortcuts.
+####
+
+# To know how it works read bash Script for more info. You can also run it in terminal with args:
+# ~/.local/bin/iupload
+#
+# The script uses these:
+# ~/scripts/tools/python/imgur
+# ~/scripts/tools/python/imgur/venv/bin/imgur-uploader
 "iupload"
 mod4 + alt + i
 
-
-# Upload contents of the clipboard--has to be text like-- to wgetpaste paste bin like
-# and give back link into the clipboard first register to be ready to be pasted for sharing.
-"xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt"
+# Upload text from clipboard to https://bpa.st/<something> using wgetpaste.
+"URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500"
 mod4 + alt + p
+
+
+
+
+# bindsym mod4+Mod1+p exec --no-startup-id bash -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
 
 
 # ------- Way to open terminal -----------

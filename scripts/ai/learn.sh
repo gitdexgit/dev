@@ -57,4 +57,4 @@ RESULT=$(curl -s http://localhost:11434/api/generate \
   -d "{\"model\":\"$MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0,\"top_k\":1},\"stream\":false}" \
   | jq -r '.response')
 
-[ -z "$RESULT" ] && dunstify -u cri
+[ -z "$RESULT" ] && dunstify -u critical -t 3000 -a "learn" "✗ ollama failed" && exit 1

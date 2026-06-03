@@ -1,3 +1,8 @@
+
+
+
+
+
 # i3 config file (v4)
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
@@ -131,7 +136,7 @@ exec --no-startup-id dunst
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
 exec --no-startup-id xbindkeys
 exec --no-startup-id xset s off -dpms
-exec_always --no-startup-id sh -c "setxkbmap us; xset r rate 240 68"
+exec_always --no-startup-id sh -c "setxkbmap us; xset r rate 220 50"
 exec --no-startup-id xsetroot -solid "#000000"
 
 # CopyQ — launch daemon and show the window on startup

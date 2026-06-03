@@ -1,5 +1,5 @@
 #!/bin/bash
-MODEL="qwen2.5:1.5b"
+MODEL="gemma4-e2b-caveman:latest"
 CLIP=$(xclip -o -selection clipboard 2>/dev/null)
 [ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "cav" "⚠ nothing in clipboard" && exit 0
 

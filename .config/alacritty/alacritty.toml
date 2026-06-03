@@ -37,6 +37,21 @@ key = "V"
 mods = "Control"
 action = "Paste"
 
+# [[keyboard.bindings]]
+# key = "Enter"
+# mods = "Alt"
+# chars = "\u001b"
+
+# [[keyboard.bindings]]
+# key = "Enter"
+# mods = "Alt"
+# chars = "\u001b\r"
+#
+# [[keyboard.bindings]]
+# key = "Enter"
+# mods = "Alt"
+# chars = "\u001b"
+
 [[keyboard.bindings]]
 key = "K"
 mods = "Alt"

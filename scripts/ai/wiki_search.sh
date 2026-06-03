@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WIKI_DIR=~/wiki
-MODEL="qwen2.5:1.5b"
+MODEL="llama3.2:latest"
 
 QUERY=$(xclip -o -selection clipboard 2>/dev/null)
 

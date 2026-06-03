@@ -1,5 +1,5 @@
 #!/bin/bash
-MODEL="qwen2.5:1.5b"
+MODEL="llama3.2:latest"
 CLIP=$(xclip -o -selection clipboard 2>/dev/null)
 [ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "searcher" "⚠ nothing in clipboard" && exit 0
 

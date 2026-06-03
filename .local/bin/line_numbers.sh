@@ -3,25 +3,19 @@ declare -r LINE_NUMBER_PANE_WIDTH=2
 declare -r LINE_NUMBER_UPDATE_DELAY=0.1
 declare -r COLOR_NUMBERS_RGB="101;112;161"
 declare -r COLOR_ACTIVE_NUMBER_RGB="255;158;100"
-declare -r PANE_TRACK_DIR="/tmp/tmux-line-numbers"
 
 open_line_number_split(){
     local self_path=$(realpath "$0")
     local pane_id=$(tmux display-message -pF "#{pane_id}")
-    local track_file="$PANE_TRACK_DIR/$pane_id"
 
-    mkdir -p "$PANE_TRACK_DIR"
-
-    if [ -f "$track_file" ]; then
-        local num_pane=$(cat "$track_file")
-        tmux kill-pane -t "$num_pane" 2>/dev/null
-        rm -f "$track_file"
+    local existing=$(pgrep -f "$self_path $pane_id")
+    if [ -n "$existing" ]; then
+        kill $existing
         return
     fi
 
-    local num_pane=$(tmux split-window -h -l $LINE_NUMBER_PANE_WIDTH -b -PF "#{pane_id}" "$self_path $pane_id")
-    echo "$num_pane" > "$track_file"
-    tmux select-pane -t "$pane_id"
+    tmux split-window -h -l $LINE_NUMBER_PANE_WIDTH "$self_path $pane_id"
+    tmux select-pane -l
 }
 
 enter_copy_mode(){
@@ -39,17 +33,18 @@ is_in_copy_mode(){
 
 redraw_line_numbers(){
     local cursor_y=$1
-    local lines=$(tput lines)
-    clear -x
+    local lines=$(tmux display-message -p -t "$target_pane" -F '#{pane_height}')
+
+    printf "\e[H"
+
     for (( i=0; i<lines; i++ )); do
-        tput cup $i 0
         local rel=$(( cursor_y - i ))
         if [ $rel -gt 0 ]; then
-            printf "\e[38;2;${COLOR_NUMBERS_RGB};2m%2d\e[0m" $rel
+            printf "\e[38;2;${COLOR_NUMBERS_RGB};2m%2d\e[0m\e[K\n" $rel
         elif [ $rel -eq 0 ]; then
-            printf "\e[38;2;${COLOR_ACTIVE_NUMBER_RGB};1m%2d\e[0m" 0
+            printf "\e[38;2;${COLOR_ACTIVE_NUMBER_RGB};1m%2d\e[0m\e[K\n" 0
         else
-            printf "\e[38;2;${COLOR_NUMBERS_RGB};2m%2d\e[0m" $(( -rel ))
+            printf "\e[38;2;${COLOR_NUMBERS_RGB};2m%2d\e[0m\e[K\n" $(( -rel ))
         fi
     done
 }
@@ -71,22 +66,16 @@ restore_pane_width(){
     tmux resize-pane -t "$target_pane" -L $(($LINE_NUMBER_PANE_WIDTH + 1)) 2>/dev/null || true
 }
 
-cleanup(){
-    rm -f "$PANE_TRACK_DIR/$target_pane"
-    restore_pane_width
-}
-
 main(){
     target_pane=$1
     if [ -z "$target_pane" ]; then
         open_line_number_split
         exit 0
     else
-        trap cleanup EXIT
         enter_copy_mode
     fi
     update_loop
-    cleanup
+    restore_pane_width
 }
 
 main "$@"

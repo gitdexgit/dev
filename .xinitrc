@@ -1,17 +1,19 @@
-# Load X resources (keyboard speed, colors)
-# [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
-
-# Set keyboard layout first (important!)
 setxkbmap us
-
-# Fix keyboard repeat (Fast)
-xset r rate 240 68
-
-
-
-# Disable laptop screen (if HDMI connected)
-# Check name with 'xrandr'. Usually eDP-1.
+xset r rate 220 50
 xrandr --output eDP-1 --off
 
-# Start i3
-exec i3
+export XDG_SESSION_TYPE=x11
+export XDG_CURRENT_DESKTOP=i3
+export XDG_SESSION_DESKTOP=i3
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+export GTK_USE_PORTAL=1
+
+dbus-update-activation-environment --systemd \
+    DISPLAY \
+    XAUTHORITY \
+    XDG_CURRENT_DESKTOP \
+    XDG_SESSION_DESKTOP \
+    XDG_SESSION_TYPE \
+    XDG_RUNTIME_DIR
+
+exec dbus-run-session i3

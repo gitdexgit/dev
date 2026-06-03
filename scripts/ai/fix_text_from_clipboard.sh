@@ -54,7 +54,7 @@ PROMPT="Fix grammar only. Spelling is already correct. Do not change, replace, o
 FIXED=$(curl -s http://localhost:11434/api/generate \
   -H "Content-Type: application/json" \
   -d "{
-    \"model\": \"qwen2.5:1.5b\",
+    \"model\": \"llama3.2:latest\",
     \"prompt\": $(jq -n --arg p "$PROMPT\n\n$SPELL_FIXED" '$p'),
     \"options\": {\"temperature\": 0, \"top_k\": 1},
     \"stream\": false

@@ -1,5 +1,5 @@
 #!/bin/bash
-MODEL="qwen2.5-coder:1.5b"
+MODEL="qwen2.5-coder:3b"
 CLIP=$(xclip -o -selection clipboard 2>/dev/null)
 [ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "namer" "⚠ nothing in clipboard" && exit 0
 
