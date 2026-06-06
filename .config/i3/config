@@ -238,7 +238,8 @@ for_window [title="Godot"] floating enable
 
 for_window [class="mpv"] border none
 
-for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
+# for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
+for_window [class="Com.github.xournalpp.xournalpp"]  border none
 
 # Zeal
 # for_window [class="Zeal"] floating enable, move position center, move scratchpad
@@ -393,7 +394,28 @@ bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
 bindsym Mod1+space exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
 bindsym $mod+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
 
+# --- Mouse Window Management ---
+bindsym Control+Shift+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+bindsym Control+$mod+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+bindsym Control+Mod1+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+bindsym Control+Mod1+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+bindsym Control+Shift+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+bindsym Control+$mod+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
 
+# --- Misc Tools ---
+bindsym Control+Mod1+t exec --no-startup-id "~/scripts/yt/yt_get_current_player_timestamps.sh"
+bindsym Mod1+F2 exec --no-startup-id "rofi -show drun -show-icons"
+bindsym Mod1+F3 exec --no-startup-id "xfce4-appfinder -c"
+bindsym Control+$mod+a exec --no-startup-id "autoshot-toggle"
+bindsym Control+$mod+1 exec --no-startup-id "autoshot-pause"
+bindsym Control+$mod+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
+bindsym Control+$mod+8 exec --no-startup-id "env ADW_DEBUG_COLOR_SCHEME=prefer-dark gnome-sound-recorder"
+bindsym Control+$mod+9 exec --no-startup-id "env GTK_THEME=Arc-Dark gnome-clocks"
+bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "alacritty -e xset dpms force off"
+
+# --- Window & Workspace Rename ---
+bindsym $mod+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
+bindsym $mod+Mod1+t exec --no-startup-id "rncd"
 
 
 
