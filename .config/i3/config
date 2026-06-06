@@ -560,7 +560,7 @@ bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacrit
 # bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^alacritty_main" instance="^alacritty_|^alacritty_main|^qterminal"] move scratchpad
 
 # bindsym Mod1+BackSpace [class="(?i)alacritty|urxvt|qterminal|copyq|vesktop|keepassxc|xournalpp"] move scratchpad; [floating] move scratchpad
-bindsym Mod1+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
+bindsym Mod1+Shift+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
 
 # =====================================================================
 # KEYBINDINGS — FOCUS & MOVEMENT

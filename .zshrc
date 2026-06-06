@@ -248,7 +248,14 @@ toggle_oneline_prompt() {
     zle reset-prompt
 }
 zle -N toggle_oneline_prompt
-bindkey '^P' toggle_oneline_prompt
+
+# Restore history
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
+
+# Move prompt toggle to Alt+p
+bindkey '^[p' toggle_oneline_prompt
+# bindkey '^P' toggle_oneline_prompt
 
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty|kitty)
