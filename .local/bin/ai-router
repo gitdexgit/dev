@@ -1,0 +1,46 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+AI_DIR="$HOME/scripts/ai"
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "router" "⚠ nothing in clipboard" && exit 0
+
+SCRIPTS=$(ls "$AI_DIR" | grep -v "README.md")
+
+PROMPT="Role: Technical Router.
+Available Scripts:
+$SCRIPTS
+
+Category Map:
+- code-*: Language helpers, refactor, tests, boilerplate, regex.
+- sys-*: Arch Linux, i3, systemd, network, virt, logs, backups.
+- sec-*: Pentesting (HTB), DNS, fuzzing, binary, web audit.
+- logic-*: Planning, roadmaps, sanity checks, decision matrix.
+- text-*: Translation, synonyms, ELI5, persuasion, ASCII.
+- duck-*: Socratic questioning flavors.
+
+User Intent:
+$CLIP
+
+Goal: Pick best script.
+Output Format:
+Reason: <brief reason>
+[run]
+<filename>
+[run]"
+
+RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+  -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+  -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+
+CHOICE=$(echo "$RESULT" | jq -r '.choices[0].message.content' | sed -n '/\[run\]/,/\[run\]/p' | sed 's/\[run\]//g' | tr -d '[:space:]')
+REASON=$(echo "$RESULT" | jq -r '.choices[0].message.content' | grep "Reason:" | sed 's/Reason: //')
+
+if [ -f "$AI_DIR/$CHOICE" ]; then
+    dunstify -u low -t 2000 -a "router" "Routing: $CHOICE\n$REASON"
+    "$AI_DIR/$CHOICE"
+else
+    dunstify -u normal -t 2000 -a "router" "No match. Using 'any-ask'."
+    "$AI_DIR/any-ask"
+fi

@@ -1,4 +1,5 @@
 #!/bin/bash
-for f in **/*(.); do
-    [ "$(file -b --mime-type "$f")" == "text/*" ] && cat "$f"
+find . -type f | while read -r f; do
+    mime=$(file -b --mime-type "$f")
+    [[ "$mime" == text/* ]] && cat "$f"
 done | xclip -selection clipboard

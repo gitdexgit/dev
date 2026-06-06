@@ -1,0 +1,24 @@
+#!/bin/bash
+# give-me-book
+
+BOOK_DIR="$HOME/Documents/books"
+
+# Select file - No limits on preview
+FILE=$(find "$BOOK_DIR" -type f | fzf \
+    --ansi \
+    --prompt="Select Book: " \
+    --preview '
+        case {} in
+            *.pdf) pdftotext -layout -q {} - | bat --color=always --style=plain -l md ;;
+            *.epub) pandoc -t plain {} | bat --color=always --style=plain -l md ;;
+            *) file {} ;;
+        esac')
+
+[ -z "$FILE" ] && exit 0
+
+# Select opener
+TOOL=$(printf "zathura\nevince" | fzf --prompt="Open with: ")
+[ -z "$TOOL" ] && exit 0
+
+# Execute
+"$TOOL" "$FILE" >/dev/null 2>&1 &

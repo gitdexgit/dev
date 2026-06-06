@@ -399,6 +399,12 @@ alias lag='lazygit'
 alias ff='fastfetch'
 alias neofetch='fastfetch'
 alias c='clear; _NEW_LINE_BEFORE_PROMPT=1'
+alias clear='clear; _NEW_LINE_BEFORE_PROMPT=1'
+alias clera='clear; _NEW_LINE_BEFORE_PROMPT=1'
+alias clrea='clear; _NEW_LINE_BEFORE_PROMP=1'
+alias clrfea='clear; _NEW_LINE_BEFORE_PROMPT=1'
+
+
 
 alias ws='watson start'
 alias wss='watson status'
@@ -432,7 +438,7 @@ alias vpn-off='sudo systemctl stop proton.VPN.service'
 # AI
 alias ai-on='sudo systemctl start ollama'
 alias ai-off='sudo systemctl stop ollama'
-
+alias imgcap='xclip -selection clipboard -t image/png -o > ~/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png'
 # VMs
 alias vm-on='sudo systemctl start libvirtd virtlogd'
 alias vm-off='sudo systemctl stop libvirtd virtlogd'

@@ -1,0 +1,22 @@
+#!/bin/bash
+AI_DIR="$HOME/scripts/ai"
+
+# Get all scripts, exclude README
+FILES=$(ls "$AI_DIR" | grep -v "README.md")
+
+# Format for Rofi/Fzf: [Name] | [First 50 chars of System Prompt]
+LIST=""
+for f in $FILES; do
+    # Extract prompt summary (strip newlines/quotes)
+    DESC=$(grep "SYSTEM_PROMPT=" "$AI_DIR/$f" -A 1 | tail -n 1 | tr -d '\n"' | cut -c1-60)
+    [ -z "$DESC" ] && DESC="No description found."
+    LIST+="$f | $DESC\n"
+done
+
+CHOICE=$(echo -e "$LIST" | rofi -dmenu -p "AI Registry:" -i -theme-str 'window {width: 60%;}')
+
+[ -z "$CHOICE" ] && exit 0
+
+# Extract filename and run
+SCRIPT=$(echo "$CHOICE" | cut -d'|' -f1 | tr -d ' ')
+"$AI_DIR/$SCRIPT"

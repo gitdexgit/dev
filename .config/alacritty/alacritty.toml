@@ -83,7 +83,7 @@ size = 9
   family = "JetBrainsMono Nerd Font Mono"
   style = "Bold Italic"
 
-[[keyboard.bindings]]
-key = "Back"
-mods = "Control"
-chars = "\u0017"
+# [[keyboard.bindings]]
+# key = "Back"
+# mods = "Control"
+# chars = "\u0017"

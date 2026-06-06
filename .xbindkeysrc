@@ -1033,12 +1033,12 @@ Mod4 + alt + t
 # Mod4 + Shift + Tab
 
 # Show all windows of the current workspace. Similar to rofi windowcd
-"WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
-mod4+comma
+# "WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
+# mod4+comma
 
 # Show windows of the same class of the current workspace. Basically rofi windowcd but only for current class of windows
-"WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --desktop -1 --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
-mod4+slash
+# "WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --desktop -1 --wm-status sticky,shaded,maximized_vert,maximized_horz,maximized --wm-class $(xdotool getwindowclassname $(xdotool getactivewindow)) --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
+# mod4+slash
 
 # Unusable on i3...
 # "WID_skippy=$(xdotool getactivewindow); skippy-xd --expose --config ~/.config/skippy-xd/skippy-xd.rc; xdotool windowfocus $WID_skippy"
@@ -1404,7 +1404,7 @@ Control + alt + z
 # really awesome it's a pannel terminal rofi like with history and search sugguestions.
 # also good for launching scripts with good naming.
 "~/scripts/rofi/rofi-run.sh"
-mod4+F1
+alt+F1
 
 # rofi-dmenu
 "/home/dex/scripts/rofi/rofi-dmenu.sh"
@@ -1427,11 +1427,17 @@ mod4+shift+y
 "/home/dex/scripts/i3/i3-window-mover.sh"
 Alt + space
 
+"~/.local/bin/ai-run"
+mod4+shift+g
+
+
+
 # --------------------------------------------------------------------
 # ""rofi"" END
 # ---END--------------------------------------------------------------
 
 # I like mod4+v and mod4+b for split v and split h to be next to each other also for the sake of holding "a" in kyed you know modifiers
+# I like mod4+v mod4+b split v split h next to each other hold a kyed modifiers
 # "boomer"
 # Mod4 + b
 

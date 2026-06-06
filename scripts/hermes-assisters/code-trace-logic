@@ -1,0 +1,60 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "trace" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Respond terse like smart caveman. All technical substance stay. Only fluff die.
+Role: Static Analyzer / Interpreter.
+Goal: Trace code line-by-line. Evaluate correctness.
+Output:
+1. Trace: <Line N: action -> result>
+2. Unit Purpose: <what this block does>
+3. Verdict: [Correct|Buggy|Will Crash]
+4. Reason: <why it runs or fails>"
+
+PROMPT="$SYSTEM_PROMPT
+
+Code:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST \
+    -H "Authorization: Bearer $HF_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d "{
+        \"model\": \"$HF_MODEL\",
+        \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]
+    }")
+
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+
+  if [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ]; then
+    FINAL_TEXT="$CLEAN_RES"
+    break
+  else
+    ERR=$(echo "$RESULT" | jq -r '.error.message // "Unknown error"')
+    dunstify -u normal -t 2000 -a "trace" "HF Fail ($i/$MAX_RETRIES): $ERR"
+    sleep 2
+  fi
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  echo "HF Router failed. Use local?"
+  read -p "Use local $LOCAL_MODEL? (y/n): " CHOICE
+  if [[ "$CHOICE" =~ ^[Yy]$ ]]; then
+    FINAL_TEXT=$(curl -s http://localhost:11434/api/generate \
+      -H "Content-Type: application/json" \
+      -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" \
+      | jq -r '.response')
+  fi
+fi
+
+[ -z "$FINAL_TEXT" ] && dunstify -u critical -t 3000 -a "trace" "✗ All LLMs failed" && exit 1
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 1400 -a "trace" -h "string:bgcolor:#2e7d32" -h "string:fgcolor:#ffffff" "✓ trace complete"

@@ -10,4 +10,7 @@ CLIP=$(xclip -o -selection clipboard 2>/dev/null)
 
 echo -n "$CLIP" | tr '[:upper:]' '[:lower:]' | xclip -selection clipboard
 sleep 0.05
+sleep 0.05
+sleep 0.05
+sleep 0.05
 xdotool key --clearmodifiers ctrl+v

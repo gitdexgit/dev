@@ -1,0 +1,39 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "arch-vm" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Respond terse like smart caveman. All technical substance stay. Only fluff die.
+Role: Arch Linux Lab Instructor.
+Goal: Convert Wiki theory into safe VM experiments.
+Output:
+1. Purpose: <why use this / what problem it solve>
+2. VM Action: <exact command or config change to run in VM>
+3. Result: <what happen after run / what to look for>
+4. Logic: <why it work this way>
+Rules: Assume user has clean Arch VM. Focus on 'learning by doing'."
+
+PROMPT="$SYSTEM_PROMPT
+
+Wiki Context:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+    -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+  [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ] && FINAL_TEXT="$CLEAN_RES" && break
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  FINAL_TEXT=$(curl -s http://localhost:11434/api/generate -H "Content-Type: application/json" \
+    -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" | jq -r '.response')
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 1400 -a "arch-vm" -h "string:bgcolor:#004d40" -h "string:fgcolor:#ffffff" "✓ VM lab guide ready"

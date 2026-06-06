@@ -134,7 +134,7 @@ exec --no-startup-id flameshot
 exec --no-startup-id dunst
 # exec --no-startup-id zeal
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
-exec --no-startup-id xbindkeys
+# exec --no-startup-id xbindkeys
 exec --no-startup-id xset s off -dpms
 exec_always --no-startup-id sh -c "setxkbmap us; xset r rate 220 50"
 exec --no-startup-id xsetroot -solid "#000000"
@@ -180,6 +180,7 @@ exec --no-startup-id yad --notification --image="document-edit" --text="Click to
 # exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
 # exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
 exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
+exec --no-startup-id yad --notification --image="Alacritty" --text="Click to send Super+Backspace" --command="xdotool key super+BackSpace"
 
 exec --no-startup-id yad --notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+shift+t"
 
@@ -234,6 +235,8 @@ for_window [title="Godot"] floating enable
 # for_window [class="Zeal"] floating enable
 # for_window [class="Zeal"] move position center
 
+
+for_window [class="mpv"] border none
 
 for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
 
@@ -304,6 +307,113 @@ for_window [class="alacritty_main"]    floating enable, move position center, bo
 # =====================================================================
 # KEYBINDINGS — APPLICATIONS
 # =====================================================================
+
+
+
+
+
+###### -----------------------------------------------------
+###### . xbindkeys bindings migration from xbindkeys to i3
+###### -----------------------------------------------------
+
+# --- Core & Reloads ---
+# Removed xbindkeys reload since it is dead.
+bindsym $mod+Shift+Control+r restart
+
+# --- Typing Speed ---
+bindsym $mod+p exec --no-startup-id "/home/dex/scripts/sts/fast-type.sh"
+bindsym $mod+Shift+p exec --no-startup-id "/home/dex/scripts/sts/slow-type.sh"
+
+# --- Window Management (wmctrl) - QUOTED TO FIX ERRORS ---
+bindsym $mod+Mod1+l exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+bindsym $mod+Mod1+Right exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+bindsym $mod+Mod1+Up exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+bindsym $mod+Mod1+k exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+bindsym $mod+Mod1+Down exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+bindsym $mod+Mod1+j exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+bindsym $mod+Mod1+Left exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+bindsym $mod+Mod1+h exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+bindsym $mod+Mod1+u exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,419"
+bindsym $mod+Mod1+o exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,419"
+bindsym $mod+Mod1+period exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,457,716,396"
+bindsym $mod+Mod1+m exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,456,716,396"
+bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, border none, move position 0 0, resize set 1440 900'"
+bindsym Mod1+Shift+F11 exec --no-startup-id "~/scripts/i3/toggle-border.sh"
+bindsym $mod+Mod1+f exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,19,1435,855"
+bindsym $mod+Mod1+slash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+bindsym $mod+Mod1+backslash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,330,147,790,504"
+
+# --- Desktop Navigation ---
+bindsym Control+Mod1+Right exec --no-startup-id "xdotool set_desktop --relative -- 1"
+bindsym Control+Mod1+Left exec --no-startup-id "xdotool set_desktop --relative -- -1"
+
+# --- Screenshots (Fixed alt+Print to Mod1+Print) ---
+bindsym --release Print exec --no-startup-id sh -c "WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
+bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
+bindsym --release $mod+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
+bindsym --release Shift+Print exec --no-startup-id "~/scripts/video/record-area.sh"
+bindsym --release $mod+Control+3 exec --no-startup-id "~/scripts/video/record-pause.sh"
+bindsym --release $mod+Control+4 exec --no-startup-id "~/scripts/video/record-stop.sh"
+bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
+
+# --- Uploads & Notes ---
+bindsym $mod+Mod1+i exec --no-startup-id "iupload"
+bindsym $mod+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
+
+# --- AI / LLM Tools ---
+bindsym $mod+Shift+Control+u exec --no-startup-id "/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
+bindsym $mod+Shift+Control+l exec --no-startup-id "/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
+bindsym $mod+Shift+Control+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text_spelling.sh"
+bindsym $mod+Shift+Control+Mod1+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text.sh"
+bindsym $mod+Mod1+Control+w exec --no-startup-id "~/scripts/ai/wiki_search.sh"
+bindsym $mod+Mod1+Control+n exec --no-startup-id "~/scripts/ai/names_suggestion.sh"
+bindsym $mod+Mod1+Control+l exec --no-startup-id "~/scripts/ai/commit.sh"
+bindsym $mod+Mod1+Control+k exec --no-startup-id "~/scripts/ai/taskdump.sh"
+bindsym $mod+Mod1+Control+i exec --no-startup-id "~/scripts/ai/clarify.sh"
+bindsym $mod+Mod1+Control+y exec --no-startup-id "~/scripts/ai/search_queries_suggestion.sh"
+bindsym $mod+Mod1+Control+r exec --no-startup-id "~/scripts/ai/cav.sh"
+bindsym $mod+Mod1+Control+g exec --no-startup-id "~/scripts/ai/fix_text_from_clipboard.sh"
+bindsym $mod+Mod1+Control+d exec --no-startup-id "~/scripts/ai/think.sh"
+bindsym $mod+Mod1+Control+q exec --no-startup-id "~/scripts/ai/atomic_question_maker.sh"
+bindsym $mod+Mod1+Control+e exec --no-startup-id "~/scripts/ai/learn.sh"
+
+# --- Resource & System ---
+bindsym $mod+Shift+x exec --no-startup-id "xkill"
+bindsym Control+Mod1+c exec --no-startup-id "xcontrol -c"
+bindsym Control+Mod1+z exec --no-startup-id "xcontrol -p"
+bindsym $mod+Shift+m exec --no-startup-id "~/.local/bin/mic-toggle.sh"
+bindsym $mod+Control+k exec --no-startup-id "wmctrl -x -a Kazam"
+
+# --- Rofi & Navigation ---
+bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
+bindsym $mod+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
+bindsym $mod+t exec --no-startup-id "rofi -show windowcd"
+bindsym $mod+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
+bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
+bindsym Mod1+space exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
+bindsym $mod+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -393,10 +503,12 @@ bindsym Control+$mod+v [class="vesktop"] scratchpad show
 # bindsym $mod+Shift+v [class="vesktop"] scratchpad show, move position center
 
 
+bindsym Control+$mod+m exec i3-msg '[class="mpv"] scratchpad show'
+
 
 
 # Config  (Mod+Ctrl+BackSpace)
-bindsym $mod+Control+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_config" alacritty --class "alacritty_config" -T "config" -e tmux new-session -A -s config
+bindsym $mod+Control+BackSpace exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_config" alacritty --class "alacritty_config" -T "config" -e tmux new-session -A -s config
 
 # CPU  (Mod+Shift+BackSpace)
 # bindsym $mod+Shift+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_cpu" alacritty --class "alacritty_cpu" -T "cpu" -e tmux new-session -A -s cpu
@@ -405,7 +517,13 @@ bindsym $mod+Control+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5
 bindsym $mod+Mod1+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_sync" alacritty --class "alacritty_sync" -T "sync" -e tmux new-session -A -s sync
 
 # urxvtc dropdown  (Mod+BackSpace)
-bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" alacritty --class "alacritty_main" -T "main" -e tmux new-session -A -s main
+bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_main" alacritty --class "alacritty_main" -T "main" -e tmux new-session -A -s main
+
+# bindsym $mod+semicolon exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" alacritty --class "alacritty_main" -T "main" -e tmux new-session -A -s main
+
+
+
+
 # bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" urxvtc -name "alacritty_main" -title "Dropdown"
 
 # urxvtc dropdown  (Mod+BackSpace)
@@ -473,8 +591,11 @@ bindsym Mod1+Tab [con_mark=_back] focus
 
 # Back-and-forth workspace shortcuts:
 bindsym $mod+grave workspace back_and_forth
-bindsym $mod+Shift+semicolon workspace back_and_forth
 bindsym $mod+semicolon workspace back_and_forth
+bindsym $mod+Shift+semicolon workspace back_and_forth
+
+# bindsym $mod+semicolon workspace back_and_forth
+
 bindsym $mod+Tab workspace back_and_forth
 
 
@@ -509,7 +630,7 @@ bindsym $mod+Shift+z [class="Zeal"] scratchpad show, move position center
 # 2. Bind key to show ONLY floating windows
 # Change $mod+z to your preferred key
 # bindsym $mod+z exec --no-startup-id skippy-xd --wm-status float
-bindsym $mod+z exec --no-startup-id skippy-scratch
+# bindsym $mod+z exec --no-startup-id skippy-scratch
 
 
 # ctrl+mod4+z does't work...
@@ -609,7 +730,10 @@ bindsym ctrl+mod1+shift+mod4+h exec ~/scripts/i3/ws-goto.sh 26 "26h:"
 bindsym ctrl+mod1+shift+mod4+j exec ~/scripts/i3/ws-goto.sh 27 "27j:"
 bindsym ctrl+mod1+shift+mod4+k exec ~/scripts/i3/ws-goto.sh 28 "28k:"
 bindsym ctrl+mod1+shift+mod4+l exec ~/scripts/i3/ws-goto.sh 29 "29l:"
-bindsym ctrl+mod1+shift+mod4+semicolon exec ~/scripts/i3/ws-goto.sh 30 "30;:"
+
+# I guess for some reason this doesn't work so... I'll just use this for something else Do not make this work.
+# bindsym ctrl+mod1+shift+mod4+semicolon exec ~/scripts/i3/ws-goto.sh 30 "30;:"
+
 bindsym ctrl+mod1+shift+mod4+z exec ~/scripts/i3/ws-goto.sh 31 "31z:"
 bindsym ctrl+mod1+shift+mod4+x exec ~/scripts/i3/ws-goto.sh 32 "32x:"
 bindsym ctrl+mod1+shift+mod4+c exec ~/scripts/i3/ws-goto.sh 33 "33c:"

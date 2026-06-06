@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Dir with scripts
+AI_DIR="$HOME/scripts/ai"
+
+# Get list. Drop README.
+CHOICE=$(ls "$AI_DIR" | grep -v "README.md" | rofi -dmenu -p "AI Action:" -i)
+
+# Exit if no choice
+[ -z "$CHOICE" ] && exit 0
+
+# Run script
+"$AI_DIR/$CHOICE"

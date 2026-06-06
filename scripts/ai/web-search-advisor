@@ -1,0 +1,31 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-7B-Instruct"
+SEARCH_SCRIPT="$HOME/scripts/rofi/rofi-web-search.sh"
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "search-adv" "⚠ nothing in clipboard" && exit 0
+
+# Extract engine map from script
+ENGINES=$(grep -P '\["\w+"\]=".*?"' "$SEARCH_SCRIPT" | sed 's/^[[:space:]]*//')
+
+PROMPT="Role: Search Strategist.
+Available Engines (Key: URL|Description):
+$ENGINES
+
+User Query:
+$CLIP
+
+Goal: Suggest top 3 engines for this query.
+Output Format:
+- [key]: <5 word reason why>
+Rules: Terse. No fluff."
+
+RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+  -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+  -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+
+FINAL_TEXT=$(echo "$RESULT" | jq -r '.choices[0].message.content // "No suggestion."')
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 3000 -a "search-adv" "Search suggestions ready"

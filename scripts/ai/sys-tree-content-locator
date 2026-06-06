@@ -1,0 +1,56 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "tree-locator" "⚠ nothing in clipboard" && exit 0
+
+# Prompt 1: Identify files and generate rg commands
+PROMPT_1="Role: File System Scout.
+Input: tree/ls output + user query.
+Goal: Identify likely files. Generate ripgrep (rg) commands.
+Rules:
+- If path missing, warn user.
+- Output Format:
+[REASON]
+<why these files>
+[/REASON]
+[COMMANDS]
+rg -i 'pattern' /full/path/to/file
+[/COMMANDS]
+
+Input:
+$CLIP"
+
+RESULT_1=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+  -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+  -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT_1" '$p')}]}" | jq -r '.choices[0].message.content')
+
+# Extract commands
+CMDS=$(echo "$RESULT_1" | sed -n '/\[COMMANDS\]/,/\[\/COMMANDS\]/p' | sed 's/\[.*COMMANDS\]//g')
+
+# Check for path/execution
+if [[ "$CLIP" == *"/"* ]] || [[ "$CLIP" == *"pwd"* ]]; then
+    RG_OUT=$(eval "$CMDS" 2>/dev/null)
+
+    if [ -n "$RG_OUT" ]; then
+        # Prompt 2: Analyze rg output
+        PROMPT_2="Role: Content Analyst.
+        Query: $CLIP
+        Data found:
+        $RG_OUT
+        Goal: Extract answer. Terse caveman style."
+
+        FINAL_TEXT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+          -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+          -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT_2" '$p')}]}" | jq -r '.choices[0].message.content')
+    else
+        FINAL_TEXT="[REASON] $RESULT_1\n\n[RESULT] rg found nothing. Check patterns."
+    fi
+else
+    FINAL_TEXT="WARN: No full path detected. Provide pwd for auto-exec.\n\n$RESULT_1"
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 3000 -a "tree-locator" "✓ search complete"

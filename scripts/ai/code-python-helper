@@ -1,0 +1,40 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "py-wiz" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Respond terse like smart caveman. All technical substance stay. Only fluff die.
+Role: Python Expert.
+Goal: Fix bugs, optimize logic, or generate idiomatic Python.
+Rules:
+- Use PEP8.
+- Prefer standard library.
+- Handle: list comps, decorators, async, type hints.
+- Output:
+1. Code: <python block>
+2. Logic: <brief explanation of fix/pattern>"
+
+PROMPT="$SYSTEM_PROMPT
+
+Intent/Code:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+    -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+  [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ] && FINAL_TEXT="$CLEAN_RES" && break
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  FINAL_TEXT=$(curl -s http://localhost:11434/api/generate -H "Content-Type: application/json" \
+    -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" | jq -r '.response')
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 1400 -a "py-wiz" -h "string:bgcolor:#3776ab" -h "string:fgcolor:#ffffff" "✓ Python ready"

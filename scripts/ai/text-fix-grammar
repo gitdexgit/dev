@@ -1,0 +1,84 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-7B-Instruct"
+LOCAL_MODEL="llama3.2:latest"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "fix-text" "⚠ nothing in clipboard" && exit 0
+
+aspell_fix() {
+    local text="$1"
+    local corrections
+    corrections=$(echo "$text" | aspell -a --lang=en 2>/dev/null | awk '
+        /^[&]/ {
+            original = $2
+            split($0, parts, ": ")
+            n = split(parts[2], sugs, ", ")
+            orig_lower = tolower(original)
+            keep = 0
+            for (i = 1; i <= n; i++) {
+                gsub(/^ +| +$/, "", sugs[i])
+                if (tolower(sugs[i]) == orig_lower) { keep = 1; break }
+            }
+            if (keep) next
+            best = ""
+            for (i = 1; i <= n; i++) {
+                if (sugs[i] ~ /^[a-z]+$/) { best = sugs[i]; break }
+            }
+            if (best == "") best = sugs[1]
+            gsub(/^ +| +$/, "", best)
+            if (best != "") print original "|" best
+        }
+    ')
+    local result="$text"
+    while IFS='|' read -r original suggestion; do
+        [ -z "$original" ] && continue
+        escaped=$(echo "$original" | sed 's/[]\[^$.*/]/\\&/g')
+        result=$(echo "$result" | sed "s/\b$escaped\b/$suggestion/g")
+    done <<< "$corrections"
+    echo "$result"
+}
+
+SPELL_FIXED=$(aspell_fix "$CLIP")
+PROMPT="Fix grammar only. Spelling is already correct. Do not change, replace, or rephrase any words. Only fix grammar if clearly broken. Output only the corrected text.\n\n$SPELL_FIXED"
+
+# Try HF Router
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST \
+    -H "Authorization: Bearer $HF_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d "{
+        \"model\": \"$HF_MODEL\",
+        \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]
+    }")
+
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+
+  if [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ]; then
+    FINAL_TEXT="$CLEAN_RES"
+    break
+  else
+    ERR=$(echo "$RESULT" | jq -r '.error.message // "Unknown error"')
+    dunstify -u normal -t 2000 -a "fix-text" "HF Fail ($i/$MAX_RETRIES): $ERR"
+    sleep 2
+  fi
+done
+
+# Fallback
+if [ -z "$FINAL_TEXT" ]; then
+  echo "HF Router failed after $MAX_RETRIES attempts."
+  read -p "Use local Ollama? (y/n): " CHOICE
+  if [[ "$CHOICE" =~ ^[Yy]$ ]]; then
+    FINAL_TEXT=$(curl -s http://localhost:11434/api/generate \
+      -H "Content-Type: application/json" \
+      -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" \
+      | jq -r '.response')
+  fi
+fi
+
+[ -z "$FINAL_TEXT" ] && dunstify -u critical -t 3000 -a "fix-text" "✗ All LLMs failed" && exit 1
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 1400 -a "fix-text" -h "string:bgcolor:#1e88e5" -h "string:fgcolor:#ffffff" "✓ fix-text done"

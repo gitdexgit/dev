@@ -1,0 +1,36 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-7B-Instruct"
+AI_DIR="$HOME/scripts/ai"
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "advisor" "⚠ nothing in clipboard" && exit 0
+
+SCRIPTS=$(ls "$AI_DIR" | grep -v "README.md")
+
+PROMPT="Respond terse like smart caveman.
+Available scripts:
+$SCRIPTS
+
+User Intent:
+$CLIP
+
+Goal: Suggest best script(s) for task.
+Output:
+- [script-name]: <5 word reason why>
+- [alternative]: <5 word reason why>
+Rules: Max 3 suggestions. No fluff."
+
+RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+  -X POST \
+  -H "Authorization: Bearer $HF_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{
+      \"model\": \"$HF_MODEL\",
+      \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]
+  }")
+
+FINAL_TEXT=$(echo "$RESULT" | jq -r '.choices[0].message.content // "No match found."')
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 3000 -a "advisor" "Suggestions in clipboard"

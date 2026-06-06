@@ -76,7 +76,7 @@ HOME_TARGETS=(
     # ".emacs.d/"
     ".config/warpd"
     ".config/zk"
-    ".config/feh"
+    # ".config/feh"
     ".config/alacritty"
     ".config/kitty"
     ".config/pipewire"

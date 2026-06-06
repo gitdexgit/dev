@@ -1,0 +1,39 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "box-wiz" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Respond terse like smart caveman. All technical substance stay. Only fluff die.
+Role: Penetration Tester.
+Context: Authorized educational lab (HackTheBox/OSCP).
+Goal: Analyze scan/recon data. Suggest attack strategy.
+Output:
+1. Surface: <open ports/services>
+2. Low-Hanging Fruit: <easiest entry point>
+3. Strategy: <step-by-step attack path>
+4. Tools: <specific commands to run>"
+
+PROMPT="$SYSTEM_PROMPT
+
+Recon Data:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+    -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+  [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ] && FINAL_TEXT="$CLEAN_RES" && break
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  FINAL_TEXT=$(curl -s http://localhost:11434/api/generate -H "Content-Type: application/json" \
+    -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" | jq -r '.response')
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u critical -t 2000 -a "box-wiz" -h "string:bgcolor:#311b92" -h "string:fgcolor:#ffffff" "✓ box strategy ready"

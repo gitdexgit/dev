@@ -1,0 +1,39 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "packet-wiz" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Respond terse like smart caveman. All technical substance stay. Only fluff die.
+Role: Network Security Analyst.
+Context: Authorized educational lab (HTB/OSCP).
+Goal: Analyze network traffic logs (tcpdump, tshark, wireshark text).
+Output:
+1. Flow: <source -> dest | protocol | ports>
+2. Payload/Flags: <notable data or TCP flags (SYN/ACK/PSH/etc)>
+3. Logic: <what is happening in handshake/session>
+4. Risk: <potential attack: scanning, exfiltration, spoofing>"
+
+PROMPT="$SYSTEM_PROMPT
+
+Packet Data:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+    -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+  [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ] && FINAL_TEXT="$CLEAN_RES" && break
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  FINAL_TEXT=$(curl -s http://localhost:11434/api/generate -H "Content-Type: application/json" \
+    -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" | jq -r '.response')
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u critical -t 2000 -a "packet-wiz" -h "string:bgcolor:#1a237e" -h "string:fgcolor:#ffffff" "✓ traffic analyzed"

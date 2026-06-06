@@ -30,7 +30,7 @@ try:
     data = json.loads(sys.stdin.read())
     matches = data.get("matches", [])
     matches.sort(key=lambda m: m["offset"], reverse=True)
-    
+
     for match in matches:
         if match.get("replacements") and len(match["replacements"]) > 0:
             replacement = sanitize_text(match["replacements"][0]["value"])
@@ -48,5 +48,7 @@ sleep 0.2
 
 # --- 4. OUTPUT THE RESULT ---
 echo -n "$CORRECTED_TEXT" | xclip -i -selection clipboard
+sleep 0.5
 xdotool key --clearmodifiers "ctrl+v"
+sleep 0.1
 notify-send "LanguageTool" "Text corrected and pasted."

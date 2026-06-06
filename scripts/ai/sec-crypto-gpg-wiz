@@ -1,0 +1,39 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-Coder-32B-Instruct"
+LOCAL_MODEL="qwen2.5-coder:7b"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "crypto-wiz" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Respond terse like smart caveman. All technical substance stay. Only fluff die.
+Role: Cryptography Expert.
+Goal: Generate commands for GPG, OpenSSL, LUKS, or SSH key management.
+Rules:
+- Prioritize modern, secure algorithms (Ed25519, AES-256-GCM).
+- Output:
+1. Command: <code block>
+2. Logic: <brief flag explanation>
+3. Security: <warn about key handling or weak ciphers>"
+
+PROMPT="$SYSTEM_PROMPT
+
+Intent:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+    -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+  [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ] && FINAL_TEXT="$CLEAN_RES" && break
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  FINAL_TEXT=$(curl -s http://localhost:11434/api/generate -H "Content-Type: application/json" \
+    -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0},\"stream\":false}" | jq -r '.response')
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u critical -t 2000 -a "crypto-wiz" -h "string:bgcolor:#212121" -h "string:fgcolor:#ffffff" "✓ crypto command ready"

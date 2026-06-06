@@ -1,0 +1,37 @@
+#!/bin/bash
+HF_TOKEN=$(cat ~/.key/HF_TOKEN)
+HF_MODEL="Qwen/Qwen2.5-7B-Instruct"
+LOCAL_MODEL="llama3.2:latest"
+MAX_RETRIES=3
+
+CLIP=$(xclip -o -selection clipboard 2>/dev/null)
+[ -z "$CLIP" ] && dunstify -u normal -t 2000 -a "yt-queries" "⚠ nothing in clipboard" && exit 0
+
+SYSTEM_PROMPT="Role: YouTube Search Expert.
+Goal: Generate high-accuracy search queries for YouTube.
+Rules:
+- Use keyword-dense phrases.
+- Include variations: tutorial, deep dive, comparison, review.
+- Use common YT tags/terms (e.g., 'explained', 'walkthrough', '2024').
+- Output: List of 5-8 queries only. No fluff."
+
+PROMPT="$SYSTEM_PROMPT
+
+Intent:
+$CLIP"
+
+for i in $(seq 1 $MAX_RETRIES); do
+  RESULT=$(curl -s "https://router.huggingface.co/v1/chat/completions" \
+    -X POST -H "Authorization: Bearer $HF_TOKEN" -H "Content-Type: application/json" \
+    -d "{\"model\": \"$HF_MODEL\", \"messages\": [{\"role\": \"user\", \"content\": $(jq -n --arg p "$PROMPT" '$p')}]}")
+  CLEAN_RES=$(echo "$RESULT" | jq -r '.choices[0].message.content // empty')
+  [ -n "$CLEAN_RES" ] && [ "$CLEAN_RES" != "null" ] && FINAL_TEXT="$CLEAN_RES" && break
+done
+
+if [ -z "$FINAL_TEXT" ]; then
+  FINAL_TEXT=$(curl -s http://localhost:11434/api/generate -H "Content-Type: application/json" \
+    -d "{\"model\":\"$LOCAL_MODEL\",\"prompt\":$(jq -n --arg p "$PROMPT" '$p'),\"options\":{\"temperature\":0.7},\"stream\":false}" | jq -r '.response')
+fi
+
+echo -n "$FINAL_TEXT" | xclip -selection clipboard
+dunstify -u low -t 1400 -a "yt-queries" -h "string:bgcolor:#f44336" -h "string:fgcolor:#ffffff" "✓ YT queries ready"

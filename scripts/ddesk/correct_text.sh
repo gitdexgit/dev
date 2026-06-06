@@ -47,5 +47,8 @@ except (json.JSONDecodeError, IndexError):
 
 # --- 4. OUTPUT THE RESULT ---
 echo -n "$CORRECTED_TEXT" | xclip -i -selection clipboard
+sleep 1
+sleep 0.5
 xdotool key --clearmodifiers "ctrl+v"
+sleep 0.1
 notify-send "LanguageTool" "Text corrected and pasted."
