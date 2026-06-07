@@ -12,7 +12,7 @@
 
 set $mod Mod4
 
-font pango:monospace 8
+font pango:Iosevka 10
 
 focus_follows_mouse no
 
@@ -495,16 +495,16 @@ bindsym $mod+F12 exec --no-startup-id qterminal -d
 
 
 # Scratch (Mod+Shift+f)
-bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_work" alacritty --class "alacritty_work" -T "work" -e tmux new-session -A -s work -c ~/work
+bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_work" alacritty --class "alacritty_work" -T "work" -e tmux new-session -A -s work -c ~/work
 
+# Duck  (Mod+Shift+d)
+bindsym $mod+Shift+d exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_duck" alacritty --class "alacritty_duck" -T "duck" -e tmux new-session -A -s duck -c ~/work
 
 # Draft  (Mod+Shift+g)
 # bindsym $mod+Shift+g exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_draft" alacritty --class "alacritty_draft" -T "draft" -e tmux new-session -A -s draft
 
 
 
-# Duck  (Mod+Shift+d)
-bindsym $mod+Shift+d exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_duck" alacritty --class "alacritty_duck" -T "duck" -e tmux new-session -A -s duck -c ~/work
 
 
 
@@ -800,6 +800,7 @@ bar {
     position bottom
     strip_workspace_numbers yes
     tray_output HDMI-1
-    font pango:Iosevka Term Narrow 9
+    # font pango:Iosevka Term Narrow 9
+    font pango:Iosevka 10
 }
 

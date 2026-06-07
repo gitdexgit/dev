@@ -65,7 +65,7 @@ mode = "Vi|~Search"
 action = "ScrollHalfPageDown"
 
 [font]
-size = 9
+size = 12
 
   [font.normal]
   family = "JetBrainsMono Nerd Font Mono"

@@ -1,3 +1,9 @@
+Xft.dpi:       120
+Xft.antialias: 1
+Xft.hinting:   1
+Xft.hintstyle: hintmedium
+
+
 ! ------------------------------------------------------------------------------
 ! THE REAL TSODING (REXIM) CONFIG - JETBRAINS MONO EDITION (FOR DEX)
 ! ------------------------------------------------------------------------------

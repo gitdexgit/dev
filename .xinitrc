@@ -1,3 +1,5 @@
+xrdb -merge ~/.Xresources
+
 setxkbmap us
 xset r rate 220 50
 

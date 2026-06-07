@@ -1,0 +1,47 @@
+#!/bin/bash
+# notify-timer
+
+INPUT="$*"
+TARGET=0
+NOTIF_ID=0
+
+# Kill notification on exit
+cleanup() {
+    [[ $NOTIF_ID -ne 0 ]] && dunstify -C "$NOTIF_ID"
+    exit
+}
+trap cleanup SIGINT SIGTERM EXIT
+
+# Parse time string to seconds
+[[ -n "$INPUT" ]] && TARGET=$(echo "$INPUT" | sed 's/s//g; s/m/*60/g; s/h/*3600/g; s/d/*86400/g; s/ /+/g' | bc)
+
+date "+%T %a, %d-%m"
+echo ""
+
+SEC=0
+NOTIFIED=0
+
+while true; do
+    H=$((SEC / 3600))
+    M=$(( (SEC / 60) % 60 ))
+    S=$((SEC % 60))
+
+    printf "\r%02d:%02d:%02d" $H $M $S
+
+    if [[ $TARGET -gt 0 && $SEC -ge $TARGET ]]; then
+        if [[ $NOTIFIED -eq 0 ]]; then
+            # -p prints notification ID
+            NOTIF_ID=$(dunstify -p -u critical -t 0 "Timer" "$INPUT passed")
+            NOTIFIED=1
+        fi
+
+        DIFF=$((SEC - TARGET))
+        DH=$((DIFF / 3600))
+        DM=$(( (DIFF / 60) % 60 ))
+        DS=$((DIFF % 60))
+        printf " (+%02d:%02d:%02d)" $DH $DM $DS
+    fi
+
+    sleep 1
+    ((SEC++))
+done
