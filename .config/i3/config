@@ -349,7 +349,12 @@ bindsym Control+Mod1+Right exec --no-startup-id "xdotool set_desktop --relative 
 bindsym Control+Mod1+Left exec --no-startup-id "xdotool set_desktop --relative -- -1"
 
 # --- Screenshots (Fixed alt+Print to Mod1+Print) ---
-bindsym --release Print exec --no-startup-id sh -c "WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
+# This doesn't:
+# bindsym --release Print exec --no-startup-id bash -c "WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
+#
+# You have to do it this way:
+bindsym --release Print exec --no-startup-id ~/.config/i3/screenshot.sh
+
 bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
 bindsym --release $mod+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
 bindsym --release Shift+Print exec --no-startup-id "~/scripts/video/record-area.sh"
@@ -391,7 +396,7 @@ bindsym $mod+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
 bindsym $mod+t exec --no-startup-id "rofi -show windowcd"
 bindsym $mod+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
 bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
-bindsym Mod1+space exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
+bindsym Mod1+Shift+space exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
 bindsym $mod+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
 
 # --- Mouse Window Management ---

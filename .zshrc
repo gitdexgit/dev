@@ -169,10 +169,12 @@ bindkey '\e[4~' end-of-line
 # Editing
 bindkey '^U' backward-kill-line
 bindkey '^K' kill-line
+# This makes C-backspace delete a word I like it over Alt-Backspace. because of capslock you now
+bindkey '^H' backward-delete-word
 bindkey '^[[3;5~' kill-word
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
-bindkey '^H' backward-delete-char
+# bindkey '^H' backward-delete-char
 bindkey "^[[3~" delete-char
 
 # Undo/Redo (Nano style + Kali style)
@@ -208,7 +210,11 @@ bindkey '^[r' history-incremental-search-backward
 
 # Application Shortcuts
 bindkey '^G' autosuggest-toggle
-bindkey -s '\et' "tmux-sessionizer\r"
+# bindkey -s '\et' "tmux-sessionizer\r"
+
+# \em is the escape sequence for Alt+m
+# bindkey -s '\em' "tmux-sessionizer\r"
+
 bindkey -s 's' "scratchpad-sessionizer"
 
 
@@ -297,6 +303,7 @@ fi
 
 # Must have on every OS
 alias ll='ls -alhF'
+alias ts='tmux-sessionizer'
 alias la='ls -AlhF'
 alias l='ls -CF'
 alias ls='ls --color=auto'
