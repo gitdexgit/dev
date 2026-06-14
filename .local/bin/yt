@@ -1,20 +1,20 @@
 #!/bin/bash
 URL="$1"
-
-# Prompt if no argument
 [ -z "$URL" ] && read -r -p "URL: " URL
 [ -z "$URL" ] && exit 1
 
-# Get resolutions, sort unique, pick with fzf
-RES=$(yt-dlp --list-formats "$URL" | grep -oP '\d{3,4}p' | sort -unr | fzf --header="Select Resolution")
+CHOICE=$(printf '1080p\n720p\n480p\n360p\n240p\naudio-only' | fzf --header="Quality")
 
-# Strip 'p' for logic
-HEIGHT=${RES%p}
+[ -z "$CHOICE" ] && exit 0
 
-# Play. hwdec=auto uses GPU. cache=yes prevents stutter.
-[ -n "$HEIGHT" ] && mpv \
-    --hwdec=auto \
-    --cache=yes \
-    --demuxer-max-bytes=500M \
-    --ytdl-format="bestvideo[height<=$HEIGHT]+bestaudio/best" \
-    "$URL"
+if [ "$CHOICE" = "audio-only" ]; then
+    mpv --no-video --ytdl-format="bestaudio" --cache=yes "$URL"
+else
+    HEIGHT=${CHOICE%p}
+    mpv \
+        --hwdec=auto \
+        --cache=yes \
+        --demuxer-max-bytes=500M \
+        --ytdl-format="bestvideo[height<=$HEIGHT]+bestaudio/best[height<=$HEIGHT]" \
+        "$URL"
+fi

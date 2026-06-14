@@ -18,25 +18,25 @@ echo "--- Starting ---"
 # done
 
 tmux new-session -d -s "main" -c "$HOME" -n "zsh"
-tmux new-session -d -s "wiki" -c "$HOME/wiki/" -n "zsh"
+# tmux new-session -d -s "wiki" -c "$HOME/wiki/" -n "zsh"
 
-tmux new-session -d -s "config"
+# tmux new-session -d -s "config"
 
 ####
 #### .duck
 ####
 
-tmux new-session -d -s "work" -c "$HOME/work" -n "learn"
-tmux send-keys -t "work":1 "nvim aha.md" C-m
+tmux new-session -d -s "learn" -c "$HOME/learn" -n "learn"
+tmux send-keys -t "learn":1 "nvim aha.md" C-m
 
-tmux new-window -t "work":2 -c "$HOME/work/buffer" -n "~/work/buffer"
-tmux send-keys -t "work":2 "ls" C-m
+tmux new-window -t "learn":2 -c "$HOME/learn/buffer" -n "~/learn/buffer"
+tmux send-keys -t "learn":2 "ls" C-m
 
 # Fixed typo in path below
-tmux new-window -t "work":3 -c "$HOME/work/attachments/" -n "~/work/attachments"
-tmux new-window -t "work":4 -c "$HOME/wiki/" -n "~/wiki"
+tmux new-window -t "learn":3 -c "$HOME/learn/attachments/" -n "~/learn/attachments"
+tmux new-window -t "learn":4 -c "$HOME/wiki/" -n "~/wiki"
 
-tmux select-window -t "work":1
+tmux select-window -t "learn":1
 
 
 # TODO:
@@ -56,28 +56,25 @@ tmux select-window -t "work":1
 ####
 
 SESS="session"
-WDIR="/home/dex/work"
+WDIR="/home/dex/learn"
 
 SESS="session"
-WDIR="/home/dex/work"
+WDIR="/home/dex/learn"
 
 # Window 1: session (3 panes)
 tmux new-session -d -s "$SESS" -n "session"
-tmux split-window -v -t "$SESS":1.1
-tmux split-window -h -t "$SESS":1.2
-
 # Use C-m at end to trigger Enter
-tmux send-keys -t "$SESS":1.3 "timer"
-tmux send-keys -t "$SESS":1.2 '(echo "running" && ssleep 1h && dunstify -u critical -t 0 "Timer" "1 hour passed" && echo "done")'
-tmux send-keys -t "$SESS":1.1 'echo -e "\n[]\n" ; timer'
+tmux send-keys -t "$SESS":1.1 'echo "\n [ just woke up ] \n" ; timer'
 
+tmux new-window -t "$SESS":2 -n "timer"
+tmux send-keys -t "$SESS":2.1 "notify-timer 1h"
 # Window 2: clock (3 panes - split top, full bottom)
-tmux new-window -t "$SESS":2 -n "clock"
-tmux split-window -h -t "$SESS":2.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
-tmux split-window -v -t "$SESS":2.2     # Splits 2.1 into 2.1 (top-left) and 2.3 (top-right)
-tmux send-keys -t "$SESS":2.1 "aclock" C-m
-tmux send-keys -t "$SESS":2.2 "acal" C-m
-tmux send-keys -t "$SESS":2.3 "ww" C-m
+tmux new-window -t "$SESS":3 -n "clock"
+tmux split-window -h -t "$SESS":3.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+tmux split-window -v -t "$SESS":3.2     # Splits 2.1 into 2.1 (top-left) and 2.3 (top-right)
+tmux send-keys -t "$SESS":3.1 "aclock" C-m
+tmux send-keys -t "$SESS":3.2 "acal" C-m
+tmux send-keys -t "$SESS":3.3 "woke-up"
 
 
 
@@ -95,8 +92,8 @@ tmux send-keys -t "$SESS":2.3 "ww" C-m
 # tmux send-keys -t "$SESS":4.3 "watch -n 3 -c timew summary" C-m
 
 # Window 5: tasks
-tmux new-window -t "$SESS":3 -n "tasks" -c "$WDIR"
-tmux send-keys -t "$SESS":3.1 "vim tasks.md" C-m
+tmux new-window -t "$SESS":4 -n "tasks" -c "$WDIR"
+tmux send-keys -t "$SESS":4.1 "vim tasks.md" C-m
 
 tmux select-window -t "$SESS":1
 
@@ -119,12 +116,12 @@ tmux new-window -t "btop":2 -c "$HOME" -n "nethogs"
 # Window 3
 tmux new-window -t "btop":3 -c "$HOME" -n "cpupower"
 tmux split-window -h -t "btop":3.1
-tmux split-window -v -t "btop":3.1
+# tmux split-window -v -t "btop":3.1
 
 # Commands
-tmux send-keys -t "btop":1.1 "watch -t sensors"
-tmux send-keys -t "btop":1.2 "btop" C-m
-tmux send-keys -t "btop":1.3 "ping 8.8.8.8" C-m
+# tmux send-keys -t "btop":1.1 "watch -t sensors"
+tmux send-keys -t "btop":1.1 "btop" C-m
+tmux send-keys -t "btop":1.2 "ping 8.8.8.8" C-m
 
 tmux send-keys -t "btop":2.1 "nethogs" C-m
 
@@ -134,27 +131,29 @@ tmux send-keys -t "btop":3.3 "sudo cpupower frequency-set -g performance"
 
 tmux select-pane -t "btop":1.2
 
+
+
 ####
 #### .jobs
 ####
 
-tmux new-session -d -s "jobs" -n "logs"
-tmux send-keys -t "jobs:logs" "journalctl -f" C-m
+# tmux new-session -d -s "jobs" -n "logs"
+# tmux send-keys -t "jobs:logs" "journalctl -f" C-m
 
 ####
 #### .sync
 ####
 
-tmux new-session -d -s "sync" -n "dev" -c "$HOME/dev"
-tmux send-keys -t "sync":1 "sleep 1m ; git status" C-m
-
-tmux new-window -t "sync":2 -n "work" -c "$HOME/work"
-tmux send-keys -t "sync":2 "sleep 2m ; git status" C-m
-
-tmux new-window -t "sync":3 -n "wiki" -c "$HOME/wiki"
-tmux send-keys -t "sync":3 "sleep 3m ; git status" C-m
-
-tmux new-window -t "sync":4 -n "archive_fossil" -c "$HOME/archive_fossil/"
-tmux send-keys -t "sync":3 "sleep 3m ; git status" C-m
+# tmux new-session -d -s "sync" -n "dev" -c "$HOME/dev"
+# tmux send-keys -t "sync":1 "sleep 1m ; git status" C-m
+#
+# tmux new-window -t "sync":2 -n "learn" -c "$HOME/learn"
+# tmux send-keys -t "sync":2 "sleep 2m ; git status" C-m
+#
+# tmux new-window -t "sync":3 -n "wiki" -c "$HOME/wiki"
+# tmux send-keys -t "sync":3 "sleep 3m ; git status" C-m
+#
+# tmux new-window -t "sync":4 -n "archive_fossil" -c "$HOME/archive_fossil/"
+# tmux send-keys -t "sync":3 "sleep 3m ; git status" C-m
 
 echo "--- Session Creation Complete ---"

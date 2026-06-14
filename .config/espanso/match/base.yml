@@ -1,40 +1,44 @@
-# espanso match file
-#
-# For a complete introduction, visit the official docs at: https://espanso.org/docs/
-
-# You can use this file to define the base matches (aka snippets)
-# that will be available in every application when using espanso.
-
-# Matches are substitution rules: when you type the "trigger" string
-# it gets replaced by the "replace" string.
-# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
-
 matches:
 
+  ##################### Esentials ###############################333
+
+  # old ;;timer; used to look like this
+  # - trigger: ";;timer;"
+  #   replace: "echo \"\\n [$|$] \\n\" ; timer"
+
+
+  - trigger: ";;p;"
+    replace: "Understanding first. Be brief. Use few words. Keep meaning big. Word count as low as possible. Technicality only when it matters. Concept understanding first."
+
+
   - trigger: ";;timer;"
-    replace: "echo \"\\n [$|$] \\n\" ; timer"
+    replace: "echo $|$; timer"
 
-  - trigger: ";;qq;"
-    replace: |
-      q:
-      $|$
-
-      a:
-
+  # very useful when asking and answering questions to llm
   - trigger: ";;q;"
     force_mode: clipboard
     vars:
       - name: clip
         type: clipboard
     replace: |
-      q:
+      questions:
       {{clip}}
-      a:
+      answer:
 
-  #------------ Essentials -------------
-  # very handy just spam ;;;; just keep holding it. and it works so you only need to hold 1 button
+  - trigger: ";;qq;"
+    force_mode: clipboard
+    vars:
+      - name: clip
+        type: clipboard
+    replace: |
+      questions:
+      $|$
+      answer:
 
+  - trigger: ";;todo;"
+    replace: "- [ ] "
 
+  ################ Coding blocks #######################
   - trigger: ";;`bash;"
     replace: "```bash\n$|$\n```"
     propagate_case: false
@@ -47,6 +51,14 @@ matches:
     replace: "```c\n$|$\n```"
     propagate_case: false
 
+  - trigger: ";;`scm;"
+    replace: "```c\n$|$\n```"
+    propagate_case: false
+
+  - trigger: ";;`elisp;"
+    replace: "```c\n$|$\n```"
+    propagate_case: false
+
   - trigger: ";;`lua;"
     replace: "```lua\n$|$\n```"
     propagate_case: false
@@ -54,21 +66,21 @@ matches:
   - trigger: ";;`;"
     replace: "```\n$|$\n```"
     propagate_case: false
-    # backend: clipboard
-
-  # - trigger: ";;p;"
-  #   replace: "{{output}}"
-  #   force_clipboard: true
-  #   paste_shortcut: "Ctrl+V"
-  #   vars:
-  #     - name: output
-  #       type: shell
-  #       params:
-  #         cmd: "ORIGINAL=$(copyq read 0); echo \"\\`\\`\\`\n$ORIGINAL\n\\`\\`\\`\"; (sleep 0.2; echo \"$ORIGINAL\" | copyq copy -) &"
 
 
 
-  - trigger: "lua;;p;"
+  ################ Coding blocks with clipboard content inside #######################
+  - trigger: ";;cb;"
+    replace: "```\n{{content}}\n```\n\n"
+    force_clipboard: true
+    paste_shortcut: "Ctrl+V"
+    vars:
+      - name: content
+        type: shell
+        params:
+          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
+
+  - trigger: ";;cblua;"
     replace: "```lua\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -79,7 +91,7 @@ matches:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
 
-  - trigger: "c;;p;"
+  - trigger: ";;cbc;"
     replace: "```c\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -89,8 +101,7 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
-
-  - trigger: "python;;p;"
+  - trigger: ";;cbpython;"
     replace: "```python\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -101,7 +112,7 @@ matches:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
 
-  - trigger: "b;;p;"
+  - trigger: ";;cbbash;"
     replace: "```bash\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -111,18 +122,7 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
-  - trigger: "bash;;p;"
-    replace: "```bash\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-
-  - trigger: "py;;p;"
+  - trigger: ";;cbpy;"
     replace: "```py\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -133,191 +133,7 @@ matches:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
 
-
-  - trigger: "js;;p;"
-    replace: "```js\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-  - trigger: "ts;;p;"
-    replace: "```ts\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-
-  - trigger: ";;p;"
-    replace: "```\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-
-  - trigger: ";;gc=;"
-    force_mode: clipboard
-    replace: |
-      == _)
-      == W{{mydate}}
-      == ==START============================================================
-      == ""{{my_title}}"" START
-      == ===================================================================
-
-      == [[]]
-
-      == DESCRIPTION:
-
-      == Why?:
-
-      == Solution?:
-
-      == ====================================================================
-
-      $|$
-
-      == ====================================================================
-      == ""{{my_title}}"" END
-      == ===END==============================================================
-    vars:
-      - name: my_title
-        type: shell
-        params:
-          # cmd: bash '/home/dex/scripts/ddesk/espanso/insert_comment_gc_hashtag.sh'
-          cmd:
-            'zenity --entry --title="Comment Header" --text="Enter the header title:"'
-      - name: mydate
-        type: date
-        params:
-          format: "%V %a, %d at %H:%M"
-
-
-  - trigger: ";;gc-;"
-    force_mode: clipboard
-    replace: |
-      -- _)
-      -- W{{mydate}}
-      -- --START------------------------------------------------------------
-      -- ""{{my_title}}"" START
-      -- -------------------------------------------------------------------
-
-      -- [[]]
-
-      -- DESCRIPTION:
-
-      -- Why?:
-
-      -- Solution?:
-
-      -- --------------------------------------------------------------------
-
-      $|$
-
-      -- --------------------------------------------------------------------
-      -- ""{{my_title}}"" END
-      -- ---END--------------------------------------------------------------
-    vars:
-      - name: my_title
-        type: shell
-        params:
-          # cmd: bash '/home/dex/scripts/ddesk/espanso/insert_comment_gc_hashtag.sh'
-          cmd:
-            'zenity --entry --title="Comment Header" --text="Enter the header title:"'
-      - name: mydate
-        type: date
-        params:
-          format: "%V %a, %d at %H:%M"
-
-
-
-  - trigger: ";;gc#;"
-    force_mode: clipboard
-    replace: |
-      # _)
-      # W{{mydate}}
-      # ---START------------------------------------------------------------
-      # ""{{my_title}}"" START
-      # --------------------------------------------------------------------
-
-      # [[]]
-
-      # DESCRIPTION:
-
-      # Why?:
-
-      # Solution?:
-
-      # --------------------------------------------------------------------
-
-      $|$
-
-      # --------------------------------------------------------------------
-      # ""{{my_title}}"" END
-      # ---END--------------------------------------------------------------
-    vars:
-      - name: my_title
-        type: shell
-        params:
-          # cmd: bash '/home/dex/scripts/ddesk/espanso/insert_comment_gc_hashtag.sh'
-          cmd:
-            'zenity --entry --title="Comment Header" --text="Enter the header title:"'
-      - name: mydate
-        type: date
-        params:
-          format: "%V %a, %d at %H:%M"
-  # ----- Experemental END----
-
-  # ---- Remember commands ----
-
-  - trigger: ';;command~screens off'
-    replace: 'xset dpms force off # make sure to run it in a terminal other wise it will not run'
-
-  # ---- Remember commands END----
-
-
-  # ---- terminal ----
-  - trigger: ';;mpvyt;'
-    replace: 'mpv --ytdl-format=<worst|best |OR| 18|169..etc --> (yt-dlp -F "link")> "youtube link"'
-
-  # just trying to not gotget this command
-  - trigger: ';;feh;'
-    replace: 'feh --geometry 3286x1080+0+0 --borderless .'
-
-  # [IMPROVEMNS] This should probably use the control+alt+p or whatever the *bin functions I use in temrinal... maybe that would
-  # help so that instead of me needing to open a terminal to run those I can just run them from wherever by just typing text... wherever
-  # - trigger: ';;pbin;'
-  #   replace: 'xclip -o -selection clipboard > /tmp/mypaste.txt && wgetpaste -r -C /tmp/mypaste.txt && rm /tmp/mypaste.txt'
-
-  # [IMPROVEMNS] This should probably use the control+alt+p or whatever the *bin functions I use in temrinal... maybe that would
-  # - trigger: ';;gbin;'
-  #   replace: 'grep $|$ <(curl {{my_clip}})'
-  #   vars:
-  #     - name: my_clip
-  #       type: clipboard
-
-  # [IMPROVEMNS] This should probably use the control+alt+p or whatever the *bin functions I use in temrinal... maybe that would
-  # - trigger: ';;vbin;'
-  #   replace: '(curl {{my_clip}}) | vim'
-  #   vars:
-  #     - name: my_clip
-  #       type: clipboard
-
-  # ---- terminal END----
-
-
-
-  # --[EMAIL]-- [ gmails ] ----
+  ############### Email section ##############################
 
   - trigger: ';;g.d;'
     replace: 'ttdextester@gmail.com'
@@ -327,127 +143,40 @@ matches:
     replace: 'fagottarik@gmail.com'
 
 
-  # END--[EMAIL]-- [ gmails ] END----
+  ############### Dev console when using youtube, hit f12 and type to make player faster or slower ############################
 
-
-
-  # ----- Paths --------
-  - trigger: ';;p.desk;'
-    replace: '/home/dex/Desktop/'
-
-  - trigger: ';;p.h;'
-    replace: '/home/dex/'
-
-  - trigger: ';;p.down;'
-    replace: '/home/dex/Downloads/'
-
-  - trigger: ';;p.doc'
-    replace: '/home/dex/Documents/'
-
-  - trigger: ';;p.pic]'
-    replace: '/home/dex/Pictures/'
-
-  - trigger: ';;p.s;'
-    replace: '/home/dex/scripts/'
-  # ----- Paths END--------
-
-  # --[COMMANDS]-- [ tmux ] ----
-  # instead of using the zsh history, which I do from time to time. the most
-  # frequenly used ones should have their own shortcut.
-  # this only is for long commands
-
-  - trigger: ';;t.date;'
-    replace: ' watch -n 1 /home/dex/scripts/my_clock.sh'
-  - trigger: ';;t.date]'
-    replace: ' while true; do date; echo ""; date "+%y/%m/%d" ; echo "" ; date "+%T" ; sleep 60; clear; done'
-
-  - trigger: ';;t.cal;'
-    replace: ' while true; do cal -w ; sleep 300; clear; done'
-
-  # END--[COMMANDS]-- [ tmux ] END----
-
-
-  - trigger: ";;todo;"
-    replace: "- [ ] "
-
-  - trigger: ";;t;"
-    replace: "- [ ] "
-
-
-  # ----- Date & Time ------
-  - trigger: ";;.d;"
-    replace: "{{mydate}}"
-    vars:
-      - name: mydate
-        type: date
-        params:
-          format: "%d/%m/%Y"
-
-  # - trigger: ";;.f;"
-  #   replace: "{{output}}"
-  #   vars:
-  #     - name: output
-  #       type: script
-  #       params:
-  #         args:
-  #           # this is just a scritp wrapper for running fleet.note.sh to make other triggers work
-  #           - /home/dex/scripts/ddesk/espanso/f-script-fix.sh
-            # - /home/dex/scripts/ddesk/nothing/fleet.note.sh
-  # - trigger: "].f]"
-  #   replace: "{{output}}"
-  #   vars:
-  #     - name: output
-  #       type: script
-  #       params:
-  #         args:
-  #           - bash
-  #           # this is just a scritp wrapper for running fleet.note.sh to make other triggers work
-  #           - /home/dex/scripts/ddesk/espanso/f-script-fix.sh
-  #           # - /home/dex/scripts/ddesk/nothing/fleet.note.sh
-
-  # ----- Date & Time END------
-
-  # ---- help ----
-# espanso match file
-
-# For a complete introduction, visit the official docs at: https://espanso.org/docs/
-
-
-# _)
-# W03 Fri, 16 at 07:31
-# ---START------------------------------------------------------------
-# ""web console jscommands"" START
-# --------------------------------------------------------------------
-
-# [[]]
-
-# DESCRIPTION:
-
-# Why?:
-
-# Solution?:
-
-# --------------------------------------------------------------------
-
-
-  - trigger: ";;v5;"
+  - trigger: ";;yt5;"
     replace: "document.querySelector('video').currentTime += 5;"
 
-  - trigger: ";;v-5;"
+  - trigger: ";;yt-5;"
     replace: "document.querySelector('video').currentTime -= 5;"
 
-# --------------------------------------------------------------------
-# ""web console jscommands"" END
-# ---END--------------------------------------------------------------
+  - trigger: ";;yt4;"
+    replace: "document.querySelector('video').currentTime += 4;"
 
+  - trigger: ";;yt-4;"
+    replace: "document.querySelector('video').currentTime -= 4;"
 
+  - trigger: ";;yt3;"
+    replace: "document.querySelector('video').currentTime += 3;"
 
+  - trigger: ";;yt-3;"
+    replace: "document.querySelector('video').currentTime -= 3;"
 
+  - trigger: ";;yt2;"
+    replace: "document.querySelector('video').currentTime += 2;"
 
+  - trigger: ";;yt-2;"
+    replace: "document.querySelector('video').currentTime -= 2;"
 
+  - trigger: ";;yt2.5;"
+    replace: "document.querySelector('video').currentTime += 2.5;"
 
+  - trigger: ";;yt-2.5;"
+    replace: "document.querySelector('video').currentTime -= 2.5;"
 
+  - trigger: ";;yt1;"
+    replace: "document.querySelector('video').currentTime += 1.04;"
 
-
-
-
+  - trigger: ";;yt-1;"
+    replace: "document.querySelector('video').currentTime -= 1.04;"

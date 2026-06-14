@@ -1,5 +1,5 @@
 
-
+hide_edge_borders both
 
 
 
@@ -148,15 +148,13 @@ exec --no-startup-id sh -c "sleep 5; gromit-mpx"
 
 # Razer DPI
 exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"
-exec --no-startup-id sh -c "sleep 10; xournalpp"
-# exec --no-startup-id sleep 15 && vesktop
 
 # Firefox profiles
-exec --no-startup-id sleep 5  && firefox -P default-release --class default-release
-# exec --no-startup-id sleep 10 && firefox -P ai --class ai
+exec --no-startup-id sleep 5  && firefox -P default-release -c default-release
+# exec --no-startup-id sleep 10 && firefox -P ai -c ai
 
 # Alacritty daemon (silent — suppresses copy log noise)
-# exec --no-startup-id alacritty -qq --daemon --socket /tmp/alacritty-daemon.sock
+# exec --no-startup-id st -qq --daemon --socket /tmp/st-daemon.sock
 
 # urxvt daemon
 # exec --no-startup-id urxvtd -q -o -f
@@ -174,15 +172,13 @@ exec --no-startup-id i3-back
 # exec --no-startup-id yad --notification --image="edit-clear" --text="Click to send Super+Backspace" --command="xdotool key alt+BackSpace"
 
 
-
-
-exec --no-startup-id yad --notification --image="document-edit" --text="Click to toggle Xournal++" --command="xdotool key ctrl+super+x"
-# exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
-# exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
 exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
+exec --no-startup-id yad --notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+control+shift+t"
 exec --no-startup-id yad --notification --image="Alacritty" --text="Click to send Super+Backspace" --command="xdotool key super+BackSpace"
 
-exec --no-startup-id yad --notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+shift+t"
+
+# exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
+# exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
 
 # exec --no-startup-id yad --notification --image="vesktop" --text="Click to send Super+Backspace" --command="xdotool key super+control+v"
 # exec --no-startup-id yad --notification --image="copyq" --text="Click to send Super+Backspace" --command="xdotool key super+control+c"
@@ -236,10 +232,8 @@ for_window [title="Godot"] floating enable
 # for_window [class="Zeal"] move position center
 
 
-for_window [class="mpv"] border none
+for_window [class="mpv"] floating enable, border none
 
-# for_window [class="Com.github.xournalpp.xournalpp"] floating enable, move scratchpad
-for_window [class="Com.github.xournalpp.xournalpp"]  border none
 
 # Zeal
 # for_window [class="Zeal"] floating enable, move position center, move scratchpad
@@ -282,27 +276,63 @@ for_window [class="osb"] focus, exec --no-startup-id "i3-msg move absolute posit
 for_window [instance="floating_thunar"]   floating enable
 
 
-# for_window [class="alacritty_scratch"]    floating enable, border pixel 0, move position center
-# for_window [class="alacritty_draft"]      floating enable, border pixel 0, move position center
-# for_window [class="alacritty_duck"]       floating enable, border pixel 0, move position center
-# for_window [class="alacritty_task"]       floating enable, border pixel 0, move position center
-# for_window [class="alacritty_btop"]       floating enable, border pixel 0, move position center
-# for_window [class="alacritty_config"]     floating enable, border pixel 0, move position center
-# for_window [class="alacritty_cpu"]        floating enable, border pixel 0, move position center
-# for_window [class="alacritty_sync"]       floating enable, border pixel 0, move position center
-# for_window [instance="alacritty_main"] floating enable, border pixel 0, move position center
+# for_window [class="st_scratch"]    floating enable, border pixel 0, move position center
+# for_window [class="st_draft"]      floating enable, border pixel 0, move position center
+# for_window [class="st_duck"]       floating enable, border pixel 0, move position center
+# for_window [class="st_task"]       floating enable, border pixel 0, move position center
+# for_window [class="st_btop"]       floating enable, border pixel 0, move position center
+# for_window [class="st_config"]     floating enable, border pixel 0, move position center
+# for_window [class="st_cpu"]        floating enable, border pixel 0, move position center
+# for_window [class="st_sync"]       floating enable, border pixel 0, move position center
+# for_window [instance="st_main"] floating enable, border pixel 0, move position center
 #
 
-# for_window [class="alacritty_scratch"]    floating enable, move position center
-for_window [class="alacritty_work"]      floating enable, move position center, border pixel 0
-for_window [class="alacritty_draft"]      floating enable, move position center, border pixel 0
-for_window [class="alacritty_duck"]       floating enable, move position center, border pixel 0
-for_window [class="alacritty_task"]       floating enable, move position center, border pixel 0
-for_window [class="alacritty_btop"]       floating enable, move position center, border pixel 0
-for_window [class="alacritty_config"]     floating enable, move position center, border pixel 0
-for_window [class="alacritty_cpu"]        floating enable, move position center, border pixel 0
-for_window [class="alacritty_sync"]       floating enable, move position center, border pixel 0
-for_window [class="alacritty_main"]    floating enable, move position center, border pixel 0
+# for_window [class="st_scratch"]    floating enable, move position center
+# for_window [class="st_work"]      floating enable, move position center
+# for_window [class="st_draft"]      floating enable, move position center
+# for_window [class="st_duck"]       floating enable, move position center
+# for_window [class="st_task"]       floating enable, move position center
+# for_window [class="st_btop"]       floating enable, move position center
+# for_window [class="st_config"]     floating enable, move position center
+
+# for_window [class="st_scratch"]    floating enable
+# for_window [class="st_draft"]      floating enable
+# for_window [class="st_duck"]       floating enable
+for_window [class="st_task"]       floating enable
+for_window [class="st_btop"]       floating enable
+
+for_window [class="st_task"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+bindsym $mod+Control+Shift+t exec --no-startup-id ~/.config/i3/task_toggle.sh
+
+
+# Btop  (Mod+Shift+b)
+for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/btop_toggle.sh
+
+
+# Wiki  (Mod+Alt+BackSpace)
+for_window [class="st_sync"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+bindsym $mod+Mod1+BackSpace exec --no-startup-id ~/.config/i3/sync_toggle.sh
+
+
+for_window [class="st_learn"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+bindsym $mod+Control+Shift+f exec --no-startup-id ~/.config/i3/work_toggle.sh
+
+for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+bindsym $mod+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.sh
+
+for_window [class="st_duck"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+bindsym $mod+Control+Shift+d exec --no-startup-id ~/.config/i3/duck_toggle.sh
+
+for_window [class="st_main"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+bindsym $mod+BackSpace exec --no-startup-id ~/.config/i3/main_toggle.sh
+
+
+
+
+for_window [class="st_cpu"]        floating enable, move position center
+for_window [class="st_sync"]       floating enable, move position center
+# for_window [class="st_main"]    floating enable, move position center
 
 
 # =====================================================================
@@ -322,8 +352,10 @@ for_window [class="alacritty_main"]    floating enable, move position center, bo
 bindsym $mod+Shift+Control+r restart
 
 # --- Typing Speed ---
-bindsym $mod+p exec --no-startup-id "/home/dex/scripts/sts/fast-type.sh"
-bindsym $mod+Shift+p exec --no-startup-id "/home/dex/scripts/sts/slow-type.sh"
+# bindsym $mod+p exec --no-startup-id "/home/dex/scripts/sts/fast-type.sh"
+# bindsym $mod+Shift+p exec --no-startup-id "/home/dex/scripts/sts/slow-type.sh"
+
+
 
 # --- Window Management (wmctrl) - QUOTED TO FIX ERRORS ---
 bindsym $mod+Mod1+l exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
@@ -416,7 +448,7 @@ bindsym Control+$mod+1 exec --no-startup-id "autoshot-pause"
 bindsym Control+$mod+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
 bindsym Control+$mod+8 exec --no-startup-id "env ADW_DEBUG_COLOR_SCHEME=prefer-dark gnome-sound-recorder"
 bindsym Control+$mod+9 exec --no-startup-id "env GTK_THEME=Arc-Dark gnome-clocks"
-bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "alacritty -e xset dpms force off"
+bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "st -e xset dpms force off"
 
 # --- Window & Workspace Rename ---
 bindsym $mod+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
@@ -455,28 +487,29 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 # ------------
 
 # Terminal (Alacritty via daemon)
-# Open alacritty terminal but attach to tmux-sessionizer and we make sure we never open a new tmux-session because it's stuck at picker. Really fast and handy. should be default
-# bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e tmux-sessionizer || alacritty -qq -e tmux-sessionizer
+# Open st terminal but attach to tmux-sessionizer and we make sure we never open a new tmux-session because it's stuck at picker. Really fast and handy. should be default
+# bindsym $mod+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window -e tmux-sessionizer || st -qq -e tmux-sessionizer
 
-# bindsym $mod+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window -e zsh -c tmux-sessionizer || alacritty -qq -e zsh -c tmux-sessionizer
-# bindsym $mod+Return exec alacritty -e zsh -c tmux-sessionizer
+# bindsym $mod+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window -e zsh -c tmux-sessionizer || st -qq -e zsh -c tmux-sessionizer
+# bindsym $mod+Return exec st -e zsh -c tmux-sessionizer
 
 # Update binding
-bindsym $mod+Return exec alacritty --class alacritty_float -e zsh -c tmux-sessionizer
+bindsym $mod+Control+Return exec st -c st_float -e zsh -c tmux-sessionizer
+bindsym $mod+Shift+Return exec st -e zsh -c tmux-sessionizer
 
-for_window [class="alacritty_float"] floating enable, resize set 90 ppt 90 ppt, move position center
+for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center
 
-# Open default alacritty temrinal. Just the same as you would open dmenu and type alacritty
-# bindsym $mod+Shift+Return exec alacritty -qq msg --socket /tmp/alacritty-daemon.sock create-window || alacritty -qq
+# Open default st temrinal. Just the same as you would open dmenu and type st
+# bindsym $mod+Shift+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window || st -qq
 
-bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+Return exec st
 
 
 # Toggle Qalculate scratchpad
 bindsym Control+$mod+q [class="Qalculate-gtk"] scratchpad show, move position center
 
 # USELESS:
-# I no longe use urxvtc. It's not worth it. alacritty is way worth it for a little bit extra price.
+# I no longe use urxvtc. It's not worth it. st is way worth it for a little bit extra price.
 #
 # Terminal (urxvtc — clean, no tmux)
 # bindsym $mod+Shift+Return exec --no-startup-id urxvtc
@@ -496,33 +529,26 @@ bindsym $mod+F12 exec --no-startup-id qterminal -d
 # --- Dropdown terminals (tdrop) ---
 
 # Scratch  (Mod+Shift+f)
-# bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_scratch" alacritty --class "alacritty_scratch" -T "scratch" -e tmux new-session -A -s scratch
+# bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_scratch" st -c "st_scratch" -t "scratch" -e tmux new-session -A -s scratch
 
 
-# Scratch (Mod+Shift+f)
-bindsym $mod+Shift+f exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_work" alacritty --class "alacritty_work" -T "work" -e tmux new-session -A -s work -c ~/work
 
 # Duck  (Mod+Shift+d)
-bindsym $mod+Shift+d exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_duck" alacritty --class "alacritty_duck" -T "duck" -e tmux new-session -A -s duck -c ~/work
+# bindsym $mod+Control+Shift+d exec --no-startup-id tdrop -ma -w 100% -h 98% -n "st_duck" st -c "st_duck" -t "duck" -e tmux new-session -A -s duck -c ~/work
 
 # Draft  (Mod+Shift+g)
-# bindsym $mod+Shift+g exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_draft" alacritty --class "alacritty_draft" -T "draft" -e tmux new-session -A -s draft
+# bindsym $mod+Shift+g exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_draft" st -c "st_draft" -t "draft" -e tmux new-session -A -s draft
 
 
 
 
 
 
-# Task session
-bindsym $mod+Shift+t exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_task" alacritty --class "alacritty_task" -T "session" -e tmux new-session -A -s session ~/work
-
-# Btop  (Mod+Shift+b)
-bindsym $mod+Shift+b exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_btop" alacritty --class "alacritty_btop" -T "btop" -e tmux new-session -A -s btop
-
-# bindsym $mod+Control+x exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_btop" alacritty --class "alacritty_btop" -T "btop" -e tmux new-session -A -s btop
 
 
-bindsym Control+$mod+x [class="Com.github.xournalpp.xournalpp"] scratchpad show, move position center
+# bindsym $mod+Control+x exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_btop" st -c "st_btop" -t "btop" -e tmux new-session -A -s btop
+
+
 
 # vesktop
 # 3. Keybinding (Add to SCRATCHPAD section)
@@ -533,39 +559,35 @@ bindsym Control+$mod+v [class="vesktop"] scratchpad show
 bindsym Control+$mod+m exec i3-msg '[class="mpv"] scratchpad show'
 
 
-
-# Config  (Mod+Ctrl+BackSpace)
-bindsym $mod+Control+BackSpace exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_config" alacritty --class "alacritty_config" -T "config" -e tmux new-session -A -s config
-
 # CPU  (Mod+Shift+BackSpace)
-# bindsym $mod+Shift+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_cpu" alacritty --class "alacritty_cpu" -T "cpu" -e tmux new-session -A -s cpu
+# bindsym $mod+Shift+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_cpu" st -c "st_cpu" -t "cpu" -e tmux new-session -A -s cpu
 
-# Wiki  (Mod+Alt+BackSpace)
-bindsym $mod+Mod1+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_sync" alacritty --class "alacritty_sync" -T "sync" -e tmux new-session -A -s sync
 
-# urxvtc dropdown  (Mod+BackSpace)
-bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 100% -h 98% -n "alacritty_main" alacritty --class "alacritty_main" -T "main" -e tmux new-session -A -s main
 
-# bindsym $mod+semicolon exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" alacritty --class "alacritty_main" -T "main" -e tmux new-session -A -s main
+# bindsym $mod+semicolon exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" st -c "st_main" -t "main" -e tmux new-session -A -s main
 
 
 
 
-# bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" urxvtc -name "alacritty_main" -title "Dropdown"
+# bindsym $mod+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" urxvtc -name "st_main" -title "Dropdown"
 
 # urxvtc dropdown  (Mod+BackSpace)
-# bindsym $mod+i exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "alacritty_main" urxvtc -name "alacritty_main" -title "Dropdown"
+# bindsym $mod+i exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" urxvtc -name "st_main" -title "Dropdown"
 
 ## The issue with this one is that, it makes mod4+grave switch between workspace 40 and the current workspace for back and forth. It's annoying to have.
 # Mass hide all tdrop windows to Workspace 42
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^alacritty_main|^qterminal"] move to workspace 40
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^st_|^st_main|^qterminal"] move to workspace 40
 
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^alacritty_|^alacritty_main|^qterminal"] move scratchpad
 
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^alacritty_main" instance="^alacritty_|^alacritty_main|^qterminal"] move scratchpad
+# bindsym $mod+Mod1+space exec --no-startup-id /home/dex/scripts/i3/i3-window-mover.sh
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^st_|^st_main|^qterminal"] move scratchpad
 
-# bindsym Mod1+BackSpace [class="(?i)alacritty|urxvt|qterminal|copyq|vesktop|keepassxc|xournalpp"] move scratchpad; [floating] move scratchpad
+# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^st_main" instance="^st_|^st_main|^qterminal"] move scratchpad
+
 bindsym Mod1+Shift+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
+
+bindsym $mod+Shift+t  exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
+
 
 # =====================================================================
 # KEYBINDINGS — FOCUS & MOVEMENT
@@ -597,7 +619,7 @@ bindsym $mod+apostrophe focus output HDMI-1
 bindsym $mod+backslash  focus output eDP-1
 
 
-
+# his is for window_management keyd that I lost or stopped using I think just keep holding f and hit q and it should be there
 bindsym F19              exec --no-startup-id xdotool mousemove_relative -- 0 -10
 bindsym Control+F19      exec --no-startup-id xdotool mousemove_relative -- -10 0
 bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
@@ -606,24 +628,12 @@ bindsym Control+Mod4+F19 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
 
 
-
-
-
 # Alt-tab (previous window via i3-back)
-# bindsym Mod1+Tab        [con_mark=_back] focus
-# bindsym Mod1+Tab [con_mark=_back] focus; [class="vesktop" floating] move position 36 45; [class="Zeal" floating] move position center; [class="copyq" floating] move position center;
-bindsym Mod1+Tab [con_mark=_back] focus
-
-
-
-# Back-and-forth workspace shortcuts:
+bindsym Mod1+Tab        [con_mark=_back] focus
+bindsym Mod1+semicolon        [con_mark=_back] focus
 bindsym $mod+grave workspace back_and_forth
 bindsym $mod+semicolon workspace back_and_forth
-bindsym $mod+Shift+semicolon workspace back_and_forth
 
-# bindsym $mod+semicolon workspace back_and_forth
-
-bindsym $mod+Tab workspace back_and_forth
 
 
 # =====================================================================
@@ -757,9 +767,9 @@ bindsym ctrl+mod1+shift+mod4+h exec ~/scripts/i3/ws-goto.sh 26 "26h:"
 bindsym ctrl+mod1+shift+mod4+j exec ~/scripts/i3/ws-goto.sh 27 "27j:"
 bindsym ctrl+mod1+shift+mod4+k exec ~/scripts/i3/ws-goto.sh 28 "28k:"
 bindsym ctrl+mod1+shift+mod4+l exec ~/scripts/i3/ws-goto.sh 29 "29l:"
+bindsym ctrl+mod1+shift+mod4+semicolon exec "~/scripts/i3/ws-goto.sh 30 '30;:'"
 
 # I guess for some reason this doesn't work so... I'll just use this for something else Do not make this work.
-# bindsym ctrl+mod1+shift+mod4+semicolon exec ~/scripts/i3/ws-goto.sh 30 "30;:"
 
 bindsym ctrl+mod1+shift+mod4+z exec ~/scripts/i3/ws-goto.sh 31 "31z:"
 bindsym ctrl+mod1+shift+mod4+x exec ~/scripts/i3/ws-goto.sh 32 "32x:"
@@ -768,9 +778,9 @@ bindsym ctrl+mod1+shift+mod4+v exec ~/scripts/i3/ws-goto.sh 34 "34v:"
 bindsym ctrl+mod1+shift+mod4+b exec ~/scripts/i3/ws-goto.sh 35 "35b:"
 bindsym ctrl+mod1+shift+mod4+n exec ~/scripts/i3/ws-goto.sh 36 "36n:"
 bindsym ctrl+mod1+shift+mod4+m exec ~/scripts/i3/ws-goto.sh 37 "37m:"
-bindsym ctrl+mod1+shift+mod4+comma exec ~/scripts/i3/ws-goto.sh 38 "38,:"
 bindsym ctrl+mod1+shift+mod4+period exec ~/scripts/i3/ws-goto.sh 39 "39.:"
 bindsym ctrl+mod1+shift+mod4+slash exec ~/scripts/i3/ws-goto.sh 40 "40/:"
+bindsym ctrl+mod1+shift+mod4+comma exec "~/scripts/i3/ws-goto.sh 38 '38,:'"
 
 
 # =====================================================================

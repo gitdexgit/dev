@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# ~/.local/bin/guile-repl
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+SOCKET="$ROOT/.guile-repl.socket"
+[ -f "$SOCKET" ] && rm "$SOCKET"
+guile --listen="$SOCKET"
+rm -f "$SOCKET"

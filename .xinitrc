@@ -19,4 +19,5 @@ dbus-update-activation-environment --systemd \
     XDG_SESSION_TYPE \
     XDG_RUNTIME_DIR
 
+# this stuff doesn't start on log in what is going on
 exec dbus-run-session i3

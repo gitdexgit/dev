@@ -6,7 +6,8 @@ PID_FILE="/tmp/whisper_rec.pid"
 
 if [ -f "$PID_FILE" ]; then
     PID=$(cat "$PID_FILE")
-    kill "$PID" 2>/dev/null && rm "$PID_FILE"
+    kill -- -"$PID" 2>/dev/null
+    rm -f "$PID_FILE"
     sleep 0.5
 
     if [ ! -f "$TEMP_AUDIO" ] || [ ! -s "$TEMP_AUDIO" ]; then
@@ -20,7 +21,6 @@ if [ -f "$PID_FILE" ]; then
     fi
 
     notify-send "Dictation" "Processing..." -t 1000
-
     RESULT=$("$BINARY" -m "$MODEL" -f "$TEMP_AUDIO" \
         -nt \
         --threads 1 \
@@ -44,7 +44,9 @@ if [ -f "$PID_FILE" ]; then
 else
     rm -f "$TEMP_AUDIO"
     notify-send "Dictation" "Listening..." -t 500
-    rec -q -c 1 -r 16000 "$TEMP_AUDIO" &
+    setsid rec -q -c 1 -r 16000 "$TEMP_AUDIO" &
     echo $! > "$PID_FILE"
 fi
+
+
 

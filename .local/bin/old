@@ -1,26 +1,38 @@
 #!/usr/bin/env bash
-# old — age tracker
-# alias: oo
 
 BIRTH="2001-08-08"
+MMDD="0808"
 birth_epoch=$(date -d "$BIRTH" +%s)
 now_epoch=$(date +%s)
-
-# Calculations
-diff=$(( now_epoch - birth_epoch ))
-days=$(( diff / 86400 ))
-
 y_now=$(date +%Y)
 m_now=$(( 10#$(date +%m) ))
+
+# General Calculations
+diff=$(( now_epoch - birth_epoch ))
+days=$(( diff / 86400 ))
 years=$(( y_now - 2001 ))
-
-# Adjust year if birthday hasn't happened yet this year
-[ "$(date +%m%d)" -lt "0808" ] && years=$(( years - 1 ))
-
-# Total months passed
+[ "$(date +%m%d)" -lt "$MMDD" ] && years=$(( years - 1 ))
 months=$(( (y_now - 2001) * 12 + (m_now - 8) ))
 
+# Birthday Tracking Logic
+if [ "$(date +%m%d)" -ge "$MMDD" ]; then
+    last_year=$y_now
+    next_year=$((y_now + 1))
+else
+    last_year=$((y_now - 1))
+    next_year=$y_now
+fi
+
+last_epoch=$(date -d "$last_year-08-08" +%s)
+next_epoch=$(date -d "$next_year-08-08" +%s)
+
+days_since=$(( (now_epoch - last_epoch) / 86400 ))
+days_until=$(( (next_epoch - now_epoch) / 86400 + 1 ))
+
 # Output
-echo "Days passed: $days"
-echo "Months passed: $months"
 echo "Age: $years"
+echo "Days passed (total): $days"
+echo "Months passed (total): $months"
+echo "----------------------------"
+echo "Days since last birthday: $days_since"
+echo "Days until next birthday: $days_until"

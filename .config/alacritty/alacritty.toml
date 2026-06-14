@@ -1,9 +1,5 @@
 [general]
 
-import = [
-  # "/usr/lib/node_modules/alacritty-themes/themes/3024.dark.toml"
-]
-
 [window]
 opacity = 1
 dynamic_title = true
@@ -13,16 +9,9 @@ decorations = "full"
   columns = 120
   lines = 36
 
-# [colors]
-# selection = { }
-
 [colors.primary]
 background = "#000000"
 foreground = "#d8d8d8"
-
-
-
-
 
 [debug]
 log_level = "Off"
@@ -36,33 +25,6 @@ unfocused_hollow = true
 key = "V"
 mods = "Control"
 action = "Paste"
-
-# [[keyboard.bindings]]
-# key = "Enter"
-# mods = "Alt"
-# chars = "\u001b"
-
-# [[keyboard.bindings]]
-# key = "Enter"
-# mods = "Alt"
-# chars = "\u001b\r"
-#
-# [[keyboard.bindings]]
-# key = "Enter"
-# mods = "Alt"
-# chars = "\u001b"
-
-[[keyboard.bindings]]
-key = "K"
-mods = "Alt"
-mode = "Vi|~Search"
-action = "ScrollHalfPageUp"
-
-[[keyboard.bindings]]
-key = "J"
-mods = "Alt"
-mode = "Vi|~Search"
-action = "ScrollHalfPageDown"
 
 [font]
 size = 12
@@ -82,8 +44,3 @@ size = 12
   [font.bold_italic]
   family = "JetBrainsMono Nerd Font Mono"
   style = "Bold Italic"
-
-# [[keyboard.bindings]]
-# key = "Back"
-# mods = "Control"
-# chars = "\u0017"

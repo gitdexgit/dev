@@ -22,9 +22,15 @@
 
 
 # --- [0] AUTO-TMUX STARTUP ---
-if [[ -z "$TMUX" ]] && [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1; then
-    tmux new-session
-fi
+# if [[ -z "$TMUX" ]] && [[ $- == *i* ]] && command -v tmux >/dev/null 2>&1; then
+#     tmux new-session
+# fi
+
+
+
+
+
+
 
 alias perf='sudo cpupower frequency-set -g performance && echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference'
 
@@ -47,22 +53,25 @@ export ZSH_COMPDUMP="$HOME/.cache/zcompdump"
 # 3. DEFERRED PLUGINS
 [[ -f ~/zsh-defer/zsh-defer.plugin.zsh ]] && source ~/zsh-defer/zsh-defer.plugin.zsh
 
-ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
-
 load_heavy_stuff() {
-    # FZF Tab
-    [[ -f "$ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.plugin.zsh" ]] && \
-        source "$ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.plugin.zsh"
 
-    # Autosuggestions — try Arch path first, fall back to Debian/Kali
+# FZF Tab
+#
+    local _ft=/usr/share/fzf-tab/fzf-tab.plugin.zsh
+    [[ -f $_ft ]] || _ft=~/.zsh/fzf-tab/fzf-tab.plugin.zsh
+    [[ -f $_ft ]] && source "$_ft"
+
     local _as=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
     [[ -f $_as ]] || _as=/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    [[ -f $_as ]] || _as=~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
     [[ -f $_as ]] && source "$_as"
+
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 
-    # Syntax Highlighting — source then set ALL styles, fully deferred
     local _sh=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     [[ -f $_sh ]] || _sh=/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    [[ -f $_sh ]] || _sh=~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
     if [[ -f $_sh ]]; then
         source "$_sh"
         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
@@ -142,7 +151,10 @@ zsh-defer -c '[[ -z "$SSH_AUTH_SOCK" ]] && command -v keychain >/dev/null && eva
 # 5. OPTIONS
 export KEYTIMEOUT=1
 bindkey -e
-unsetopt vi
+
+bindkey -r "^[a"
+
+# unsetopt vi
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
@@ -153,6 +165,10 @@ export ZSH_DISABLE_COMPFIX=true
 PROMPT_EOL_MARK=""
 
 stty ixon
+
+#################### From here and and up is not the issue so it's in betweeen here ######################3
+
+
 
 # 6. KEY BINDINGS
 
@@ -177,15 +193,47 @@ bindkey '^[[1;5D' backward-word
 # bindkey '^H' backward-delete-char
 bindkey "^[[3~" delete-char
 
+
+
+
+
+
+
+
+
+
 # Undo/Redo (Nano style + Kali style)
 bindkey '^[[Z' undo       # Shift-Tab
 bindkey '^[u' undo        # Alt-u
 bindkey '^[e' redo        # Alt-e
 
+
 bindkey '^Y' yank
-bindkey '^J' self-insert
+
+
+# bindkey '^J' self-insert
+
+
 bindkey ' ' magic-space
 bindkey '^@' expand-or-complete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Custom Widgets
 fg-widget() { BUFFER="fg"; zle accept-line; }
@@ -194,8 +242,36 @@ bindkey '^[z' fg-widget
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey '\en' edit-command-line
 bindkey '\ee' edit-command-line
+bindkey '\en' edit-command-line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # History search
 # bindkey -r -M viins '^R'
@@ -247,6 +323,20 @@ configure_prompt() {
             ;;
     esac
 }
+
+
+
+
+
+
+#################### From here and bellow it's not the isssue #######################3
+
+
+
+
+
+
+
 
 toggle_oneline_prompt() {
     [[ "$PROMPT_ALTERNATIVE" == "oneline" ]] && PROMPT_ALTERNATIVE=twoline || PROMPT_ALTERNATIVE=oneline
@@ -303,7 +393,7 @@ fi
 
 # Must have on every OS
 alias ll='ls -alhF'
-alias ts='tmux-sessionizer'
+alias t='tmux-sessionizer'
 alias la='ls -AlhF'
 alias l='ls -CF'
 alias ls='ls --color=auto'
@@ -315,22 +405,15 @@ alias egrep='grep -E --color=auto'
 # nvim is better than vim. If only vim then just use vi instead.
 alias -g vim='nvim'
 
-# frequently used
-alias t='task'
-alias j='jobs'
-alias f='fg'
-alias d='date'
-alias tt='timew'
-alias ww='wokeup'
-alias woke-up='wokeup'
-alias oo='old'
-alias yearsold='old'
-alias years-old='old'
+# just time the fking command name
+# alias tt='timew'
+# alias ta='task'
 
 # maintainance
-alias nvrc='nvim ~/.zshrc'
-alias nvenv='nvim ~/.zshenv'
-alias nvnv='cd ~/.config/nvim/ ; nvim .'
+# Just type the fking dir and commands man
+# alias nvrc='nvim ~/.zshrc'
+# alias nvenv='nvim ~/.zshenv'
+alias vimrc='cd ~/.config/nvim/ ; nvim .'
 
 # Also Afeh and AFEH are in ~/.local/bin/ as binaries for dmenu availability
 alias Afeh='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless --info "echo %F" .'
@@ -338,15 +421,16 @@ alias AFEH='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 
 
 
 
-alias mpvg='mpv --player-operation-mode=pseudo-gui'
-alias mpvyt='mpv --ytdl-format='
-alias streamlink='streamlink --player mpv'
+# alias mpvg='mpv --player-operation-mode=pseudo-gui'
+# alias mpvyt='mpv --ytdl-format='
+# alias streamlink='streamlink --player mpv'
 
-
-alias refresh_urxvt='xrdb -merge ~/.Xresources && killall urxvtd && echo "URxvt Refreshed!"'
+# Look for word meaning real quick... scuffed but works
 alias define='sdcv'
 
+# Still i'm too used to the ]]r screw it it's a cool
 alias -g ]]r='source ~/.zshrc ; source ~/.zshenv'
+
 alias md='mkdir -p'
 alias history="history 0"
 
@@ -354,26 +438,32 @@ alias history="history 0"
 
 alias mydocs='kiwix-serve --library --port 8080 ~/KiwixLibrary/library.xml'
 
-
 alias p='ps aux | grep'
-alias m='mpv * --loop-playlist'
-alias sudo='sudo '
-alias py='python'
-alias msgbox='zenity'
 alias o='less'
+alias sudo='sudo '
+alias msgbox='zenity'
+
 alias ost='ollama-stop'
-alias wireshark-dark='QT_STYLE_OVERRIDE=kvantum-dark wireshark'
+
+# idk about this like obsidian I need to start using it at some point need to start making things in roder to use obsidian
 alias obo='~/scripts/ddesk/obsidian/run-obsidian-script.sh'
+alias ob='obsidian-cli'
+
+# alias m='mpv * --loop-playlist'
+alias py='python'
+
+alias wireshark-dark='QT_STYLE_OVERRIDE=kvantum-dark wireshark'
 
 alias \00.='setxkbmap -layout us'
 alias \01.='setxkbmap -layout fr'
 alias \02.='setxkbmap -layout ara'
 alias \04.='setxkbmap us_rpd'
 
-alias cdd='cd $(dirname "$(fp)")'
-alias cdfp='cd $(dirname "$(fp)")'
-alias ob='obsidian-cli'
+# just use freaking zoxide or something what even is this fp function
+# alias cdd='cd $(dirname "$(fp)")'
+# alias cdfp='cd $(dirname "$(fp)")'
 
+# phone stuff
 alias nh='ssh nh'
 alias termux='ssh termux'
 alias dell='ssh dell'
@@ -386,57 +476,59 @@ alias ip='ip --color=auto'
 #
 # alias -g xc='| col -b | xclip -selection clipboard'
 
+# This tries to copy like file from terminal to the clipbard mayeb I should learn how to type man...
 alias xcg='xclip -selection clipboard -t image/png -o > /tmp/clip.png'
 
-alias s='cd ~/scripts'
-alias a='cd ~/archive_fossil/'
-alias wo='cd ~/work'
-alias wi='cd ~/wiki'
-alias cu='cd ~/work/current_struggles/'
+# just use zoxide or simple cd
+# alias s='cd ~/scripts'
+
+# I don't use this
+# alias a='cd ~/archive_fossil/'
+
+# Again same thing
+# alias wo='cd ~/work'
+
+# same thing
+# alias wi='cd ~/wiki'
+
+# same thing
+# alias cu='cd ~/work/current_struggles/'
 
 # For phone quick echo "<text>" | ca
-alias ca='DISPLAY=:0 copyq copy -'
+# I don't understand this
+# alias ca='DISPLAY=:0 copyq copy -'
 
+# use zocide man
+# alias so='cd ~/work/sources/'
 
-alias so='cd ~/work/sources/'
-
-
+# Calender stuff:
 alias acal='while true; do cal -w ; sleep 300; clear; done'
-
 alias cal='cal -w'
 
-
-alias scratch='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
+# I don't use this
+# alias scratch='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
 alias scr='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
-alias uvim='UVIM_MODE=true nvim'
-alias lag='lazygit'
-alias ff='fastfetch'
-alias neofetch='fastfetch'
+
+# What even is this man
+# alias uvim='UVIM_MODE=true nvim'
+
+# man don't be lazy just use tmux man use C-b g it opens lazygti in a gui.. or just type lazygit command man don't be lazy
+# alias lag='lazygit'
+
+
+# just type fastfetch man lazy fuck
+# alias ff='fastfetch'
+
+# just type fastfetch man lazy fuck
+# alias neofetch='fastfetch'
+
+
 alias c='clear; _NEW_LINE_BEFORE_PROMPT=1'
 alias clear='clear; _NEW_LINE_BEFORE_PROMPT=1'
 alias clera='clear; _NEW_LINE_BEFORE_PROMPT=1'
 alias clrea='clear; _NEW_LINE_BEFORE_PROMP=1'
 alias clrfea='clear; _NEW_LINE_BEFORE_PROMPT=1'
 
-
-
-alias ws='watson start'
-alias wss='watson status'
-alias wp='watson stop'
-alias wl='watson log --day'
-alias wll='watson log --all | tac | bat'
-alias wlll='watson log --all | tac | bat'
-alias wr='watson report --day'
-alias wre='watson restart'
-alias we='watson edit'
-alias watson-yesterday='watson report --from $(date -d "yesterday" +%F) --to $(date -d "yesterday" +%F)'
-
-alias ptask='cd ~/watson && ./p && cd -'
-alias pt='cd ~/watson && ./p && cd -'
-alias -g P='cd ~/watson && ./p && cd -'
-alias stask='cd ~/watson && ./s && cd -'
-alias st='cd ~/watson && ./s && cd -'
-alias -g S='cd ~/watson && ./s && cd -'
 
 
 
@@ -458,11 +550,15 @@ alias vm-on='sudo systemctl start libvirtd virtlogd'
 alias vm-off='sudo systemctl stop libvirtd virtlogd'
 
 
-
-alias e='exit'
-alias ee='exit'
-alias eee='exit'
+# 1) Just type freaking exit
+# 2) Just freaking practice C-d if you are outside tmux
+# 3) Just freaking practice C-b x y. (or hold tab then x y)
 alias eeee='exit'
+
+# I know these are handy it makes closing tmux windows fast... but just freaking hold tab and x and spam y ez... practice typing exit man
+# alias e='exit'
+# alias ee='exit'
+# alias eeee='exit'
 
 alias i='hostname -i'
 alias I='hostname -I'
@@ -474,23 +570,27 @@ alias dps='docker ps'
 
 # The "Essential" Git Duo
 alias gst='git status'
-alias lgt='lazygit'
 
+# just type it man
+# alias lgt='lazygit'
 
-alias mon-on='xrandr --output HDMI-1 --auto --primary --output eDP-1 --auto --right-of HDMI-1'
-alias mon-off='xrandr --output eDP-1 --off --output HDMI-1 --auto --primary'
+# Just use laptop-on laptop-off
+# alias mon-on='xrandr --output HDMI-1 --auto --primary --output eDP-1 --auto --right-of HDMI-1'
+# alias mon-off='xrandr --output eDP-1 --off --output HDMI-1 --auto --primary'
 
+# just use zoxide
+# alias c.d='cd ~/Desktop'
+# alias c.dd='cd ~/Downloads'
+# alias c.doc='cd ~/Documents'
+# alias c.f='cd ~/fleet'
+# alias c.s='cd ~/scripts'
+# alias c.v='cd ~/fleet/vaults'
+# alias c.ps='~/Pictures/Screenshots'
+# alias c.p='~/Pictures'
 
-alias c.d='cd ~/Desktop'
-alias c.dd='cd ~/Downloads'
-alias c.doc='cd ~/Documents'
-alias c.f='cd ~/fleet'
-alias c.s='cd ~/scripts'
-alias c.v='cd ~/fleet/vaults'
-alias c.ps='~/Pictures/Screenshots'
-alias c.p='~/Pictures'
+# just type it or use tmux C-b C it opens a pop up for this
+# alias q='qalc'
 
-alias q='qalc'
 # alias ]timer='_my_timer_func'
 # alias timer='_my_timer_func'
 
@@ -722,3 +822,32 @@ zstyle ':fzf-tab:complete:ollama:*' fzf-preview 'ollama show --system $word 2>/d
 
 
 
+if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+    vterm_printf() { printf "\e]%s\e\\" "$1"; }
+
+    # This runs before each prompt - sends current directory
+    vterm_precmd() {
+        vterm_printf "7;file://$HOST$PWD"
+        vterm_printf "0;%s@%s:%s" "$USER" "$HOST" "${PWD/$HOME/~}"
+    }
+
+    # This runs before each command - sends the command being run
+    vterm_preexec() {
+        vterm_printf "0;$1"
+    }
+
+    # Register the hooks
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd vterm_precmd
+    add-zsh-hook preexec vterm_preexec
+
+    # Prompt tracking (needed for vterm-copy-mode to work properly)
+    vterm_prompt_end() {
+        vterm_printf "51;A$(whoami)@$(hostname):${PWD}"
+    }
+    setopt PROMPT_SUBST
+    PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
+
+    # Clear scrollback alias
+    alias clear='vterm_printf "51;Evterm-clear-scrollback"; tput clear'
+fi
