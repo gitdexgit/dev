@@ -1,1 +1,0 @@
-/home/dex/work/idea.md

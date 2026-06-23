@@ -1,16 +1,29 @@
 #!/bin/bash
+#
+# This is a wrapper around the autoshot.sh script. This one pauses and resumes the script
+
 TARGET="autoshot.sh"
-PIDS=$(pgrep -f "$TARGET")
+ID=9911
+TIME=600
 
-[ -z "$PIDS" ] && exit 0
+# Use -x to match the filename exactly, or use -f but exclude the current script's PID
+# This ensures we don't "find" ourselves.
+PIDS=$(pgrep -f "$TARGET" | grep -v $$)
 
-# Check first PID status
+if [ -z "$PIDS" ]; then
+    dunstify -r $ID -t $TIME -u low "Autoshot" "<span color='#ff5555'> Not Running</span>"
+    exit 0
+fi
+
+# Get the status of the actual process
 STATUS=$(ps -p $(echo $PIDS | awk '{print $1}') -o stat=)
 
 if [[ "$STATUS" == *T* ]]; then
+    # It is currently STOPPED (Paused), so Resume it
     pkill -CONT -f "$TARGET"
-    dunstify -i media-playback-start -u low "Autoshot" "▶ Resumed"
+    dunstify -r $ID -t $TIME -u low "Autoshot" "<span color='#8be9fd'>▶ Resumed</span>"
 else
+    # It is currently RUNNING, so Pause it
     pkill -STOP -f "$TARGET"
-    dunstify -i media-playback-pause -u low "Autoshot" "⏸ Paused"
+    dunstify -r $ID -t $TIME -u low "Autoshot" "<span color='#ffb86c'>⏸ Paused</span>"
 fi

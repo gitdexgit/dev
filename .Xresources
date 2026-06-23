@@ -1,12 +1,11 @@
+
+# --- Esensital stuff on 1920x1080
 Xft.dpi:       120
 Xft.antialias: 1
 Xft.hinting:   1
 Xft.hintstyle: hintmedium
 
-
-! ------------------------------------------------------------------------------
-! THE REAL TSODING (REXIM) CONFIG - JETBRAINS MONO EDITION (FOR DEX)
-! ------------------------------------------------------------------------------
+! --- URXvt bs
 
 ! --- Performance & Identity ---
 URxvt.termName:         rxvt-256color

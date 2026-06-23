@@ -1,0 +1,96 @@
+{
+  "confirmDeletion": false,
+  "showAddCommand": true,
+  "debug": false,
+  "editorMenu": [],
+  "fileMenu": [],
+  "leftRibbon": [
+    {
+      "id": "open-with-default-app:open",
+      "icon": "lucide-arrow-up-right",
+      "name": "Open in default app",
+      "mode": "any",
+      "color": "#27d624"
+    },
+    {
+      "id": "obsidian-hider:toggle-hider-status",
+      "icon": "lucide-rectangle-horizontal",
+      "name": "Hider: Toggle status bar",
+      "mode": "any",
+      "color": "#a72ac0"
+    },
+    {
+      "id": "obsidian-shellcommands:shell-command-15q6udch0n",
+      "icon": "lucide-files",
+      "name": "Shell commands: Execute: dolphin open",
+      "mode": "any",
+      "color": "#316d66"
+    },
+    {
+      "id": "obsidian-shellcommands:shell-command-i78kksnfm6",
+      "icon": "lucide-terminal-square",
+      "name": "Shell commands: Execute: kitty",
+      "mode": "any",
+      "color": "#ffffff"
+    },
+    {
+      "id": "terminal:open-terminal.select.current",
+      "icon": "lucide-terminal",
+      "name": "Terminal: Open current directory in terminal: Select",
+      "mode": "any",
+      "color": "#00d5ff"
+    },
+    {
+      "id": "obsidian-shellcommands:shell-command-ioxaz50h9j",
+      "icon": "lucide-switch-camera",
+      "name": "Shell commands: Execute: Switch Vault",
+      "mode": "any",
+      "color": "#ff7300"
+    },
+    {
+      "id": "obsidian-shellcommands:shell-command-arqc9etak4",
+      "icon": "lucide-package-search",
+      "name": "Shell commands: Execute: Omnisearch",
+      "mode": "any",
+      "color": "#ff0000"
+    },
+    {
+      "id": "edit-in-neovim:edit-in-neovim-new-instance",
+      "icon": "lucide-arrow-up",
+      "name": "Edit in Neovim: Open Neovim",
+      "mode": "any",
+      "color": "#44ff00"
+    }
+  ],
+  "rightRibbon": [],
+  "titleBar": [],
+  "statusBar": [
+    {
+      "id": "file-explorer:move-file",
+      "icon": "lucide-folder-tree",
+      "name": "Move current file to another folder",
+      "mode": "any",
+      "color": "#f5f5f5"
+    }
+  ],
+  "pageHeader": [],
+  "macros": [],
+  "explorer": [],
+  "hide": {
+    "statusbar": [],
+    "leftRibbon": [
+      "Gnome Terminal"
+    ]
+  },
+  "spacing": "15",
+  "advancedToolbar": {
+    "rowHeight": 48,
+    "rowCount": 1,
+    "spacing": 0,
+    "buttonWidth": 48,
+    "columnLayout": false,
+    "mappedIcons": [],
+    "tooltips": false,
+    "heightOffset": 0
+  }
+}

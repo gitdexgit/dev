@@ -1,0 +1,338 @@
+{
+  "main": {
+    "id": "5324373015726ba8",
+    "type": "split",
+    "children": [
+      {
+        "id": "e229ec51f66c0769",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c95d43b0ff3d6abd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "current_struggles/Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing"
+            }
+          },
+          {
+            "id": "3fc57ee1f7114095",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "build man-made solutions applying principles of computational thinking that work"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a74b9428a5f40d11",
+    "type": "split",
+    "children": [
+      {
+        "id": "83c98de7ccf4f464",
+        "type": "tabs",
+        "dimension": 71.15789473684211,
+        "children": [
+          {
+            "id": "1737b495e804725e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "37246fcd544d2c57",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "6022a45464a2669b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      },
+      {
+        "id": "20758e2af7c40d95",
+        "type": "tabs",
+        "dimension": 28.842105263157897,
+        "children": [
+          {
+            "id": "22de8b1f3338b8da",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {},
+              "icon": "clock",
+              "title": "Recent Files"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 253.5
+  },
+  "right": {
+    "id": "1ae653979aaa9708",
+    "type": "split",
+    "children": [
+      {
+        "id": "fca44f0aafd4fdcf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "51225fc6cb848fab",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
+                "options": {
+                  "collapse-filter": false,
+                  "search": "",
+                  "localJumps": 1,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": false,
+                  "collapse-color-groups": false,
+                  "colorGroups": [],
+                  "collapse-display": false,
+                  "showArrow": true,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": false,
+                  "centerStrength": 0.518713248970312,
+                  "repelStrength": 10,
+                  "linkStrength": 1,
+                  "linkDistance": 250,
+                  "scale": 0.6666666666666666,
+                  "close": true
+                }
+              },
+              "icon": "lucide-git-fork",
+              "title": "Graph of build man-made solutions applying principles of computational thinking that work"
+            }
+          }
+        ]
+      },
+      {
+        "id": "91b963ba03128310",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e7597554536e252d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for build man-made solutions applying principles of computational thinking that work"
+            }
+          },
+          {
+            "id": "45c85533112804e0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "scratch.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from scratch"
+            }
+          },
+          {
+            "id": "4ae2eb44b6b2b898",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": true,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "7f369c7b3af2c03a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "402303ae6ad1afc4",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "1796f2e65b4fcd83",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "current_struggles/THE PROGRAMMER PROCESS PRINCIPLES.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of THE PROGRAMMER PROCESS PRINCIPLES"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 326.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "graph:Open graph view": false,
+      "bases:Create new base": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "random-note:Open random note": true,
+      "switcher:Open quick switcher": true,
+      "cmdr:Open in default app": false,
+      "cmdr:Hider: Toggle status bar": false,
+      "cmdr:Shell commands: Execute: dolphin open": false,
+      "cmdr:Shell commands: Execute: kitty": false,
+      "cmdr:Terminal: Open current directory in terminal: Select": false,
+      "cmdr:Shell commands: Execute: Switch Vault": false,
+      "cmdr:Shell commands: Execute: Omnisearch": false,
+      "cmdr:Edit in Neovim: Open Neovim": false,
+      "obsidian-focus-mode:Toggle Focus Mode (Shift + Click to show active pane only)": false,
+      "vim-toggle:Toggle Vim Mode": false,
+      "darlal-switcher-plus:Open in Headings Mode": false,
+      "darlal-switcher-plus:Open Symbols for the active editor": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "obsidian-shellcommands:Shell commands: Custom variables": false,
+      "obsidian-kanban:Create new board": false,
+      "tldraw:Create new tldrawing": false,
+      "periodic-notes:Open today": false
+    }
+  },
+  "active": "3fc57ee1f7114095",
+  "lastOpenFiles": [
+    "current_struggles/Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing.md",
+    "current_struggles/THE PROGRAMMER PROCESS PRINCIPLES.md",
+    "evaluate.md~",
+    "one_file/sources",
+    "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
+    "current_struggles/Capture financial production for money making.md",
+    "current_struggles/Capture personal capacity for hard and easy things for energy tracking.md",
+    "current_struggles/Execute universal data architecture for clarity.md",
+    "current_struggles/real programmers focus on the logic not the syntax.md",
+    "sources/ai - the logic first method in programming.md",
+    "current_struggles/Solve complex problems by composing a sequence of reliable modular components where each verified output functions as the next input.md",
+    "Distill any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing.md",
+    "scratch.md",
+    "scratch.md~",
+    "4913",
+    "canvas.canvas",
+    "base.base",
+    "permanent/nvim fo r flag continues markdown blockquotes.md",
+    "wiki/wiki - nvim fo r flag continues markdown blockquotes.md~",
+    "wiki/wiki - nvim fo r flag continues markdown blockquotes.md",
+    "wiki/nvim fo r flag continues markdown blockquotes.md",
+    "wiki",
+    "compare with ai.md~",
+    "final.md~",
+    "draft.md~",
+    "Kanban.md",
+    "Drawing 2026-01-24 07.50.35.excalidraw.md",
+    "Drawing 2026-01-22 04.29.18.excalidraw.md",
+    "2025 W50 a really bad week.md",
+    "permanent/root - 2025 W50 a really bad week.md",
+    "permanent/root - personal - 2025 W50 a really bad week.md",
+    "permanent/internalized - personal - 2025 W50 a really bad week.md",
+    "permanent/internalized - something something test.md",
+    "Attatchements/Templates/default.md",
+    "compare with ai.md",
+    "final.md",
+    "tldraw/assets/icons/zoom-out.svg",
+    "tldraw/assets/icons/zoom-in.svg",
+    "tldraw/assets/icons/warning-triangle.svg",
+    "tldraw/assets/icons/vertical-align-start.svg",
+    "tldraw/assets/icons/vertical-align-middle.svg",
+    "tldraw/assets/icons/vertical-align-end.svg",
+    "tldraw/assets/icons/unlock.svg",
+    "tldraw/assets/icons/ungroup.svg",
+    "tldraw/assets/icons/undo.svg",
+    "tldraw/assets/icons/twitter.svg"
+  ]
+}

@@ -36,7 +36,15 @@
 (eval-after-load 'zenburn
 (set-face-attribute 'line-number nil :inherit 'default))
 
+(rc/require 'xclip)
+(xclip-mode 1)
 
+;; This is the built-in mode that makes the mouse work in terminals
+(xterm-mouse-mode 1)
+
+;; Optional: Makes scrolling feel more natural
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
 
 
 ;; Ido / Smex
@@ -138,9 +146,6 @@ otherwise shows current directory."
             (display-line-numbers-mode -1)))
 
 (message "Emacs config loaded – vterm smart buffer names enabled")
-
-
-
 
 
 

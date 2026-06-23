@@ -29,12 +29,12 @@ tmux new-session -d -s "main" -c "$HOME" -n "zsh"
 tmux new-session -d -s "learn" -c "$HOME/learn" -n "learn"
 tmux send-keys -t "learn":1 "nvim aha.md" C-m
 
-tmux new-window -t "learn":2 -c "$HOME/learn/buffer" -n "~/learn/buffer"
-tmux send-keys -t "learn":2 "ls" C-m
+tmux new-window -t "learn":2 -c "$HOME/learn/buffer" -n "duck"
+tmux send-keys -t "learn":2 "nvim duck.md" C-m
 
 # Fixed typo in path below
-tmux new-window -t "learn":3 -c "$HOME/learn/attachments/" -n "~/learn/attachments"
-tmux new-window -t "learn":4 -c "$HOME/wiki/" -n "~/wiki"
+# tmux new-window -t "learn":3 -c "$HOME/learn/attachments/" -n "~/learn/attachments"
+tmux new-window -t "learn":3 -c "$HOME/wiki/" -n "wiki"
 
 tmux select-window -t "learn":1
 
@@ -77,24 +77,6 @@ tmux send-keys -t "$SESS":3.2 "acal" C-m
 tmux send-keys -t "$SESS":3.3 "woke-up"
 
 
-
-# Window 3: taskwarrior (2 panes)
-# tmux new-window -t "$SESS":3 -n "taskwarrior"
-# tmux split-window -v -t "$SESS":3.1      # Splits 3.1 into 3.1 (top) and 3.2 (bottom)
-# tmux send-keys -t "$SESS":3.1 'watch -n 3 -c "task rc._forcecolor:on"' C-m
-
-
-# Window 4: timewarrior (3 panes)
-# tmux new-window -t "$SESS":4 -n "timewarrior"
-# tmux split-window -v -t "$SESS":4      # Splits 4.1 -> 4.1 (top), 4.2 (bottom)
-# tmux split-window -h -t "$SESS":4.1    # Splits 4.1 -> 4.1 (top-left), 4.3 (top-right)
-# tmux send-keys -t "$SESS":4.1 "watch -n 3 -c timew" C-m
-# tmux send-keys -t "$SESS":4.3 "watch -n 3 -c timew summary" C-m
-
-# Window 5: tasks
-tmux new-window -t "$SESS":4 -n "tasks" -c "$WDIR"
-tmux send-keys -t "$SESS":4.1 "vim tasks.md" C-m
-
 tmux select-window -t "$SESS":1
 
 
@@ -106,9 +88,10 @@ tmux new-session -d -s "btop" -n "btop" -c "$HOME"
 
 # Window 1: Absolute minimum sidebars
 # Left pane (sensors) = 5 chars
-tmux split-window -h -t "btop":1.1 -l 4 -b
+tmux split-window -h -t "btop":1.1 -l 1 -b
+
 # Right pane (ping) = 5 chars
-tmux split-window -h -t "btop":1.2 -l 1
+# tmux split-window -h -t "btop":1.2 -l 1
 
 # Window 2
 tmux new-window -t "btop":2 -c "$HOME" -n "nethogs"

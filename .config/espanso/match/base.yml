@@ -80,7 +80,7 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
-  - trigger: ";;cblua;"
+  - trigger: ";;luacb;"
     replace: "```lua\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -91,7 +91,7 @@ matches:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
 
-  - trigger: ";;cbc;"
+  - trigger: ";;ccb;"
     replace: "```c\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -101,7 +101,7 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
-  - trigger: ";;cbpython;"
+  - trigger: ";;pythoncb;"
     replace: "```python\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -111,8 +111,7 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
-
-  - trigger: ";;cbbash;"
+  - trigger: ";;bcb;"
     replace: "```bash\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"
@@ -122,7 +121,17 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
-  - trigger: ";;cbpy;"
+  - trigger: ";;bashcb;"
+    replace: "```bash\n{{content}}\n```\n\n"
+    force_clipboard: true
+    paste_shortcut: "Ctrl+V"
+    vars:
+      - name: content
+        type: shell
+        params:
+          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
+
+  - trigger: ";;pycb;"
     replace: "```py\n{{content}}\n```\n\n"
     force_clipboard: true
     paste_shortcut: "Ctrl+V"

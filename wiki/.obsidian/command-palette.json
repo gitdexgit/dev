@@ -1,0 +1,16 @@
+{
+  "pinned": [
+    "open-with-default-app:open",
+    "workspace:copy-url",
+    "obsidian-show-file-path:copy-file-path",
+    "file-explorer:duplicate-file",
+    "workspace:toggle-stacked-tabs",
+    "editor:toggle-source",
+    "markdown:toggle-preview",
+    "editor:fold-all",
+    "editor:unfold-all",
+    "app:toggle-left-sidebar",
+    "app:toggle-right-sidebar",
+    "app:toggle-ribbon"
+  ]
+}

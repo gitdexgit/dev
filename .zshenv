@@ -1,8 +1,17 @@
+
+# This is very important
+export VISUAL=nvim
+
+
+
 # --- ESSENTIALS ---
+
+# OLD. Zsh checks the VISUAL first.
 export EDITOR=nvim
+
+
 export PAGER="bat"
 export MANPAGER="nvim +Man!"
-export VISUAL=nvim
 export TERMINAL=alacritty
 export ZK_NOTEBOOK_DIR="$HOME/work/"
 export ZK_NOTE_LINK_FORMAT="wiki"
@@ -30,7 +39,7 @@ export FZF_DEFAULT_OPTS="
   --ansi
   --preview-window='up:65%:wrap'
   --preview 'bash ~/.config/fzf/preview.sh {}'
-  --bind 'ctrl-left:backward-word,ctrl-right:forward-word,ctrl-delete:kill-word,ctrl-k:kill-line'
+  --bind 'delete:delete-char,ctrl-delete:kill-word,ctrl-backspace:backward-kill-word,ctrl-left:backward-word,ctrl-right:forward-word,ctrl-k:kill-line'
   --bind 'alt-j:preview-down,alt-k:preview-up'
   --bind 'alt-J:preview-page-down,alt-K:preview-page-up'
   --bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up'

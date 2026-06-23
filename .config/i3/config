@@ -220,8 +220,10 @@ assign [class="default-release"] $ws1
 # Float dmenu and pin to top-center
 for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
 # Send Qalculate to scratchpad automatically
-for_window [class="Qalculate-gtk"] floating enable, move scratchpad
+# for_window [class="Qalculate-gtk"] floating enable, move scratchpad
 
+# Only float windows with the specific class 'pin_shot'
+for_window [class="pin_shot"] floating enable, sticky enable, border pixel 2
 
 for_window [instance="godot"] floating enable
 for_window [title="Godot"] floating enable
@@ -257,9 +259,9 @@ for_window [class="vesktop"] floating enable, move scratchpad
 for_window [class="copyq"] floating enable, move scratchpad
 # for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
-for_window [class="KeePassXC"] floating enable, move scratchpad
-for_window [class="obs"] floating enable, move scratchpad
-for_window [class="scrcpy"] floating enable, move scratchpad
+# for_window [class="KeePassXC"] floating enable, move scratchpad
+# for_window [class="obs"] floating enable, move scratchpad
+# for_window [class="scrcpy"] floating enable, move scratchpad
 # for_window [class="KeePassXC"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 # for_window [class="org.mozilla.Thunderbird"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
 
@@ -270,8 +272,8 @@ for_window [class="scrcpy"] floating enable, move scratchpad
 # for_window [class="copyq"] border pixel 0
 
 # for_window [class="KeePassXC"] floating enable, border pixel 0, resize set 1440 900, focus, exec --no-startup-id "i3-msg move absolute position 0 0"
-for_window [class="KeePassXC"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
-for_window [class="osb"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
+# for_window [class="KeePassXC"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
+# for_window [class="osb"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
 
 for_window [instance="floating_thunar"]   floating enable
 
@@ -302,7 +304,7 @@ for_window [class="st_task"]       floating enable
 for_window [class="st_btop"]       floating enable
 
 for_window [class="st_task"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
-bindsym $mod+Control+Shift+t exec --no-startup-id ~/.config/i3/task_toggle.sh
+bindsym $mod+shift+t exec --no-startup-id ~/.config/i3/task_toggle.sh
 
 
 # Btop  (Mod+Shift+b)
@@ -321,11 +323,41 @@ bindsym $mod+Control+Shift+f exec --no-startup-id ~/.config/i3/work_toggle.sh
 for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 bindsym $mod+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.sh
 
-for_window [class="st_duck"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
-bindsym $mod+Control+Shift+d exec --no-startup-id ~/.config/i3/duck_toggle.sh
+# for_window [class="st_duck"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+# bindsym $mod+Control+Shift+d exec --no-startup-id ~/.config/i3/duck_toggle.sh
 
 for_window [class="st_main"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 bindsym $mod+BackSpace exec --no-startup-id ~/.config/i3/main_toggle.sh
+
+
+# --- Tmux Session Tiled Terminals ---
+# bindsym $mod+Control+s exec st -e tmux new-session -A -s session
+# bindsym $mod+Control+l exec st -e tmux new-session -A -s learn
+# bindsym $mod+Control+b exec st -e tmux new-session -A -s btop
+# bindsym $mod+Control+Return exec st -e tmux new-session -A -s main
+# bindsym $mod+Control+Left exec st -e tmux new-session -A -s btop
+# bindsym $mod+Control+m exec st -e tmux new-session -A -s main
+# bindsym $mod+Control+d exec st -e tmux new-session -A -s duck
+# bindsym $mod+Control+c exec st -e tmux new-session -A -s config
+# bindsym $mod+Control+Delete exec st -e tmux new-session -A -s duck
+
+bindsym $mod+Control+s exec st -t session -e tmux new-session -A -s session
+bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s learn
+bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s btop
+# bindsym $mod+Control+Return exec st -t main -e tmux new-session -A -s main
+bindsym $mod+Control+Left exec st -t btop -e tmux new-session -A -s btop
+bindsym $mod+Control+m exec st -t main -e tmux new-session -A -s main
+# bindsym $mod+Control+d exec st -t duck -e tmux new-session -A -s duck
+bindsym $mod+Control+c exec st -t config -e tmux new-session -A -s config
+# bindsym $mod+Control+t exec st -e tmux-sessionizer
+# bindsym $mod+Control+Delete exec st -t duck -e tmux new-session -A -s duck
+
+
+bindsym $mod+Control+Return exec st -e tmux-sessionizer
+
+# --- Kill Window ---
+# NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
+bindsym $mod+Control+q kill
 
 
 
@@ -349,32 +381,33 @@ for_window [class="st_sync"]       floating enable, move position center
 
 # --- Core & Reloads ---
 # Removed xbindkeys reload since it is dead.
-bindsym $mod+Shift+Control+r restart
+# bindsym $mod+Shift+Control+r restart
 
 # --- Typing Speed ---
 # bindsym $mod+p exec --no-startup-id "/home/dex/scripts/sts/fast-type.sh"
 # bindsym $mod+Shift+p exec --no-startup-id "/home/dex/scripts/sts/slow-type.sh"
 
 
-
+# All of these need fixing but I don't use them that much though..
 # --- Window Management (wmctrl) - QUOTED TO FIX ERRORS ---
-bindsym $mod+Mod1+l exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
-bindsym $mod+Mod1+Right exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
-bindsym $mod+Mod1+Up exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
-bindsym $mod+Mod1+k exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
-bindsym $mod+Mod1+Down exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
-bindsym $mod+Mod1+j exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
-bindsym $mod+Mod1+Left exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
-bindsym $mod+Mod1+h exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
-bindsym $mod+Mod1+u exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,419"
-bindsym $mod+Mod1+o exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,419"
-bindsym $mod+Mod1+period exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,457,716,396"
-bindsym $mod+Mod1+m exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,456,716,396"
+# bindsym $mod+Mod1+l exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+# bindsym $mod+Mod1+Right exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+# bindsym $mod+Mod1+Up exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+# bindsym $mod+Mod1+k exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+# bindsym $mod+Mod1+Down exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+# bindsym $mod+Mod1+j exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+# bindsym $mod+Mod1+Left exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+# bindsym $mod+Mod1+h exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+# bindsym $mod+Mod1+u exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,419"
+# bindsym $mod+Mod1+o exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,419"
+# bindsym $mod+Mod1+period exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,457,716,396"
+# bindsym $mod+Mod1+control+m exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,456,716,396"
+# bindsym $mod+Mod1+f exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,19,1435,855"
+# bindsym $mod+Mod1+slash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+# bindsym $mod+Mod1+backslash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,330,147,790,504"
+
 bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, border none, move position 0 0, resize set 1440 900'"
 bindsym Mod1+Shift+F11 exec --no-startup-id "~/scripts/i3/toggle-border.sh"
-bindsym $mod+Mod1+f exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,19,1435,855"
-bindsym $mod+Mod1+slash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
-bindsym $mod+Mod1+backslash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,330,147,790,504"
 
 # --- Desktop Navigation ---
 bindsym Control+Mod1+Right exec --no-startup-id "xdotool set_desktop --relative -- 1"
@@ -399,59 +432,93 @@ bindsym $mod+Mod1+i exec --no-startup-id "iupload"
 bindsym $mod+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
 
 # --- AI / LLM Tools ---
-bindsym $mod+Shift+Control+u exec --no-startup-id "/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
-bindsym $mod+Shift+Control+l exec --no-startup-id "/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
-bindsym $mod+Shift+Control+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text_spelling.sh"
-bindsym $mod+Shift+Control+Mod1+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text.sh"
-bindsym $mod+Mod1+Control+w exec --no-startup-id "~/scripts/ai/wiki_search.sh"
-bindsym $mod+Mod1+Control+n exec --no-startup-id "~/scripts/ai/names_suggestion.sh"
-bindsym $mod+Mod1+Control+l exec --no-startup-id "~/scripts/ai/commit.sh"
-bindsym $mod+Mod1+Control+k exec --no-startup-id "~/scripts/ai/taskdump.sh"
-bindsym $mod+Mod1+Control+i exec --no-startup-id "~/scripts/ai/clarify.sh"
-bindsym $mod+Mod1+Control+y exec --no-startup-id "~/scripts/ai/search_queries_suggestion.sh"
-bindsym $mod+Mod1+Control+r exec --no-startup-id "~/scripts/ai/cav.sh"
-bindsym $mod+Mod1+Control+g exec --no-startup-id "~/scripts/ai/fix_text_from_clipboard.sh"
-bindsym $mod+Mod1+Control+d exec --no-startup-id "~/scripts/ai/think.sh"
-bindsym $mod+Mod1+Control+q exec --no-startup-id "~/scripts/ai/atomic_question_maker.sh"
-bindsym $mod+Mod1+Control+e exec --no-startup-id "~/scripts/ai/learn.sh"
+# bindsym $mod+Shift+Control+u exec --no-startup-id "/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
+# bindsym $mod+Shift+Control+l exec --no-startup-id "/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
+# bindsym $mod+Shift+Control+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text_spelling.sh"
+# bindsym $mod+Shift+Control+Mod1+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text.sh"
+# bindsym $mod+Mod1+Control+w exec --no-startup-id "~/scripts/ai/wiki_search.sh"
+# bindsym $mod+Mod1+Control+n exec --no-startup-id "~/scripts/ai/names_suggestion.sh"
+# bindsym $mod+Mod1+Control+l exec --no-startup-id "~/scripts/ai/commit.sh"
+# bindsym $mod+Mod1+Control+k exec --no-startup-id "~/scripts/ai/taskdump.sh"
+# bindsym $mod+Mod1+Control+i exec --no-startup-id "~/scripts/ai/clarify.sh"
+# bindsym $mod+Mod1+Control+y exec --no-startup-id "~/scripts/ai/search_queries_suggestion.sh"
+# bindsym $mod+Mod1+Control+r exec --no-startup-id "~/scripts/ai/cav.sh"
+# bindsym $mod+Mod1+Control+g exec --no-startup-id "~/scripts/ai/fix_text_from_clipboard.sh"
+# bindsym $mod+Mod1+Control+d exec --no-startup-id "~/scripts/ai/think.sh"
+# bindsym $mod+Mod1+Control+q exec --no-startup-id "~/scripts/ai/atomic_question_maker.sh"
+# bindsym $mod+Mod1+Control+e exec --no-startup-id "~/scripts/ai/learn.sh"
 
 # --- Resource & System ---
 bindsym $mod+Shift+x exec --no-startup-id "xkill"
 bindsym Control+Mod1+c exec --no-startup-id "xcontrol -c"
 bindsym Control+Mod1+z exec --no-startup-id "xcontrol -p"
+
 bindsym $mod+Shift+m exec --no-startup-id "~/.local/bin/mic-toggle.sh"
-bindsym $mod+Control+k exec --no-startup-id "wmctrl -x -a Kazam"
+
+# bindsym $mod+Control+k exec --no-startup-id "wmctrl -x -a Kazam"
 
 # --- Rofi & Navigation ---
 bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
-bindsym $mod+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
-bindsym $mod+t exec --no-startup-id "rofi -show windowcd"
+bindsym $mod+Mod1+r exec --no-startup-id "rofi -show windowcd"
 bindsym $mod+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
 bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
-bindsym Mod1+Shift+space exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
+
+# open rofi. Show workspaces as options. Select option; rofi Moves current window to a selected option.
+bindsym $mod+Mod1+m exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
+
+# I'm not sure about this Do I even use this?
 bindsym $mod+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
 
 # --- Mouse Window Management ---
-bindsym Control+Shift+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
-bindsym Control+$mod+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
-bindsym Control+Mod1+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
-bindsym Control+Mod1+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
-bindsym Control+Shift+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
-bindsym Control+$mod+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+# bindsym Control+Shift+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
+# bindsym Control+$mod+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
+# bindsym Control+Mod1+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
+# bindsym Control+Mod1+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
+# bindsym Control+Shift+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
+# bindsym Control+$mod+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
 
 # --- Misc Tools ---
-bindsym Control+Mod1+t exec --no-startup-id "~/scripts/yt/yt_get_current_player_timestamps.sh"
+
+# why do you even care about this?
+# I mean idk whatever I guess
+# It's a cool script but like it's useless if I want to get the time I can get it real quick no big deal I think.
+# bindsym Control+Mod1+t exec --no-startup-id "~/scripts/yt/yt_get_current_player_timestamps.sh"
+
 bindsym Mod1+F2 exec --no-startup-id "rofi -show drun -show-icons"
-bindsym Mod1+F3 exec --no-startup-id "xfce4-appfinder -c"
+
+# we don't really use this anymore... sadly... I think rofi is simpler and faster
+# bindsym Mod1+F3 exec --no-startup-id "xfce4-appfinder -c"
+
+# Oh this autoshot script I'm not sure It's here. I guess... I should maybe start using it but I'm not really using it.
+# I think this is only good for when like I'm making something. But for like now ... I'll keep it for now but maybe
+# We change it in the future but it's cool
+# This is a very well done script I like it. Very nice usage of the dunstify very nice use of the other tools and with keyd'S caps+meta+1 and 2.. it's
+# some good stuff
 bindsym Control+$mod+a exec --no-startup-id "autoshot-toggle"
-bindsym Control+$mod+1 exec --no-startup-id "autoshot-pause"
+bindsym Control+$mod+1 exec --no-startup-id "autoshot-toggle"
+bindsym Control+$mod+2 exec --no-startup-id "autoshot-pause"
+
 bindsym Control+$mod+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
-bindsym Control+$mod+8 exec --no-startup-id "env ADW_DEBUG_COLOR_SCHEME=prefer-dark gnome-sound-recorder"
-bindsym Control+$mod+9 exec --no-startup-id "env GTK_THEME=Arc-Dark gnome-clocks"
-bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "st -e xset dpms force off"
+
+# I think I killed the gnome-sound-recorder I think I no longer use it I didn't really find any particular use case for it tbh
+# Just use audacity or simple arecord it does the job I think. idk man. I don't record audio that much.
+# bindsym Control+$mod+8 exec --no-startup-id "env ADW_DEBUG_COLOR_SCHEME=prefer-dark gnome-sound-recorder"
+
+# So we I think we killed gnome-clock I no longer use it
+# bindsym Control+$mod+9 exec --no-startup-id "env GTK_THEME=Arc-Dark gnome-clocks"
+
+# Turn monitor off
+#
+# this sucks I have to click it 3 times
+# bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "st -e xset dpms force off"
+#
+# wow all I needed is a tiny sleep and it works perfectly now
+bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "sleep 0.5; xset dpms force off"
+
 
 # --- Window & Workspace Rename ---
-bindsym $mod+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
+# bindsym $mod+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
+bindsym $mod+Control+r exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
 bindsym $mod+Mod1+t exec --no-startup-id "rncd"
 
 
@@ -494,19 +561,26 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 # bindsym $mod+Return exec st -e zsh -c tmux-sessionizer
 
 # Update binding
-bindsym $mod+Control+Return exec st -c st_float -e zsh -c tmux-sessionizer
-bindsym $mod+Shift+Return exec st -e zsh -c tmux-sessionizer
+bindsym $mod+mod1+Return exec st -c st_float -e zsh -c tmux-sessionizer
+
+# bindsym $mod+Shift+Return exec st -e zsh -c tmux-sessionizer
+
+bindsym $mod+Shift+Return exec st -e tmux
+
 
 for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center
 
 # Open default st temrinal. Just the same as you would open dmenu and type st
 # bindsym $mod+Shift+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window || st -qq
 
-bindsym $mod+Return exec st
+bindsym $mod+Return exec st -t st
 
+
+# Example for your main terminal
+# bindsym $mod+Return exec st -e zsh -c "printf '\e]0;st\a'; zsh"
 
 # Toggle Qalculate scratchpad
-bindsym Control+$mod+q [class="Qalculate-gtk"] scratchpad show, move position center
+# bindsym Control+$mod+q [class="Qalculate-gtk"] scratchpad show, move position center
 
 # USELESS:
 # I no longe use urxvtc. It's not worth it. st is way worth it for a little bit extra price.
@@ -517,14 +591,20 @@ bindsym Control+$mod+q [class="Qalculate-gtk"] scratchpad show, move position ce
 # Launcher (default)
 # bindsym $mod+d exec --no-startup-id dmenu_run
 
-# Launcher (Personal) this run my ~/.local/bin/drun which allows for piping <cmd1> | <cmd2>... hehehe useful for xc --e.g-> xprop | xc
+# drun is dmenu but with a window rule to make it work with copyq(clipboard manager) really good
 bindsym $mod+d exec --no-startup-id drun
+
+# Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like $mod+d then type rofi -show run ez.
+# rofi -show run with different theme
+# bindsym $mod+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
 
 # Kill focused window
 bindsym $mod+Shift+q kill
 
 # QTerminal dropdown
-bindsym $mod+F12 exec --no-startup-id qterminal -d
+# bindsym $mod+F12 exec --no-startup-id qterminal -d
+
+
 
 # --- Dropdown terminals (tdrop) ---
 
@@ -556,7 +636,7 @@ bindsym Control+$mod+v [class="vesktop"] scratchpad show
 # bindsym $mod+Shift+v [class="vesktop"] scratchpad show, move position center
 
 
-bindsym Control+$mod+m exec i3-msg '[class="mpv"] scratchpad show'
+# bindsym Control+$mod+m exec i3-msg '[class="mpv"] scratchpad show'
 
 
 # CPU  (Mod+Shift+BackSpace)
@@ -585,8 +665,6 @@ bindsym Control+$mod+m exec i3-msg '[class="mpv"] scratchpad show'
 # bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^st_main" instance="^st_|^st_main|^qterminal"] move scratchpad
 
 bindsym Mod1+Shift+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
-
-bindsym $mod+Shift+t  exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
 
 
 # =====================================================================
@@ -674,15 +752,18 @@ bindsym $mod+Shift+z [class="Zeal"] scratchpad show, move position center
 # bindsym Mod4+Control+z [class="Zeal"] scratchpad show
 
 # Shortcut to show/hide the CopyQ window
-bindsym $mod+Control+c [class="copyq"] scratchpad show, move position center
-bindsym $mod+Control+p [class="KeePassXC"] scratchpad show
-bindsym $mod+Control+o [class="obs"] scratchpad show
-bindsym $mod+Control+s [class="scrcpy"] scratchpad show
+bindsym $mod+Mod1+c [class="copyq"] scratchpad show, move position center
+
+# bindsym $mod+Control+p [class="KeePassXC"] scratchpad show
+# bindsym $mod+Control+o [class="obs"] scratchpad show
+# bindsym $mod+Control+s [class="scrcpy"] scratchpad show
 # bindsym $mod+Control+e [class="org.mozilla.Thunderbird"] scratchpad show
 
 bindsym $mod+q           move scratchpad
 bindsym $mod+Shift+s     scratchpad show
-bindsym $mod+Mod1+s      [workspace="__i3_scratch"] scratchpad show
+
+# Why would you do this? It just clutters your monitor... use rofi instead or just cycle and such.
+# bindsym $mod+Mod1+s      [workspace="__i3_scratch"] scratchpad show
 
 bindsym Control+Mod1+s sticky toggle
 

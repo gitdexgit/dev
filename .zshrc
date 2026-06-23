@@ -1,5 +1,7 @@
 # In the future try out fast-syntax-highlighting thing instead of zsh-syntax-highlighting
 
+
+
 # Also get good and like try to like read bellow and try to like make it less bloat
 # and smart... take inspiration from tsooding and the prime gen
 # Also go to your scripts and reduce the scripts bloot and what not... you know... and try to like idk...
@@ -240,14 +242,14 @@ fg-widget() { BUFFER="fg"; zle accept-line; }
 zle -N fg-widget
 bindkey '^[z' fg-widget
 
+
+
+
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey '\ee' edit-command-line
-bindkey '\en' edit-command-line
 
-
-
-
+# Bind to Ctrl-x Ctrl-e (The Aloxaf / Bash default)
+bindkey '^x^e' edit-command-line
 
 
 

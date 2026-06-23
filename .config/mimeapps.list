@@ -46,6 +46,7 @@ application/json=neovim-allacrity.desktop;
 x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop;
 application/x-shellscript=kitty-open.desktop;run-in-alacritty.desktop;neovim-allacrity.desktop;
 video/x-matroska=mpv.desktop;org.xfce.Parole.desktop;
+video/x-ms-wmv=mpv.desktop;
 
 [Default Applications]
 audio/aac=mpv.desktop;

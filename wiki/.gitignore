@@ -1,0 +1,19 @@
+
+# 2. Allow the .gitignore file itself (optional but recommended)
+!.gitignore
+
+# 3. Allow the specific directories
+# Note: Using the spelling "Attatchements" as shown in your file list
+!Attatchements/
+!current_struggles/
+!sources/
+
+# 4. If these folders contain subdirectories, ensure Git tracks them
+!Attatchements/**
+!permanent/**
+!sources/**
+
+
+# scratch.md
+# .zk
+# tldraw

@@ -1,0 +1,266 @@
+{
+  "main": {
+    "id": "cfb28c8001a463d5",
+    "type": "split",
+    "children": [
+      {
+        "id": "2ebaa7e5e1f6c656",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5abb0be9a3895a5a",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          },
+          {
+            "id": "70769b99a54e2045",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-08-16_00-59-53.fleet.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-08-16_00-59-53.fleet"
+            }
+          },
+          {
+            "id": "f2fc90cb7775f9e9",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d758451eb3c7d13c",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "7a93c27b912f3596",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "alphabetical",
+            "autoReveal": false
+          },
+          "icon": "lucide-folder-closed",
+          "title": "Files"
+        }
+      },
+      {
+        "id": "b92d1894ba52b347",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "Mr robot",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          },
+          "icon": "lucide-search",
+          "title": "Search"
+        }
+      },
+      {
+        "id": "663d4f979402490d",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-tags",
+          "title": "Tags"
+        }
+      },
+      {
+        "id": "d7682ef68f600470",
+        "type": "leaf",
+        "state": {
+          "type": "all-properties",
+          "state": {
+            "sortOrder": "frequency",
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-archive",
+          "title": "All properties"
+        }
+      },
+      {
+        "id": "6ca85a83a07f50b3",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {},
+          "icon": "lucide-bookmark",
+          "title": "Bookmarks"
+        }
+      },
+      {
+        "id": "08490cd8e42d94c6",
+        "type": "leaf",
+        "state": {
+          "type": "recent-files",
+          "state": {},
+          "icon": "lucide-ghost",
+          "title": "recent-files"
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "88bb63391e129785",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "b5c8dbc21d9aca52",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "2025-10-01.md",
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-coming-in",
+          "title": "Backlinks"
+        }
+      },
+      {
+        "id": "bab59e4de4b60c88",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-going-out",
+          "title": "Outgoing links"
+        }
+      },
+      {
+        "id": "c912366632f18cd3",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {
+            "followCursor": false,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-list",
+          "title": "Outline"
+        }
+      },
+      {
+        "id": "1f56a530704c7340",
+        "type": "leaf",
+        "state": {
+          "type": "calendar",
+          "state": {},
+          "icon": "calendar-with-checkmark",
+          "title": "Calendar"
+        }
+      }
+    ],
+    "currentTab": 3
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:Create new base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "random-note:Open random note": false,
+      "cmdr:Open in default app": false,
+      "cmdr:Hider: Toggle status bar": false,
+      "cmdr:Shell commands: Execute: dolphin open": false,
+      "cmdr:Shell commands: Execute: kitty": false,
+      "cmdr:Terminal: Open current directory in terminal: Select": false,
+      "cmdr:Shell commands: Execute: Switch Vault": false,
+      "cmdr:Shell commands: Execute: Omnisearch": false,
+      "cmdr:Edit in Neovim: Open Neovim": false,
+      "obsidian-focus-mode:Toggle Focus Mode (Shift + Click to show active pane only)": false,
+      "vim-toggle:Toggle Vim Mode": false,
+      "darlal-switcher-plus:Open in Headings Mode": false,
+      "darlal-switcher-plus:Open Symbols for the active editor": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "periodic-notes:Open today": false,
+      "obsidian-kanban:Create new board": false,
+      "tldraw:Create new tldrawing": false
+    }
+  },
+  "active": "f2fc90cb7775f9e9",
+  "lastOpenFiles": [
+    "current_struggles/THE PROGRAMMER PROCESS PRINCIPLES.md",
+    "current_struggles/Execute universal data architecture for clarity.md",
+    "2025-12-13_1-39.md",
+    "zero day or zero click exploits.md",
+    "bxjxndbdbbxbx.md",
+    "2025-12-12_16-32-19.md",
+    "2025-12-12_16-07-08.md",
+    "2025-12-12_16-04-33.md",
+    "2025-12-12_15-44-33.md",
+    "2025-12-12_15-39-58.md",
+    "2025-12-12_15-09-11.md",
+    "2025-12-12_15-06-32.md",
+    "2025-12-12_12-32-16.md",
+    "2025-12-12_12-26-14.md",
+    "2025-12-12_12-04-38.md",
+    "2025-08-16_00-59-53.fleet.md",
+    "Names fam ayoub.md",
+    "Templates/Daily Note Template.md",
+    "Attatchements/Screenshot_20251013-050352_Firefox Nightly.png",
+    "what am basically doing with my life these next 4 years.md",
+    "kiss_conf.md",
+    "what is the idea of prices for example.md",
+    "2025-10-01.md",
+    "(idea)(keyd) I have an idea to improve the ergonomics of moving between desktops with keyboard.md",
+    "002_before send review/001_Amine raghib-french life morocco rich people taking advantage hypnosis what people think etc.md",
+    "a cool site to check.md",
+    "new project- fix old computer hp compact.md",
+    "Attatchements/IMG_20250929_133816.jpg",
+    "Attatchements/IMG_20250929_144613.png",
+    "Attatchements/IMG_20250929_144613.jpg",
+    "Attatchements/Pasted image 20250923095236.png",
+    "Attatchements/IMG_20250929_144613 1.jpg",
+    "Attatchements/Pasted image 20250923095328.png",
+    "Attatchements/Pasted image 20250923095255.png",
+    "Attatchements",
+    "sync"
+  ]
+}

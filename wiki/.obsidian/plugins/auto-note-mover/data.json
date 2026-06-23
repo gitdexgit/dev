@@ -1,0 +1,43 @@
+{
+  "trigger_auto_manual": "Automatic",
+  "use_regex_to_check_for_tags": false,
+  "statusBar_trigger_indicator": true,
+  "folder_tag_pattern": [
+    {
+      "folder": "0002_do",
+      "tag": "",
+      "pattern": ".d."
+    },
+    {
+      "folder": "999_trash",
+      "tag": "",
+      "pattern": ".t."
+    },
+    {
+      "folder": "0004_help",
+      "tag": "",
+      "pattern": ".h."
+    },
+    {
+      "folder": "0000_send",
+      "tag": "",
+      "pattern": ".s."
+    },
+    {
+      "folder": "0001_confirm",
+      "tag": "",
+      "pattern": ".c."
+    },
+    {
+      "folder": "0002_process",
+      "tag": "",
+      "pattern": ".p."
+    }
+  ],
+  "use_regex_to_check_for_excluded_folder": false,
+  "excluded_folder": [
+    {
+      "folder": ""
+    }
+  ]
+}

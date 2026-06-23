@@ -10,7 +10,7 @@ ICON_NAME="mic_indicator"
 if [[ $MUTE_STATUS == *"yes"* ]]; then
     # Muted: Kill icon
     pkill -f "yad --notification --name=$ICON_NAME"
-    notify-send -t 1000 -u critical "Microphone" "MUTED 🔇"
+    notify-send -t 250 -u critical "Microphone" "MUTED 🔇"
 else
     # Live: Start icon if not running
     if ! pgrep -f "yad --notification --name=$ICON_NAME" > /dev/null; then
@@ -18,5 +18,5 @@ else
             --image="audio-input-microphone" \
             --text="Mic Live" &
     fi
-    notify-send -t 1000 "Microphone" "LIVE 🎤"
+    notify-send -t 250 "Microphone" "LIVE 🎤"
 fi

@@ -7,7 +7,7 @@ NOTIF_ID=0
 
 # Kill notification on exit
 cleanup() {
-    [[ $NOTIF_ID -ne 0 ]] && dunstify -C "$NOTIF_ID"
+    # [[ $NOTIF_ID -ne 0 ]] && dunstify -C "$NOTIF_ID"
     exit
 }
 trap cleanup SIGINT SIGTERM EXIT
@@ -30,8 +30,7 @@ while true; do
 
     if [[ $TARGET -gt 0 && $SEC -ge $TARGET ]]; then
         if [[ $NOTIFIED -eq 0 ]]; then
-            # -p prints notification ID
-            NOTIF_ID=$(dunstify -p -u critical -t 0 "Timer" "$INPUT passed")
+            # NOTIF_ID=$(dunstify -p -u critical -t 0 "Timer" "$INPUT passed")
             NOTIFIED=1
         fi
 

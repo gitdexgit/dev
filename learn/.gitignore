@@ -1,0 +1,23 @@
+# 1. Ignore everything in the root
+/*
+
+!.gitignore
+!buffer/
+!buffer/*
+!answers.md
+!questions.md
+!idea.md
+!learn.md
+!remember.md
+!solutions.md
+!problems.md
+!tasks.md
+!sync.md
+!serve_notes_on_localhost.sh
+!README.md
+!Kanban.md
+!harpoon1.hp
+!harpoon2.hp
+!session.md
+!old.questions.md
+

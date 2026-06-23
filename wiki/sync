@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Check if there are any changes to commit.
+# The -n operator tests if a string is non-empty.
+# We use command substitution $(...) to capture the output of the git command.
+# you can also use git status --porcelain=v1 but i'l stick with git status -s
+if [[ -n "$(git status -s)" ]]; then
+    echo "Changes detected. Starting automated sync..."
+
+    # Stage all changes (new files, modifications, and deletions)
+    git add --all
+
+    # Commit the changes with a more useful message (e.g., a timestamp)
+    echo "Committing changes..."
+    git commit -m "Automated sync on $(date)"
+
+    # Pull remote changes and rebase your local commits on top of them.
+    # This helps maintain a cleaner git history.
+    echo "Pulling remote changes..."
+    git pull --rebase
+
+    # Push your changes to the remote repository
+    echo "Pushing changes..."
+    git push
+
+    echo "Sync complete."
+else
+    echo "No changes to commit. Working tree is clean."
+fi

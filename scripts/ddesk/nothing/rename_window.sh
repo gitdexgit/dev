@@ -1,11 +1,12 @@
 #!/bin/bash
+#
+# Get current title. Get prompted in rofi. Put current title in the prompt.
+# Manage the prompt manually. Hit ok. changes the title of the current window
 
-# Get the new title from the user using rofi
-NEW_TITLE=$(rofi -dmenu -p "Rename Window To:")
+CURRENT=$(xdotool getactivewindow getwindowname)
 
-# If the user entered a title and didn't cancel
-if [ -n "$NEW_TITLE" ]; then
-    # Use wmctrl to set the title of the currently active window.
-    # This is more robust and notifies the window manager properly.
-    wmctrl -r :ACTIVE: -T "$NEW_TITLE"
-fi
+# Pre-fill rofi using -filter
+NEW_TITLE=$(rofi -dmenu -p "Rename Window:" -filter "$CURRENT")
+
+# Apply if changed
+[ -n "$NEW_TITLE" ] && wmctrl -r :ACTIVE: -T "$NEW_TITLE"

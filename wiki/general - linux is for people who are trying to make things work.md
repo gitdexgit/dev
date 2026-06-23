@@ -1,0 +1,1 @@
+Linux is a place where fking people like me nerds or whatever you wanna call them that spend a lot of time in front of the computer where they try their best to make things work... It might be a bad idea... potentially useless and lead to catastrofic results but. At least they try. Hopefully the experience can be put into other things and it is not lost.
