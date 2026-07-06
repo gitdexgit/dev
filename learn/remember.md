@@ -24,22 +24,30 @@
 
 
 
+## war - internet noise
+The "Hacker" Rule (Layer 5):
+
+"If I didn't go looking for it, I don't look at it."
+
+ If it "pops up," it is Noise.
+
+ If it is "recommended," it is Noise.
+
+ If it is "trending," it is Noise.
+
+Question:
+If the internet is a war, and the "Noise" is the enemy's ammunition, what is your Primary Shield?
+(Is it a piece of software, a habit, or a specific mindset?)
 
 
 
 
 
 
+## Layer 6: Noise
 
-
-
-
-
-
-
-
-
-
+Level 6 (Noise): "You can read anything, but you'll never find it under this
+mountain of garbage."
 
 
 
@@ -2231,24 +2239,3 @@ bsd-games /usr/bin/wump
 
 They can be even inspiration to make a clone or something like this to train like on python or something. very interesting
 
-
----
-
-If you want to continue training the voice. The files needed and what not are in
-google drive. But (tbh you need to get good at python and learn what the hell is
-going on here for sure.)
-
-python3 -m piper.train fit \
-  --data.voice_name "my_voice" \
-  --data.csv_path "/content/drive/MyDrive/piper_backup/metadata_final.csv" \
-  --data.audio_dir "/content/drive/MyDrive/piper_backup/audio_clips_fixed/" \
-  --data.cache_dir "/content/cache/" \
-  --data.config_path "/content/drive/MyDrive/piper_backup/my_voice.json" \
-  --data.batch_size 8 \
-  --ckpt_path "/content/drive/MyDrive/piper_backup/latest.ckpt" \
-  --trainer.max_epochs 3000 \
-  --trainer.accelerator gpu \
-  --trainer.devices 1
-
-
----

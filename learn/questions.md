@@ -3,32 +3,36 @@
 
 
 
+## What is hacking? Commit to memory this hacker definition, it includes systems and clearly defines the 2 types of hackers:
+
+definition (the main claim):
+
+Hacking is deeply understanding a system in order to add, remove, or change parts of it beyond its intended use without breaking the system, usually driven by one or many motives — curiosity, ego, boredom, play, challenge, or habit — and one or many goals; hacking can also arise from accident or reflex as the cause of discovery or change, but those are not motives themselves. In a program, 0 motives is possible because it can execute code without subjectivity, while still having functional agency.
+
+framing (the repetition here is a clue of why that claim is shaped that way):
+
+usually driven by one or many motives — curiosity, ego, boredom, play, challenge, or habit — and one or many goals; hacking can also arise from accident or reflex as the cause of discovery or change, but those are not motives themselves. In a program, 0 motives is possible because it can execute code without subjectivity, while still having functional agency.
+
+analogy/contrast (what it looks like in Serial Experiments Lain vs real life):
+
+Why we used Lain: to show how hacking can move from external system-use into identity, control, memory, and selfhood. It makes the abstract idea feel concrete.
+
+Why it fits: because Lain blurs the line between system, agency, and subjectivity in a way real life usually does not.
+
+Lain analogy: if the program were Lain, the “hacking” starts like curiosity about the Wired, then shifts into identity, control, memory, and reality itself. It stops being just “use of a system” and becomes “what is the self inside the system?”
+
+Why it fits:
+- deeply understanding a system → Lain learns the Wired; in real life, a coder learns how an OS, app, or network works
+- add/remove/change parts → Lain’s identity, memory, and presence shift; in real life, someone patches code, edits data, or changes a machine
+- beyond intended use → the Wired is used outside its design; in real life, a tool is used for a purpose its maker didn’t plan
+- without breaking the system → the Wired still operates while distorted; in real life, a website or device still works after tweaks or exploits
+- curiosity/ego/boredom/play/challenge/habit → it starts as “what is this?” and turns into “what am I?”; in real life, someone reverse-engineers software just to see how it works
+- accident/reflex → some changes happen automatically or unintentionally; in real life, a script runs automatically, or a mistake changes a config
+- one goal or many goals → multiple forces act at once; in real life, someone hacks to learn, show skill, and solve a problem together
+- program executes code → the system behaves like code running itself; it changes by following rules, not by choosing, so it has functional agency but no subjectivity; in real life, an automated bot follows its script, while in Lain the Wired feels self-driving
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# In science in experiments what is the thing that they don't teach you about science
+## In science in experiments what is the thing that they don't teach you about science
 Model 3:37 PM
 Thinking Thoughts
 

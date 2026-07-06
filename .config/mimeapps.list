@@ -1,5 +1,5 @@
 [Added Associations]
-application/pdf=calibre-gui.desktop;org.gnome.Evince.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;calibre-gui.desktop;org.gnome.Evince.desktop;
 audio/aac=mpv.desktop;
 audio/mp4=mpv.desktop;
 audio/mpeg=vlc.desktop;mpv.desktop;
@@ -47,6 +47,7 @@ x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop
 application/x-shellscript=kitty-open.desktop;run-in-alacritty.desktop;neovim-allacrity.desktop;
 video/x-matroska=mpv.desktop;org.xfce.Parole.desktop;
 video/x-ms-wmv=mpv.desktop;
+application/x-zerosize=mpv.desktop;audacity.desktop;
 
 [Default Applications]
 audio/aac=mpv.desktop;
@@ -85,3 +86,4 @@ application/x-pksz=CiscoPacketTracer-9.0.0.desktop
 video/mp4=mpv.desktop
 application/x-shellscript=neovim-allacrity.desktop
 text/x-csrc=neovim-allacrity.desktop
+application/x-zerosize=audacity.desktop

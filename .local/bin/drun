@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# this only works with https://github.com/gitdexgit/dmenu-i3-keyd-nograb it's really interesting but tbh I don't care if I care just use rofi man
+
 if pgrep -x dmenu > /dev/null; then
     # If dmenu is open, focus it
     i3-msg '[class="(?i)dmenu"] focus'

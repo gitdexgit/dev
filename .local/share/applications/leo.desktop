@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Leo Editor
+Comment=Literate Editor with Outlines
+Exec=/home/dex/.local/bin/leo %F
+Icon=leo
+Terminal=false
+Type=Application
+Categories=Development;Editor;
+MimeType=application/x-leo-outline;

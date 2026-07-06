@@ -1,6 +1,17 @@
 
 
 
+Maybe we can study how neorons work and things like that. It's interesting to see
+latest developments.
+
+-------
+
+It's time to learn french or something so I can deal with french people living in my country using
+the skin of morocan people
+
+-------
+
+
 very simple stuff  that you should learn or know
 
 1. **Compiler-Driven Development**: For compiled/static languages (C, Rust, Zig). Compiler find type/logic errors before run.

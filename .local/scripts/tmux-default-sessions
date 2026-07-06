@@ -23,33 +23,26 @@ tmux new-session -d -s "main" -c "$HOME" -n "zsh"
 # tmux new-session -d -s "config"
 
 ####
-#### .duck
+#### .learn
 ####
 
-tmux new-session -d -s "learn" -c "$HOME/learn" -n "learn"
-tmux send-keys -t "learn":1 "nvim aha.md" C-m
+# Create session "learn" and name window 1 "main"
+tmux new-session -d -s "learn" -c "$HOME/learn" -n "main"
+tmux send-keys -t "learn:main" "nvim aha.md" C-m
 
-tmux new-window -t "learn":2 -c "$HOME/learn/buffer" -n "duck"
-tmux send-keys -t "learn":2 "nvim duck.md" C-m
+# Window 2
+tmux new-window -t "learn:2" -c "$HOME/learn/buffer" -n "duck"
+tmux send-keys -t "learn:duck" "nvim duck.md" C-m
 
-# Fixed typo in path below
-# tmux new-window -t "learn":3 -c "$HOME/learn/attachments/" -n "~/learn/attachments"
-tmux new-window -t "learn":3 -c "$HOME/wiki/" -n "wiki"
+# Window 3
+tmux new-window -t "learn:3" -c "$HOME/wiki/" -n "wiki"
 
-tmux select-window -t "learn":1
+# Focus window 1
+tmux select-window -t "learn:main"
 
 
-# TODO:
-# I think session should be like this:
-# the sessions: https://i.imgur.com/jFl4mYR.png
-# window 1: https://i.imgur.com/QqAWvIU.png
-# window 2: https://i.imgur.com/QPUMzkI.png
-# window 3: https://i.imgur.com/xRJtfpZ.png
-# window 4: https://i.imgur.com/TnDak4a.png
-# window 5: https://i.imgur.com/geIH4TR.png
-# window 6: https://i.imgur.com/HqVM12A.png
-# ....So add the code here to auto run it like the pictures.
-#
+
+
 
 ####
 #### .session
@@ -63,18 +56,21 @@ WDIR="/home/dex/learn"
 
 # Window 1: session (3 panes)
 tmux new-session -d -s "$SESS" -n "session"
-# Use C-m at end to trigger Enter
-tmux send-keys -t "$SESS":1.1 'echo "\n [ just woke up ] \n" ; timer'
+tmux split-window -v -t "$SESS":1.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+tmux split-window -h -t "$SESS":1.2     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+tmux send-keys -t "$SESS":1.1 'watch -n 1 -c "timew"' C-m
+tmux send-keys -t "$SESS":1.3 'notify-timer 1h'
 
-tmux new-window -t "$SESS":2 -n "timer"
-tmux send-keys -t "$SESS":2.1 "notify-timer 1h"
+# tmux new-window -t "$SESS":2 -n "timer"
+# tmux send-keys -t "$SESS":2.1 "notify-timer 1h"
+
 # Window 2: clock (3 panes - split top, full bottom)
-tmux new-window -t "$SESS":3 -n "clock"
+tmux new-window -t "$SESS":2 -n "clock"
 tmux split-window -h -t "$SESS":3.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
 tmux split-window -v -t "$SESS":3.2     # Splits 2.1 into 2.1 (top-left) and 2.3 (top-right)
-tmux send-keys -t "$SESS":3.1 "aclock" C-m
-tmux send-keys -t "$SESS":3.2 "acal" C-m
-tmux send-keys -t "$SESS":3.3 "woke-up"
+tmux send-keys -t "$SESS":2.1 "aclock" C-m
+tmux send-keys -t "$SESS":2.2 "acal" C-m
+tmux send-keys -t "$SESS":2.3 "woke-up"
 
 
 tmux select-window -t "$SESS":1
@@ -86,34 +82,32 @@ tmux select-window -t "$SESS":1
 
 tmux new-session -d -s "btop" -n "btop" -c "$HOME"
 
-# Window 1: Absolute minimum sidebars
-# Left pane (sensors) = 5 chars
-tmux split-window -h -t "btop":1.1 -l 1 -b
-
-# Right pane (ping) = 5 chars
-# tmux split-window -h -t "btop":1.2 -l 1
+# Window 1:
+# Split 1.1 to create 1.2. -b puts new pane (1.1) on left.
+# Window 1:
+# Split 1.1 to create 1.2 on the RIGHT.
+# -l 40 makes the right pane (ping) 40 columns wide.
+tmux split-window -h -t "btop":1.1 -l 1
 
 # Window 2
 tmux new-window -t "btop":2 -c "$HOME" -n "nethogs"
 
 # Window 3
 tmux new-window -t "btop":3 -c "$HOME" -n "cpupower"
-tmux split-window -h -t "btop":3.1
-# tmux split-window -v -t "btop":3.1
+tmux split-window -h -t "btop":3.1   # Creates 3.2
+tmux split-window -v -t "btop":3.2   # Creates 3.3
 
 # Commands
-# tmux send-keys -t "btop":1.1 "watch -t sensors"
 tmux send-keys -t "btop":1.1 "btop" C-m
 tmux send-keys -t "btop":1.2 "ping 8.8.8.8" C-m
 
-tmux send-keys -t "btop":2.1 "nethogs" C-m
+tmux send-keys -t "btop":2.1 "sudo nethogs" C-m
 
 tmux send-keys -t "btop":3.1 "watch -n 5 cpupower frequency-info" C-m
 tmux send-keys -t "btop":3.2 "sudo cpupower frequency-set -u 2800MHz"
 tmux send-keys -t "btop":3.3 "sudo cpupower frequency-set -g performance"
 
-tmux select-pane -t "btop":1.2
-
+tmux select-pane -t "btop":1.1
 
 
 ####

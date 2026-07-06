@@ -2,8 +2,13 @@
 
 
 
+## In emacs try an IRC there that would be fun. Try mail as well. ofc try git there as well.
+Yeah I want emacs to have like IRC I wonder how would that feel with also mail and like magit or whatever.
 
-# discord - make your own discord client.
+
+
+
+## discord - make your own discord client.
 
 https://github.com/Discord-Client-Encyclopedia-Management/Discord3rdparties
 GitHub

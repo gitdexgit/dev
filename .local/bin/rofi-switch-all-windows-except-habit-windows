@@ -1,33 +1,39 @@
 #!/bin/bash
+#
+# Shows windows on all workspaces expect the floating habit workspaces I know. also this is very smart and good
+
 FILE="$HOME/.cache/last_desktop"
 ORIGINAL_DESKTOP=$(xdotool get_desktop)
 
 # 1. Get current focused container ID
 ACTIVE_ID=$(i3-msg -t get_tree | jq '.. | select(.focused? == true) | .id')
 
-# 2. Generate list: Filter floating, use .class, keep ID at end
-WINDOW_LIST=$(i3-msg -t get_tree | jq -r '
+# 2. Generate RAW list
+RAW_LIST=$(i3-msg -t get_tree | jq -r '
   .. | select(.type? == "workspace") as $ws |
   .. | select(.window? != null) |
-  select(
-    (
-      (.window_properties.title | test("^(btop|main|learn|config|session)$|CopyQ"))
-      and (.floating | test("on"))
-    ) | not
-  ) |
-  "\($ws.num | if . == -1 then " " else . end)\t\(.window_properties.class)\t\(.window_properties.title)\t\(.id)"
-' | column -t -s $'\t')
+  select(((.window_properties.title | test("^(btop|main|learn|config|session)$|CopyQ")) and (.floating | test("on"))) | not) |
+  "\($ws.num)\t\(.window_properties.class)\t\(.window_properties.title)\t\(.id)"
+')
 
-# 3. Calculate row index for highlight
-ROW_INDEX=$(echo "$WINDOW_LIST" | grep -n "$ACTIVE_ID$" | cut -d: -f1)
-[ -n "$ROW_INDEX" ] && SEL_CONF="-selected-row $((ROW_INDEX - 1))" || SEL_CONF=""
+# 3. Hierarchical Sort
+ACTIVE_ROW=$(echo "$RAW_LIST" | awk -v id="$ACTIVE_ID" '$NF == id')
+ACTIVE_WS=$(echo "$ACTIVE_ROW" | awk '{print $1}')
 
-# 4. Launch Rofi (Hide column 4, which is the ID)
-SELECTION=$(echo "$WINDOW_LIST" | rofi -dmenu -i -p "window" $SEL_CONF -display-columns 1,2,3)
-[ -z "$SELECTION" ] && exit
+# Same workspace (excluding active)
+SAME_WS=$(echo "$RAW_LIST" | awk -v id="$ACTIVE_ID" -v ws="$ACTIVE_WS" '$NF != id && $1 == ws')
 
-# 5. Switch using the hidden ID (last word of selection)
-W_ID=$(echo "$SELECTION" | awk '{print $NF}')
+# Other workspaces (sorted by WS number)
+OTHER_WS=$(echo "$RAW_LIST" | awk -v ws="$ACTIVE_WS" '$1 != ws' | sort -n)
+
+SORTED_LIST=$(printf "%s\n%s\n%s" "$ACTIVE_ROW" "$SAME_WS" "$OTHER_WS" | sed '/^\s*$/d')
+
+# 4. Launch Rofi
+INDEX=$(echo "$SORTED_LIST" | cut -f1,2,3 | column -t -s $'\t' | rofi -dmenu -i -format i -p "window" -a 0 -selected-row 0)
+[ -z "$INDEX" ] && exit
+
+# 5. Switch using ID
+W_ID=$(echo "$SORTED_LIST" | sed -n "$((INDEX + 1))p" | awk -F'\t' '{print $NF}')
 i3-msg "[con_id=$W_ID] focus" > /dev/null
 
 # 6. Post-processing

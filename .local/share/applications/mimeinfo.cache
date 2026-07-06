@@ -2,6 +2,7 @@
 application/pkix-cert=wine-extension-crt.desktop;
 application/vnd.ms-htmlhelp=wine-extension-chm.desktop;
 application/winhlp=wine-extension-hlp.desktop;
+application/x-leo-outline=leo.desktop;
 application/x-ms-application=wine-extension-application.desktop;
 application/x-ms-xbap=wine-extension-xbap.desktop;
 application/x-osu-beatmap-archive=osu-lazer.desktop;sh.ppy.osu.stable.desktop;
