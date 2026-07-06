@@ -3,15 +3,11 @@
 
 
 
+## Internet Basics - The secret to rot memorization that they don't teach you which is obvious
 
+You remember only what you frequently use. And let the papers or software or computer or data storage either smart or dumb or humans maybe and let them remember it for you.
 
-
-
-
-
-
-
-
+Again, say it again "Only remember what you frequently use. And let other things remember it for you."
 
 
 

@@ -10,18 +10,21 @@ kb-move-end:    "Control+e,End";
 kb-row-first:   "Control+Home";
 kb-row-last:    "Control+End";
 
+kb-row-down: "Down,Control+n,Alt+Tab";
+kb-row-up: "Up,Control+p,Alt+ISO_Left_Tab";
+
 
 drun-cache: true;
 
-modi:	"drun,run,window";
-font:	"sans 12";
+modi:   "drun,run,window";
+font:   "sans 12";
 
 /**
 here are other matching options (algorithms)
-"normal"	- The default prefix mathicng.
-"regex"		- Match against a regular expression.
-"glob"		- Match against a glob pattern.
-"fuzzy"		- Fuzzy matching. This is wha I like, cuz fzf you know
+"normal"    - The default prefix mathicng.
+"regex"     - Match against a regular expression.
+"glob"      - Match against a glob pattern.
+"fuzzy"     - Fuzzy matching. This is wha I like, cuz fzf you know
 
 
 */
