@@ -10,6 +10,10 @@
 (setq warning-minimum-level :error)
 (setq native-comp-async-report-warnings-errors 'silent)
 (add-to-list 'warning-suppress-types '(lexical-binding))
+
+
+
+
 ;;; so
 
 (add-to-list 'load-path "~/.emacs.local/")
@@ -55,11 +59,6 @@
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-
-
-
-
 
 
 
@@ -480,9 +479,14 @@ compilation-error-regexp-alist-alist
 ;; Global keys (at end to override everything)
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-x <right>") 'find-file)
+(global-set-key (kbd "C-x <down>") 'switch-to-next-buffer)
 (global-set-key (kbd "C-x <end>") 'eval-last-sexp)
 
 (global-set-key (kbd "C-M-<right>") 'forward-sexp)
+(global-set-key (kbd "C-x 4 <right>") 'ido-find-file-other-window)
+
+
+(global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "C-M-<left>") 'backward-sexp)
 
 (defun rc/comment-line-stay ()
@@ -492,3 +496,93 @@ compilation-error-regexp-alist-alist
     (comment-line 1)))
 
 (global-set-key (kbd "C-;") 'rc/comment-line-stay)
+
+
+;; --- changing the default C-x C-b to be using the M-x ibuffer because it's nicer than the default one.
+(global-set-key [remap list-buffers] 'ibuffer)
+
+
+
+
+
+
+
+;; --- ERC AUTOJOIN FORCED FIX (v19 - SASL + no shadow bug) ---
+(require 'erc)
+(require 'erc-sasl)
+(require 'auth-source)
+
+;; --- 1. SPELLING FIX ---
+(setq ispell-program-name "hunspell")
+(setq ispell-dictionary "en_US")
+(setq ispell-hunspell-dict-alist-pos 1)
+(defun my-erc-hook-spelling ()
+  "Enable flyspell safely in ERC buffers."
+  (require 'flyspell)
+  (ignore-errors
+    (setq-local flyspell-generic-check-word-predicate 'erc-check-ispell-without-commands)
+    (flyspell-mode 1)))
+(add-hook 'erc-mode-hook 'my-erc-hook-spelling)
+
+;; --- 2. M-x ERC DEFAULTS ---
+(setq erc-nick "dex3rd")
+(setq erc-user-full-name "dex3rd")
+(setq erc-server "irc.libera.chat")
+(setq erc-port 6697)
+(setq erc-prompt-for-password nil)
+
+;; --- 3. MANUAL COMMANDS (renamed — erc-login is core fn, don't shadow) ---
+(defun erc-identify ()
+  "Manual command to identify if SASL didn't fire (DC/timeout)."
+  (interactive)
+  (let* ((secret (plist-get (car (auth-source-search :host "irc.libera.chat" :user "dex3rd")) :secret))
+         (password (if (functionp secret) (funcall secret) secret)))
+    (if password
+        (progn
+          (erc-message "PRIVMSG" (format "NickServ IDENTIFY %s" password))
+          (message "ERC: Sent manual IDENTIFY."))
+      (message "ERC Error: No password found in .authinfo"))))
+
+(defun erc-ghost ()
+  "Kill stuck dex3rd session, reclaim nick, identify."
+  (interactive)
+  (let* ((secret (plist-get (car (auth-source-search :host "irc.libera.chat" :user "dex3rd")) :secret))
+         (password (if (functionp secret) (funcall secret) secret)))
+    (if password
+        (progn
+          (erc-message "PRIVMSG" (format "NickServ GHOST dex3rd %s" password))
+          (run-at-time "2 sec" nil
+                       (lambda ()
+                         (erc-cmd-NICK "dex3rd")
+                         (erc-identify)))
+          (message "ERC: Ghosting old session..."))
+      (message "ERC Error: No password found in .authinfo"))))
+
+;; --- 4. SASL (auto-auth on connect, no "Not Registered" error) ---
+(setq erc-sasl-mechanism 'plain)
+(setq erc-sasl-user "dex3rd")
+;; password pulled from auth-source automatically by erc-sasl
+
+;; --- 5. AUTOJOIN & SPAM ---
+(setq-default erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE" "NOTICE"
+                              "324" "328" "329" "332" "333" "353" "366"))
+(setq erc-autojoin-on-identify 'all)
+(setq erc-autojoin-channels-alist
+      '(("Libera.Chat" "##programming" "#bash" "#emacs" "#kali" "#linux"
+         "#hackers" "#hacker" "#c" "#c++" "#ai" "#c++-general"
+         "#c++-basic" "#rust" "#lua" "#go-nuts" "#odin" "#ctf"
+         "#picoctf" "#networking" "#python")))
+
+;; --- 6. MODULES ---
+(setq erc-modules '(netsplit fill button match track completion
+                    readonly networks ring autojoin services
+                    bufbar stamp sasl))
+(erc-update-modules)
+
+;; --- 7. UI & TIMESTAMPS ---
+(setq erc-timestamp-format "[%H:%M] ")
+(setq erc-insert-timestamp-function 'erc-insert-timestamp-left)
+(setq erc-header-line-format "%t")
+(setq erc-bufbar-width 15)
+(winner-mode 1)
+(global-visual-line-mode 1)

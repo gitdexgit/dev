@@ -1,9 +1,34 @@
 
+### If the system were destroyed tonight and you could replace it with any system you wanted, what would it be?
+
+
+###  What would it take to prove this wrong? (basically the firewall rule that is so good)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 ## What is hacking? Commit to memory this hacker definition, it includes systems and clearly defines the 2 types of hackers:
+
+
 
 definition (the main claim):
 

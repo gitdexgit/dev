@@ -48,6 +48,8 @@ application/x-shellscript=kitty-open.desktop;run-in-alacritty.desktop;neovim-all
 video/x-matroska=mpv.desktop;org.xfce.Parole.desktop;
 video/x-ms-wmv=mpv.desktop;
 application/x-zerosize=mpv.desktop;audacity.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-8UMES3.desktop;
+x-scheme-handler/mid=userapp-Thunderbird-8UMES3.desktop;
 
 [Default Applications]
 audio/aac=mpv.desktop;
@@ -73,7 +75,7 @@ inode/directory=thunar.desktop;
 text/markdown=neovim-allacrity.desktop
 inode/x-empty=neovim-allacrity.desktop
 text/plain=neovim-allacrity.desktop
-message/rfc822=neovim-allacrity.desktop
+message/rfc822=userapp-Thunderbird-8UMES3.desktop
 x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop
 image/jpeg=feh.desktop
@@ -87,3 +89,5 @@ video/mp4=mpv.desktop
 application/x-shellscript=neovim-allacrity.desktop
 text/x-csrc=neovim-allacrity.desktop
 application/x-zerosize=audacity.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-8UMES3.desktop
+x-scheme-handler/mid=userapp-Thunderbird-8UMES3.desktop

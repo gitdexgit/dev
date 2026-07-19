@@ -1,3 +1,8 @@
+# This sshit needs some refactoing
+
+
+
+
 
 hide_edge_borders both
 
@@ -174,7 +179,7 @@ exec --no-startup-id i3-back
 
 
 exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
-# exec --no-startup-id yad --notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+control+shift+t"
+exec --no-startup-id ad -y-notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+shift+t"
 # exec --no-startup-id yad --notification --image="Alacritty" --text="Click to send Super+Backspace" --command="xdotool key super+BackSpace"
 
 
@@ -245,9 +250,9 @@ for_window [class="mpv"] floating enable, border none
 # Zeal
 # for_window [class="Zeal"] floating enable, move position center, move scratchpad
 
-for_window [class="Zeal"] floating enable, move scratchpad
-for_window [class="Zeal"] floating enable, move scratchpad
-for_window [class="vesktop"] floating enable, move scratchpad
+# for_window [class="Zeal"] floating enable, move scratchpad
+# for_window [class="Zeal"] floating enable, move scratchpad
+# for_window [class="vesktop"] floating enable, move scratchpad
 
 # for_window [class="vesktop"] floating enable, border pixel 2, resize set 1368 px 810 px, move position 36 45, move scratchpad
 
@@ -331,8 +336,8 @@ bindsym $mod+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.s
 # for_window [class="st_duck"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 # bindsym $mod+Control+Shift+d exec --no-startup-id ~/.config/i3/duck_toggle.sh
 
-for_window [class="st_main"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
-bindsym $mod+Shift+Control+BackSpace exec --no-startup-id ~/.config/i3/main_toggle.sh
+# for_window [class="st_main"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+# bindsym $mod+Shift+Control+BackSpace exec --no-startup-id ~/.config/i3/main_toggle.sh
 
 
 # --- Tmux Session Tiled Terminals ---
@@ -349,16 +354,17 @@ bindsym $mod+Shift+Control+BackSpace exec --no-startup-id ~/.config/i3/main_togg
 bindsym $mod+Control+s exec st -t session -e tmux new-session -A -s session
 bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s learn
 bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s btop
+bindsym $mod+Control+w exec st -t word -e tmux new-session -A -s word
 # bindsym $mod+Control+Return exec st -t main -e tmux new-session -A -s main
 bindsym $mod+Control+Left exec st -t btop -e tmux new-session -A -s btop
-bindsym $mod+Control+m exec st -t main -e tmux new-session -A -s main
+# bindsym $mod+Control+m exec st -t main -e tmux new-session -A -s main
 # bindsym $mod+Control+d exec st -t duck -e tmux new-session -A -s duck
 bindsym $mod+Control+c exec st -t config -e tmux new-session -A -s config
 # bindsym $mod+Control+t exec st -e tmux-sessionizer
 # bindsym $mod+Control+Delete exec st -t duck -e tmux new-session -A -s duck
 
 
-bindsym $mod+Control+Return exec st -e tmux-sessionizer
+bindsym $mod+Shift+Return exec st -e tmux-sessionizer
 
 # --- Kill Window ---
 # NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
@@ -417,6 +423,7 @@ for_window [class="st_sync"]       floating enable, move position center
 # bindsym $mod+Mod1+backslash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,330,147,790,504"
 
 bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, border none, move position 0 0, resize set 1924 1075'"
+# bindsym Mod1+F11 exec --no-startup-id "i3-msg 'border none, move position 0 0, resize set 1924 1075'"
 # bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, move position -3 0, resize set 1924 1075'"
 bindsym Mod1+Shift+F11 exec --no-startup-id "~/scripts/i3/toggle-border.sh"
 
@@ -461,6 +468,7 @@ bindsym $mod+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpast
 
 # --- Resource & System ---
 bindsym $mod+Shift+x exec --no-startup-id "xkill"
+bindsym $mod+Mod1+e exec --no-startup-id "rofi -show emoji"
 bindsym Control+Mod1+c exec --no-startup-id "xcontrol -c"
 bindsym Control+Mod1+z exec --no-startup-id "xcontrol -p"
 
@@ -474,6 +482,11 @@ bindsym $mod+Shift+d exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 bindsym $mod+Mod1+r exec --no-startup-id "rofi -show windowcd"
 bindsym $mod+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
 bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
+
+
+# bindsym $mod+b exec --no-startup-id "~/.local/bin/rofi-switch-all-windows-except-habit-windows"
+bindsym $mod+b exec --no-startup-id "rofi -show windowcd"
+
 
 # open rofi. Show workspaces as options. Select option; rofi Moves current window to a selected option.
 bindsym $mod+Mod1+m exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
@@ -511,6 +524,7 @@ bindsym Control+$mod+1 exec --no-startup-id "autoshot-toggle"
 bindsym Control+$mod+2 exec --no-startup-id "autoshot-pause"
 
 bindsym Control+$mod+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
+bindsym Control+$mod+v exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
 
 # I think I killed the gnome-sound-recorder I think I no longer use it I didn't really find any particular use case for it tbh
 # Just use audacity or simple arecord it does the job I think. idk man. I don't record audio that much.
@@ -577,7 +591,7 @@ bindsym $mod+mod1+Return exec st -c st_float -e zsh -c tmux-sessionizer
 
 # bindsym $mod+Shift+Return exec st -e zsh -c tmux-sessionizer
 
-bindsym $mod+Shift+Return exec st -e tmux
+bindsym $mod+Control+Return exec st -e tmux
 
 
 for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center
@@ -649,7 +663,9 @@ bindsym $mod+Shift+q kill
 
 # vesktop
 # 3. Keybinding (Add to SCRATCHPAD section)
-bindsym Control+$mod+v [class="vesktop"] scratchpad show
+bindsym $mod+Mod1+v [class="vesktop"] scratchpad show
+
+
 # bindsym $mod+Shift+v [class="vesktop"] scratchpad show, move position center
 
 
@@ -688,25 +704,29 @@ bindsym Mod1+Shift+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
 # KEYBINDINGS — FOCUS & MOVEMENT
 # =====================================================================
 
+
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-bindsym $mod+Left  focus left
-bindsym $mod+Down  focus down
-bindsym $mod+Up    focus up
-bindsym $mod+Right focus right
+
+# bindsym $mod+Shift+Left  move left
+# bindsym $mod+Shift+Down  move down
+# bindsym $mod+Shift+Up    move up
+# bindsym $mod+Shift+Right move right
+
+
+# bindsym $mod+Left  focus left
+# bindsym $mod+Down  focus down
+# bindsym $mod+Up    focus up
+# bindsym $mod+Right focus right
 
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-bindsym $mod+Shift+Left  move left
-bindsym $mod+Shift+Down  move down
-bindsym $mod+Shift+Up    move up
-bindsym $mod+Shift+Right move right
 
 # Monitor focus, I only have 1 monitor on at all time. But It is pluged.
 # So if I need to turn on monitor these are handy. With xrandr. To pin something on the right like discord.
@@ -736,8 +756,19 @@ bindsym $mod+grave workspace back_and_forth
 # KEYBINDINGS — LAYOUT
 # =====================================================================
 
-bindsym $mod+v split h
-bindsym $mod+b split v
+bindsym $mod+v split v
+
+
+# bindsym $mod+b split h
+
+# split in horizontal orientation
+# bindsym $mod+h split h
+bindsym $mod+semicolon split h
+
+
+# It's like tmux where you can have like yeah just for compatibility and $mod is the prefix ok?
+bindsym $mod+Shift+5 split h
+bindsym $mod+Shift+apostrophe split v
 
 bindsym $mod+f fullscreen toggle
 

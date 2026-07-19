@@ -1,5 +1,186 @@
 
 
+Remember this table sizes. I bet there is this table exactly on a man page like the man ascii page right?
+
++----------+------+----------+
+| Name     | Unit | Value    |
++----------+------+----------+
+| Bit      | b    | 1 / 0    |
+| Byte     | B    | 8 b      |
++----------+------+----------+
+| Kilobyte | KB   | 1000 B   |
+| Kibibyte | KiB  | 1024 B   |
++----------+------+----------+
+| Megabyte | MB   | 1000 KB  |
+| Mebibyte | MiB  | 1024 KiB |
++----------+------+----------+
+| Gigabyte | GB   | 1000 MB  |
+| Gibibyte | GiB  | 1024 MiB |
++----------+------+----------+
+| Terabyte | TB   | 1000 GB  |
+| Tibibyte | TiB  | 1024 GiB |
++----------+------+----------+
+| Petabyte | PB   | 1000 TB  |
+| Pebibyte | PiB  | 1024 TiB |
++----------+------+----------+
+| Exabyte  | EB   | 1000 PB  |
+| Exbibyte | EiB  | 1024 PiB |
++----------+------+----------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## How do you study for a test that can ask any question
+
+C: So what we know is that it is useless to memorize --> because they can ask
+you any question. So what do you do? Good question.
+
+S: You will just guess the answer right? The better your methods of guessing
+the more likely it is the closest answer to the question. And who knows maybe
+sometimes you might get lucky and get a question that you know but it's very
+unlikely.
+
+C: So no matter how you study you will not get the things you have studied. So
+how do you prepare for such insanely hard exam?
+
+S: yes so you can't leave it to lady luck. Yes so no matter how you study you
+will not get the things you have studied it's very unlikely dude unless you
+have a very large amount of time like 2 thousands years or something to study.
+
+I think the answer is using extrapolation. Well what is extrapolation it's
+something you do so it's a verb. You do it to extend you knowledge. Meaning you
+have a few facts and knowledge but you extend it. knowledge Expantion.
+
+Well extrapolation is basically infering. infering is basically reasoning. So
+you deducde and reason to reach a logical answer or something like that... I
+think this is the core of the issue here that these questions impose. So it's
+all about thinking... so we need to improve our thinking in order to answer
+questions of such magnitude. That's how we can do it..
+
+
+
+
+
+
+
+
+
+
+T: The answer to the question How do you study for an exam that can ask you any
+question is the following:
+
+First let's understand that an exam where you can be asked any question is
+insane and intense What does it even mean to be asked any questoin? it meas
+that there are no limits on the facts they can dump on you. So to study for
+such an exam you need an enormous amount of knowledge. You can't have that it's
+just hard eve if you are 60y old.
+
+So what is the best or 2nd best thing you can do? You have to try right you
+can't like not try if you don't try nothing is going to change right. at least
+you should give it a try. But you don't want to try things randomly for sure.
+So you need to try to asnwer any question in a smart way.
+
+What it means to answer any question in a smart way is basically the following:
+
+So what we need is an ability or skill or a method that can allow us to extend
+our knowledge. I think we might also use tools to allow us to extend our
+knowledge. So we mix internal/external methods. If we extend our knowledge then
+it is possible to give an answer to almost any qusetion right.
+
+But etending your knowledge is meaningless right... you can argue that the
+internet extends the knowledge of all people you can find an answer to any
+question right... but not all of us are genuises right. That's because either
+the answer to those questions are not found or the answer to those questions
+are incomplete. Most of the time you have incomplete answers right. Unless it's
+trivia or facts then you can just use the internet to extend your knowledge
+right. But this assumes you have internet maybe the internet dies one day. In
+that case what do you do? Well you use a local LLM running on your computer,
+it's been trained on the internet so it might not be correct but it is what it
+is at least it will give you an estimate to the answer ok? You can also only
+download valuable stuff using kiwi right using kiwi-serve and umm maybe use 50gb
+or something and only download best 50k wiki articles and things like that and
+docs? so you only have like the most used things things like that to help you
+cover almost everything right... and you know the internet even if it dies it's
+very rarely to die for more than 1day and at worst you can just idk unless you
+are in a way you can get internet maybe nowadays even if you are in a way you
+can still get internet probably. You can also work with a group of people and
+together you can extend your whole knowledge your overall knowledge right.
+
+But simply extending your knowledge using tools isn't enough. What about lies?
+
+We need a way filter out or find bugs or issues and sometimes the answers could
+be correct but our situation is very unique or something is at play that is
+making it not work right. And so we need the ability to trouble shoot or review
+things to make sure It is the right answer or answers.
+
+But if we just use no external tools just our own brain. It's really hard but
+not impossible. You add a few people together with a lot of experience and just
+they all use their own brain and that's it... it is possible. Well assuming you
+can afford to hire armies of people who specialize in fields right and they are
+smart not stupid right. Something like this.
+
+So as you can see this is a very tricky question and this is the best answer I
+can give you as a teacher. It's a question that the more you live and get good
+with many skills and purchase offline/online tools and technology and things
+like that the more you have more options and the more you have more options and
+whenever you get a question you just use one of those options not to answer it
+for you but to at least try to help you find the most likely answer and that's
+all about it. Those options can be your own knowledge and skills and things like
+that meaning internal... or external and that's it.
+
+
+
+
+
+
+
+
+
+
+
+## the rest
+
+
+
+
+To improve learning you can all these parts play the role:
+exercise (do the simple top to bottom 15min body worm ups.... plank and sqaut holding and hanging/squeezing a towl tightly )
+rest(attention 10min rest every 1h or so/ good sleep)
+goal(some sort of initial goal or goals to steer your attention in a direction.)
+smart navigation(the ability to know when to discover where to discover data information knowledge and understanding and the ability to test use them and workbackward kinda like a rotation between discovery and reverse-engeneering. If you get spoiled you change the game. ofc there are other rules and exceptions to the game.)
+
+sadly there are still some downsides because the environment where you live still affects the learning... like noise and problems ....etc but you know the essential stuff for learning are you know up. You can also add recreational activities from time to time sure they help too but it must not waste your time as much
+
+
+
+
+
+
+
 
 
 

@@ -17,7 +17,15 @@ echo "--- Starting ---"
 #     fi
 # done
 
-tmux new-session -d -s "main" -c "$HOME" -n "zsh"
+# tmux new-session -d -s "main" -c "$HOME" -n "zsh"
+
+
+
+tmux new-session -d -s "word" -c "$HOME" -n "d"
+tmux send-keys -t "word:d" "d "
+
+tmux new-window -t "word:2" -c "$HOME" -n "ai-d"
+
 # tmux new-session -d -s "wiki" -c "$HOME/wiki/" -n "zsh"
 
 # tmux new-session -d -s "config"
@@ -27,6 +35,7 @@ tmux new-session -d -s "main" -c "$HOME" -n "zsh"
 ####
 
 # Create session "learn" and name window 1 "main"
+
 tmux new-session -d -s "learn" -c "$HOME/learn" -n "main"
 tmux send-keys -t "learn:main" "nvim aha.md" C-m
 
@@ -56,21 +65,24 @@ WDIR="/home/dex/learn"
 
 # Window 1: session (3 panes)
 tmux new-session -d -s "$SESS" -n "session"
-tmux split-window -v -t "$SESS":1.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
-tmux split-window -h -t "$SESS":1.2     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+# I don't think you need this
+# tmux split-window -v -t "$SESS":1.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+tmux split-window -h -t "$SESS":1.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+# I don't think you need this you just timew whenever and things like that this way you can run it everywhere
+# but to be clean we are going to keep it in workspace 10
 tmux send-keys -t "$SESS":1.1 'watch -n 1 -c "timew"' C-m
-tmux send-keys -t "$SESS":1.3 'notify-timer 1h'
+tmux send-keys -t "$SESS":1.3 '10min'
 
 # tmux new-window -t "$SESS":2 -n "timer"
 # tmux send-keys -t "$SESS":2.1 "notify-timer 1h"
 
 # Window 2: clock (3 panes - split top, full bottom)
 tmux new-window -t "$SESS":2 -n "clock"
-tmux split-window -h -t "$SESS":3.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
-tmux split-window -v -t "$SESS":3.2     # Splits 2.1 into 2.1 (top-left) and 2.3 (top-right)
+tmux split-window -h -t "$SESS":2.1     # Splits 2.1 into 2.1 (top) and 2.2 (bottom)
+tmux split-window -v -t "$SESS":2.2     # Splits 2.1 into 2.1 (top-left) and 2.3 (top-right)
 tmux send-keys -t "$SESS":2.1 "aclock" C-m
 tmux send-keys -t "$SESS":2.2 "acal" C-m
-tmux send-keys -t "$SESS":2.3 "woke-up"
+tmux send-keys -t "$SESS":2.3 "watch -n 10 woke-up n" C-m
 
 
 tmux select-window -t "$SESS":1

@@ -293,7 +293,7 @@ bindkey '^G' autosuggest-toggle
 # \em is the escape sequence for Alt+m
 # bindkey -s '\em' "tmux-sessionizer\r"
 
-bindkey -s 's' "scratchpad-sessionizer"
+# bindkey -s 's' "scratchpad-sessionizer"
 
 
 # The siient ones, has potential but for now the usage is very minimal and isn't as good atm. I don't use these much. but keep them:
@@ -532,6 +532,8 @@ alias clrea='clear; _NEW_LINE_BEFORE_PROMP=1'
 alias clrfea='clear; _NEW_LINE_BEFORE_PROMPT=1'
 
 
+alias dict='dict -d wn'
+alias d='dict -d wn'
 
 
 # Remote Access (VPN + Security)

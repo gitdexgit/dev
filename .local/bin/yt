@@ -8,7 +8,7 @@ CHOICE=$(printf '1080p\n720p\n480p\n360p\n240p\naudio-only' | fzf --header="Qual
 [ -z "$CHOICE" ] && exit 0
 
 if [ "$CHOICE" = "audio-only" ]; then
-    mpv --no-video --ytdl-format="bestaudio" --cache=yes "$URL"
+    mpv --vo=null --ytdl-format="bestaudio" --cache=yes "$URL"
 else
     HEIGHT=${CHOICE%p}
     mpv \
