@@ -35,6 +35,14 @@
 (column-number-mode 1)
 (show-paren-mode 1)
 
+
+;; Esensial modes
+(winner-mode 1)
+(global-visual-line-mode 1)
+(blink-cursor-mode 0)
+
+
+
 (rc/require-theme 'gruber-darker)
 ;; (rc/require-theme 'zenburn)
 (eval-after-load 'zenburn
@@ -51,14 +59,142 @@
 (setq mouse-wheel-progressive-speed nil)
 
 
-;; Ido / Smex
-(rc/require 'smex 'ido-completing-read+)
-(ido-mode 1)
-(ido-everywhere 1)
-(ido-ubiquitous-mode 1)
 
-(global-set-key (kbd "M-x") 'smex)
+;; Ido / Smex
+; (rc/require 'smex 'ido-completing-read+)
+; (ido-mode 1)
+; (ido-everywhere 1)
+; (ido-ubiquitous-mode 1)
+
+; (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+
+
+;; vertico orderless consult
+
+(rc/require 'vertico)
+(rc/require 'orderless)
+(rc/require 'consult)
+
+(require 'vertico-multiform)
+(require 'vertico-flat)
+
+(vertico-mode 1)
+(vertico-multiform-mode 1)
+(savehist-mode 1) ;; Provides Smex-style sorting logic
+(setq vertico-flat-max-lines 3) ;; allows the mini-buffer list to wrap shows more commands as needed I guess
+
+(setq consult-preview-key 'any) ;; by default it moves as I move but keep it to garentee it moves
+
+;; 2. The "Smex" logic (Sort by history/frequency)
+(setq vertico-sort-function #'vertico-sort-history-alpha)
+
+(setq vertico-multiform-commands
+      '((execute-extended-command flat) ; M-x
+        (switch-to-buffer flat)          ; C-x b
+        (find-file flat)                 ; C-x C-f
+        (dired flat)                     ; C-x d
+        (read-file-name flat)))          ; General file prompts
+
+; (setq completion-styles '(orderless basic))
+(setq completion-styles '(orderless flex basic)) ;; makes it feel like ido more
+
+;; make it like fzf-lua.resume to an extent mostly what I need
+(require 'vertico-repeat)
+(add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+
+;; This is like "fzf-lua.resume"
+(global-set-key (kbd "C-c '") #'vertico-repeat)
+
+;; Keybinds (My fzf-lua style)
+(global-set-key (kbd "C-c /")   'consult-line)      ;; blines
+(global-set-key (kbd "C-c g /") 'consult-ripgrep)   ;; grep_project
+
+;; change default buffer switch to consult-buffer because it's just better gives fzf-lua-buffer feel
+(global-set-key [remap switch-to-buffer] 'consult-buffer)
+(add-to-list 'vertico-multiform-commands '(consult-buffer flat)) ;; fixes the look
+
+
+
+;; --- Vertico, Orderless, Consult (Modern Ido/Smex) ---
+(rc/require 'vertico)
+(rc/require 'orderless)
+(rc/require 'consult)
+(require 'vertico-multiform)
+(require 'vertico-flat)
+(require 'vertico-repeat)
+
+(vertico-mode 1)
+(vertico-multiform-mode 1)
+(savehist-mode 1)
+
+(setq vertico-flat-max-lines 3)
+(setq vertico-cycle t)
+(setq vertico-sort-function #'vertico-sort-history-alpha) ; Smex-style sorting
+(setq consult-preview-key 'any)                           ; Live movement
+(setq completion-styles '(orderless flex basic))          ; Ido-style matching
+
+(setq vertico-multiform-commands
+      '((execute-extended-command flat)
+        (consult-buffer flat)
+        (find-file flat)
+        (dired flat)
+        (read-file-name flat)))
+
+;; Keybinds
+(global-set-key [remap switch-to-buffer] 'consult-buffer)
+(global-set-key (kbd "C-c /")   'consult-line)
+(global-set-key (kbd "C-c g /") 'consult-ripgrep)
+(global-set-key (kbd "C-c '")   'vertico-repeat)
+(add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+
+
+
+;; --- Harpoon (Manual Slot Management) ---
+(rc/require 'harpoon)
+
+;; 1. The Menu
+(global-set-key (kbd "C-c h e") 'harpoon-toggle-quick-menu)
+
+;; 2. Add / Prepend
+(global-set-key (kbd "C-c h a") 'harpoon-add-file)
+
+(defun harpoon-prepend ()
+  "Add current file to the first slot."
+  (interactive)
+  (harpoon-add-file)
+  (save-window-excursion
+    (with-current-buffer (harpoon--toggle-quick-menu)
+      (goto-char (point-max))
+      (forward-line -1)
+      (let ((line (delete-and-extract-region (line-beginning-position) (line-end-position))))
+        (goto-char (point-min))
+        (insert line "\n"))
+      (save-buffer)
+      (kill-buffer))))
+
+(global-set-key (kbd "C-c h A") 'harpoon-prepend)
+
+;; 3. Selection (1-9)
+(global-set-key (kbd "C-c h 1") 'harpoon-go-to-1)
+(global-set-key (kbd "C-c h 2") 'harpoon-go-to-2)
+(global-set-key (kbd "C-c h 3") 'harpoon-go-to-3)
+(global-set-key (kbd "C-c h 4") 'harpoon-go-to-4)
+(global-set-key (kbd "C-c h 5") 'harpoon-go-to-5)
+(global-set-key (kbd "C-c h 6") 'harpoon-go-to-6)
+(global-set-key (kbd "C-c h 7") 'harpoon-go-to-7)
+(global-set-key (kbd "C-c h 8") 'harpoon-go-to-8)
+(global-set-key (kbd "C-c h 9") 'harpoon-go-to-9)
+
+;; 4. Replace Logic
+(global-set-key (kbd "C-c h !") (lambda () (interactive) (harpoon-delete-1) (harpoon-prepend)))
+(global-set-key (kbd "C-c h @") (lambda () (interactive) (harpoon-delete-2) (harpoon-add-file)))
+(global-set-key (kbd "C-c h #") (lambda () (interactive) (harpoon-delete-3) (harpoon-add-file)))
+(global-set-key (kbd "C-c h $") (lambda () (interactive) (harpoon-delete-4) (harpoon-add-file)))
+
+
+
 
 
 
@@ -543,6 +679,27 @@ compilation-error-regexp-alist-alist
           (message "ERC: Sent manual IDENTIFY."))
       (message "ERC Error: No password found in .authinfo"))))
 
+;; --- 8. TOGGLE CHANNEL-INFO SPAM (numerics only, JOIN/PART/etc stay hidden) ---
+(defvar my-erc-info-codes '("324" "328" "329" "332" "333" "353" "366")
+  "Numeric channel-info codes toggled by `erc-toggle-spam'.")
+(defvar my-erc-info-hidden t
+  "State: t = info codes hidden, nil = shown.")
+(defun erc-toggle-spam ()
+  "Toggle visibility of channel-info numerics (topic/url/names/etc).
+JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
+  (interactive)
+  (if my-erc-info-hidden
+      (progn
+        (setq erc-hide-list (cl-set-difference erc-hide-list my-erc-info-codes :test #'string=))
+        (setq my-erc-info-hidden nil)
+        (message "ERC: channel info UNHIDDEN."))
+    (progn
+      (setq erc-hide-list (append erc-hide-list my-erc-info-codes))
+      (setq my-erc-info-hidden t)
+      (message "ERC: channel info HIDDEN."))))
+
+
+
 (defun erc-ghost ()
   "Kill stuck dex3rd session, reclaim nick, identify."
   (interactive)
@@ -569,7 +726,7 @@ compilation-error-regexp-alist-alist
 (setq erc-autojoin-on-identify 'all)
 (setq erc-autojoin-channels-alist
       '(("Libera.Chat" "##programming" "#bash" "#emacs" "#kali" "#linux"
-         "#hackers" "#hacker" "#c" "#c++" "#ai" "#c++-general"
+         "#hackers" "#c" "#c++" "#ai" "#c++-general"
          "#c++-basic" "#rust" "#lua" "#go-nuts" "#odin" "#ctf"
          "#picoctf" "#networking" "#python")))
 
@@ -584,5 +741,3 @@ compilation-error-regexp-alist-alist
 (setq erc-insert-timestamp-function 'erc-insert-timestamp-left)
 (setq erc-header-line-format "%t")
 (setq erc-bufbar-width 15)
-(winner-mode 1)
-(global-visual-line-mode 1)

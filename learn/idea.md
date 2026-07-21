@@ -2,6 +2,19 @@
 I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
+## Try to make an IRC client
+
+Make an IRC client for learning purposes see how it can be duable they say it's not hard but who knows.
+
+
+
+
+## Think of ways to sync .keys and .ssh and .auth password stuff unlike keepass they are kinda sensitive.
+
+Should I put them in a private github repo? Or should I only have them locally?
+Should I do some zip compression and then something encrypt the file or put a password on it?
+Or should I have them in usb and on my phone as well? I don't know. I need a way to store them.
+
 
 
 ## Use flowsharts
