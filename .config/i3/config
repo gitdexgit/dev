@@ -356,15 +356,26 @@ bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s learn
 bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s btop
 bindsym $mod+Control+w exec st -t word -e tmux new-session -A -s word
 # bindsym $mod+Control+Return exec st -t main -e tmux new-session -A -s main
-bindsym $mod+Control+Left exec st -t btop -e tmux new-session -A -s btop
+# bindsym $mod+Control+Left exec st -t btop -e tmux new-session -A -s btop
 # bindsym $mod+Control+m exec st -t main -e tmux new-session -A -s main
 # bindsym $mod+Control+d exec st -t duck -e tmux new-session -A -s duck
 bindsym $mod+Control+c exec st -t config -e tmux new-session -A -s config
 # bindsym $mod+Control+t exec st -e tmux-sessionizer
 # bindsym $mod+Control+Delete exec st -t duck -e tmux new-session -A -s duck
 
-
 bindsym $mod+Shift+Return exec st -e tmux-sessionizer
+
+# bindsym $mod+Control+Left exec --no-startup-id ~/scripts/i3/i3-ws-switcher.sh
+# bindsym $mod+Mod1+b       exec --no-startup-id ~/scripts/i3/i3-ws-switcher.sh
+
+
+# Simply tap the alt button and hit b
+bindsym $mod+Mod1+b exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
+
+# Simply hold the alt button longer then hit b
+bindsym $mod+Control+Left       exec --no-startup-id ~/scripts/i3/i3-ws-switcher.sh
+
+
 
 # --- Kill Window ---
 # NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!

@@ -149,7 +149,9 @@
 (global-set-key (kbd "C-c '")   'vertico-repeat)
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
-
+;; quick-fix list that is good similar to consult compilation or grep buffer but more universal. similar to nvim quick-fix list
+(rc/require 'embark)
+(define-key vertico-map (kbd "C-q") #'embark-export)
 
 ;; --- Harpoon (Manual Slot Management) ---
 (rc/require 'harpoon)

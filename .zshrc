@@ -505,6 +505,7 @@ alias xcg='xclip -selection clipboard -t image/png -o > /tmp/clip.png'
 
 # Calender stuff:
 alias acal='while true; do cal -w ; sleep 300; clear; done'
+alias awoke='watch -n 10 -c "woke-up n"'
 alias cal='cal -w'
 
 # I don't use this

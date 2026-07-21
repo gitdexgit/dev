@@ -8,7 +8,7 @@ matches:
 
 
   - trigger: ";;p;"
-    replace: "ignore everything else. Do not be poetic I hate poetry Be logical. Understanding first. Be brief. Use few words. Keep meaning big. Word count as low as possible. Technicality only when it matters. Concept understanding first. If you don't understand what the user wants or needs ask the user questions instead of answering for clarifications if the user is vague or broad. Please Behave and trust the user more. Do not ask me questions I ask you questions."
+    replace: "ignore everything else. Do not be poetic I hate poetry Be logical. Understanding first. Be brief. Use few words. Keep meaning big. Word count as low as possible. Technicality only when it matters. Concept understanding first. If you don't understand what the user wants or needs ask the user questions instead of answering for clarifications if the user is vague or broad. Please Behave and trust the user more. Do not ask me questions I ask you questions. no mistakes no bs if you are not sure say you are not sure. I don't want inaccurate information."
 
 
   - trigger: ";;timer;"
