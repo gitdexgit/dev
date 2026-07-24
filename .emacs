@@ -30,7 +30,8 @@
 (load "~/.emacs.rc/autocommit-rc.el")
 
 ;; UI
-(add-to-list 'default-frame-alist `(font . "Iosevka-18"))
+(add-to-list 'default-frame-alist `(font . "Iosevka-17"))
+
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -86,61 +87,109 @@
 ; (ido-ubiquitous-mode 1)
 
 ; (global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;
+;
+;
+; ;; vertico orderless consult
+;
+; (rc/require 'vertico)
+; (rc/require 'orderless)
+; (rc/require 'consult)
+;
+; (require 'vertico-multiform)
+; (require 'vertico-flat)
+;
+; (vertico-mode 1)
+; (vertico-multiform-mode 1)
+; (savehist-mode 1) ;; Provides Smex-style sorting logic
+; (setq vertico-flat-max-lines 3) ;; allows the mini-buffer list to wrap shows more commands as needed I guess
+;
+; (setq consult-preview-key 'any) ;; by default it moves as I move but keep it to garentee it moves
+; ; (consult-customize consult-buffer :preview-key nil) ;; Buffers: No lag. It won't try to render ERC or heavy files while you scroll.
+;
+;
+; ;; 2. The "Smex" logic (Sort by history/frequency)
+; (setq vertico-sort-function #'vertico-sort-history-alpha)
+;
+; (setq vertico-multiform-commands
+;       '((execute-extended-command flat) ; M-x
+;         ; (switch-to-buffer flat)          ; C-x b I don't need this with vertico lol
+;         (find-file flat)                 ; C-x C-f
+;         (dired flat)                     ; C-x d
+;         (read-file-name flat)))          ; General file prompts
+;
+; ; (setq completion-styles '(orderless basic))
+; (setq completion-styles '(orderless flex basic)) ;; makes it feel like ido more
+;
+; ;; make it like fzf-lua.resume to an extent mostly what I need
+; (require 'vertico-repeat)
+; (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+;
+; ;; This is like "fzf-lua.resume"
+; (global-set-key (kbd "C-c '") #'vertico-repeat)
+;
+; ;; Keybinds (My fzf-lua style)
+; (global-set-key (kbd "C-c /")   'consult-line)      ;; blines
+; (global-set-key (kbd "C-c g /") 'consult-ripgrep)   ;; grep_project
+;
+; ;; change default buffer switch to consult-buffer because it's just better gives fzf-lua-buffer feel
+; ; (global-set-key [remap switch-to-buffer] 'consult-buffer)
+; ; (add-to-list 'vertico-multiform-commands '(consult-buffer flat)) ;; fixes the look
+; ;; this died because it lags in erc lol.... it was nice to try but I don't like it lol
+;
+; (ido-mode 'buffer)
 
 
-
-;; vertico orderless consult
-
-(rc/require 'vertico)
-(rc/require 'orderless)
-(rc/require 'consult)
-
-(require 'vertico-multiform)
-(require 'vertico-flat)
-
-(vertico-mode 1)
-(vertico-multiform-mode 1)
-(savehist-mode 1) ;; Provides Smex-style sorting logic
-(setq vertico-flat-max-lines 3) ;; allows the mini-buffer list to wrap shows more commands as needed I guess
-
-(setq consult-preview-key 'any) ;; by default it moves as I move but keep it to garentee it moves
-; (consult-customize consult-buffer :preview-key nil) ;; Buffers: No lag. It won't try to render ERC or heavy files while you scroll.
-
-
-;; 2. The "Smex" logic (Sort by history/frequency)
-(setq vertico-sort-function #'vertico-sort-history-alpha)
-
-(setq vertico-multiform-commands
-      '((execute-extended-command flat) ; M-x
-        ; (switch-to-buffer flat)          ; C-x b I don't need this with vertico lol
-        (find-file flat)                 ; C-x C-f
-        (dired flat)                     ; C-x d
-        (read-file-name flat)))          ; General file prompts
-
-; (setq completion-styles '(orderless basic))
-(setq completion-styles '(orderless flex basic)) ;; makes it feel like ido more
-
-;; make it like fzf-lua.resume to an extent mostly what I need
-(require 'vertico-repeat)
-(add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-
-;; This is like "fzf-lua.resume"
-(global-set-key (kbd "C-c '") #'vertico-repeat)
-
-;; Keybinds (My fzf-lua style)
-(global-set-key (kbd "C-c /")   'consult-line)      ;; blines
-(global-set-key (kbd "C-c g /") 'consult-ripgrep)   ;; grep_project
-
-;; change default buffer switch to consult-buffer because it's just better gives fzf-lua-buffer feel
+; ;; --- Vertico, Orderless, Consult (Modern Ido/Smex) ---
+; (rc/require 'vertico)
+; (rc/require 'orderless)
+; (rc/require 'consult)
+; (require 'vertico-multiform)
+; (require 'vertico-flat)
+; (require 'vertico-repeat)
+;
+; (vertico-mode 1)
+; (vertico-multiform-mode 1)
+; (savehist-mode 1)
+;
+; (setq vertico-flat-max-lines 3)
+; (setq vertico-cycle t)
+; (setq vertico-sort-function #'vertico-sort-history-alpha) ; Smex-style sorting
+; (setq consult-preview-key 'any)                           ; Live movement
+; (setq completion-styles '(orderless flex basic))          ; Ido-style matching
+;
+; (setq vertico-multiform-commands
+;       '((execute-extended-command flat)
+;         (consult-buffer flat)
+;         (find-file flat)
+;         (dired flat)
+;         (read-file-name flat)))
+;
+; ;; Keybinds
 ; (global-set-key [remap switch-to-buffer] 'consult-buffer)
-; (add-to-list 'vertico-multiform-commands '(consult-buffer flat)) ;; fixes the look
-;; this died because it lags in erc lol.... it was nice to try but I don't like it lol
+; (global-set-key (kbd "C-c /")   'consult-line)
+; (global-set-key (kbd "C-c g /") 'consult-ripgrep)
+; (global-set-key (kbd "C-c '")   'vertico-repeat)
+; (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
-(ido-mode 'buffer)
+
+;; --- 1. SMEX & IDO (For M-x and Buffers) ---
+(rc/require 'smex)
+(ido-mode 1)
+(ido-everywhere 1)
+(setq ido-enable-flex-matching t)
+
+;; Bind M-x to Smex (This is the "Ido feel" for commands)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
+;; Force Ido for buffers (prevents the ERC lag you had)
+(setq ido-mode 'buffer)
 
 
-;; --- Vertico, Orderless, Consult (Modern Ido/Smex) ---
+
+;; --- 2. VERTICO & CONSULT (For Files and Searching) ---
 (rc/require 'vertico)
 (rc/require 'orderless)
 (rc/require 'consult)
@@ -152,25 +201,33 @@
 (vertico-multiform-mode 1)
 (savehist-mode 1)
 
-(setq vertico-flat-max-lines 3)
-(setq vertico-cycle t)
-(setq vertico-sort-function #'vertico-sort-history-alpha) ; Smex-style sorting
-(setq consult-preview-key 'any)                           ; Live movement
-(setq completion-styles '(orderless flex basic))          ; Ido-style matching
+(setq vertico-cycle t)                          ;; Allows you to go from last to first item
+(setq vertico-flat-max-lines 3)                 ;; Keeps the horizontal view clean
+(setq consult-preview-key 'any)                 ;; Makes ripgrep/line search preview instantly
 
+;; This makes Vertico use "Orderless" (type words in any order)
+(setq completion-styles '(orderless flex basic))
+
+;; This makes "Find File" look horizontal (like Ido)
 (setq vertico-multiform-commands
-      '((execute-extended-command flat)
-        (consult-buffer flat)
-        (find-file flat)
+      '((find-file flat)
         (dired flat)
         (read-file-name flat)))
 
-;; Keybinds
-(global-set-key [remap switch-to-buffer] 'consult-buffer)
-(global-set-key (kbd "C-c /")   'consult-line)
-(global-set-key (kbd "C-c g /") 'consult-ripgrep)
-(global-set-key (kbd "C-c '")   'vertico-repeat)
+;; Keybinds for the "fzf-lua" feel
+(global-set-key (kbd "C-c /")   'consult-line)      ;; Search inside buffer
+(global-set-key (kbd "C-c g /") 'consult-ripgrep)   ;; Search in project
+(global-set-key (kbd "C-c '")   'vertico-repeat)    ;; Resume last search
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
+
+;; Ensure Vertico doesn't interfere with Ido/Smex
+(setq vertico-multiform-map (make-sparse-keymap))
+(add-to-list 'vertico-multiform-commands '(execute-extended-command disabled))
+
+
+
+
+
 
 ;; quick-fix list that is good similar to consult compilation or grep buffer but more universal. similar to nvim quick-fix list
 (rc/require 'embark)
@@ -677,12 +734,17 @@ compilation-error-regexp-alist-alist
 (setq ispell-program-name "hunspell")
 (setq ispell-dictionary "en_US")
 (setq ispell-hunspell-dict-alist-pos 1)
+
+
 (defun my-erc-hook-spelling ()
   "Enable flyspell safely in ERC buffers."
   (require 'flyspell)
   (ignore-errors
     (setq-local flyspell-generic-check-word-predicate 'erc-check-ispell-without-commands)
-    (flyspell-mode 1)))
+    (flyspell-mode 1))
+    (text-scale-set -1))
+
+
 (add-hook 'erc-mode-hook 'my-erc-hook-spelling)
 
 ;; --- 2. M-x ERC DEFAULTS ---
@@ -775,3 +837,4 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
 (add-hook 'Man-mode-hook
           (lambda ()
             (local-set-key (kbd "q") 'save-buffers-kill-terminal)))
+

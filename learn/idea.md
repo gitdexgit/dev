@@ -2,6 +2,32 @@
 I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
+## Give these 3 legendary books on computers and It stuff a reading after you finish overthe write
+
+
+
+by steven who died btw recently:
+
+for networking(These rule and what not for networking are unchanged):
+
+`/home/dex/Downloads/[Addison-Wesley professional computing series] Stevens, W Richard_Fenner, Bill_Rudoff, Andrew M - UNIX Network Programming, Volume 1_ The Sockets Networking API (2003_2008, Addison-Wesley Professional) - libgen.li.pdf`
+
+`/home/dex/Downloads/UNIX Network Programming Volume.2 (Prentice.Hall) - libgen.li.pdf`
+
+And for OS:
+
+`/home/dex/Downloads/[Addison-Wesley professional computing series] Rago, Stephen A._ Stevens, W. Richard - Advanced Programming in the UNIX Environment, 3rd Edition (2013, Addison-Wesley Professional) - libgen.li.pdf`
+
+
+And for programming not just C the legendary book of coding and programming language the language basically:
+
+`/home/dex/Downloads/Ritchie, Dennis MacAlistair_ - The C Programming Language (1988) - libgen.li.pdf`
+
+
+
+
+btw that: `[Addison-Wesley professional computing series] Rago, Stephen A._ Stevens, W. Richard - Advanced Programming in the UNIX Environment, 3rd Edition (2013, Addison-Wesley Professional) - libgen.li` this one you can use as like a man page always have it with you and you know... go to the table of content where you need it. That's what gurus maybe use idk.
+
 ## get to know and use perl
 Learn perl but don't learn everyrthing just learn PCRE regex, how to mass rename files and folders and things like that or even mass create and things like that. One-liners that do sed and awk and that's it really. that is the value of perl today. Increase your text manipulation skills after ofc you master the basics of sed and grep and awk and get familar with them and bash and regex then you move to perl. it is useless to move to perl when you know know how to use the basic commands but only at a basic level right? like tldr level.
 

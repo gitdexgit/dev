@@ -1,9 +1,48 @@
-# Reduces the 'ramping up' feel, making movement more instant
+# --- Visuals ---
+hint_font_size: 20
+hint_bgcolor: #000000
+hint_fgcolor: #ffffff
+hint_border_radius: 4
+
+# --- Snappy Physics ---
 acceleration_exponent: 1.0
 acceleration_time: 0
-
-# Increase speed to make it feel snappier
-speed: 200
-
-# Ensure the hint/grid overlay doesn't use too many resources
+speed: 250
 cursor_size: 6
+
+# --- Exit Strategy ---
+exit: q
+
+# --- Movement (Vim + Emacs Hybrid) ---
+up: k p
+down: j n
+left: h b
+right: l f
+
+# --- Vertical Scrolling ---
+# s/d for vertical scrolling
+scroll_up: d
+scroll_down: s
+scroll_speed: 300
+
+## scroll_right and scroll_left don't exist yet so we need to add them
+# make scroll_right: e
+# make scroll_left: a
+
+
+# --- Mouse Buttons (Clicks) ---
+buttons: m , .
+buttons: m w r
+
+screen: o
+
+
+# --- Mode Switching ---
+# 'v' for Hints (Teleport)
+hint: v
+# 'g' for Grab (Drag)
+drag: g
+
+# --- Grid (Disabled) ---
+# We unbind this so it doesn't conflict with 'g' for drag
+grid: unbind
