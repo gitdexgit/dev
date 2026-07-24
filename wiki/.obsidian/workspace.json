@@ -11,32 +11,17 @@
             "id": "c95d43b0ff3d6abd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "webviewer",
               "state": {
-                "file": "current_struggles/Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing.md",
-                "mode": "preview",
-                "source": false
+                "url": "http://localhost:8080/content/wikipedia_en_top_maxi_2026-03/Regional_Internet_registry#Local_Internet_registry",
+                "title": "Regional Internet registry",
+                "mode": "reader"
               },
-              "icon": "lucide-file",
-              "title": "Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing"
-            }
-          },
-          {
-            "id": "3fc57ee1f7114095",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "build man-made solutions applying principles of computational thinking that work"
+              "icon": "globe-2",
+              "title": "Regional Internet registry"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -127,7 +112,6 @@
             "state": {
               "type": "localgraph",
               "state": {
-                "file": "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
                 "options": {
                   "collapse-filter": false,
                   "search": "",
@@ -155,7 +139,27 @@
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "Graph of build man-made solutions applying principles of computational thinking that work"
+              "title": "Graph view"
+            }
+          }
+        ]
+      },
+      {
+        "id": "14575b035410371c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1796f2e65b4fcd83",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
             }
           }
         ]
@@ -170,7 +174,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "current_struggles/build man-made solutions applying principles of computational thinking that work.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -180,7 +183,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for build man-made solutions applying principles of computational thinking that work"
+              "title": "Backlinks"
             }
           },
           {
@@ -232,23 +235,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
-            }
-          },
-          {
-            "id": "1796f2e65b4fcd83",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "current_struggles/THE PROGRAMMER PROCESS PRINCIPLES.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "Outline of THE PROGRAMMER PROCESS PRINCIPLES"
+              "icon": "lucide-ghost",
+              "title": "calendar"
             }
           }
         ]
@@ -281,12 +269,12 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false,
       "obsidian-excalidraw-plugin:New drawing": false,
       "obsidian-shellcommands:Shell commands: Custom variables": false,
+      "periodic-notes:Open today": false,
       "obsidian-kanban:Create new board": false,
-      "tldraw:Create new tldrawing": false,
-      "periodic-notes:Open today": false
+      "tldraw:Create new tldrawing": false
     }
   },
-  "active": "3fc57ee1f7114095",
+  "active": "c95d43b0ff3d6abd",
   "lastOpenFiles": [
     "current_struggles/Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing.md",
     "current_struggles/THE PROGRAMMER PROCESS PRINCIPLES.md",

@@ -2,6 +2,10 @@
 I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
+## get to know and use perl
+Learn perl but don't learn everyrthing just learn PCRE regex, how to mass rename files and folders and things like that or even mass create and things like that. One-liners that do sed and awk and that's it really. that is the value of perl today. Increase your text manipulation skills after ofc you master the basics of sed and grep and awk and get familar with them and bash and regex then you move to perl. it is useless to move to perl when you know know how to use the basic commands but only at a basic level right? like tldr level.
+
+
 ## Try to make an IRC client
 
 Make an IRC client for learning purposes see how it can be duable they say it's not hard but who knows.

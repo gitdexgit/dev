@@ -14,6 +14,8 @@
 
 
 
+
+
 ;;; so
 
 (add-to-list 'load-path "~/.emacs.local/")
@@ -34,6 +36,23 @@
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (show-paren-mode 1)
+
+(require 'mouse-drag)
+
+;; Bind Left Mouse Button (1) to drag the buffer
+(global-set-key [down-mouse-3] 'mouse-drag-drag)
+
+;; Important: Disable "copy on drag" so it doesn't mess with text selection
+(setq mouse-drag-copy-region nil)
+
+;; Enable pixel-level smoothness (Emacs 29+)
+(pixel-scroll-precision-mode 1)
+
+
+(with-eval-after-load 'info
+  (define-key Info-mode-map [mouse-8] 'Info-history-back)
+  (define-key Info-mode-map [mouse-9] 'Info-history-forward))
+
 
 
 ;; Esensial modes
@@ -86,13 +105,15 @@
 (setq vertico-flat-max-lines 3) ;; allows the mini-buffer list to wrap shows more commands as needed I guess
 
 (setq consult-preview-key 'any) ;; by default it moves as I move but keep it to garentee it moves
+; (consult-customize consult-buffer :preview-key nil) ;; Buffers: No lag. It won't try to render ERC or heavy files while you scroll.
+
 
 ;; 2. The "Smex" logic (Sort by history/frequency)
 (setq vertico-sort-function #'vertico-sort-history-alpha)
 
 (setq vertico-multiform-commands
       '((execute-extended-command flat) ; M-x
-        (switch-to-buffer flat)          ; C-x b
+        ; (switch-to-buffer flat)          ; C-x b I don't need this with vertico lol
         (find-file flat)                 ; C-x C-f
         (dired flat)                     ; C-x d
         (read-file-name flat)))          ; General file prompts
@@ -112,9 +133,11 @@
 (global-set-key (kbd "C-c g /") 'consult-ripgrep)   ;; grep_project
 
 ;; change default buffer switch to consult-buffer because it's just better gives fzf-lua-buffer feel
-(global-set-key [remap switch-to-buffer] 'consult-buffer)
-(add-to-list 'vertico-multiform-commands '(consult-buffer flat)) ;; fixes the look
+; (global-set-key [remap switch-to-buffer] 'consult-buffer)
+; (add-to-list 'vertico-multiform-commands '(consult-buffer flat)) ;; fixes the look
+;; this died because it lags in erc lol.... it was nice to try but I don't like it lol
 
+(ido-mode 'buffer)
 
 
 ;; --- Vertico, Orderless, Consult (Modern Ido/Smex) ---
@@ -743,3 +766,12 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
 (setq erc-insert-timestamp-function 'erc-insert-timestamp-left)
 (setq erc-header-line-format "%t")
 (setq erc-bufbar-width 15)
+
+;; for live preview
+(with-eval-after-load 'man
+  (define-key Man-mode-map (kbd "M-i") 'consult-imenu)) ;; <--- Changed 'imenu to 'consult-imenu
+
+;; Keep the 'q' fix
+(add-hook 'Man-mode-hook
+          (lambda ()
+            (local-set-key (kbd "q") 'save-buffers-kill-terminal)))

@@ -2,6 +2,7 @@
 xrdb -merge ~/.Xresources
 setxkbmap us
 xset r rate 220 50
+xset s off -dpms
 
 # 2. Monitor Setup
 xrandr --output HDMI-1 --mode 1920x1080 --primary --output eDP-1 --off

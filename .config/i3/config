@@ -141,7 +141,6 @@ exec --no-startup-id dunst
 # exec --no-startup-id zeal
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
 # exec --no-startup-id xbindkeys
-exec --no-startup-id xset s off -dpms
 exec_always --no-startup-id sh -c "setxkbmap us; xset r rate 220 50"
 exec --no-startup-id xsetroot -solid "#000000"
 
@@ -313,7 +312,7 @@ for_window [instance="floating_thunar"]   floating enable
 for_window [class="st_task"]       floating enable
 for_window [class="st_btop"]       floating enable
 
-for_window [class="st_task"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+for_window [class="st_task"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 bindsym $mod+shift+t exec --no-startup-id ~/.config/i3/task_toggle.sh
 
 
@@ -339,6 +338,9 @@ bindsym $mod+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.s
 # for_window [class="st_main"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 # bindsym $mod+Shift+Control+BackSpace exec --no-startup-id ~/.config/i3/main_toggle.sh
 
+# I hate the mouse scroll on the tabbed by mistake
+bindsym button4 nop
+bindsym button5 nop
 
 # --- Tmux Session Tiled Terminals ---
 # bindsym $mod+Control+s exec st -e tmux new-session -A -s session
@@ -952,6 +954,8 @@ bindsym $mod+r mode "resize"
 # =====================================================================
 
 bar {
+    wheel_up_cmd nop
+    wheel_down_cmd nop
     status_command i3status
     position bottom
     strip_workspace_numbers yes
