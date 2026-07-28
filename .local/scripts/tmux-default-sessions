@@ -21,10 +21,10 @@ echo "--- Starting ---"
 
 
 
-tmux new-session -d -s "word" -c "$HOME" -n "d"
-tmux send-keys -t "word:d" "d "
-
-tmux new-window -t "word:2" -c "$HOME" -n "ai-d"
+# tmux new-session -d -s "word" -c "$HOME" -n "d"
+# tmux send-keys -t "word:d" "d "
+#
+# tmux new-window -t "word:2" -c "$HOME" -n "ai-d"
 
 # tmux new-session -d -s "wiki" -c "$HOME/wiki/" -n "zsh"
 
@@ -37,17 +37,17 @@ tmux new-window -t "word:2" -c "$HOME" -n "ai-d"
 # Create session "learn" and name window 1 "main"
 
 tmux new-session -d -s "learn" -c "$HOME/learn" -n "main"
-tmux send-keys -t "learn:main" "nvim aha.md" C-m
+tmux send-keys -t "learn:idk" "nvim idk.md" C-m
 
 # Window 2
-tmux new-window -t "learn:2" -c "$HOME/learn/buffer" -n "duck"
-tmux send-keys -t "learn:duck" "nvim duck.md" C-m
+# tmux new-window -t "learn:2" -c "$HOME/learn/buffer" -n "duck"
+# tmux send-keys -t "learn:duck" "nvim duck.md" C-m
 
 # Window 3
-tmux new-window -t "learn:3" -c "$HOME/wiki/" -n "wiki"
+tmux new-window -t "learn:2" -c "$HOME/wiki/" -n "wiki"
 
 # Focus window 1
-tmux select-window -t "learn:main"
+tmux select-window -t "learn:idk"
 
 
 

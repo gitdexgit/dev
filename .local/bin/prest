@@ -1,0 +1,26 @@
+#!/bin/bash
+WS_NAME=$(i3-msg -t get_workspaces | jq -r '.[] | select(.num == 10) | .name')
+START_TIME_STR=$(echo "$WS_NAME" | cut -d':' -f3-5)
+
+if [[ ! "$START_TIME_STR" =~ ^[0-9]{2}:[0-9]{2}:[0-9]{2}$ ]]; then
+    echo "Error: No valid timestamp."
+    exit 1
+fi
+
+START_TS=$(date -d "$START_TIME_STR" +%s)
+NOW_TS=$(date +%s)
+
+ELAPSED=$(( NOW_TS - START_TS ))
+
+# If negative, the clock hit 00:00. Add 24 hours to resolve.
+if [ $ELAPSED -lt 0 ]; then
+    ELAPSED=$(( ELAPSED + 86400 ))
+fi
+
+TOTAL_DURATION=3600
+
+awk -v e="$ELAPSED" -v t="$TOTAL_DURATION" 'BEGIN {
+    p = (e / t) * 100;
+    if (p > 100) printf "Time up! %.1f%% passed\n", p
+    else printf "Progress: %.1f%% passed | %.1f%% left\n", p, 100-p
+}'

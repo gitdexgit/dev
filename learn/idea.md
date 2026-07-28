@@ -1,9 +1,67 @@
+very good ideas:
 
-I have 770+ lines of words in idea.md I need to refactor at some point.
+
+## Write a book called "Building a First Brain"
+
+The core is SMT protocol. Student Mentor and Teacher.
+
+Student has the ultralearning mentality
+
+Mentor has the socratic mentality
+
+And the teacher has the feynman mentality
+
+Then we explain the edge cases ... simple but that's about it.
+
+
+call it the following:
+
+Recommended Title:
+Building a First Brain: The SMT Protocol
+
+Why this works:
+
+ The Hook: "Building a First Brain" (The "What").
+
+ The Mechanism: "The SMT Protocol" (The "How").
+
+ The Contrast: It immediately signals that this is a system, not just a philosophy.
+
+
+
+## make ttypio
+
+
+man these github projects tt and typicoa for monkey type
+clone.... typicoa got the design interface of how the game
+should look very well... it just lacks bigger timer bigger
+numbers while tt got the big numbers and pipes and things
+like that it lacks a good playing interface
+
+
+
+fucking hell I don't know go I would have loved to merge
+these into ttype tt + typicoa = ttypi
+man github hasn't been updated both of them since like 3y ago
+or something sigh... I guess something to add to the todo
+list
+
+
+
+merge these two projects
+
+This one:
+https://github.com/lemnos/tt
+
+and This one:
+https://github.com/bloznelis/typioca
+
+
+
+
 
 
 ## Give these 3 legendary books on computers and It stuff a reading after you finish overthe write
-
 
 
 by steven who died btw recently:
@@ -27,6 +85,85 @@ And for programming not just C the legendary book of coding and programming lang
 
 
 btw that: `[Addison-Wesley professional computing series] Rago, Stephen A._ Stevens, W. Richard - Advanced Programming in the UNIX Environment, 3rd Edition (2013, Addison-Wesley Professional) - libgen.li` this one you can use as like a man page always have it with you and you know... go to the table of content where you need it. That's what gurus maybe use idk.
+
+
+
+## Make books.md and now you are ready to read books fully.
+
+      Setup
+Use a single file: `books.md`.
+
+      Syntax
+Use prefixes for status and hashtags for subjects.
+
+*   `[R]` = Read / Worth studying.
+*   `[S]` = Skimmed / Re-reading.
+*   `#subject` = Categorization.
+
+**Example:**
+- [R] *Title A* #psychology #logic
+- [S] *Title B* #history
+- [R] *Title C* #logic
+
+     Why this works
+1.  **Portability:** It is plain text. Any editor reads it.
+2.  **Search:** Use `Ctrl+F` for titles or click tags in Obsidian to filter by subject.
+3.  **Simplicity:** No complex plugins or folders needed.
+
+      Future Proofing
+If the list grows too large, Obsidian's **Dataview** plugin can turn this list into a dynamic table automatically, but the manual list is the best starting point.
+
+**Is this structure sufficient for your needs?**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I have 770+ lines of words in idea.md I need to refactor at some point.
+
+
+
+
+
+
+
+
+
+## Build a house from scratch on my own.
+Build a house like our mud house from mud right on your own.
+
+
+
+
+
+
 
 ## get to know and use perl
 Learn perl but don't learn everyrthing just learn PCRE regex, how to mass rename files and folders and things like that or even mass create and things like that. One-liners that do sed and awk and that's it really. that is the value of perl today. Increase your text manipulation skills after ofc you master the basics of sed and grep and awk and get familar with them and bash and regex then you move to perl. it is useless to move to perl when you know know how to use the basic commands but only at a basic level right? like tldr level.

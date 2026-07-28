@@ -348,15 +348,6 @@ otherwise shows current directory."
       (setq-local mode-line-buffer-identification
                   (list " " display-name)))))
 
-(defun my-vterm-start-polling ()
-  "Start polling for changes (directory or title) in vterm."
-  (when (not vterm--term) (sit-for 0.1))
-  (my-vterm-update-buffer-name)
-  ;; Poll every 0.5 seconds – lightweight and catches title updates from nvim
-  (run-with-timer 0.5 0.5 #'my-vterm-update-buffer-name))
-
-(add-hook 'vterm-mode-hook #'my-vterm-start-polling)
-
 ;; Disable line numbers in vterm (cleaner look)
 (add-hook 'vterm-mode-hook
           (lambda ()
@@ -716,14 +707,6 @@ compilation-error-regexp-alist-alist
 (global-set-key (kbd "C-;") 'rc/comment-line-stay)
 
 
-;; --- changing the default C-x C-b to be using the M-x ibuffer because it's nicer than the default one.
-(global-set-key [remap list-buffers] 'ibuffer)
-
-
-
-
-
-
 
 ;; --- ERC AUTOJOIN FORCED FIX (v19 - SASL + no shadow bug) ---
 (require 'erc)
@@ -731,9 +714,11 @@ compilation-error-regexp-alist-alist
 (require 'auth-source)
 
 ;; --- 1. SPELLING FIX ---
-(setq ispell-program-name "hunspell")
-(setq ispell-dictionary "en_US")
-(setq ispell-hunspell-dict-alist-pos 1)
+;; Use aspell it is the default it is good so if it's the default then no need to uncomment these
+
+; (setq ispell-program-name "hunspell")
+; (setq ispell-dictionary "en_US")
+; (setq ispell-hunspell-dict-alist-pos 1)
 
 
 (defun my-erc-hook-spelling ()
@@ -812,8 +797,8 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
                               "324" "328" "329" "332" "333" "353" "366"))
 (setq erc-autojoin-on-identify 'all)
 (setq erc-autojoin-channels-alist
-      '(("Libera.Chat" "##programming" "#bash" "#emacs" "#kali" "#linux"
-         "#hackers" "#c" "#c++" "#ai" "#c++-general"
+      '(("Libera.Chat" "##programming" "#bash" "#emacs" "#linux"
+         "#hackers" "#c++" "#ai" "#c++-general"
          "#c++-basic" "#rust" "#lua" "#go-nuts" "#odin" "#ctf"
          "#picoctf" "#networking" "#python")))
 

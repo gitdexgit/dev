@@ -128,6 +128,7 @@ workspace 43 output eDP-1
 # AUTOSTART
 # =====================================================================
 
+exec --no-startup-id emacs --daemon
 
 # 1. Start the daemon on login
 # exec --no-startup-id skippy-xd --start-daemon
@@ -227,12 +228,14 @@ assign [class="default-release"] $ws1
 # Float dmenu and pin to top-center
 for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
 
+# # Target the specific title we set in the script
+# for_window [title="screenshot_pin"] floating enable, sticky disable, border none
 
 # Send Qalculate to scratchpad automatically
 # for_window [class="Qalculate-gtk"] floating enable, move scratchpad
 
 # Only float windows with the specific class 'pin_shot'
-for_window [class="pin_shot"] floating enable, sticky enable, border pixel 2
+for_window [class="pin_shot"] floating enable, border none
 
 for_window [instance="godot"] floating enable
 for_window [title="Godot"] floating enable
@@ -353,6 +356,7 @@ bindsym button5 nop
 # bindsym $mod+Control+c exec st -e tmux new-session -A -s config
 # bindsym $mod+Control+Delete exec st -e tmux new-session -A -s duck
 
+bindsym $mod+Control+e exec emacsclient -c
 bindsym $mod+Control+s exec st -t session -e tmux new-session -A -s session
 bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s learn
 bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s btop
@@ -439,6 +443,8 @@ bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, border none, mov
 # bindsym Mod1+F11 exec --no-startup-id "i3-msg 'border none, move position 0 0, resize set 1924 1075'"
 # bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, move position -3 0, resize set 1924 1075'"
 bindsym Mod1+Shift+F11 exec --no-startup-id "~/scripts/i3/toggle-border.sh"
+
+
 
 # --- Desktop Navigation ---
 bindsym Control+Mod1+Right exec --no-startup-id "xdotool set_desktop --relative -- 1"

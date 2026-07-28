@@ -7,7 +7,7 @@ hint_border_radius: 4
 # --- Snappy Physics ---
 acceleration_exponent: 1.0
 acceleration_time: 0
-speed: 250
+speed: 200
 cursor_size: 6
 
 # --- Exit Strategy ---

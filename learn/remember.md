@@ -1,5 +1,39 @@
 
 
+
+
+
+
+Remember in idk.md which was aha.md in ~/learn directory. Please call the coach a mentor from now on. and give him the
+M:
+
+so we have S: then M: then we have T:
+
+
+
+---------
+
+feynman sayings:
+
+
+- Knowing the name of a bird in 10 languages tells you nothing about the bird. It only tells you about humans.
+- What I cannot create, I do not understand.
+  (If you can't build the logic from scratch, you don't own it.)
+
+
+
+
+
+
+
+--------
+
+
+
+
+
+
+
 Remember this table sizes. I bet there is this table exactly on a man page like the man ascii page right?
 
 +----------+------+----------+

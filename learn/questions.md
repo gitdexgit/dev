@@ -24,8 +24,6 @@
 
 
 
-
-
 ## What is hacking? Commit to memory this hacker definition, it includes systems and clearly defines the 2 types of hackers:
 
 
