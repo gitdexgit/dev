@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Parse input
+SEC=$(echo "$*" | sed 's/min/*60/g; s/m/*60/g; s/h/*3600/g; s/s//g' | bc)
+[[ -z "$SEC" ]] && SEC=300
+
+# Infinite loop
+while true; do
+    # Determine if we are in negative time
+    if [ $SEC -lt 0 ]; then
+        SIGN="-"
+        # Use the absolute value for the math
+        CUR_SEC=$(( -SEC ))
+    else
+        SIGN=" "
+        CUR_SEC=$SEC
+    fi
+
+    # Format and print
+    # %s for the sign, then the standard HH:MM:SS
+    printf "\r%s%02d:%02d:%02d" "$SIGN" $((CUR_SEC/3600)) $(((CUR_SEC/60)%60)) $((CUR_SEC%60))
+
+    sleep 1
+    ((SEC--))
+done

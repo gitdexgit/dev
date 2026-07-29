@@ -1,0 +1,2 @@
+#!/bin/bash
+cd ~/tmpshot && rm -rf ./*

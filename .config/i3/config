@@ -137,6 +137,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id espanso daemon
 exec --no-startup-id flameshot
+exec --no-startup-id xset s off -dpms
 # exec --no-startup-id qalculate-gtk
 exec --no-startup-id dunst
 # exec --no-startup-id zeal
@@ -312,28 +313,31 @@ for_window [instance="floating_thunar"]   floating enable
 # for_window [class="st_scratch"]    floating enable
 # for_window [class="st_draft"]      floating enable
 # for_window [class="st_duck"]       floating enable
-for_window [class="st_task"]       floating enable
-for_window [class="st_btop"]       floating enable
+# for_window [class="st_scratch"]       floating enable
+# for_window [class="st_btop"]       floating enable
 
-for_window [class="st_task"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
-bindsym $mod+shift+t exec --no-startup-id ~/.config/i3/task_toggle.sh
-
+for_window [class="st_scratch"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+bindsym $mod+t exec --no-startup-id ~/.config/i3/scratch_toggle.sh
 
 # Btop  (Mod+Shift+b)
 for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
 bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/btop_toggle.sh
 
-
-# Wiki  (Mod+Alt+BackSpace)
-for_window [class="st_sync"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
-bindsym $mod+Mod1+BackSpace exec --no-startup-id ~/.config/i3/sync_toggle.sh
-
-
 for_window [class="st_learn"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
-bindsym $mod+Control+Shift+f exec --no-startup-id ~/.config/i3/work_toggle.sh
+bindsym $mod+Control+Shift+f exec --no-startup-id ~/.config/i3/learn_toggle.sh
 
 for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 bindsym $mod+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.sh
+
+
+
+
+
+# Wiki  (Mod+Alt+BackSpace)
+# for_window [class="st_sync"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+# bindsym $mod+Mod1+BackSpace exec --no-startup-id ~/.config/i3/sync_toggle.sh
+
+
 
 # for_window [class="st_duck"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
 # bindsym $mod+Control+Shift+d exec --no-startup-id ~/.config/i3/duck_toggle.sh
@@ -357,15 +361,15 @@ bindsym button5 nop
 # bindsym $mod+Control+Delete exec st -e tmux new-session -A -s duck
 
 bindsym $mod+Control+e exec emacsclient -c
-bindsym $mod+Control+s exec st -t session -e tmux new-session -A -s session
-bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s learn
-bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s btop
-bindsym $mod+Control+w exec st -t word -e tmux new-session -A -s word
+bindsym $mod+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
+bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s "*learn*"
+bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
+# bindsym $mod+Control+w exec st -t word -e tmux new-session -A -s word
 # bindsym $mod+Control+Return exec st -t main -e tmux new-session -A -s main
 # bindsym $mod+Control+Left exec st -t btop -e tmux new-session -A -s btop
 # bindsym $mod+Control+m exec st -t main -e tmux new-session -A -s main
 # bindsym $mod+Control+d exec st -t duck -e tmux new-session -A -s duck
-bindsym $mod+Control+c exec st -t config -e tmux new-session -A -s config
+bindsym $mod+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 # bindsym $mod+Control+t exec st -e tmux-sessionizer
 # bindsym $mod+Control+Delete exec st -t duck -e tmux new-session -A -s duck
 

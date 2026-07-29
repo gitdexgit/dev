@@ -117,10 +117,13 @@ If the list grows too large, Obsidian's **Dataview** plugin can turn this list i
 
 
 
+## Build a big mud house our house but bigger
+The trick is using thicker walls and Iron type H that is think and strong. And you put as many as you need.
 
 
 
-
+## Build a house from scratch on my own.
+Build a house like our mud house from mud right on your own.
 
 
 
@@ -156,8 +159,6 @@ I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
 
-## Build a house from scratch on my own.
-Build a house like our mud house from mud right on your own.
 
 
 

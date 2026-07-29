@@ -418,8 +418,8 @@ alias -g vim='nvim'
 alias vimrc='cd ~/.config/nvim/ ; nvim .'
 
 # Also Afeh and AFEH are in ~/.local/bin/ as binaries for dmenu availability
-alias Afeh='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless --info "echo %F" .'
-alias AFEH='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless'
+# alias Afeh='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless --info "echo %F" .'
+# alias AFEH='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 --borderless'
 
 
 
@@ -428,7 +428,7 @@ alias AFEH='cd ~/tmpshot ; feh -R 5 -S mtime --reverse --geometry 3286x1080+0+0 
 # alias streamlink='streamlink --player mpv'
 
 # Look for word meaning real quick... scuffed but works
-alias define='sdcv'
+# alias define='sdcv'
 
 # Still i'm too used to the ]]r screw it it's a cool
 alias -g ]]r='source ~/.zshrc ; source ~/.zshenv'
@@ -533,8 +533,10 @@ alias clrea='clear; _NEW_LINE_BEFORE_PROMP=1'
 alias clrfea='clear; _NEW_LINE_BEFORE_PROMPT=1'
 
 
+# dictionary
 alias dict='dict -d wn'
 alias d='dict -d wn'
+# alias define='dict -d wn'
 
 
 # Remote Access (VPN + Security)

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+SEC=600
+
+# Use 'while true' so it never stops at 0
+while true; do
+    # 1. Determine the sign and the absolute value for calculation
+    if [ $SEC -lt 0 ]; then
+        SIGN="-"
+        ABS_SEC=$(( -SEC ))
+    else
+        SIGN=" "
+        ABS_SEC=$SEC
+    fi
+
+    # 2. Print the sign followed by formatted HH:MM:SS
+    # Using ABS_SEC ensures minutes and seconds don't show up as negative numbers (like 00:00:-01)
+    printf "\r%s%02d:%02d:%02d" "$SIGN" $((ABS_SEC/3600)) $(( (ABS_SEC/60)%60 )) $((ABS_SEC%60))
+
+    sleep 1
+    ((SEC--))
+done

@@ -1,2 +1,4 @@
 set selection-clipboard clipboard
 set selection-notification false
+map <PageDown> scroll half-down
+map <PageUp>   scroll half-up
