@@ -24,6 +24,35 @@
 
 
 
+
+
+## Does someone really need to know everything about something in order to understand it?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## What is hacking? Commit to memory this hacker definition, it includes systems and clearly defines the 2 types of hackers:
 
 

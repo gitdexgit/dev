@@ -1,27 +1,44 @@
 #!/bin/bash
-
-# A script to kill, pause, or continue a process by clicking its window.
-
+# xcontrol: Suspend (-z) or Continue (-c) on LEFT click only. Right/middle = cancel.
 case "$1" in
-    -p|--pause)
-        echo "Click on the window to PAUSE..."
-        pid=$(xprop _NET_WM_PID | awk '{print $3}')
-        if [[ -n "$pid" ]]; then
-            kill -STOP "$pid"
-        fi
-        ;;
-
-    -c|--continue)
-        echo "Click on the window to CONTINUE..."
-        pid=$(xprop _NET_WM_PID | awk '{print $3}')
-        if [[ -n "$pid" ]]; then
-            kill -CONT "$pid"
-        fi
-        ;;
-
-    *)
-        # Default behavior: run the original xkill.
-        # "$@" passes all arguments (like -id, -frame) to the real xkill.
-        /usr/bin/xkill "$@"
-        ;;
+    -z) SIG="STOP" ;;
+    -c) SIG="CONT" ;;
+    *) exit 1 ;;
 esac
+
+# find pointer device id
+DEVID=$(xinput list --id-only "Virtual core pointer" 2>/dev/null)
+[ -z "$DEVID" ] && DEVID=2
+
+BTNFILE=$(mktemp)
+
+# background watcher: capture first button number pressed
+(
+    xinput test-xi2 --root "$DEVID" 2>/dev/null | while read -r line; do
+        [[ "$line" == *"ButtonPress"* ]] && MODE=1
+        if [[ "$MODE" == 1 && "$line" == *"detail:"* ]]; then
+            echo "${line//[^0-9]/}" > "$BTNFILE"
+            break
+        fi
+    done
+) &
+WATCHER=$!
+
+# crosshair cursor, waits for click, returns window id (same click as watcher sees)
+WID=$(xwininfo -int | sed -n 's/.*Window id: \([0-9]\+\).*/\1/p')
+
+# give watcher a moment to write button (should already be done, same event)
+for i in 1 2 3 4 5; do
+    [ -s "$BTNFILE" ] && break
+    sleep 0.05
+done
+
+BTN=$(cat "$BTNFILE" 2>/dev/null)
+rm -f "$BTNFILE"
+kill "$WATCHER" 2>/dev/null
+
+[ -z "$WID" ] && exit 1
+[ "$BTN" != "1" ] && exit 0   # not left click -> cancel, no action
+
+PID=$(xprop -id "$WID" _NET_WM_PID | awk '{print $3}')
+[ -n "$PID" ] && kill -"$SIG" "$PID"

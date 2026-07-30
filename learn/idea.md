@@ -149,6 +149,22 @@ Build a house like our mud house from mud right on your own.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
@@ -156,9 +172,55 @@ I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
 
+## try out exwm
+give this exwm a try:
 
-
-
+[16:44] <dex3rd`> I got so fascinated by C-x I made it system wide. But,
+                  making it system wide using let's say xremap is a bad idea
+                  because it will conflict with other programs. luckily xremap
+                  has the ability to know which window it is on and not. But,
+                  that is not a good solution.
+        <dex3rd`> Because you'd have to manage the headache of "if/then"
+                  window is on or off... and you keep losing the C-x prefix
+                  system wide.
+        <bremner> tusharhero-xmpp: I think it's a combination of high
+                  reputation site and maybe less ambitious countermeasuers
+        <technomancy> you can also use exwm to get emacs bindings systemwide
+        <dex3rd> Well guess how I solved it?
+[16:45] <bremner> goats?
+[16:46] <dex3rd> Well... if C-x is not possible how about C-M-A-x ? and then
+                 maybe use a program like 'keyd' to make it so if you hold
+                 your tab 180ms it turns it into a different keyboard. thus
+                 holding Tab then hitting x is the same as sending
+                 C-M-A-x. And we use this key combo in the xremap config in
+                 .config/xremap.yml
+        <dex3rd> smart right?
+[16:47] <technomancy> dex3rd: it's always going fall in the uncanny valley
+                      unless you use exwm
+[16:48] <dex3rd> well I'm just happy that tab+x b now gives me rofi -windowcd
+                 heheheh I'm basically stealing C-x t t and using Tab-x t t
+                 and things like that from emacs
+        <dex3rd> and applying the things to the os
+[16:50] <dex3rd> I also stole the idea of M-x I loved the naming scheme
+                 verb-name things like that name-name-name... tells you what
+                 the thing does. Can even do it to arguments. So most frequent
+                 programs I use if they are longer than 2 names I do that
+                 naming schema. And put the program or script in
+                 .local/bin... do dmenu feeds like M-x. But sadly I don't like
+                 M-x I believe Super+d is the way to go.
+        <dex3rd> Pretty cool right? stealing from emacs and using it on my
+                 OS. But still using emacs? Ofc some stuff can't be stolen or
+                 don't make sense I guess but it is what it is... we steal
+                 from nvim sometimes as well :D
+[16:51] <skulk> you really should try out exwm
+        <dex3rd> I'll try it out at some day... exwm... but it has to be
+                 exactly like i3 or else I'm not trying it out.
+        <technomancy> oh, it's way better
+[16:52] <hodapp> so far I've not been dedicated enough to try out exwm
+        <dex3rd> no I don't need way better than i3 I need exactly i3
+        <technomancy> dex3rd: you just spent several lines explaining that i3
+                      doesn't do what you want
+        * dex3rd adding - [ ] try out exwm. To the todo list in idea.md
 
 
 

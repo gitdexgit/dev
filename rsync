@@ -75,6 +75,7 @@ HOME_TARGETS=(
     ".config/yazi"
     ".dotfiles"
     ".config/fzf"
+    ".config/xremap.yml"
     "tool"
     ".config/systemd"
     # ".emacs.d/init.el"

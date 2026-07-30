@@ -130,6 +130,8 @@ workspace 43 output eDP-1
 
 exec --no-startup-id emacs --daemon
 
+exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
+
 # 1. Start the daemon on login
 # exec --no-startup-id skippy-xd --start-daemon
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -316,17 +318,17 @@ for_window [instance="floating_thunar"]   floating enable
 # for_window [class="st_scratch"]       floating enable
 # for_window [class="st_btop"]       floating enable
 
-for_window [class="st_scratch"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+for_window [class="st_scratch"] floating enable, border none, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
 bindsym $mod+t exec --no-startup-id ~/.config/i3/scratch_toggle.sh
 
 # Btop  (Mod+Shift+b)
 for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
 bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/btop_toggle.sh
 
-for_window [class="st_learn"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+for_window [class="st_learn"] floating enable, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
 bindsym $mod+Control+Shift+f exec --no-startup-id ~/.config/i3/learn_toggle.sh
 
-for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
+for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
 bindsym $mod+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.sh
 
 
@@ -361,29 +363,37 @@ bindsym button5 nop
 # bindsym $mod+Control+Delete exec st -e tmux new-session -A -s duck
 
 bindsym $mod+Control+e exec emacsclient -c
+
 bindsym $mod+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
+
+
+for_window [title="learn"] border none
 bindsym $mod+Control+l exec st -t learn -e tmux new-session -A -s "*learn*"
+
+for_window [title="^btop$"] border none
 bindsym $mod+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
 # bindsym $mod+Control+w exec st -t word -e tmux new-session -A -s word
 # bindsym $mod+Control+Return exec st -t main -e tmux new-session -A -s main
 # bindsym $mod+Control+Left exec st -t btop -e tmux new-session -A -s btop
 # bindsym $mod+Control+m exec st -t main -e tmux new-session -A -s main
 # bindsym $mod+Control+d exec st -t duck -e tmux new-session -A -s duck
+
+
+for_window [title="^config$"] border none
 bindsym $mod+Control+c exec st -t config -e tmux new-session -A -s "*config*"
+
 # bindsym $mod+Control+t exec st -e tmux-sessionizer
 # bindsym $mod+Control+Delete exec st -t duck -e tmux new-session -A -s duck
 
 bindsym $mod+Shift+Return exec st -e tmux-sessionizer
 
-# bindsym $mod+Control+Left exec --no-startup-id ~/scripts/i3/i3-ws-switcher.sh
-# bindsym $mod+Mod1+b       exec --no-startup-id ~/scripts/i3/i3-ws-switcher.sh
 
 
-# Simply tap the alt button and hit b
-bindsym $mod+Mod1+b exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
+# Tab+x b --> switch-buffer
+# bindsym $mod+Mod1+b exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
 
-# Simply hold the alt button longer then hit b
-bindsym $mod+Control+Left       exec --no-startup-id ~/scripts/i3/i3-ws-switcher.sh
+# Tab+x t t ---> switch-workspace
+# bindsym $mod+Control+Left       exec --no-startup-id switch-workspace
 
 
 
@@ -490,29 +500,54 @@ bindsym $mod+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpast
 # bindsym $mod+Mod1+Control+e exec --no-startup-id "~/scripts/ai/learn.sh"
 
 # --- Resource & System ---
-bindsym $mod+Shift+x exec --no-startup-id "xkill"
-bindsym $mod+Mod1+e exec --no-startup-id "rofi -show emoji"
-bindsym Control+Mod1+c exec --no-startup-id "xcontrol -c"
-bindsym Control+Mod1+z exec --no-startup-id "xcontrol -p"
 
-bindsym $mod+Shift+m exec --no-startup-id "~/.local/bin/mic-toggle.sh"
+# Tab+x q k
+# bindsym $mod+Shift+x exec --no-startup-id "xkill"
 
-# bindsym $mod+Control+k exec --no-startup-id "wmctrl -x -a Kazam"
+# Tab-x q c
+# bindsym Control+Mod1+c exec --no-startup-id "xcontrol -c"
+
+# Tab-x q z
+# bindsym Control+Mod1+z exec --no-startup-id "xcontrol -z"
+
+# I'm tempted to make a tab-x a m... but Mod+shift+m is faster... I'm tempted to make it mod+m because we moved mod+m to Tab-x t m
+bindsym $mod+m exec --no-startup-id "~/.local/bin/mic-toggle.sh"
+
 
 # --- Rofi & Navigation ---
+# we keep alt+f1 because in kali linux that is the default for the xfce4 replacement program for demnu that comes by default
 bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
+
+# Well this goes well with mod+d
 bindsym $mod+Shift+d exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
-bindsym $mod+Mod1+r exec --no-startup-id "rofi -show windowcd"
-bindsym $mod+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
-bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
+
+
+
+
+# Tab-x 8 e
+# bindsym $mod+Mod1+e exec --no-startup-id "rofi -show emoji"
+# bindsym $mod+Mod1+e exec --no-startup-id emoji
+
+# Tab-x s
+# bindsym $mod+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
+# bindsym $mod+y exec --no-startup-id quick-search
+
+# Tab-x S
+# bindsym $mod+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
+# bindsym $mod+Shift+y exec --no-startup-id web-search
 
 
 # bindsym $mod+b exec --no-startup-id "~/.local/bin/rofi-switch-all-windows-except-habit-windows"
-bindsym $mod+b exec --no-startup-id "rofi -show windowcd"
+
+# Tab+x b --> switch-buffer
+# bindsym $mod+b exec --no-startup-id switch-buffer
+# bindsym $mod+Mod1+r exec --no-startup-id "rofi -show windowcd"
 
 
 # open rofi. Show workspaces as options. Select option; rofi Moves current window to a selected option.
-bindsym $mod+Mod1+m exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
+# bindsym $mod+Mod1+m exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
+bindsym $mod+Mod1+m exec --no-startup-id move-buffer-to-workspace
+
 
 # I'm not sure about this Do I even use this?
 bindsym $mod+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
@@ -568,7 +603,7 @@ bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "sleep 0.5; xset dpms for
 # --- Window & Workspace Rename ---
 # bindsym $mod+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
 bindsym $mod+Control+r exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
-bindsym $mod+Mod1+t exec --no-startup-id "rncd"
+bindsym $mod+Mod1+t exec --no-startup-id "rename-workspace"
 
 
 

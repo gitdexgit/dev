@@ -1,4 +1,4 @@
 #!/bin/bash
 OLD_NAME=$(i3-msg -t get_workspaces | jq -r '.[] | select(.num == 10) | .name')
 [ -z "$OLD_NAME" ] && exit 1
-i3-msg "rename workspace \"$OLD_NAME\" to \"10:10 $(date +%H:%M:%S)\"" > /dev/null
+i3-msg "rename workspace \"$OLD_NAME\" to \"10:$(date +%H:%M:%S)\"" > /dev/null
