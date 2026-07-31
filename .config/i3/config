@@ -130,7 +130,19 @@ workspace 43 output eDP-1
 
 exec --no-startup-id emacs --daemon
 
-exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
+
+# This is dogshit for now
+# exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
+
+# Testing this instead of xremap
+exec --no-startup-id sxhkd
+exec_always --no-startup-id xmodmap -e "keycode 200 = F22"
+
+exec --no-startup-id skippy-xd --start-daemon
+
+# Start xcompmgr compositor with the -n flag
+exec --no-startup-id xcompmgr -n
+
 
 # 1. Start the daemon on login
 # exec --no-startup-id skippy-xd --start-daemon
@@ -389,10 +401,10 @@ bindsym $mod+Shift+Return exec st -e tmux-sessionizer
 
 
 
-# Tab+x b --> switch-buffer
+# Caps+A+x b --> switch-buffer
 # bindsym $mod+Mod1+b exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
 
-# Tab+x t t ---> switch-workspace
+# Caps+A+x t t ---> switch-workspace
 # bindsym $mod+Control+Left       exec --no-startup-id switch-workspace
 
 
@@ -501,7 +513,7 @@ bindsym $mod+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpast
 
 # --- Resource & System ---
 
-# Tab+x q k
+# Caps+A+x q k
 # bindsym $mod+Shift+x exec --no-startup-id "xkill"
 
 # Tab-x q c
@@ -518,8 +530,9 @@ bindsym $mod+m exec --no-startup-id "~/.local/bin/mic-toggle.sh"
 # we keep alt+f1 because in kali linux that is the default for the xfce4 replacement program for demnu that comes by default
 bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 
+# Just hold Alt then hold x for 130s
 # Well this goes well with mod+d
-bindsym $mod+Shift+d exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
+# bindsym $mod+Shift+d exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 
 
 
@@ -539,7 +552,7 @@ bindsym $mod+Shift+d exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 
 # bindsym $mod+b exec --no-startup-id "~/.local/bin/rofi-switch-all-windows-except-habit-windows"
 
-# Tab+x b --> switch-buffer
+# Caps+A+x b --> switch-buffer
 # bindsym $mod+b exec --no-startup-id switch-buffer
 # bindsym $mod+Mod1+r exec --no-startup-id "rofi -show windowcd"
 
@@ -602,8 +615,13 @@ bindsym $mod+Shift+Mod1+Control+0 exec --no-startup-id "sleep 0.5; xset dpms for
 
 # --- Window & Workspace Rename ---
 # bindsym $mod+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
-bindsym $mod+Control+r exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
-bindsym $mod+Mod1+t exec --no-startup-id "rename-workspace"
+
+# Caps+A+x x r --> rename-buffer
+# bindsym $mod+Control+r exec --no-startup-id rename-buffer
+
+
+# Caps+A+x t r --> rename-buffer
+# bindsym $mod+Mod1+t exec --no-startup-id "rename-workspace"
 
 
 
@@ -681,11 +699,13 @@ bindsym $mod+Return exec st -t st
 
 bindsym $mod+d exec dmenu_run
 
-
 # Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like $mod+d then type rofi -show run ez.
 # rofi -show run with different theme
 # bindsym $mod+Shift+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
 bindsym $mod+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
+
+
+
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -721,7 +741,7 @@ bindsym $mod+Shift+q kill
 
 # vesktop
 # 3. Keybinding (Add to SCRATCHPAD section)
-bindsym $mod+Mod1+v [class="vesktop"] scratchpad show
+# bindsym $mod+Mod1+v [class="vesktop"] scratchpad show
 
 
 # bindsym $mod+Shift+v [class="vesktop"] scratchpad show, move position center
@@ -745,7 +765,7 @@ bindsym $mod+Mod1+v [class="vesktop"] scratchpad show
 # urxvtc dropdown  (Mod+BackSpace)
 # bindsym $mod+i exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" urxvtc -name "st_main" -title "Dropdown"
 
-## The issue with this one is that, it makes mod4+grave switch between workspace 40 and the current workspace for back and forth. It's annoying to have.
+## The issue with this one is that, it makes $mod+grave switch between workspace 40 and the current workspace for back and forth. It's annoying to have.
 # Mass hide all tdrop windows to Workspace 42
 # bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^st_|^st_main|^qterminal"] move to workspace 40
 
@@ -755,7 +775,8 @@ bindsym $mod+Mod1+v [class="vesktop"] scratchpad show
 
 # bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^st_main" instance="^st_|^st_main|^qterminal"] move scratchpad
 
-bindsym Mod1+Shift+BackSpace exec --no-startup-id ~/.config/i3/hide-floats.sh
+# Just tap tal then tap alt... make sure both keyd and xremap are on.
+bindsym Mod1+Shift+BackSpace exec --no-startup-id hide-float-windows
 
 
 # =====================================================================
@@ -855,7 +876,7 @@ bindsym $mod+Shift+z [class="Zeal"] scratchpad show, move position center
 # bindsym $mod+z exec --no-startup-id skippy-scratch
 
 
-# ctrl+mod4+z does't work...
+# ctrl+$mod+z does't work...
 # bindsym Mod4+Control+z [class="Zeal"] scratchpad show
 
 # Shortcut to show/hide the CopyQ window
@@ -934,41 +955,41 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym ctrl+mod1+shift+mod4+q exec ~/scripts/i3/ws-goto.sh 11 "11q:"
-bindsym ctrl+mod1+shift+mod4+w exec ~/scripts/i3/ws-goto.sh 12 "12w:"
-bindsym ctrl+mod1+shift+mod4+e exec ~/scripts/i3/ws-goto.sh 13 "13e:"
-bindsym ctrl+mod1+shift+mod4+r exec ~/scripts/i3/ws-goto.sh 14 "14r:"
-bindsym ctrl+mod1+shift+mod4+t exec ~/scripts/i3/ws-goto.sh 15 "15t:"
-bindsym ctrl+mod1+shift+mod4+y exec ~/scripts/i3/ws-goto.sh 16 "16y:"
-bindsym ctrl+mod1+shift+mod4+u exec ~/scripts/i3/ws-goto.sh 17 "17u:"
-bindsym ctrl+mod1+shift+mod4+i exec ~/scripts/i3/ws-goto.sh 18 "18i:"
-bindsym ctrl+mod1+shift+mod4+o exec ~/scripts/i3/ws-goto.sh 19 "19o:"
-bindsym ctrl+mod1+shift+mod4+p exec ~/scripts/i3/ws-goto.sh 20 "20p:"
-bindsym ctrl+mod1+shift+mod4+a exec ~/scripts/i3/ws-goto.sh 21 "21a:"
-bindsym ctrl+mod1+shift+mod4+s exec ~/scripts/i3/ws-goto.sh 22 "22s:"
-bindsym ctrl+mod1+shift+mod4+d exec ~/scripts/i3/ws-goto.sh 23 "23d:"
-bindsym ctrl+mod1+shift+mod4+f exec ~/scripts/i3/ws-goto.sh 24 "24f:"
+bindsym ctrl+mod1+shift+$mod+q exec ~/scripts/i3/ws-goto.sh 11 "11q:"
+bindsym ctrl+mod1+shift+$mod+w exec ~/scripts/i3/ws-goto.sh 12 "12w:"
+bindsym ctrl+mod1+shift+$mod+e exec ~/scripts/i3/ws-goto.sh 13 "13e:"
+bindsym ctrl+mod1+shift+$mod+r exec ~/scripts/i3/ws-goto.sh 14 "14r:"
+bindsym ctrl+mod1+shift+$mod+t exec ~/scripts/i3/ws-goto.sh 15 "15t:"
+bindsym ctrl+mod1+shift+$mod+y exec ~/scripts/i3/ws-goto.sh 16 "16y:"
+bindsym ctrl+mod1+shift+$mod+u exec ~/scripts/i3/ws-goto.sh 17 "17u:"
+bindsym ctrl+mod1+shift+$mod+i exec ~/scripts/i3/ws-goto.sh 18 "18i:"
+bindsym ctrl+mod1+shift+$mod+o exec ~/scripts/i3/ws-goto.sh 19 "19o:"
+bindsym ctrl+mod1+shift+$mod+p exec ~/scripts/i3/ws-goto.sh 20 "20p:"
+bindsym ctrl+mod1+shift+$mod+a exec ~/scripts/i3/ws-goto.sh 21 "21a:"
+bindsym ctrl+mod1+shift+$mod+s exec ~/scripts/i3/ws-goto.sh 22 "22s:"
+bindsym ctrl+mod1+shift+$mod+d exec ~/scripts/i3/ws-goto.sh 23 "23d:"
+bindsym ctrl+mod1+shift+$mod+f exec ~/scripts/i3/ws-goto.sh 24 "24f:"
 
 # Sadly have to use F1 key. bause this hotkey+g is taken. for languagetools correction hotkey.
-bindsym ctrl+mod1+shift+mod4+F1 exec ~/scripts/i3/ws-goto.sh 25 "25g:"
-bindsym ctrl+mod1+shift+mod4+h exec ~/scripts/i3/ws-goto.sh 26 "26h:"
-bindsym ctrl+mod1+shift+mod4+j exec ~/scripts/i3/ws-goto.sh 27 "27j:"
-bindsym ctrl+mod1+shift+mod4+k exec ~/scripts/i3/ws-goto.sh 28 "28k:"
-bindsym ctrl+mod1+shift+mod4+l exec ~/scripts/i3/ws-goto.sh 29 "29l:"
-bindsym ctrl+mod1+shift+mod4+semicolon exec "~/scripts/i3/ws-goto.sh 30 '30;:'"
+bindsym ctrl+mod1+shift+$mod+F1 exec ~/scripts/i3/ws-goto.sh 25 "25g:"
+bindsym ctrl+mod1+shift+$mod+h exec ~/scripts/i3/ws-goto.sh 26 "26h:"
+bindsym ctrl+mod1+shift+$mod+j exec ~/scripts/i3/ws-goto.sh 27 "27j:"
+bindsym ctrl+mod1+shift+$mod+k exec ~/scripts/i3/ws-goto.sh 28 "28k:"
+bindsym ctrl+mod1+shift+$mod+l exec ~/scripts/i3/ws-goto.sh 29 "29l:"
+bindsym ctrl+mod1+shift+$mod+semicolon exec "~/scripts/i3/ws-goto.sh 30 '30;:'"
 
 # I guess for some reason this doesn't work so... I'll just use this for something else Do not make this work.
 
-bindsym ctrl+mod1+shift+mod4+z exec ~/scripts/i3/ws-goto.sh 31 "31z:"
-bindsym ctrl+mod1+shift+mod4+x exec ~/scripts/i3/ws-goto.sh 32 "32x:"
-bindsym ctrl+mod1+shift+mod4+c exec ~/scripts/i3/ws-goto.sh 33 "33c:"
-bindsym ctrl+mod1+shift+mod4+v exec ~/scripts/i3/ws-goto.sh 34 "34v:"
-bindsym ctrl+mod1+shift+mod4+b exec ~/scripts/i3/ws-goto.sh 35 "35b:"
-bindsym ctrl+mod1+shift+mod4+n exec ~/scripts/i3/ws-goto.sh 36 "36n:"
-bindsym ctrl+mod1+shift+mod4+m exec ~/scripts/i3/ws-goto.sh 37 "37m:"
-bindsym ctrl+mod1+shift+mod4+period exec ~/scripts/i3/ws-goto.sh 39 "39.:"
-bindsym ctrl+mod1+shift+mod4+slash exec ~/scripts/i3/ws-goto.sh 40 "40/:"
-bindsym ctrl+mod1+shift+mod4+comma exec "~/scripts/i3/ws-goto.sh 38 '38,:'"
+bindsym ctrl+mod1+shift+$mod+z exec ~/scripts/i3/ws-goto.sh 31 "31z:"
+bindsym ctrl+mod1+shift+$mod+x exec ~/scripts/i3/ws-goto.sh 32 "32x:"
+bindsym ctrl+mod1+shift+$mod+c exec ~/scripts/i3/ws-goto.sh 33 "33c:"
+bindsym ctrl+mod1+shift+$mod+v exec ~/scripts/i3/ws-goto.sh 34 "34v:"
+bindsym $mod+ctrl+mod1+shift+b exec ~/scripts/i3/ws-goto.sh 35 "35b:"
+bindsym ctrl+mod1+shift+$mod+n exec ~/scripts/i3/ws-goto.sh 36 "36n:"
+bindsym ctrl+mod1+shift+$mod+m exec ~/scripts/i3/ws-goto.sh 37 "37m:"
+bindsym ctrl+mod1+shift+$mod+period exec ~/scripts/i3/ws-goto.sh 39 "39.:"
+bindsym ctrl+mod1+shift+$mod+slash exec ~/scripts/i3/ws-goto.sh 40 "40/:"
+bindsym ctrl+mod1+shift+$mod+comma exec "~/scripts/i3/ws-goto.sh 38 '38,:'"
 
 
 # =====================================================================

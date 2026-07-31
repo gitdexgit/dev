@@ -8,29 +8,29 @@
 
 #include <stdint.h>
 
-#define MAX_SECTIONS 32
+#define MAX_SECTIONS 258
 #define MAX_SECTION_ENTRIES 1024
 
 struct ini_entry {
-	char *key;
-	char *val;
+    char *key;
+    char *val;
 
-	size_t lnum;		// The line number in the original source file.
+    size_t lnum;        // The line number in the original source file.
 };
 
 struct ini_section {
-	char name[256];
+    char name[256];
 
-	size_t nr_entries;
-	size_t lnum;
+    size_t nr_entries;
+    size_t lnum;
 
-	struct ini_entry entries[MAX_SECTION_ENTRIES];
+    struct ini_entry entries[MAX_SECTION_ENTRIES];
 };
 
 struct ini {
-	size_t nr_sections;
+    size_t nr_sections;
 
-	struct ini_section sections[MAX_SECTIONS];
+    struct ini_section sections[MAX_SECTIONS];
 };
 
 /*

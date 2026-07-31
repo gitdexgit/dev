@@ -1,6 +1,14 @@
 very good ideas:
 
 
+## more offline
+
+Git the bigger version of Wikipedia... also stack overflow try to use it more maybe? programming solutions or whatever... you know..
+I would love to just use kiwi and just brwoser and just browse offline you know... But I need to think of storage... I need to like probably
+reduce the windows partition... use the VM space smartly and you know better optimize my space so the downloads fit and things like that.
+
+
+
 ## Write a book called "Building a First Brain"
 
 The core is SMT protocol. Student Mentor and Teacher.
@@ -168,7 +176,13 @@ Build a house like our mud house from mud right on your own.
 I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
+## give kanata a try
 
+I installed it with cargo install kanata --features cmd So it's basically a better keyd+sxhkbd all in one binary?
+which will allow chords and sequences like emacs and things like that... and layers like keyd and everything right?
+from the timeout() function that keyd provides to the good stuff right?
+
+yes... and it's s-expressions so it's like emacs config... nice.
 
 
 

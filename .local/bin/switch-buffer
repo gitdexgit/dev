@@ -1,9 +1,48 @@
 #!/bin/bash
 Y_OFFSET="60px"
-rofi -show windowcd \
+
+ws_name=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')
+tree=$(i3-msg -t get_tree)
+
+mapfile -t rows < <(echo "$tree" | jq -r --arg ws "$ws_name" '
+def ordered_leaves:
+  if .window != null then
+    [ { id: .window, name: .name, focused: .focused } ]
+  else
+    (.focus // []) as $forder
+    | ((.nodes // []) + (.floating_nodes // [])) as $ch
+    | ($forder | map(. as $fid | $ch[] | select(.id == $fid))) as $inorder
+    | ($ch | map(select( ( .id as $i | ($forder | index($i)) ) == null ))) as $rest
+    | ($inorder + $rest)
+    | map(ordered_leaves) | add // []
+  end;
+
+def find_ws:
+  if .type == "workspace" and .name == $ws then [.]
+  else ((.nodes // []) + (.floating_nodes // []) | map(find_ws) | add // [])
+  end;
+
+(find_ws | .[0] | ordered_leaves // [])[]
+| "\(.id)\t\(.focused)\t\(.name)"
+')
+
+ids=()
+titles=()
+for row in "${rows[@]}"; do
+    IFS=$'\t' read -r id focused name <<< "$row"
+    [ -z "$id" ] && continue
+    [ "$focused" = "true" ] && continue   # skip active window, by ID not title
+    [ -z "$name" ] && continue
+    ids+=("$id")
+    titles+=("$name")
+done
+
+[ "${#titles[@]}" -eq 0 ] && exit 0
+
+selected_idx=$(printf '%s\n' "${titles[@]}" | rofi -dmenu \
     -p "Buffer: " \
+    -format i \
     -selected-row 0 \
-    -window-format "{t}" \
     -theme-str '
         configuration {
             sidebar-mode: false;
@@ -58,4 +97,9 @@ rofi -show windowcd \
             text-color:     #fabd2f;
             font:           "Monospace Bold 11";
         }
-    '
+    ')
+
+[ -z "$selected_idx" ] && exit 0
+
+win_id="${ids[$selected_idx]}"
+i3-msg "[id=$win_id] focus"

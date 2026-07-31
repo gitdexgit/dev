@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# 1. Define temp file
+TMP_FILE="/tmp/x0_upload.png"
+
+# 2. Save clipboard image to temp file
+if ! xclip -selection clipboard -t image/png -o > "$TMP_FILE" 2>/dev/null; then
+    notify-send "Error" "No image in clipboard"
+    exit 1
+fi
+
+# 3. Upload to x0.at and capture URL
+URL=$(curl -s -F "file=@$TMP_FILE" https://x0.at/)
+
+# 4. Copy URL to clipboard
+echo -n "$URL" | xclip -selection clipboard
+
+# 5. Cleanup and Notify
+rm "$TMP_FILE"
+notify-send -t 400 -h string:bgcolor:#95F034 -h string:fgcolor:#000000 "x0.at" "Link copied to clipboard"

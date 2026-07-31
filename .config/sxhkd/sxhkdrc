@@ -1,0 +1,45 @@
+# --- Universal Chords (Leader: C-M-x) ---
+
+# Simple sequences
+ctrl + alt + x ; {b,Left}
+    switch-buffer
+
+ctrl + alt + x ; control + b
+    switch-all-buffer
+
+ctrl + alt + x ; k
+    i3-msg kill
+
+ctrl + alt + x ; s
+    quick-search
+
+ctrl + alt + x ; shift + s
+    web-search
+
+# Nested: x -> r
+ctrl + alt + x ; x ; r
+    rename-buffer
+
+# --- Universal Chords (Leader: C-M-x) ---
+# Nested: 8 -> e -> s
+ctrl + alt + x ; 8 ; e ; s
+    emoji
+
+# Nested: t -> {t,r,m}
+ctrl + alt + x ; t ; {t,r,m}
+    {switch-workspace,rename-workspace,move-buffer-to-workspace}
+
+# Nested: 5 -> {o,m}
+ctrl + alt + x ; 5 ; {o,m}
+    i3-msg {focus output next,move container to output next}
+
+# Nested: q -> {r,l,q,k,c,z}
+ctrl + alt + x ; q ; {r,l,q,k,c,z}
+    {i3-msg restart,i3-msg reload,i3-msg exit,xkill,xcontrol -c,xcontrol -z}
+
+# --- Global Actions ---
+alt + F22
+    M-x
+
+ctrl + alt + shift + b
+    switch-buffer-preview

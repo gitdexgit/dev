@@ -4,6 +4,16 @@
 
 
 
+remember to keep using this wondershaper thing to limit you upload and download speeds soemtimes so you don't restart the
+router I guess?
+
+
+
+----
+
+
+
+
 Remember in idk.md which was aha.md in ~/learn directory. Please call the coach a mentor from now on. and give him the
 M:
 

@@ -1,47 +1,57 @@
 keymap:
+
+
+  - name: Emacs Meta Navigation
+    application:
+      not: [Emacs, emacs]
+    remap:
+      M-f: C-right
+      M-b: C-left
+      M-d: C-delete
+      M-v: pageup
+      M-S-f: C-S-right
+      M-S-b: C-S-left
+
   - name: Universal Chords
     remap:
-      C-M-A-x:
+      C-M-x:
         remap:
-          # Buffers / Windows
+          x:
+            remap:
+              r: { launch: ["rename-buffer"] }
           b: { launch: ["switch-buffer"] }
+          left: { launch: ["switch-buffer"] }
           C-b: { launch: ["switch-all-buffer"] }
           k: { launch: ["i3-msg", "kill"] }
-
-          # C-x 8 e mimicry (Emoji)
           "8":
             remap:
-              e: { launch: ["emoji"] }
-          # Tabs / Workspaces
+              e:
+                remap:
+                  s: { launch: ["emoji"] }
           t:
             remap:
               t: { launch: ["switch-workspace"] }
               r: { launch: ["rename-workspace"] }
               m: { launch: ["move-buffer-to-workspace"] }
-
-          # Search (Mimicking M-s prefix)
           Shift-s: { launch: ["web-search"] }
           s: { launch: ["quick-search"] }
-
-          # good for 2nd monitor setup or multiple monitor setups it matches the
-          # concept of emacs frame but if you make it bigger it's monitors in my system
-          "5": # Frame/Monitor Prefix
+          "5":
             remap:
               o: { launch: ["i3-msg", "focus", "output", "next"] }
               m: { launch: ["i3-msg", "move", "container", "to", "output", "next"] }
-
-          q: # Quit/System Prefix
+          q:
             remap:
               r: { launch: ["i3-msg", "restart"] }
               l: { launch: ["i3-msg", "reload"] }
               q: { launch: ["i3-msg", "exit"] }
-              # kill buffer/program
               k: { launch: ["xkill"] }
-              # continue buffer/program
               c: { launch: ["xcontrol", "-c"] }
-              # suspend buffer/program
               z: { launch: ["xcontrol", "-z"] }
 
-
+  - name: Global Actions
+    remap:
+      f23: { launch: ["hide-float-windows"] }
+      M-f22: { launch: ["M-x"] }
+      C-M-S-Super-b: { launch: ["switch-buffer-preview"] }
 
 

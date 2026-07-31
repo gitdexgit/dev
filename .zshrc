@@ -456,10 +456,11 @@ alias py='python'
 
 alias wireshark-dark='QT_STYLE_OVERRIDE=kvantum-dark wireshark'
 
+# Sometimes I need other langauges to seach stuff on the internet very rare though...
 alias \00.='setxkbmap -layout us'
 alias \01.='setxkbmap -layout fr'
 alias \02.='setxkbmap -layout ara'
-alias \04.='setxkbmap us_rpd'
+alias \03.='setxkbmap us_rpd'
 
 # just use freaking zoxide or something what even is this fp function
 # alias cdd='cd $(dirname "$(fp)")'

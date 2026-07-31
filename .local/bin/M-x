@@ -1,0 +1,57 @@
+#!/bin/bash
+
+THEME='
+window {
+    width: 100%;
+    anchor: north;
+    location: north;
+    y-offset: -5px;
+    border: 0;
+    padding: 0;
+    children: [ horibox ];
+}
+horibox {
+    orientation: horizontal;
+    children: [ prompt, textbox-prefix, entry, listview, textbox-suffix ];
+}
+prompt {
+    vertical-align: 0.5;
+    padding: 0 5px 0 10px;
+}
+textbox-prefix {
+    expand: false;
+    content: "{";
+    vertical-align: 0.5;
+    text-color: #e5c07b;
+}
+entry {
+    expand: false;
+    width: 8em;
+    vertical-align: 0.5;
+    placeholder: "";
+}
+listview {
+    layout: horizontal;
+    spacing: 0px;
+    lines: 100;
+}
+element {
+    border: 0px 2px 0px 0px;
+    border-color: #666666;
+    padding: 2px 8px;
+    margin: 0px;
+}
+element-text {
+    vertical-align: 0.5;
+}
+textbox-suffix {
+    expand: false;
+    content: "...}";
+    vertical-align: 0.5;
+}
+'
+
+rofi -show run \
+    -display-run "M-x" \
+    -theme-str "$THEME" \
+    -run-command "bash -c '{cmd}'"

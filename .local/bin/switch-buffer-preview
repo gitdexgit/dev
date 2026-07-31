@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+rofi -show windowcd \
+    -window-format "{t}" \
+    -show-icons \
+    -window-thumbnail \
+    -theme-str '
+        window { width: 100%; }
+        listview { layout: horizontal; spacing: 2px; }
+        element { orientation: vertical; width: 230px; padding: 5px; }
+        element-icon { size: 200px; }
+    '
