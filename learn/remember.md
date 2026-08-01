@@ -5,6 +5,34 @@
 
 
 
+
+
+
+----
+
+remember you have figlet cli tool you have emacs's artist-mode and you have libraspire
+and godot.
+
+So it's pixel art and pixel stuff video games basics ok?
+
+
+
+---
+
+
+Remember zit almachina I believe it's called sewing machine oil right? they call it
+zit almachina in morroco it's cheap only 3dh with alcohol (if you can't find alcohol
+use distuliant in morocco the popular brand is "the turtle") and you take a q-tip... q-tips are
+like the stick with a bit of cotton for like cleaning your ear right... and you dip a little bit
+of alcohol (or distuilant) and clean the blade's pin (not the blades to be safe so plastic doesn't disolve) and
+you clean the whole in the coil's part... the bottom part of the fan. and you then take the machine oil... or even
+car engine oil and put it on the coil's hole and done. It should solve it... if not solved then the mechanical part
+or the brass that is holding the blade's pin is damaged or something
+
+
+---
+
+
 parsley vs cilantro
 
 Kousbor (Cilantro)

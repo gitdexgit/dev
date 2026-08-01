@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+# 4. Refresh i3
+i3-msg restart
