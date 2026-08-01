@@ -71,6 +71,7 @@ HOME_TARGETS=(
     "challenges.md"
     ".tmux.conf"
     ".xprofile"
+    ".zprofile"
     ".xbindkeysrc"
     ".bashrc"
     ".vimrc"
