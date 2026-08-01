@@ -1,6 +1,9 @@
 # 1. Resources and Keyboard
 xrdb -merge ~/.Xresources
+
 setxkbmap us
+[ -f ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+
 xset r rate 220 50
 xset s off -dpms
 

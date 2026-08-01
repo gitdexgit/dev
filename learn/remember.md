@@ -4,6 +4,47 @@
 
 
 
+
+parsley vs cilantro
+
+Kousbor (Cilantro)
+Maâdnous (Parsley)
+
+
+------
+
+So in the same way that doctor does to his patients it is they who must grow and get well
+and in the same way a farmer tends to his farm and animals it is they who must grow. And so
+in the same way the students are they themselves who must do the learning not the teacher.
+Knowledge must grow in the students mind if learning is to take place
+
+
+
+
+
+------
+
+
+If every teacher had to be taught by instruction by a previous teacher then there will be no
+beginning because who was the first teacher's teacher? Doesn't make sense. And thus there has
+to be discovery. We humans can learn by discovery.
+
+
+----
+
+
+
+we do not have to know everything about something in order to understand it
+
+
+
+
+--------
+
+
+
+
+
 remember to keep using this wondershaper thing to limit you upload and download speeds soemtimes so you don't restart the
 router I guess?
 

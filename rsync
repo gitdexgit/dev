@@ -1,5 +1,15 @@
 #!/bin/bash
 #
+# TODO:
+# - [ ] Please refactor this and include what you use and remove what you don't.
+#
+#
+#
+#
+#
+#
+#
+#
 # This script intelligently syncs both system and user-level config files.
 # It MUST be run with sudo, but it will correctly find the original user's
 # home directory and fix repository permissions upon completion.
@@ -52,8 +62,7 @@ SYSTEM_TARGETS=(
 HOME_TARGETS=(
     ".zshrc"
     ".xinitrc"
-    ".urxvt"
-    "task"
+    ".Xmodmap"
     "learn"
     "wiki"
     ".Xresources"

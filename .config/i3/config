@@ -815,7 +815,7 @@ bindsym $mod+backslash  focus output eDP-1
 
 # his is for window_management keyd that I lost or stopped using I think just keep holding f and hit q and it should be there
 bindsym F19              exec --no-startup-id xdotool mousemove_relative -- 0 -10
-bindsym Control+F19      exec --no-startup-id xdotool mousemove_relative -- -10 0
+bindsym $mod+F18      exec --no-startup-id xdotool mousemove_relative -- -10 0
 bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
 bindsym Control+Mod4+F19 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
