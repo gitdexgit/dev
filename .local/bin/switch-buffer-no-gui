@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# Live-focus window switcher for i3/sway using fzf.
+# Focuses window as you move highlight (fzf 'focus' event) — true no-lag preview.
+# Restores original focused window if aborted (Esc/Ctrl-C).
+#
+# Deps: fzf (>=0.35, needs 'focus' event support), jq
+# Usage: bind this to a keybind in your i3/sway config, run in a terminal
+#        (e.g. via foot/alacritty/kitty scratchpad, or rofi -show combi won't work here —
+#        needs a real terminal since fzf is a TUI, not a rofi replacement drop-in).
+
+set -euo pipefail
+
+if command -v swaymsg &>/dev/null; then
+    WM=sway
+    GET_TREE=(swaymsg -t get_tree)
+    FOCUS_CMD() { swaymsg -t command "[con_id=$1] focus"; }
+elif command -v i3-msg &>/dev/null; then
+    WM=i3
+    GET_TREE=(i3-msg -t get_tree)
+    FOCUS_CMD() { i3-msg "[con_id=$1] focus"; }
+else
+    echo "Error: neither swaymsg nor i3-msg found." >&2
+    exit 1
+fi
+
+for bin in fzf jq; do
+    command -v "$bin" &>/dev/null || { echo "Error: '$bin' not found." >&2; exit 1; }
+done
+
+TREE_JSON=$("${GET_TREE[@]}")
+
+orig_id=$(jq '.. | select(.focused? == true) | .id' <<<"$TREE_JSON" | head -1)
+
+# id \t app_id/class \t title  — only leaf windows (actual windows, not containers/workspaces)
+list=$(jq -r '
+  .. | select(.type? == "con" or .type? == "floating_con")
+     | select(.window? != null or .app_id? != null)
+     | select((.nodes // []) == [])
+     | "\(.id)\t\(.app_id // .window_properties.class // "?")\t\(.name // "")"
+' <<<"$TREE_JSON")
+
+if [[ -z "$list" ]]; then
+    echo "No windows found." >&2
+    exit 1
+fi
+
+focus_by_id() {
+    FOCUS_CMD "$1" &>/dev/null || true
+}
+
+# Bind string calls the right IPC binary directly per-highlight-move.
+if [[ "$WM" == sway ]]; then
+    focus_bind='execute-silent(swaymsg -t command "[con_id={1}] focus")'
+else
+    focus_bind='execute-silent(i3-msg "[con_id={1}] focus")'
+fi
+
+sel=$(fzf \
+    --delimiter='\t' \
+    --with-nth=2,3 \
+    --bind "focus:${focus_bind}" \
+    --prompt="window> " \
+    <<<"$list") || {
+        # aborted (Esc / Ctrl-C) -> restore original focus
+        focus_by_id "$orig_id"
+        exit 0
+    }
+
+if [[ -z "$sel" ]]; then
+    focus_by_id "$orig_id"
+    exit 0
+fi
+
+id=$(cut -f1 <<<"$sel")
+focus_by_id "$id"

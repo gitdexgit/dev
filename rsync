@@ -60,6 +60,7 @@ SYSTEM_TARGETS=(
 # --- 2. Home directory files and directories (RELATIVE PATHS) ---
 HOME_TARGETS=(
     ".zshrc"
+    ".tridactylrc"
     ".xinitrc"
     ".Xmodmap"
     "learn"
@@ -80,6 +81,7 @@ HOME_TARGETS=(
     "themes"
     "Documents/Bookmarks"
     ".config/yazi"
+    ".config/feh"
     ".config/sxhkd/sxhkdrc"
     ".dotfiles"
     ".config/fzf"

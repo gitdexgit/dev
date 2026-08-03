@@ -44,7 +44,7 @@ tmux send-keys -t "*learn*:idk" "nvim idk.md" C-m
 # tmux send-keys -t "learn:duck" "nvim duck.md" C-m
 
 # Window 3
-tmux new-window -t "*learn*:2" -c "$HOME/wiki/" -n "wiki"
+tmux new-window -t "*learn*:2" -c "$HOME/bag/" -n "bag"
 
 # Focus window 1
 tmux select-window -t "*learn*:idk"

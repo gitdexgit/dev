@@ -16,6 +16,15 @@ matches:
         params:
           format: "%Y-%m-%d_%H-%M-%S"
 
+
+  - trigger: ";;vd;"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "v%Y.%m.%d: "
+
   - trigger: ";;dd;"
     replace: "{{mydate}}"
     vars:
