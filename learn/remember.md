@@ -1,7 +1,35 @@
 
 
 
+---
 
+remember to know the purpose of a system you have to observe what it does and
+what it affects as well. You forget what was the intent or input or how it is
+designed... focus on the output. Ofc You need to be smart to know the actual
+output in case you are not fooled by an effect of the environment which might
+have other factors that affect the system's output needed to identify the
+system's output.
+
+But in general to know the purpose of a system look at what it does or produces.
+The output.
+
+---
+
+You cannot really win a very high pressure or many pressures exerted on you
+umm... I think the best way to win against it or has high chances is to invest
+in everything all at once. For example a company or a country who is poor is
+poor. A way to not fix it is to let's say poor as much money into farming as
+possible and that will solve povery... that's stupid... a better approach is to
+poor money on all fields (ofc only essential ones at the start until you are
+rich enough to poor money on other essential but not critical you know or non
+essential) So basically it's like a heart and it's pumping blood. It pumps blood
+all at once not just to 1 path. Sadly every like path connected is esential in
+the body but sadly we have some paths and artificial categories or places that
+can be removed or just not invest into them and nothing change
+
+
+
+---
 
 
 Lime vs. Cement: Never use modern cement to patch a mud house.[1] It traps
@@ -3134,4 +3162,60 @@ bsd-games /usr/bin/battlestar bsd-games /usr/bin/caesar bsd-games
 
 They can be even inspiration to make a clone or something like this to train
 like on python or something. very interesting
+
+
+
+---------
+
+
+Remember to fix the keyboad bad habits ok? not just in monkey type but in every
+buffer ok?
+
+Please so not mistake (sometihng) as 2 symbols. please just focus on the data
+not the information it conveys ( is 1 letter so shift+9 and yeah. unless you are
+writing '()' at once then hold space.
+
+If there is just 1 symbol then no need to hold spacebar... just hit the right
+symbol using shift+1234 or whatever you get it... if it's 2 or more then you do
+the rule
+
+the ')' rule/end of symbol rule: btw if you have a (word)  the 2nd ) you simply after you type it and you have no
+more symbols on the right... it's better if you do not space+s or space+l ok?
+It's better to just remove your spacebar hold to cancel the symbols layer then
+look to the next letter of the first word and decide if it's going to be right
+thumb or left thumb.
+
+the '(' rule/start of symbol rule: Same trick with the like if you start a symbol place spacebar first then click
+and hold spacebar again and type the symbol or symbols.
+
+
+
+
+---
+
+
+
+I hate how you have to deal with many types of pressure.... sigh... a mess is a
+mess of problems I guess... and they exert pressure.
+
+
+
+---
+
+I hate that morocco when it comes to world changing events it's just a pawn.
+
+
+
+---
+
+Remember the pressure. Anyone/anything trying pressure then "Find a way to meet
+the pressure".
+
+
+
+
+
+
+
+
 

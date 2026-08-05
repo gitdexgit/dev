@@ -1,6 +1,34 @@
 very good ideas:
 
 
+## Fix space+f4
+
+space+f4 is basically switch-buffer but we should return the old like you know
+rofi-switch.sh thing with like you know longer one or maybe we add a toggle
+to the C-A-x b maybe? maybe user can M-s to make it show in the middle and like
+it's like stacked with  ufll names ok? this way it's like it's like i3 you know
+and you can see the full name of the buffer in current workspace ok? and like
+make it slightly wider ok so the names fit on the screen. and then if you do M-w
+it returns it to how it was but like tbh it's better to not add that and simply
+esc and hit the switch buffer shortcut again
+
+
+## improve zsh speed
+
+You know to improve my zsh speed like you know... I can just clone very minimal
+like zsh config and thigns like that but also have a like 2ndary zshconfig that
+I can source whenever... and I simply bind it to ]]e right... whenver I need
+like fzf-tab or things like that the shinny stuff... this way mod4+enter is so
+fast with st I can just you know 1 tap leftmeta and one tap enter heck I can
+just 1 tap leftalt then hit caps+m and it works baby and just start typing shit
+or simply hold capslock then leftmeta and hit M it works I have it in keyd
+config.
+
+so tl;dr split whatever gives delays from main .zshrc ok? so it's .zshrc.main and we
+simply do be sourcing ]]m or idk ]]e and in the future we can like do ]]e2 or
+]]m2 to source mutliple like environments or other people's zshrc and test
+them... or like make different build or something you know?
+
 
 
 ## Improvements to the SMT protocol and the adition of the AMM input method and applications

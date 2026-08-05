@@ -800,7 +800,7 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
       '(("Libera.Chat" "##programming" "#bash" "#emacs" "#linux"
          "#hackers" "#c++" "#ai" "#c++-general"
          "#c++-basic" "#rust" "#lua" "#go-nuts" "#odin" "#ctf"
-         "#picoctf" "#networking" "#python")))
+         "#picoctf" "#networking" "#python" "speed" "momentum" "valiance" "pressure")))
 
 ;; --- 6. MODULES ---
 (setq erc-modules '(netsplit fill button match track completion

@@ -1,0 +1,126 @@
+#!/bin/bash
+Y_OFFSET="60px"
+MAX_LEN=50   # tune to taste
+
+extract_display_name() {
+    local name="$1"
+    if [[ "$name" == /* ]]; then
+        printf '%s' "${name##*/}"
+    else
+        printf '%s' "$name"
+    fi
+}
+
+truncate_name() {
+    local name="$1" max="$2"
+    local len=${#name}
+    (( len <= max )) && { printf '%s' "$name"; return; }
+    local keep=$(( (max - 3) / 2 ))
+    printf '%s...%s' "${name:0:keep}" "${name: -$keep}"
+}
+
+ws_name=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')
+tree=$(i3-msg -t get_tree)
+mapfile -t rows < <(echo "$tree" | jq -r --arg ws "$ws_name" '
+def ordered_leaves:
+  if .window != null then
+    [ { id: .window, name: .name, focused: .focused } ]
+  else
+    (.focus // []) as $forder
+    | ((.nodes // []) + (.floating_nodes // [])) as $ch
+    | ($forder | map(. as $fid | $ch[] | select(.id == $fid))) as $inorder
+    | ($ch | map(select( ( .id as $i | ($forder | index($i)) ) == null ))) as $rest
+    | ($inorder + $rest)
+    | map(ordered_leaves) | add // []
+  end;
+def find_ws:
+  if .type == "workspace" and .name == $ws then [.]
+  else ((.nodes // []) + (.floating_nodes // []) | map(find_ws) | add // [])
+  end;
+(find_ws | .[0] | ordered_leaves // [])[]
+| "\(.id)\t\(.focused)\t\(.name)"
+')
+
+ids=()
+titles=()
+full_names=()
+for row in "${rows[@]}"; do
+    IFS=$'\t' read -r id focused name <<< "$row"
+    [ -z "$id" ] && continue
+    [ "$focused" = "true" ] && continue
+    [ -z "$name" ] && continue
+    ids+=("$id")
+    full_names+=("$name")
+    disp="$(extract_display_name "$name")"
+    titles+=("$(truncate_name "$disp" "$MAX_LEN")")
+done
+
+[ "${#titles[@]}" -eq 0 ] && exit 0
+
+selected_idx=$(
+    for i in "${!titles[@]}"; do
+        printf '%s\0meta\x1f%s\n' "${titles[$i]}" "${full_names[$i]}"
+    done | rofi -dmenu \
+        -p "Buffer: " \
+        -format i \
+        -selected-row 0 \
+        -theme-str '
+            configuration {
+                sidebar-mode: false;
+            }
+            window {
+                location:       north;
+                anchor:         north;
+                width:          100%;
+                y-offset:       '$Y_OFFSET';
+                children:       [ mainbox ];
+                background-color: #1d2021;
+            }
+            mainbox {
+                orientation:    horizontal;
+                children:       [ prompt, entry, listview ];
+            }
+            prompt {
+                padding:        2px 10px;
+                background-color: #1d2021;
+                text-color:     #fabd2f;
+                font:           "Monospace Bold 11";
+            }
+            entry {
+                expand:         false;
+                width:          100px;
+                padding:        2px 10px;
+                text-color:     #ebdbb2;
+                background-color: #1d2021;
+                placeholder:    "";
+            }
+            listview {
+                layout:         horizontal;
+                lines:          100;
+                spacing:        0px;
+            }
+            element {
+                padding:        2px 8px;
+                border:         0px 1px 0px 0px;
+                border-color:   #504945;
+                background-color: transparent;
+            }
+            element-text {
+                text-color:     #928374;
+                vertical-align: 0.5;
+            }
+            element selected {
+                background-color: transparent;
+                border:         0px 1px 0px 0px;
+                border-color:   #504945;
+            }
+            element selected element-text {
+                text-color:     #fabd2f;
+                font:           "Monospace Bold 11";
+            }
+        '
+)
+
+[ -z "$selected_idx" ] && exit 0
+win_id="${ids[$selected_idx]}"
+i3-msg "[id=$win_id] focus"

@@ -1,3 +1,5 @@
+# Only use sxhkdrc for the seuqnces for emacs like and that's it do not bind in here
+
 # --- Universal Chords (Leader: C-M-x) ---
 
 # Simple sequences
@@ -36,10 +38,6 @@ ctrl + alt + x ; 5 ; {o,m}
 # Nested: q -> {r,l,q,k,c,z}
 ctrl + alt + x ; q ; {r,l,q,k,c,z}
     {i3-msg restart,i3-msg reload,i3-msg exit,xkill,xcontrol -c,xcontrol -z}
-
-# --- Global Actions ---
-alt + F22
-    M-x
 
 ctrl + alt + shift + b
     switch-buffer-preview

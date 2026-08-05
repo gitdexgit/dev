@@ -404,15 +404,6 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
 
 
-
-# Caps+A+x b --> switch-buffer
-# bindsym Mod4+Mod1+b exec --no-startup-id ~/.local/bin/rofi-switch-all-windows
-
-# Caps+A+x t t ---> switch-workspace
-# bindsym Mod4+Control+Left       exec --no-startup-id switch-workspace
-
-
-
 # --- Kill Window ---
 # NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
 bindsym Mod4+Control+q kill
@@ -706,8 +697,7 @@ bindsym Mod4+d exec dmenu_run
 # Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like Mod4+d then type rofi -show run ez.
 # rofi -show run with different theme
 # bindsym Mod4+Shift+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
-bindsym Mod4+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
-
+# bindsym Mod4+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
 
 
 
