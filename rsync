@@ -119,6 +119,7 @@ HOME_TARGETS=(
     ".config/tmux-sessionizer"
     ".local/share/applications"
     ".local/share/fonts"
+    ".local/share/zathura"
     ".local/scripts"
     ".local/bin"
 )
