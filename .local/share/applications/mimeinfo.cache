@@ -15,6 +15,7 @@ application/x-pkt=CiscoPacketTracer-9.0.0.desktop;
 application/x-pkz=CiscoPacketTracer-9.0.0.desktop;
 application/x-shellscript=run-in-alacritty.desktop;
 application/x-wine-extension-appref-ms=wine-extension-appref-ms.desktop;
+application/x-wine-extension-eop=wine-extension-eop.desktop;
 application/x-wine-extension-msp=wine-extension-msp.desktop;
 application/xaml+xml=wine-extension-xaml.desktop;
 inode/directory=org.kde.dolphin.desktop;

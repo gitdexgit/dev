@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Run EveryonePiano
+Exec=env "WINEPREFIX=/home/dex/.wine" wine "C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start Menu\\\\Programs\\\\EveryonePiano\\\\Run EveryonePiano.lnk"
+Type=Application
+StartupNotify=true
+Icon=9825_EveryonePiano.0
+StartupWMClass=everyonepiano.exe

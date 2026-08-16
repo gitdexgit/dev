@@ -799,8 +799,8 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
 (setq erc-autojoin-channels-alist
       '(("Libera.Chat" "##programming" "#bash" "#emacs" "#linux"
          "#hackers" "#c++" "#ai" "#c++-general"
-         "#c++-basic" "#rust" "#lua" "#go-nuts" "#odin" "#ctf"
-         "#picoctf" "#networking" "#python" "speed" "momentum" "valiance" "pressure")))
+         "#c++-basic" "#lua" "#go-nuts" "#odin" "#ctf"
+         "#picoctf" "#networking" "#python" "speed" "momentum" "valiance" "preasure")))
 
 ;; --- 6. MODULES ---
 (setq erc-modules '(netsplit fill button match track completion

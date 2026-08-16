@@ -113,11 +113,11 @@ tmux split-window -v -t "*btop*":3.2   # Creates 3.3
 tmux send-keys -t "*btop*":1.1 "btop" C-m
 tmux send-keys -t "*btop*":1.2 "ping 8.8.8.8" C-m
 
-tmux send-keys -t "*btop*":2.1 "sudo nethogs" C-m
+tmux send-keys -t "*btop*":2.1 "nethogs" C-m
 
-tmux send-keys -t "*btop*":3.1 "watch -n 5 cpupower frequency-info" C-m
-tmux send-keys -t "*btop*":3.2 "sudo cpupower frequency-set -u 2800MHz"
-tmux send-keys -t "*btop*":3.3 "sudo cpupower frequency-set -g performance"
+tmux send-keys -t "*btop*":3.1 "watch -n 3 cpupower frequency-info" C-m
+# tmux send-keys -t "*btop*":3.2 "sudo cpupower frequency-set -u 2800MHz"
+# tmux send-keys -t "*btop*":3.3 "sudo cpupower frequency-set -g performance"
 
 tmux select-pane -t "*btop*":1.1
 

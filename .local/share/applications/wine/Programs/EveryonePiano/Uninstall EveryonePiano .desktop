@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Uninstall EveryonePiano 
+Exec=env "WINEPREFIX=/home/dex/.wine" wine "C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start Menu\\\\Programs\\\\EveryonePiano\\\\Uninstall EveryonePiano .lnk"
+Type=Application
+StartupNotify=true
+Icon=DF64_unins000.0
+StartupWMClass=unins000.exe

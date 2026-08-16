@@ -1,6 +1,6 @@
 # I typed it here because I forget it --> #acfg#
 
-search_trigger: ";;es;"
+search_trigger: ";;x;"
 search_shortcut: Ctrl+Shift+Meta+j
 show_notifications: false
 # backend: clipboard

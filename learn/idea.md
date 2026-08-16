@@ -1,5 +1,15 @@
 very good ideas:
 
+## When you get good at pixel art and you are pro at it get aseprite
+
+Libresprite is like aseprite. You can pay 20$ for aseprtie but you can build it
+from source. And if you make money off of it you can support them ok? You can
+build the software ok?
+
+
+## get latptop hybernation on.
+Try to see how to get this hybernation on laptop either 2nd or 1st or both going waht is the systemctl command or something
+
 
 ## Fix space+f4
 
@@ -495,9 +505,116 @@ Build a house like our mud house from mud right on your own.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 I have 770+ lines of words in idea.md I need to refactor at some point.
 
 
+## I would love to make a clone of "The tutorial is too hard" but with like hororr inspired by the horror game developer thing.
+
+It should be something like humanity was living and things like that but all of
+a suden they like has this tower that invites anyone and you are stuck right and
+it's like public live streamed through people's laptops now every one has this
+app they can't remove it or website right they can visit it is not hosted on any
+server or antyhing and they can watch rooms. as in levels tutorial tower rooms.
+the player/players have like space and things like that they can teleport and
+things like that... they can't kill each other in the like... you know and
+thigns like that... and when they finish a level they can like farm resources or
+something and what ever something like this and there is like systems and
+cooperations and there are items and rules... and everyone can be killed. You
+can also just ignore the rules and go kill the damn entities and brute force and
+things like that. And there are classes and things like that. And death... tons
+of death... and to clear some levels it might need like some x number of people
+to play and there are secret hidden levels and like some levels you can play
+alone. We can also farm some old levels. idk things like this. Just to practice
+my writing for fun.
+
+
+## try the public login idea of irc channels
+
+Let's say I like so in the same way IRC today does it I do it but -write and JS
+bs just simple HTML. I have a computer the computer or bot reads the channels if
+there is any new update or every like whatever it copies the previous like
+40messages or something and updates the HTML and simply that's it. And ofc `tac`
+so it's reverse so the first messages appear on the top. and we simply try to
+use eww or lynx or w3m to read and that's it... you just have a link and boom.
+We can host the thing on ngrok open a ngrok or something website that everyone
+on the internet can join or like tailscale or something so you just send them
+the link and boom they see the thing. Do not buy a domain name.
 
 
 ## Idea to improve the SMT protocol maybe - Dead battery doesn't analise shit

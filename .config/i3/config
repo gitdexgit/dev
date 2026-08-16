@@ -136,7 +136,7 @@ exec --no-startup-id emacs --daemon
 # Testing this instead of xremap
 exec --no-startup-id sxhkd
 
-exec --no-startup-id skippy-xd --start-daemon
+# exec --no-startup-id skippy-xd --start-daemon
 
 # Start xcompmgr compositor with the -n flag
 # Sadly this is too basic... it does everything but uses cpu right... but man... gromit mpx with drawing pen tablet sucks
@@ -144,6 +144,10 @@ exec --no-startup-id skippy-xd --start-daemon
 #
 # This should fix grmmit-mpx
 exec --no-startup-id picom --backend glx --vsync --no-use-damage --config /dev/null
+
+
+# Fix multiple ueberzugpp/Yazi previews inside tmux
+exec --no-startup-id ~/scripts/fix/yazi-ueberzugpp-tmux-fix
 
 
 # 1. Start the daemon on login
@@ -348,6 +352,8 @@ for_window [class="st_config"] floating enable, sticky enable, resize set 100 pp
 bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.sh
 
 
+# We do this as opposed to command(...) in keyd because this insures that rofi can interact with everything running inside the session. until we find a better fix
+bindsym Mod1+F22 exec --no-startup-id M-x
 
 
 
@@ -408,12 +414,9 @@ bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
 # NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
 bindsym Mod4+Control+q kill
 
-
-bindsym Mod4+BackSpace exec --no-startup-id /home/dex/.local/bin/volume_control.sh mute
-bindsym Mod4+minus exec --no-startup-id /home/dex/.local/bin/volume_control.sh down
-bindsym Mod4+equal exec --no-startup-id /home/dex/.local/bin/volume_control.sh up
-
-
+bindsym Mod4+BackSpace exec --no-startup-id ~/.local/bin/volume_control.sh mute
+bindsym Mod4+minus exec --no-startup-id ~/.local/bin/volume_control.sh down
+bindsym Mod4+equal exec --no-startup-id ~/.local/bin/volume_control.sh up
 
 
 for_window [class="st_cpu"]        floating enable, move position center
@@ -426,20 +429,6 @@ for_window [class="st_sync"]       floating enable, move position center
 # =====================================================================
 
 
-
-
-
-###### -----------------------------------------------------
-###### . xbindkeys bindings migration from xbindkeys to i3
-###### -----------------------------------------------------
-
-# --- Core & Reloads ---
-# Removed xbindkeys reload since it is dead.
-# bindsym Mod4+Shift+Control+r restart
-
-# --- Typing Speed ---
-# bindsym Mod4+p exec --no-startup-id "/home/dex/scripts/sts/fast-type.sh"
-# bindsym Mod4+Shift+p exec --no-startup-id "/home/dex/scripts/sts/slow-type.sh"
 
 
 # All of these need fixing but I don't use them that much though..
@@ -490,10 +479,10 @@ bindsym Mod4+Mod1+i exec --no-startup-id "iupload"
 bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
 
 # --- AI / LLM Tools ---
-# bindsym Mod4+Shift+Control+u exec --no-startup-id "/home/dex/scripts/ddesk/typing/uppercase_selection.sh"
-# bindsym Mod4+Shift+Control+l exec --no-startup-id "/home/dex/scripts/ddesk/typing/lowercase_selection.sh"
-# bindsym Mod4+Shift+Control+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text_spelling.sh"
-# bindsym Mod4+Shift+Control+Mod1+g exec --no-startup-id "/home/dex/scripts/ddesk/correct_text.sh"
+# bindsym Mod4+Shift+Control+u exec --no-startup-id "~/scripts/ddesk/typing/uppercase_selection.sh"
+# bindsym Mod4+Shift+Control+l exec --no-startup-id "~/scripts/ddesk/typing/lowercase_selection.sh"
+# bindsym Mod4+Shift+Control+g exec --no-startup-id "~/scripts/ddesk/correct_text_spelling.sh"
+# bindsym Mod4+Shift+Control+Mod1+g exec --no-startup-id "~/scripts/ddesk/correct_text.sh"
 # bindsym Mod4+Mod1+Control+w exec --no-startup-id "~/scripts/ai/wiki_search.sh"
 # bindsym Mod4+Mod1+Control+n exec --no-startup-id "~/scripts/ai/names_suggestion.sh"
 # bindsym Mod4+Mod1+Control+l exec --no-startup-id "~/scripts/ai/commit.sh"
@@ -646,7 +635,7 @@ bindsym Mod4+Shift+Mod1+Control+0 exec --no-startup-id "sleep 0.5; xset dpms for
 ###
 
 # Downloads shortcut (Control+Alt+F24)
-bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /home/dex/Workspace/Downloads/
+bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /home/$USER/Workspace/Downloads/
 
 # ------------
 
@@ -671,6 +660,7 @@ for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move po
 # bindsym Mod4+Shift+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window || st -qq
 
 bindsym Mod4+Return exec st -t st
+
 
 
 # Example for your main terminal
@@ -704,70 +694,7 @@ bindsym Mod4+d exec dmenu_run
 # Kill focused window
 bindsym Mod4+Shift+q kill
 
-# QTerminal dropdown
-# bindsym Mod4+F12 exec --no-startup-id qterminal -d
 
-
-
-# --- Dropdown terminals (tdrop) ---
-
-# Scratch  (Mod+Shift+f)
-# bindsym Mod4+Shift+f exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_scratch" st -c "st_scratch" -t "scratch" -e tmux new-session -A -s scratch
-
-
-
-# Duck  (Mod+Shift+d)
-# bindsym Mod4+Control+Shift+d exec --no-startup-id tdrop -ma -w 100% -h 98% -n "st_duck" st -c "st_duck" -t "duck" -e tmux new-session -A -s duck -c ~/work
-
-# Draft  (Mod+Shift+g)
-# bindsym Mod4+Shift+g exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_draft" st -c "st_draft" -t "draft" -e tmux new-session -A -s draft
-
-
-
-
-
-
-
-
-# bindsym Mod4+Control+x exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_btop" st -c "st_btop" -t "btop" -e tmux new-session -A -s btop
-
-
-
-# vesktop
-# 3. Keybinding (Add to SCRATCHPAD section)
-# bindsym Mod4+Mod1+v [class="vesktop"] scratchpad show
-
-
-# bindsym Mod4+Shift+v [class="vesktop"] scratchpad show, move position center
-
-
-# bindsym Control+Mod4+m exec i3-msg '[class="mpv"] scratchpad show'
-
-
-# CPU  (Mod+Shift+BackSpace)
-# bindsym Mod4+Shift+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_cpu" st -c "st_cpu" -t "cpu" -e tmux new-session -A -s cpu
-
-
-
-# bindsym Mod4+semicolon exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" st -c "st_main" -t "main" -e tmux new-session -A -s main
-
-
-
-
-# bindsym Mod4+BackSpace exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" urxvtc -name "st_main" -title "Dropdown"
-
-# urxvtc dropdown  (Mod+BackSpace)
-# bindsym Mod4+i exec --no-startup-id tdrop -ma -w 90% -h 85% -x 5% -y 4% -n "st_main" urxvtc -name "st_main" -title "Dropdown"
-
-## The issue with this one is that, it makes Mod4+grave switch between workspace 40 and the current workspace for back and forth. It's annoying to have.
-# Mass hide all tdrop windows to Workspace 42
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^st_|^st_main|^qterminal"] move to workspace 40
-
-
-# bindsym Mod4+Mod1+space exec --no-startup-id /home/dex/scripts/i3/i3-window-mover.sh
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal" instance="^st_|^st_main|^qterminal"] move scratchpad
-
-# bindsym Mod1+BackSpace [class="^[Aa]lacritty_|^URxvt|^qterminal|^st_main" instance="^st_|^st_main|^qterminal"] move scratchpad
 
 # Just tap tal then tap alt... make sure both keyd and xremap are on.
 bindsym Mod1+Shift+BackSpace exec --no-startup-id hide-float-windows

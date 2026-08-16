@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Program Files
+MimeType=application/x-wine-extension-eop;
+Exec=env "WINEPREFIX=/home/dex/.wine" wine start /ProgIDOpen "eop_auto_file" %f
+NoDisplay=true
+StartupNotify=true
+Icon=37D2_Program Files.0

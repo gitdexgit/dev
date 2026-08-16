@@ -2,7 +2,7 @@
 Type=Application
 Name=rundll32
 MimeType=application/x-wine-extension-appref-ms;
-Exec=env WINEPREFIX="/home/dex/.local/share/wineprefixes/osu-stable" wine start /ProgIDOpen Application.Reference %f
+Exec=env "WINEPREFIX=/home/dex/Games/stardew-vally-prefix" wine start /ProgIDOpen "Application.Reference" %f
 NoDisplay=true
 StartupNotify=true
 Icon=5742_rundll32.0

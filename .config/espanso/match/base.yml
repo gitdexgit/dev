@@ -84,6 +84,20 @@ matches:
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
 
+  - trigger: ";;discord-hide;"
+    replace: |
+      const avatarHide = document.createElement("style");
+      avatarHide.textContent = `
+        [class*="avatar_"],
+        img[class*="avatar"],
+        img[src*="/avatars/"] {
+          display: none !important;
+        }
+      `;
+      document.head.appendChild(avatarHide);
+    force_clipboard: true
+    paste_shortcut: "CTRL+V"
+
   - trigger: ";;luacb;"
     replace: "```lua\n{{content}}\n```\n\n"
     force_clipboard: true

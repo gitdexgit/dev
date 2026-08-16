@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+# --------------------------------------------------------------------
+# yazi-ueberzugpp-tmux-fix
+#
+# Workaround for multiple ueberzugpp instances inside the same tmux
+# session/window setup on X11.
+#
+# Designed for:
+#   - Arch Linux
+#   - X11
+#   - i3
+#   - Alacritty
+#   - tmux
+#   - Yazi
+#   - ueberzugpp
+#
+# IMPORTANT:
+#   Run this OUTSIDE tmux.
+#
+#   The script is intended to remain running in the background.
+#   It watches for ueberzugpp instances and installs tmux
+#   session-window-changed hooks for them.
+# --------------------------------------------------------------------
+
+set -o nounset
+set -o pipefail
+
+# How often to check for ueberzugpp instances.
+INTERVAL=0.10
+
+# Give ueberzugpp a moment to finish creating/removing its socket.
+SETTLE=0.20
+
+# Remember the previous set of ueberzugpp PIDs so we only update
+# tmux hooks when something actually changes.
+last_state=""
+
+# --------------------------------------------------------------------
+# Find all currently running ueberzugpp instances by their sockets.
+# --------------------------------------------------------------------
+
+get_ueberzug_pids() {
+    local socket pid
+
+    for socket in /tmp/ueberzugpp-*.socket; do
+        # Ignore the glob when there are no matching sockets.
+        [[ -S "$socket" ]] || continue
+
+        # Extract PID from:
+        # /tmp/ueberzugpp-12345.socket
+        pid="${socket##*-}"
+        pid="${pid%.socket}"
+
+        # Make sure the process still exists.
+        [[ -d "/proc/$pid" ]] || continue
+
+        printf '%s\n' "$pid"
+    done | sort -n
+}
+
+# --------------------------------------------------------------------
+# Main loop
+# --------------------------------------------------------------------
+
+while sleep "$INTERVAL"; do
+
+    # Nothing to do if there is currently no tmux server/session.
+    if ! tmux list-sessions >/dev/null 2>&1; then
+        continue
+    fi
+
+    # Find currently active ueberzugpp processes.
+    mapfile -t pids < <(get_ueberzug_pids)
+
+    current_state="${pids[*]}"
+
+    # Only touch tmux when the ueberzugpp process list changes.
+    if [[ "$current_state" != "$last_state" ]]; then
+
+        # Let ueberzugpp finish creating/removing its socket.
+        sleep "$SETTLE"
+
+        # Re-scan after settling.
+        mapfile -t pids < <(get_ueberzug_pids)
+        current_state="${pids[*]}"
+
+        # Install a tmux hook for every detected ueberzugpp instance.
+        for i in "${!pids[@]}"; do
+            tmux set-hook -w \
+                "session-window-changed[$i]" \
+                "run-shell \"ueberzugpp tmux session-window-changed ${pids[$i]}\"" \
+                2>/dev/null || true
+        done
+
+        last_state="$current_state"
+    fi
+done
+
