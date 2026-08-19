@@ -1,5 +1,25 @@
 very good ideas:
 
+
+## play wow KRONOS 5 private server Let's give old classic wow some try
+Yeah let's play old WoW why not just give it a try see how addictive it is?
+
+
+## Play Albion online it is linux native I guess try it out.
+You see this albion online why not try it out you have downloaded it and downloaded the updates I guess....
+give it a try I guess
+
+## Play Old school Ruinscape try it out
+You have it doiwnloaded might try it out at some point
+
+## Play virtual piano using Jujutsu Kaisen Vague Reason
+ look for a cheet and see what are the notes or clicks you need
+
+
+## write an essay about remember system
+Write an essay about the Remember system I use in GitHub, publish it with GitHub Pages, and eventually share it on Twitter.
+
+
 ## When you get good at pixel art and you are pro at it get aseprite
 
 Libresprite is like aseprite. You can pay 20$ for aseprtie but you can build it

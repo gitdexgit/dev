@@ -31,5 +31,7 @@ text/x-ms-regedit=wine-extension-reg.desktop;
 text/x-python=neovim-ghostty.desktop;
 text/x-shellscript=neovim-ghostty.desktop;
 x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop;
+x-scheme-handler/discord-409416265891971072=discord-409416265891971072.desktop;
 x-scheme-handler/osu=sh.ppy.osu.stable.desktop;
 x-scheme-handler/pttp=CiscoPacketTracerPtsa-9.0.0.desktop;
+x-scheme-handler/rshub=jagex-launcher.desktop;

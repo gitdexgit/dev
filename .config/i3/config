@@ -173,7 +173,7 @@ exec --no-startup-id copyq
 exec --no-startup-id copyq show
 
 # Gromit-MPX (screen annotation)
-exec --no-startup-id sh -c "sleep 5; gromit-mpx --key none --undo-key none"
+exec --no-startup-id sh -c "sleep 6; gromit-mpx --key none --undo-key none -o 0.4"
 
 # Razer DPI
 exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"

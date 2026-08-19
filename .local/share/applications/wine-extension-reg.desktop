@@ -2,6 +2,6 @@
 Type=Application
 Name=A Wine application
 MimeType=text/x-ms-regedit;
-Exec=env "WINEPREFIX=/home/dex/Games/stardew-vally-prefix" wine start /ProgIDOpen "regfile" %f
+Exec=env "WINEPREFIX=/data/VMs/WoW/prefix" wine start /ProgIDOpen "regfile" %f
 NoDisplay=true
 StartupNotify=true

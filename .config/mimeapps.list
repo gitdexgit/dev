@@ -91,3 +91,5 @@ text/x-csrc=neovim-allacrity.desktop
 application/x-zerosize=audacity.desktop
 x-scheme-handler/mailto=userapp-Thunderbird-8UMES3.desktop
 x-scheme-handler/mid=userapp-Thunderbird-8UMES3.desktop
+x-scheme-handler/discord-409416265891971072=discord-409416265891971072.desktop
+x-scheme-handler/rshub=jagex-launcher.desktop

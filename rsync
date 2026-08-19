@@ -82,6 +82,7 @@ HOME_TARGETS=(
     "Documents/Bookmarks"
     ".config/yazi"
     ".config/feh"
+    ".config/skippy-xd/skippy-xd.rc"
     ".config/sxhkd/sxhkdrc"
     ".dotfiles"
     ".config/fzf"

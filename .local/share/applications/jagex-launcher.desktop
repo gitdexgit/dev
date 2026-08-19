@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Jagex Launcher
+Exec="/home/dex/Workspace/Downloads/jagex-launcher-beta-linux-x86_64.AppImage" %U
+Terminal=false
+Type=Application
+Icon=jagex-launcher
+StartupWMClass=Jagex Launcher
+X-AppImage-Version=0.1.5
+MimeType=x-scheme-handler/rshub;
+Comment=RuneScape Hub
+Categories=Game;
+TryExec=/home/dex/Workspace/Downloads/jagex-launcher-beta-linux-x86_64.AppImage
