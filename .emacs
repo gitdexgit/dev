@@ -688,7 +688,7 @@ compilation-error-regexp-alist-alist
 ;; Global keys (at end to override everything)
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-x <right>") 'find-file)
-(global-set-key (kbd "C-x <down>") 'switch-to-next-buffer)
+(global-set-key (kbd "C-x <left>") 'ido-switch-buffer)
 (global-set-key (kbd "C-x <end>") 'eval-last-sexp)
 
 (global-set-key (kbd "C-M-<right>") 'forward-sexp)

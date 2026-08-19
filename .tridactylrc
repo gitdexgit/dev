@@ -1,4 +1,5 @@
 " General Settings
+set editorcmd st -e nvim
 set update.lastchecktime 1785762127487
 set update.nag true
 set update.nagwait 7
@@ -150,6 +151,7 @@ bind <AC-Escape> mode ignore
 bind <AC-`> mode ignore
 bind <S-Escape> mode ignore
 bind <Escape> composite mode normal ; hidecmdline
+
 bind <C-[> composite mode normal ; hidecmdline
 bind a current_url bmark
 bind A bmark
@@ -166,7 +168,43 @@ bind . repeat
 bind <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-ArrowRight><AS-ArrowLeft><AS-ArrowRight>ba open https://www.youtube.com/watch?v=M3iOROuTuMA
 bind m gobble 1 markadd
 bind ` gobble 1 markjump
-bind <C-x>b buffer
+
+
+bind --mode=ignore <Escape> composite mode normal ; hidecmdline
+bind --mode=ignore : fillcmdline_notrail
+
+bind <C-x>r fillcmdline tabrename %
+bind --mode=insert <C-x>r fillcmdline tabrename %
+bind --mode=ignore <C-x>r fillcmdline tabrename %
+
+bind <C-x>xr fillcmdline tabrename
+bind --mode=insert <C-x>xr fillcmdline tabrename
+bind --mode=ignore <C-x>xr fillcmdline tabrename
+
+bind <C-x><ArrowLeft> fillcmdline buffer
+bind --mode=insert <C-x><ArrowLeft> fillcmdline buffer
+bind --mode=ignore <C-x><ArrowLeft> fillcmdline buffer
+
+bind <C-x>b fillcmdline buffer
+bind --mode=insert <C-x><b> fillcmdline buffer
+bind --mode=ignore <C-x>b fillcmdline buffer
+
+bind <C-x><C-b> fillcmdline taball
+bind --mode=insert <C-x><C-b> fillcmdline taball
+bind --mode=ignore <C-x><C-b> fillcmdline taball
+
+bind <C-x>k tabclose
+bind --mode=insert <C-x>k tabclose
+bind --mode=ignore <C-x>k tabclose
+
+bind <C-x>d tabduplicate
+bind --mode=insert <C-x>d tabduplicate
+bind --mode=ignore <C-x>d tabduplicate
+
+bind <C-x><Delete> tabduplicate
+bind --mode=insert <C-x><Delete> tabduplicate
+bind --mode=ignore <C-x><Delete> tabduplicate
+
 bind --mode=ex <ArrowDown> ex.next_completion
 bind --mode=ex <ArrowUp> ex.prev_completion
 
