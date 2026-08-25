@@ -25,6 +25,27 @@ matches:
         params:
           cmd: "cat ~/ai/prompts/unslop.md"
 
+  - trigger: ";;pw;"
+    replace: "{{output}}"
+    force_clipboard: true
+    paste_shortcut: "CTRL+V"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "cat ~/ai/prompts/wait-what.md"
+
+
+
+  - trigger: ";;pb;"
+    replace: "{{output}}"
+    force_clipboard: true
+    paste_shortcut: "CTRL+V"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "cat ~/ai/prompts/bro.md"
 
 
   - trigger: ";;timer;"

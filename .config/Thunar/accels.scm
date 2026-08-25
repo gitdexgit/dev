@@ -10,6 +10,7 @@
 ; (gtk_accel_path "<Actions>/ThunarWindow/file-menu" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/close-tab" "<Primary>w")
 ; (gtk_accel_path "<Actions>/ThunarWindow/switch-previous-tab-alt" "<Primary><Shift>ISO_Left_Tab")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/71d46ce2f47f1fb1f084a975873f49f3" "")
 ; (gtk_accel_path "<Actions>/ThunarStatusBar/toggle-size" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/new-window" "<Primary>n")
 ; (gtk_accel_path "<Actions>/ThunarWindow/clear-directory-specific-settings" "")

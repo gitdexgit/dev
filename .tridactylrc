@@ -171,7 +171,6 @@ bind ` gobble 1 markjump
 
 
 bind --mode=ignore <Escape> composite mode normal ; hidecmdline
-bind --mode=ignore : fillcmdline_notrail
 
 bind <C-x>r fillcmdline tabrename %
 bind --mode=insert <C-x>r fillcmdline tabrename %
