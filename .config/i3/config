@@ -683,6 +683,7 @@ bindsym Mod4+Return exec st -t st
 # bindsym Mod4+d exec --no-startup-id drun
 
 bindsym Mod4+d exec dmenu_run
+bindsym Mod4+Shift+d exec M-x
 
 # Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like Mod4+d then type rofi -show run ez.
 # rofi -show run with different theme

@@ -1,3 +1,7 @@
+unbind <C-x>
+unbind --mode=insert <C-x>
+unbind --mode=ignore <C-x>
+
 " General Settings
 set editorcmd st -e nvim
 set update.lastchecktime 1785762127487
@@ -169,8 +173,25 @@ bind <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-Arrow
 bind m gobble 1 markadd
 bind ` gobble 1 markjump
 
+bind <A-x> fillcmdline_notrail
+bind --mode=insert <A-x> fillcmdline_notrail
+bind --mode=ignore <A-x> fillcmdline_notrail
 
-bind --mode=ignore <Escape> composite mode normal ; hidecmdline
+bind <C-x>, tabmove -1
+bind --mode=insert <C-x>, tabmove -1
+bind --mode=ignore <C-x>, tabmove -1
+
+bind <C-x><C-,> tabmove -1
+bind --mode=insert <C-x><C-,> tabmove -1
+bind --mode=ignore <C-x><C-,> tabmove -1
+
+bind <C-x>. tabmove +1
+bind --mode=ignore <C-x>. tabmove +1
+bind --mode=insert <C-x>. tabmove +1
+
+bind <C-x><C-.> tabmove +1
+bind --mode=ignore <C-x><C-.> tabmove +1
+bind --mode=insert <C-x><C-.> tabmove +1
 
 bind <C-x>r fillcmdline tabrename %
 bind --mode=insert <C-x>r fillcmdline tabrename %
@@ -185,7 +206,7 @@ bind --mode=insert <C-x><ArrowLeft> fillcmdline buffer
 bind --mode=ignore <C-x><ArrowLeft> fillcmdline buffer
 
 bind <C-x>b fillcmdline buffer
-bind --mode=insert <C-x><b> fillcmdline buffer
+bind --mode=insert <C-x>b fillcmdline buffer
 bind --mode=ignore <C-x>b fillcmdline buffer
 
 bind <C-x><C-b> fillcmdline taball

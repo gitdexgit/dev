@@ -1,17 +1,19 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-    echo "Usage: einfo <node>"
+    echo "Usage: einfo <manual> [index-term]"
     exit 1
 fi
 
-# 1. Check if info page exists
-if ! info "$1" --where > /dev/null 2>&1; then
-    echo "No info entry for $1"
+manual="$1"
+shift
+term="$*"
+
+if ! info "$manual" --where >/dev/null 2>&1; then
+    echo "No info entry for $manual"
     exit 1
 fi
 
-# 2. Ensure daemon is running
 if ! emacsclient -s info-server -e "t" >/dev/null 2>&1; then
     emacs --daemon=info-server >/dev/null 2>&1
     until emacsclient -s info-server -e "t" >/dev/null 2>&1; do
@@ -19,5 +21,12 @@ if ! emacsclient -s info-server -e "t" >/dev/null 2>&1; then
     done
 fi
 
-# 3. Open info node
-exec emacsclient -nw -c -e "(info \"$1\")"
+if [ -n "$term" ]; then
+    elisp=$(printf '(progn (info "%s") (Info-index "%s"))' \
+        "$manual" "$term")
+else
+    elisp=$(printf '(info "%s")' "$manual")
+fi
+
+exec emacsclient -nw -s info-server -e "$elisp"
+
