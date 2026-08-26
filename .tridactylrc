@@ -181,6 +181,14 @@ bind <C-x>, tabmove -1
 bind --mode=insert <C-x>, tabmove -1
 bind --mode=ignore <C-x>, tabmove -1
 
+bind <C-x>h tabprev
+bind --mode=insert <C-x>h tabprev
+bind --mode=ignore <C-x>h tabprev
+
+bind <C-x>l tabnext
+bind --mode=insert <C-x>l tabnext
+bind --mode=ignore <C-x>l tabnext
+
 bind <C-x><C-,> tabmove -1
 bind --mode=insert <C-x><C-,> tabmove -1
 bind --mode=ignore <C-x><C-,> tabmove -1
