@@ -10,6 +10,7 @@ m_now=$(( 10#$(date +%m) ))
 # General Calculations
 diff=$(( now_epoch - birth_epoch ))
 days=$(( diff / 86400 ))
+hours=$(( diff / 3600 ))
 years=$(( y_now - 2001 ))
 [ "$(date +%m%d)" -lt "$MMDD" ] && years=$(( years - 1 ))
 months=$(( (y_now - 2001) * 12 + (m_now - 8) ))
@@ -27,12 +28,29 @@ last_epoch=$(date -d "$last_year-08-08" +%s)
 next_epoch=$(date -d "$next_year-08-08" +%s)
 
 days_since=$(( (now_epoch - last_epoch) / 86400 ))
+hours_since=$(( (now_epoch - last_epoch) / 3600 ))
+
 days_until=$(( (next_epoch - now_epoch) / 86400 + 1 ))
+hours_until=$(( (next_epoch - now_epoch) / 3600 ))
+
+# Month Tracking Logic
+month_start=$(date -d "$(date +%Y-%m-01)" +%s)
+next_month_start=$(date -d "$(date +%Y-%m-01) +1 month" +%s)
+
+hours_since_month=$(( (now_epoch - month_start) / 3600 ))
+hours_until_month=$(( (next_month_start - now_epoch) / 3600 ))
 
 # Output
 echo "Age: $years"
 echo "Days passed (total): $days"
+echo "Hours passed (total): $hours"
 echo "Months passed (total): $months"
 echo "----------------------------"
 echo "Days since last birthday: $days_since"
+echo "Hours since last birthday: $hours_since"
 echo "Days until next birthday: $days_until"
+echo "Hours until next birthday: $hours_until"
+echo "----------------------------"
+echo "Hours since start of month: $hours_since_month"
+echo "Hours until next month: $hours_until_month"
+

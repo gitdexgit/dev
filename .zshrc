@@ -238,9 +238,9 @@ bindkey '^@' expand-or-complete
 
 
 # Custom Widgets
-fg-widget() { BUFFER="fg"; zle accept-line; }
-zle -N fg-widget
-bindkey '^[z' fg-widget
+# fg-widget() { BUFFER="fg"; zle accept-line; }
+# zle -N fg-widget
+# bindkey '^[z' fg-widget
 
 
 

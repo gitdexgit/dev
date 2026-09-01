@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CONFIG="$HOME/.config/i3/config"
+
+if grep -q '^font pango:Iosevka 0$' "$CONFIG"; then
+    sed -i 's/^font pango:Iosevka 0$/font pango:Iosevka 10/' "$CONFIG"
+else
+    sed -i 's/^font pango:Iosevka 10$/font pango:Iosevka 0/' "$CONFIG"
+fi
+
+i3-msg reload
+
