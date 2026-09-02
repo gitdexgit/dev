@@ -68,7 +68,7 @@ exposeLayout = rect
 
 # Wait time in ms before displaying switch previews
 # Set = 0 to veto live previews completely
-switchWaitDuration = 100
+switchWaitDuration = 0
 
 # During switchWaitDuration and animation,
 # Whether switch can cycle through windows
@@ -88,7 +88,7 @@ upscaleWindows = true
 
 # Animation duration in ms
 # Set = 0 to switch off animations
-animationDuration = 200
+animationDuration = 0
 
 # Animation refresh rate in fps
 animationRefresh = 60

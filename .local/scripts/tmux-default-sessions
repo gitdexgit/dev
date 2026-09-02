@@ -122,6 +122,13 @@ tmux send-keys -t "*btop*":3.1 "watch -n 3 cpupower frequency-info" C-m
 # tmux send-keys -t "*btop*":3.2 "sudo cpupower frequency-set -u 2800MHz"
 # tmux send-keys -t "*btop*":3.3 "sudo cpupower frequency-set -g performance"
 
+# Window 4
+tmux new-window -t "*btop*":4 -c "$HOME" -n "tt"
+tmux split-window -h -t "*btop*":4.1 -l 1
+tmux send-keys -t "*btop*":4.1 "tt -blockcursor -highlight1 -notheme" C-m
+tmux send-keys -t "*btop*":4.2 "ping 8.8.8.8" C-m
+
+
 tmux select-pane -t "*btop*":1.1
 
 

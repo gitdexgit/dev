@@ -1,21 +1,26 @@
 
 
-font pango:Iosevka 0
-
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
-
 hide_edge_borders both
 
-
-
-
-
-
+# less mouse usage the better
 focus_follows_mouse no
+
+# I hate the mouse scroll on the tabbed. I often hit it by mistake
+bindsym button4 nop
+bindsym button5 nop
+
 
 floating_modifier Mod4
 tiling_drag modifier titlebar
+
+
+for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
+
+
 
 
 
@@ -128,17 +133,15 @@ exec --no-startup-id sxhkd
 
 # exec --no-startup-id skippy-xd --start-daemon
 
-# Start xcompmgr compositor with the -n flag
-# Sadly this is too basic... it does everything but uses cpu right... but man... gromit mpx with drawing pen tablet sucks
-# exec --no-startup-id xcompmgr -n
-#
-# This should fix grmmit-mpx
+
+# fixes grmmit-mpx
 exec --no-startup-id picom --backend glx --vsync --no-use-damage --config /dev/null
 
+# compositor alternative (picom better)
+# exec --no-startup-id xcompmgr -n
 
-# Fix multiple ueberzugpp/Yazi previews inside tmux
+# fixes ueberzugpp/Yazi previews inside tmux
 exec --no-startup-id ~/scripts/fix/yazi-ueberzugpp-tmux-fix
-
 
 # 1. Start the daemon on login
 # exec --no-startup-id skippy-xd --start-daemon
@@ -182,7 +185,7 @@ exec --no-startup-id sleep 5  && firefox -P default-release -c default-release
 # Skippy-XD (expose-style window switcher)
 # exec --no-startup-id skippy-xd --start-daemon
 
-# i3-back (alt-tab previous-window tracking)
+# i3-back
 exec --no-startup-id i3-back
 
 
@@ -202,7 +205,6 @@ exec --no-startup-id ad -y-notification --image="clock" --text="Task/Time Termin
 # exec --no-startup-id yad --notification --image="vesktop" --text="Click to send Super+Backspace" --command="xdotool key super+control+v"
 # exec --no-startup-id yad --notification --image="copyq" --text="Click to send Super+Backspace" --command="xdotool key super+control+c"
 
-# exec --no-startup-id yad --notification --image="/usr/share/icons/Papirus/64x64/apps/duckduckgo.svg" --text="Click to send Super+Backspace" --command="xdotool key super+shift+d"
 # exec --no-startup-id yad --notification --image="yast-release-notes" --text="Click to send Super+Backspace" --command="xdotool key super+shift+f"
 # exec --no-startup-id yad --notification --image="text-wiki" --text="Click to send Super+Backspace" --command="xdotool key super+alt+BackSpace"
 # exec --no-startup-id yad --notification --image="cpu" --text="Click to send Super+Backspace" --command="xdotool key super+shift+BackSpace"
@@ -305,74 +307,51 @@ for_window [instance="floating_thunar"]   floating enable
 
 # for_window [class="st_scratch"]    floating enable, border pixel 0, move position center
 # for_window [class="st_draft"]      floating enable, border pixel 0, move position center
-# for_window [class="st_duck"]       floating enable, border pixel 0, move position center
 # for_window [class="st_task"]       floating enable, border pixel 0, move position center
 # for_window [class="st_btop"]       floating enable, border pixel 0, move position center
 # for_window [class="st_config"]     floating enable, border pixel 0, move position center
 # for_window [class="st_cpu"]        floating enable, border pixel 0, move position center
-# for_window [class="st_sync"]       floating enable, border pixel 0, move position center
-# for_window [instance="st_main"] floating enable, border pixel 0, move position center
-#
 
 # for_window [class="st_scratch"]    floating enable, move position center
 # for_window [class="st_work"]      floating enable, move position center
 # for_window [class="st_draft"]      floating enable, move position center
-# for_window [class="st_duck"]       floating enable, move position center
 # for_window [class="st_task"]       floating enable, move position center
 # for_window [class="st_btop"]       floating enable, move position center
 # for_window [class="st_config"]     floating enable, move position center
 
 # for_window [class="st_scratch"]    floating enable
 # for_window [class="st_draft"]      floating enable
-# for_window [class="st_duck"]       floating enable
 # for_window [class="st_scratch"]       floating enable
 # for_window [class="st_btop"]       floating enable
 
-for_window [class="st_scratch"] floating enable, border none, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
-bindsym Mod4+t exec --no-startup-id ~/.config/i3/scratch_toggle.sh
 
-# Btop  (Mod+Shift+b)
-for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
-bindsym Mod4+Shift+b exec --no-startup-id ~/.config/i3/btop_toggle.sh
 
 for_window [class="st_learn"] floating enable, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
-bindsym Mod4+Control+Shift+f exec --no-startup-id ~/.config/i3/learn_toggle.sh
+# I prefer space+f1 or sipmly typing focus-learn
+bindsym Mod4+Control+Shift+f exec --no-startup-id ~/.local/bin/focus-learn
 
 for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
-bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.config/i3/config_toggle.sh
+# I prefer space+f2 or sipmly typing focus-config
+bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.local/bin/focus-config
 
-
-# We do this as opposed to command(...) in keyd because this insures that rofi can interact with everything running inside the session. until we find a better fix
-bindsym Mod1+F22 exec --no-startup-id M-x
-
-
-
-# Wiki  (Mod+Alt+BackSpace)
-# for_window [class="st_sync"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
-# bindsym Mod4+Mod1+BackSpace exec --no-startup-id ~/.config/i3/sync_toggle.sh
+for_window [class="st_scratch"] floating enable, border none, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
+# I prefer space+f3 or sipmly typing focus-scratch
+bindsym Mod4+t exec --no-startup-id ~/.local/bin/focus-scratch
 
 
 
-# for_window [class="st_duck"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
-# bindsym Mod4+Control+Shift+d exec --no-startup-id ~/.config/i3/duck_toggle.sh
 
-# for_window [class="st_main"] floating enable, sticky enable, resize set 100 ppt 100 ppt, move position -3 -26
-# bindsym Mod4+Shift+Control+BackSpace exec --no-startup-id ~/.config/i3/main_toggle.sh
 
-# I hate the mouse scroll on the tabbed by mistake
-bindsym button4 nop
-bindsym button5 nop
+
+
+
 
 # --- Tmux Session Tiled Terminals ---
 # bindsym Mod4+Control+s exec st -e tmux new-session -A -s session
 # bindsym Mod4+Control+l exec st -e tmux new-session -A -s learn
 # bindsym Mod4+Control+b exec st -e tmux new-session -A -s btop
-# bindsym Mod4+Control+Return exec st -e tmux new-session -A -s main
 # bindsym Mod4+Control+Left exec st -e tmux new-session -A -s btop
-# bindsym Mod4+Control+m exec st -e tmux new-session -A -s main
-# bindsym Mod4+Control+d exec st -e tmux new-session -A -s duck
 # bindsym Mod4+Control+c exec st -e tmux new-session -A -s config
-# bindsym Mod4+Control+Delete exec st -e tmux new-session -A -s duck
 
 bindsym Mod4+Control+e exec emacsclient -c
 
@@ -385,17 +364,13 @@ bindsym Mod4+Control+l exec st -t learn -e tmux new-session -A -s "*learn*"
 for_window [title="^btop$"] border none
 bindsym Mod4+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
 # bindsym Mod4+Control+w exec st -t word -e tmux new-session -A -s word
-# bindsym Mod4+Control+Return exec st -t main -e tmux new-session -A -s main
 # bindsym Mod4+Control+Left exec st -t btop -e tmux new-session -A -s btop
-# bindsym Mod4+Control+m exec st -t main -e tmux new-session -A -s main
-# bindsym Mod4+Control+d exec st -t duck -e tmux new-session -A -s duck
 
 
 for_window [title="^config$"] border none
 bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 
 # bindsym Mod4+Control+t exec st -e tmux-sessionizer
-# bindsym Mod4+Control+Delete exec st -t duck -e tmux new-session -A -s duck
 
 bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
 
@@ -409,9 +384,6 @@ bindsym Mod4+minus exec --no-startup-id ~/.local/bin/volume_control.sh down
 bindsym Mod4+equal exec --no-startup-id ~/.local/bin/volume_control.sh up
 
 
-for_window [class="st_cpu"]        floating enable, move position center
-for_window [class="st_sync"]       floating enable, move position center
-# for_window [class="st_main"]    floating enable, move position center
 
 
 # =====================================================================
@@ -440,9 +412,13 @@ for_window [class="st_sync"]       floating enable, move position center
 # bindsym Mod4+Mod1+backslash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,330,147,790,504"
 
 bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, border none, move position 0 0, resize set 1924 1075'"
+
+# bindsym Mod1+Mod4+F11 exec --no-startup-id "i3-msg 'floating enable, move position 0 0, resize set 1924 1075'"
+
 # bindsym Mod1+F11 exec --no-startup-id "i3-msg 'border none, move position 0 0, resize set 1924 1075'"
 # bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, move position -3 0, resize set 1924 1075'"
-bindsym Mod1+Shift+F11 exec --no-startup-id "~/scripts/i3/toggle-border.sh"
+bindsym Mod1+Shift+F11 exec --no-startup-id "~/.local/bin/toggle-borders"
+bindsym Mod1+Shift+Control+F11 exec --no-startup-id "~/.local/bin/toggle-borders-pixel-1"
 
 
 
@@ -455,7 +431,7 @@ bindsym Control+Mod1+Left exec --no-startup-id "xdotool set_desktop --relative -
 # bindsym --release Print exec --no-startup-id bash -c "WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
 #
 # You have to do it this way:
-bindsym --release Print exec --no-startup-id ~/.config/i3/screenshot.sh
+bindsym --release Print exec --no-startup-id ~/.local/bin/screenshot
 
 bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
 bindsym --release Mod4+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
@@ -532,7 +508,6 @@ bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 
 
 # open rofi. Show workspaces as options. Select option; rofi Moves current window to a selected option.
-# bindsym Mod4+Mod1+m exec --no-startup-id "/home/dex/scripts/i3/i3-window-mover.sh"
 bindsym Mod4+Mod1+m exec --no-startup-id move-buffer-to-workspace
 
 
@@ -653,8 +628,6 @@ bindsym Mod4+Return exec st -t st
 
 
 
-# Example for your main terminal
-# bindsym Mod4+Return exec st -e zsh -c "printf '\e]0;st\a'; zsh"
 
 # Toggle Qalculate scratchpad
 # bindsym Control+Mod4+q [class="Qalculate-gtk"] scratchpad show, move position center
@@ -688,7 +661,7 @@ bindsym Mod4+Shift+q kill
 
 
 # Just tap tal then tap alt... make sure both keyd and xremap are on.
-bindsym Mod1+Shift+BackSpace exec --no-startup-id hide-float-windows
+bindsym Mod1+Shift+BackSpace exec --no-startup-id hide-float
 
 
 # =====================================================================
@@ -735,11 +708,12 @@ bindsym Mod4+F5 bar mode hide
 bindsym Mod4+F6 bar mode invisible
 bindsym Mod4+F7 bar mode dock
 
-bindsym Mod4+F9 exec --no-startup-id ~/.config/i3/toggle-font
+bindsym Mod4+F9 exec --no-startup-id ~/.local/bin/toggle-tabs
+bindsym Mod4+F10 exec --no-startup-id ~/.local/bin/toggle-edge-borders
 
 
 
-# Alt-tab (previous window via i3-back)
+# i3-back
 bindsym Mod1+Tab        [con_mark=_back] focus
 bindsym Mod4+grave workspace back_and_forth
 
@@ -842,15 +816,6 @@ bindsym Mod4+Mod1+8 move container to workspace number $ws8
 bindsym Mod4+Mod1+9 move container to workspace number $ws9
 bindsym Mod4+Mod1+0 move container to workspace number $ws10
 
-
-# =====================================================================
-# KEYBINDINGS — TAB FOCUS (custom script)
-# NOTE: These use Ctrl+Alt+Number to avoid clobbering Mod+Shift+1-9
-# =====================================================================
-
-bindsym Mod4+Mod1+F11 exec --no-startup-id ~/scripts/i3/tab-focus.sh 0
-bindsym Mod4+Mod1+F12 exec --no-startup-id ~/scripts/i3/tab-focus.sh 1
-# Add more as needed, e.g. bind to unused keys rather than Shift+1-9
 
 
 # =====================================================================

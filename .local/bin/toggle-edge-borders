@@ -1,0 +1,26 @@
+#!/bin/sh
+
+CONFIG="$HOME/.config/i3/config"
+
+# Get the first i3bar ID.
+BAR_ID=$(i3-msg -t get_bar_config | jq -r '.[0]')
+
+# Remember the current bar mode.
+BAR_MODE=$(i3-msg -t get_bar_config "$BAR_ID" | jq -r '.mode // "dock"')
+
+# Toggle hide_edge_borders.
+if grep -q '^hide_edge_borders both$' "$CONFIG"; then
+    sed -i 's/^hide_edge_borders both$/hide_edge_borders none/' "$CONFIG"
+else
+    sed -i 's/^hide_edge_borders none$/hide_edge_borders both/' "$CONFIG"
+fi
+
+# Reload i3.
+i3-msg reload >/dev/null
+
+# Give i3 a moment to recreate/reload the bar.
+sleep 0.1
+
+# Restore the mode we had before the reload.
+i3-msg "bar mode $BAR_MODE"
+

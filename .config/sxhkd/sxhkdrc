@@ -28,8 +28,25 @@ ctrl + alt + x ; 8 ; e ; s
     emoji
 
 # Nested: t -> {t,r,m}
-ctrl + alt + x ; t ; {t,r,m}
-    {switch-workspace,rename-workspace,move-buffer-to-workspace}
+# ctrl + alt + x ; t ; {t,r,m}
+#     {switch-workspace,rename-workspace,move-buffer-to-workspace}
+
+# Nested: t -> {t,r,m,o,O}
+ctrl + alt + x ; t ; t
+     switch-workspace
+
+ctrl + alt + x ; t ; r
+     rename-workspace
+
+ctrl + alt + x ; t ; m
+     move-buffer-to-workspace
+
+ctrl + alt + x ; t ; o
+     xdotool set_desktop --relative -- 1
+
+ctrl + alt + x ; t ; O
+     xdotool set_desktop --relative -- -1
+
 
 # Nested: 5 -> {o,m}
 ctrl + alt + x ; 5 ; {o,m}
@@ -39,5 +56,16 @@ ctrl + alt + x ; 5 ; {o,m}
 ctrl + alt + x ; q ; {r,l,q,k,c,z}
     {i3-msg restart,i3-msg reload,i3-msg exit,xkill,xcontrol -c,xcontrol -z}
 
-ctrl + alt + shift + b
-    switch-buffer-preview
+ctrl + alt + x ; x ; b
+    switch-buffer-preview-horizontal
+
+
+# --- Universal Chords (Leader: C-M-x) ---
+
+# Move between virtual desktops
+ctrl + alt + x ; h
+    xdotool set_desktop --relative -- -1
+
+ctrl + alt + x ; l
+    xdotool set_desktop --relative -- 1
+
