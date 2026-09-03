@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -704,8 +704,8 @@ bindsym Mod4+F18      exec --no-startup-id xdotool mousemove_relative -- -10 0
 bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
 bindsym F18 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
-bindsym Mod4+F5 bar mode hide
-bindsym Mod4+F6 bar mode invisible
+bindsym Mod4+F5 bar mode invisible
+bindsym Mod4+F6 bar mode hide
 bindsym Mod4+F7 bar mode dock
 
 bindsym Mod4+F9 exec --no-startup-id ~/.local/bin/toggle-tabs

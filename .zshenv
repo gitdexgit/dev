@@ -81,6 +81,7 @@ typeset -U path
 path=(
     "$PYENV_ROOT/bin"
     "$HOME/.local/bin"
+    "$HOME/opt"
     "$HOME/go/bin"
     "$HOME/.config/emacs/bin"
     "$HOME/.cargo/bin"
@@ -102,10 +103,11 @@ path=(
 . "$HOME/.cargo/env"
 
 
+# AI
 # API key for aider. Testing out this aider program.
-if [[ -d ~/.key ]]; then
-    for f in ~/.key/*(N.); do
-        export "${f:t}"="$(< "$f")"
-    done
-fi
+# if [[ -d ~/.key ]]; then
+#     for f in ~/.key/*(N.); do
+#         export "${f:t}"="$(< "$f")"
+#     done
+# fi
 

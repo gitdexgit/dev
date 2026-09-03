@@ -1,9 +1,11 @@
 #!/bin/bash
-Y_OFFSET="60px"
+
+Y_OFFSET="0px"
 MAX_LEN=50   # tune to taste
 
 extract_display_name() {
     local name="$1"
+
     if [[ "$name" == /* ]]; then
         printf '%s' "${name##*/}"
     else
@@ -12,115 +14,408 @@ extract_display_name() {
 }
 
 truncate_name() {
-    local name="$1" max="$2"
+    local name="$1"
+    local max="$2"
     local len=${#name}
-    (( len <= max )) && { printf '%s' "$name"; return; }
+
+    (( len <= max )) && {
+        printf '%s' "$name"
+        return
+    }
+
     local keep=$(( (max - 3) / 2 ))
-    printf '%s...%s' "${name:0:keep}" "${name: -$keep}"
+
+    printf '%s...%s' \
+        "${name:0:keep}" \
+        "${name: -$keep}"
 }
 
-ws_name=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .name')
+
+# ------------------------------------------------------------
+# Current workspace
+# ------------------------------------------------------------
+
+ws_name=$(
+    i3-msg -t get_workspaces |
+    jq -r '.[] | select(.focused == true) | .name'
+)
+
 tree=$(i3-msg -t get_tree)
-mapfile -t rows < <(echo "$tree" | jq -r --arg ws "$ws_name" '
-def ordered_leaves:
-  if .window != null then
-    [ { id: .window, name: .name, focused: .focused } ]
-  else
-    (.focus // []) as $forder
-    | ((.nodes // []) + (.floating_nodes // [])) as $ch
-    | ($forder | map(. as $fid | $ch[] | select(.id == $fid))) as $inorder
-    | ($ch | map(select( ( .id as $i | ($forder | index($i)) ) == null ))) as $rest
-    | ($inorder + $rest)
-    | map(ordered_leaves) | add // []
-  end;
-def find_ws:
-  if .type == "workspace" and .name == $ws then [.]
-  else ((.nodes // []) + (.floating_nodes // []) | map(find_ws) | add // [])
-  end;
-(find_ws | .[0] | ordered_leaves // [])[]
-| "\(.id)\t\(.focused)\t\(.name)"
-')
+
+
+# ------------------------------------------------------------
+# Get windows in i3's visual/container order
+#
+# We follow .focus whenever possible so nested containers
+# retain the same ordering i3 uses.
+# ------------------------------------------------------------
+
+mapfile -t rows < <(
+    echo "$tree" |
+    jq -r --arg ws "$ws_name" '
+
+    # Recursively walk a container.
+    #
+    # At each level:
+    #   1. Follow the container focus ordering.
+    #   2. Append children that are not present in .focus.
+    #
+    # This preserves the ordering used by i3 containers,
+    # including tabbed/stacked/nested containers.
+
+    def ordered_children:
+        (.nodes // []) + (.floating_nodes // []) as $children
+        |
+        (.focus // []) as $focus_order
+        |
+        (
+            $focus_order
+            | map(
+                . as $id
+                | $children[]
+                | select(.id == $id)
+            )
+        ) as $focused_children
+        |
+        (
+            $children
+            | map(
+                select(
+                    .id as $id
+                    | ($focus_order | index($id)) == null
+                )
+            )
+        ) as $remaining_children
+        |
+        ($focused_children + $remaining_children);
+
+
+    def ordered_leaves:
+
+        # This is an actual client/window.
+        if .window != null then
+            [
+                {
+                    id: .window,
+                    name: .name,
+                    focused: .focused
+                }
+            ]
+
+        # Otherwise recursively walk children.
+        else
+            ordered_children
+            | map(ordered_leaves)
+            | add // []
+        end;
+
+
+    # Find the currently focused workspace.
+    def find_workspace:
+        if .type == "workspace" and .name == $ws then
+            .
+        else
+            (
+                ((.nodes // []) + (.floating_nodes // []))
+                | map(find_workspace)
+                | map(select(. != null))
+                | .[0]
+            )
+        end;
+
+
+    # Find workspace, then emit windows in order.
+    find_workspace
+    | ordered_leaves[]
+    | "\(.id)\t\(.focused)\t\(.name)"
+'
+)
+
+
+# ------------------------------------------------------------
+# Build arrays used by Rofi
+# ------------------------------------------------------------
 
 ids=()
 titles=()
 full_names=()
+
 for row in "${rows[@]}"; do
+
     IFS=$'\t' read -r id focused name <<< "$row"
+
+    # Invalid entry
     [ -z "$id" ] && continue
+
+    # Don't show the currently focused window
     [ "$focused" = "true" ] && continue
+
+    # Don't show unnamed windows
     [ -z "$name" ] && continue
+
     ids+=("$id")
     full_names+=("$name")
+
     disp="$(extract_display_name "$name")"
-    titles+=("$(truncate_name "$disp" "$MAX_LEN")")
+
+    titles+=(
+        "$(truncate_name "$disp" "$MAX_LEN")"
+    )
 done
 
+
+# Nothing to switch to
 [ "${#titles[@]}" -eq 0 ] && exit 0
+
+
+# ------------------------------------------------------------
+# Rofi
+# ------------------------------------------------------------
 
 selected_idx=$(
     for i in "${!titles[@]}"; do
-        printf '%s\0meta\x1f%s\n' "${titles[$i]}" "${full_names[$i]}"
-    done | rofi -dmenu \
+        printf '%s\0meta\x1f%s\n' \
+            "${titles[$i]}" \
+            "${full_names[$i]}"
+    done |
+    rofi -dmenu \
+        -i \
         -p "Buffer: " \
         -format i \
         -selected-row 0 \
         -theme-str '
+
             configuration {
                 sidebar-mode: false;
             }
+
+
+            /* ------------------------------------------------
+               Window
+               ------------------------------------------------ */
+
             window {
-                location:       north;
-                anchor:         north;
-                width:          100%;
-                y-offset:       '$Y_OFFSET';
-                children:       [ mainbox ];
-                background-color: #1d2021;
+                location: north;
+                anchor: north;
+
+                width: 100%;
+
+                y-offset: 0px;
+
+                children: [ mainbox ];
+
+                background-color: #222222;
             }
+
+
+            /* ------------------------------------------------
+               Main box
+               ------------------------------------------------ */
+
             mainbox {
-                orientation:    horizontal;
-                children:       [ prompt, entry, listview ];
+                orientation: horizontal;
+
+                children: [
+                    prompt,
+                    entry,
+                    listview
+                ];
+
+                background-color: #222222;
             }
+
+
+            /* ------------------------------------------------
+               Prompt
+               ------------------------------------------------ */
+
             prompt {
-                padding:        2px 10px;
-                background-color: #1d2021;
-                text-color:     #fabd2f;
-                font:           "Monospace Bold 11";
+                padding: 2px 10px;
+
+                background-color: #222222;
+
+                text-color: #285577;
+
+                font: "Monospace Bold 11";
             }
+
+
+            /* ------------------------------------------------
+               Search entry
+               ------------------------------------------------ */
+
             entry {
-                expand:         false;
-                width:          100px;
-                padding:        2px 10px;
-                text-color:     #ebdbb2;
-                background-color: #1d2021;
-                placeholder:    "";
+                expand: false;
+
+                width: 100px;
+
+                padding: 2px 10px;
+
+                background-color: #222222;
+
+                text-color: #ffffff;
+
+                placeholder: "";
+
+                cursor-color: #ffffff;
             }
+
+
+            /* ------------------------------------------------
+               List
+               ------------------------------------------------ */
+
             listview {
-                layout:         horizontal;
-                lines:          100;
-                spacing:        0px;
+                layout: horizontal;
+
+                lines: 100;
+
+                spacing: 0px;
+
+                background-color: #222222;
+
+                scrollbar: false;
             }
+
+
+            /* ------------------------------------------------
+               Tabs
+               ------------------------------------------------ */
+
             element {
-                padding:        2px 8px;
-                border:         0px 1px 0px 0px;
-                border-color:   #504945;
-                background-color: transparent;
+                padding: 3px 10px;
+
+                border: 0px 1px 0px 0px;
+
+                border-color: #3a3a3a;
+
+                background-color: #222222;
+
+                text-color: #888888;
             }
+
+
+            /* Normal tab */
+
+            element normal.normal {
+                background-color: #222222;
+
+                text-color: #888888;
+
+                border: 0px 1px 0px 0px;
+
+                border-color: #3a3a3a;
+            }
+
+
+            /* Tab text */
+
             element-text {
-                text-color:     #928374;
-                vertical-align: 0.5;
-            }
-            element selected {
                 background-color: transparent;
-                border:         0px 1px 0px 0px;
-                border-color:   #504945;
+
+                text-color: #888888;
+
+                vertical-align: 0.5;
+
+                font: "Monospace 11";
             }
-            element selected element-text {
-                text-color:     #fabd2f;
-                font:           "Monospace Bold 11";
+
+
+            /* ------------------------------------------------
+               Selected tab
+               ------------------------------------------------ */
+
+            element selected.normal {
+                background-color: #285577;
+
+                text-color: #ffffff;
+
+                border: 0px 1px 0px 0px;
+
+                border-color: #3a3a3a;
+            }
+
+            element selected.normal element-text {
+                background-color: #285577;
+
+                text-color: #ffffff;
+
+                font: "Monospace Bold 11";
+            }
+
+
+            /* ------------------------------------------------
+               Alternate rows
+               ------------------------------------------------ */
+
+            element alternate.normal {
+                background-color: #222222;
+
+                text-color: #888888;
+
+                border: 0px 1px 0px 0px;
+
+                border-color: #3a3a3a;
+            }
+
+            element alternate.normal element-text {
+                background-color: #222222;
+
+                text-color: #888888;
+            }
+
+
+            /* ------------------------------------------------
+               Active
+               ------------------------------------------------ */
+
+            element selected.active {
+                background-color: #285577;
+
+                text-color: #ffffff;
+
+                border: 0px 1px 0px 0px;
+
+                border-color: #3a3a3a;
+            }
+
+            element selected.active element-text {
+                background-color: #285577;
+
+                text-color: #ffffff;
+            }
+
+
+            /* ------------------------------------------------
+               Urgent
+               ------------------------------------------------ */
+
+            element selected.urgent {
+                background-color: #285577;
+
+                text-color: #ffffff;
+
+                border: 0px 1px 0px 0px;
+
+                border-color: #3a3a3a;
+            }
+
+            element selected.urgent element-text {
+                background-color: #285577;
+
+                text-color: #ffffff;
             }
         '
 )
 
+
+# ------------------------------------------------------------
+# Focus selected window
+# ------------------------------------------------------------
+
 [ -z "$selected_idx" ] && exit 0
+
 win_id="${ids[$selected_idx]}"
+
 i3-msg "[id=$win_id] focus"
+

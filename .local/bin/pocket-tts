@@ -1,8 +1,12 @@
 #!/bin/bash
 
-#Define paths
+# Define paths
 VENV_PYTHON="$HOME/tools/pocket-tts/.venv/bin/python"
 SCRIPT_PATH="$HOME/tools/pocket-tts/pocket_daemon.py"
 
-$VENV_PYTHON $SCRIPT_PATH "$@"
+# Keep Hugging Face models outside ~/.cache
+export HF_HOME="$HOME/models/huggingface"
+
+# Run Pocket-TTS
+exec "$VENV_PYTHON" "$SCRIPT_PATH" "$@"
 

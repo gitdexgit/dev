@@ -10,7 +10,7 @@ if is_i3; then
     # ============================================================
     # i3wm STRATEGY: Use internal Marks
     # ============================================================
-    MARK_NAME="hidden_from_switcher"
+    MARK_NAME="M"
 
     # Check if the focused window already has the mark using jq
     if i3-msg -t get_tree | jq -e ".. | select(.focused? == true and (.marks | contains([\"$MARK_NAME\"])))" > /dev/null; then
@@ -18,7 +18,7 @@ if is_i3; then
         notify-send "i3: Window Visible" "Removed $MARK_NAME mark."
     else
         i3-msg mark "$MARK_NAME"
-        notify-send "i3: Window Hidden" "Added $MARK_NAME mark. (Hidden from custom Rofi)"
+        # notify-send "i3: Window Hidden" "Added $MARK_NAME mark. (Hidden from custom Rofi)"
     fi
 
 else

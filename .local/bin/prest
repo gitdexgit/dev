@@ -1,59 +1,244 @@
 #!/bin/bash
+
+# ============================================================
+# VISUAL TIMER
+# ============================================================
+
 # --- CONFIGURATION ---
 TIMER_MINUTES=60
-TOTAL_SECONDS=$(( TIMER_MINUTES * 60 ))
+TOTAL_SECONDS=$((TIMER_MINUTES * 60))
 
-# 1. Get workspace 10 name (e.g., 10:15:49:53)
-WS_NAME=$(i3-msg -t get_workspaces | jq -r '.[] | select(.num == 10) | .name')
+# Width of each battery/progress bar
+BAR_WIDTH=21
 
-# 2. Extract HH:MM:SS
-START_TIME_STR=$(echo "$WS_NAME" | grep -oE '[0-9]{2}:[0-9]{2}:[0-9]{2}$')
+# Dunst
+NOTIFY_ID=9991
+TIMEOUT=1700
 
-# 3. Validate
+
+# ============================================================
+# GET START TIME FROM WORKSPACE 10
+# ============================================================
+
+WS_NAME=$(i3-msg -t get_workspaces |
+    jq -r '.[] | select(.num == 10) | .name')
+
+START_TIME_STR=$(echo "$WS_NAME" |
+    grep -oE '[0-9]{2}:[0-9]{2}:[0-9]{2}$')
+
+
+# ============================================================
+# VALIDATE
+# ============================================================
+
 if [ -z "$START_TIME_STR" ]; then
-    dunstify -u critical "Timer Error" "No HH:MM:SS found in: $WS_NAME"
+    dunstify \
+        -u critical \
+        "Timer Error" \
+        "No HH:MM:SS found in workspace 10: $WS_NAME"
     exit 1
 fi
 
-# 4. Calculate elapsed time
+
+# ============================================================
+# CALCULATE ELAPSED
+# ============================================================
+
 START_TS=$(date -d "$START_TIME_STR" +%s)
 NOW_TS=$(date +%s)
-ELAPSED=$(( NOW_TS - START_TS ))
-(( ELAPSED < 0 )) && ELAPSED=$(( ELAPSED + 86400 ))
 
-# 5. Generate colored pango message
-MSG=$(awk -v e="$ELAPSED" -v t="$TOTAL_SECONDS" '
+ELAPSED=$((NOW_TS - START_TS))
+
+# Handle midnight
+if (( ELAPSED < 0 )); then
+    ELAPSED=$((ELAPSED + 86400))
+fi
+
+
+# ============================================================
+# GENERATE VISUAL
+# ============================================================
+
+MSG=$(awk \
+    -v e="$ELAPSED" \
+    -v t="$TOTAL_SECONDS" \
+    -v width="$BAR_WIDTH" '
+
 function fmt(s) {
-    h = int(s / 3600);
-    m = int((s % 3600) / 60);
-    if (h == 0) return sprintf("%dm", m);
-    return sprintf("%dh %02dm", h, m);
+    h = int(s / 3600)
+    m = int((s % 3600) / 60)
+    sec = int(s % 60)
+
+    if (h > 0)
+        return sprintf("%dh %02dm", h, m)
+
+    return sprintf("%dm %02ds", m, sec)
 }
+
+
+function make_bar(percent,    filled, empty, result, i) {
+
+    if (percent < 0)
+        percent = 0
+
+    if (percent > 100)
+        percent = 100
+
+    filled = int((percent / 100) * width + 0.5)
+    empty = width - filled
+
+    result = ""
+
+    for (i = 1; i <= filled; i++)
+        result = result "█"
+
+    for (i = 1; i <= empty; i++)
+        result = result "░"
+
+    return result
+}
+
+
 BEGIN {
-    p_passed = (e / t) * 100;
 
-    pcol = "#50fa7b";
-    if (p_passed >= 100) pcol = "#ff5555";
-    else if (p_passed >= 75) pcol = "#ff5555";
-    else if (p_passed >= 50) pcol = "#f1fa8c";
+    # ========================================================
+    # COLORS
+    # ========================================================
 
-    if (e >= t) {
-        over_sec = e - t;
-        p_over = (over_sec / t) * 100;
-        printf "Passed: <span color=\"%s\">%s (%.1f%%)</span>\nExtra: <span color=\"#f1fa8c\">%s (%.1f%%)</span>", pcol, fmt(e), p_passed, fmt(over_sec), p_over
-    } else {
-        left_sec = t - e;
-        p_left = 100 - p_passed;
-        printf "Passed: <span color=\"%s\">%s (%.1f%%)</span>\nLeft: <span color=\"#8be9fd\">%s (%.1f%%)</span>", pcol, fmt(e), p_passed, fmt(left_sec), p_left
+    GREEN  = "#50fa7b"
+    YELLOW = "#f1fa8c"
+    RED    = "#ff5555"
+    CYAN   = "#8be9fd"
+
+
+    # ========================================================
+    # NORMAL TIMER
+    # ========================================================
+
+    if (e < t) {
+
+        passed = (e / t) * 100
+        remaining = 100 - passed
+
+
+        # ----------------------------------------------------
+        # Color based on progress
+        # ----------------------------------------------------
+
+        if (passed >= 75)
+            passed_color = RED
+        else if (passed >= 50)
+            passed_color = YELLOW
+        else
+            passed_color = GREEN
+
+
+        # ----------------------------------------------------
+        # Passed bar
+        # ----------------------------------------------------
+
+        passed_bar = make_bar(passed)
+
+        printf "<span color=\"%s\">%5.1f%%</span>  ", \
+            passed_color, passed
+
+        printf "<span color=\"%s\">%s</span>  %s\n", \
+            passed_color, passed_bar, fmt(e)
+
+
+        # ----------------------------------------------------
+        # Remaining bar
+        # ----------------------------------------------------
+
+        remaining_bar = make_bar(remaining)
+
+        printf "<span color=\"%s\">%5.1f%%</span>  ", \
+            CYAN, remaining
+
+        printf "<span color=\"%s\">%s</span>  %s", \
+            CYAN, remaining_bar, fmt(t - e)
     }
-}')
 
-# 6. Urgency
+
+    # ========================================================
+    # OVERTIME
+    # ========================================================
+
+    else {
+
+        # Number of complete timer periods
+        completed = int(e / t)
+
+        # Seconds into current overtime period
+        current = e % t
+
+
+        # ----------------------------------------------------
+        # Completed periods
+        # ----------------------------------------------------
+
+        for (i = 0; i < completed; i++) {
+
+            printf "<span color=\"%s\">100.0%%</span>  ", RED
+
+            printf "<span color=\"%s\">%s</span>  %s\n", \
+                RED, make_bar(100), fmt(t)
+        }
+
+
+        # ----------------------------------------------------
+        # Current overtime period
+        # ----------------------------------------------------
+
+        if (current > 0) {
+
+            current_pct = (current / t) * 100
+
+            if (current_pct >= 75)
+                overtime_color = RED
+            else
+                overtime_color = YELLOW
+
+
+            printf "<span color=\"%s\">%5.1f%%</span>  ", \
+                overtime_color, current_pct
+
+            printf "<span color=\"%s\">%s</span>  +%s", \
+                overtime_color, \
+                make_bar(current_pct), \
+                fmt(current)
+        }
+    }
+}
+')
+
+
+# ============================================================
+# URGENCY
+# ============================================================
+
 if (( ELAPSED >= TOTAL_SECONDS )); then
     URGENCY="critical"
 else
     URGENCY="normal"
 fi
 
-dunstify -t 1200 -r 9991 -u "$URGENCY" "Timer Status" "$MSG"
+
+# ============================================================
+# NOTIFICATION
+# ============================================================
+
+dunstify \
+    -t "$TIMEOUT" \
+    -r "$NOTIFY_ID" \
+    -u "$URGENCY" \
+    "Timer Status" \
+    "$MSG"
+
+
+# ============================================================
+# TERMINAL OUTPUT
+# ============================================================
+
 echo "$MSG"
+

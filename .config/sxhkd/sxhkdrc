@@ -6,6 +6,9 @@
 ctrl + alt + x ; {b,Left}
     switch-buffer
 
+ctrl + alt + x ; Tab
+    switch-buffer-preview
+
 ctrl + alt + x ; control + b
     switch-all-buffer
 
