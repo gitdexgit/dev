@@ -1,3 +1,7 @@
 #!/bin/bash
-echo "$1" | hunspell -a
+
+result=$(echo "$1" | hunspell -a)
+
+echo "$result"
+notify-send -t 4000 "Hunspell" "$result"
 

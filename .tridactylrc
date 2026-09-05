@@ -225,6 +225,16 @@ bind <C-x>k tabclose
 bind --mode=insert <C-x>k tabclose
 bind --mode=ignore <C-x>k tabclose
 
+
+bind <C-x>o fillcmdline tabopen
+bind --mode=insert <C-x>o fillcmdline open
+bind --mode=ignore <C-x>o fillcmdline open
+
+
+bind <C-x>t fillcmdline tabopen
+bind --mode=insert <C-x>t fillcmdline tabopen
+bind --mode=ignore <C-x>t fillcmdline tabopen
+
 bind <C-x>d tabduplicate
 bind --mode=insert <C-x>d tabduplicate
 bind --mode=ignore <C-x>d tabduplicate

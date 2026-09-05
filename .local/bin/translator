@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Define virtual environment python and server path
+VENV_PYTHON="$HOME/tools/argos-translate/argos-env/bin/python"
+SCRIPT_PATH="$HOME/tools/argos-translate/server.py"
+
+# Run the server using the isolated virtual environment interpreter
+exec "$VENV_PYTHON" "$SCRIPT_PATH" "$@"

@@ -18,6 +18,10 @@ ctrl + alt + x ; k
 ctrl + alt + x ; s
     quick-search
 
+# Because sadly sometimes I switch keyboard to differnet language so. I need this to trigger dmenu_run so I can type 00. back again.
+ctrl + alt + x ; d
+    dmenu_run
+
 ctrl + alt + x ; shift + s
     web-search
 

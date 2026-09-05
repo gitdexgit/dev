@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+import sys
+import os
+
+# Dynamically find the home directory (works for any user/$USER)
+HOME = os.path.expanduser("~")
+sys.path.insert(0, os.path.join(HOME, "tools/argos-translate/argos-env/lib/python3.13/site-packages"))
+
+import argparse
+import subprocess
+import urllib.request
+import json
+
+def main():
+    parser = argparse.ArgumentParser(description="Offline CLI Translator powered by Argos")
+    parser.add_argument('--from-lang', '-f', default='en', help="Source language code (default: en)")
+    parser.add_argument('--to-lang', '-t', default='ar', help="Target language code (default: ar)")
+    parser.add_argument('text', nargs='+', help="Text to translate")
+
+    args = parser.parse_args()
+    text_to_translate = " ".join(args.text)
+
+    translated = None
+
+    # 1. Try hitting the running 'translator' server first (Lightning fast)
+    try:
+        url = "http://127.0.0.1:5000/translate"
+        payload = json.dumps({"q": text_to_translate, "source": args.from_lang, "target": args.to_lang}).encode('utf-8')
+        req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=2.0) as response:
+            res_data = json.loads(response.read().decode('utf-8'))
+            if "translatedText" in res_data:
+                translated = res_data["translatedText"]
+    except Exception:
+        pass # Server is off
+
+    # 2. Fallback: Load heavy models directly only if server is offline
+    if not translated:
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            import argostranslate.translate
+        try:
+            translated = argostranslate.translate.translate(text_to_translate, args.from_lang, args.to_lang)
+        except Exception as e:
+            print(f"Translation error: {e}", file=sys.stderr)
+            sys.exit(1)
+
+    # 3. Print, log, and notify
+    print(translated)
+
+    history_path = os.path.join(HOME, "translated")
+    with open(history_path, "w", encoding="utf-8") as f:
+        f.write(f"Original: {text_to_translate}\n")
+        f.write(f"Translated: {translated}\n")
+
+    subprocess.run([
+        'notify-send', '-u', 'normal', '-t', '5000',
+        f'Translation ({args.from_lang} ➔ {args.to_lang})', translated
+    ])
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+WOKEUP_FILE="$HOME/.woke-up"
+
+TIMEOUT=1500
+NOTIFY_ID=1234
+URGENCY=low
+
+wake_epoch=$(date -d "$(cat "$WOKEUP_FILE")" +%s)
+now_epoch=$(date +%s)
+diff=$((now_epoch - wake_epoch))
+
+MSG="Awake: $((diff / 3600))h $(((diff % 3600) / 60))m"
+
+echo "$MSG"
+
+# dunstify \
+#     -t "$TIMEOUT" \
+#     -r "$NOTIFY_ID" \
+#     -u "$URGENCY" \
+#     "Time awake" \
+#     "$MSG"
+
+notify-send -t "$TIMEOUT" "Time awake" "$MSG"
+

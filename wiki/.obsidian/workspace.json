@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "e229ec51f66c0769",
+        "id": "fb1b93fcb3ff7936",
         "type": "tabs",
         "children": [
           {
-            "id": "c95d43b0ff3d6abd",
+            "id": "97cd0e1196b59485",
             "type": "leaf",
             "state": {
-              "type": "webviewer",
-              "state": {
-                "url": "http://localhost:8080/content/wikipedia_en_top_maxi_2026-03/Regional_Internet_registry#Local_Internet_registry",
-                "title": "Regional Internet registry",
-                "mode": "reader"
-              },
-              "icon": "globe-2",
-              "title": "Regional Internet registry"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -42,7 +38,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -139,7 +137,7 @@
                 }
               },
               "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "title": "Local graph"
             }
           }
         ]
@@ -174,7 +172,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
@@ -269,12 +267,12 @@
       "darlal-switcher-plus:Open Symbols for the active editor": false,
       "obsidian-excalidraw-plugin:New drawing": false,
       "obsidian-shellcommands:Shell commands: Custom variables": false,
-      "periodic-notes:Open today": false,
       "obsidian-kanban:Create new board": false,
-      "tldraw:Create new tldrawing": false
+      "tldraw:Create new tldrawing": false,
+      "periodic-notes:Open today": false
     }
   },
-  "active": "c95d43b0ff3d6abd",
+  "active": "1737b495e804725e",
   "lastOpenFiles": [
     "current_struggles/Refine goals by distilling any man-made system into a superior lossless architecture by isolating fundamental truths through a skeptical framework of systematic component deletion and iterative stability testing.md",
     "current_struggles/THE PROGRAMMER PROCESS PRINCIPLES.md",

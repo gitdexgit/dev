@@ -1,0 +1,17 @@
+#!/bin/bash
+
+FILE="$HOME/translated"
+
+if [ -f "$FILE" ]; then
+    # Read the file contents
+    CONTENT=$(cat "$FILE")
+    
+    # Print to terminal
+    echo "$CONTENT"
+    
+    # Send desktop notification
+    notify-send -u normal -t 6000 "Previous Translation" "$CONTENT"
+else
+    echo "No translation history found."
+    notify-send -u low -t 3000 "Previous Translation" "No history found."
+fi

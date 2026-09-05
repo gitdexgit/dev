@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+WOKEUP_FILE="$HOME/.woke-up"
+
+date '+%Y-%m-%d %H:%M:%S' > "$WOKEUP_FILE"
+echo "Recorded: $(cat "$WOKEUP_FILE")"
