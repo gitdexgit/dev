@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Just type question <input>
+# no need to type queston "<input>"
+echo "$@" >> ~/fix-pronunciation
+

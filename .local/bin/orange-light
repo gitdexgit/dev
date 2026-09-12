@@ -1,0 +1,14 @@
+#!/bin/sh
+
+STATE="$HOME/.cache/orange-light"
+
+mkdir -p "$(dirname "$STATE")"
+
+if [ -f "$STATE" ]; then
+    redshift -x
+    rm "$STATE"
+else
+    redshift -O 2500
+    touch "$STATE"
+fi
+

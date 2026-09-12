@@ -10,7 +10,7 @@ ctrl + alt + x ; Tab
     switch-buffer-preview
 
 ctrl + alt + x ; control + b
-    switch-all-buffer
+    switch-all-visible-buffer
 
 ctrl + alt + x ; k
     i3-msg kill
@@ -66,6 +66,9 @@ ctrl + alt + x ; q ; {r,l,q,k,c,z}
 ctrl + alt + x ; x ; b
     switch-buffer-preview-horizontal
 
+
+ctrl + alt + x ; x ; control + b
+    switch-all-buffer
 
 # --- Universal Chords (Leader: C-M-x) ---
 

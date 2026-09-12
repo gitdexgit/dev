@@ -25,7 +25,15 @@ else
 fi
 
 # --- 3. PROMPT VIA ROFI ---
-new_name=$(rofi -dmenu -p "Rename Workspace $idx:" -mesg "Current: $current_name" -filter "$current_name" -lines 0 -theme-str 'window {width: 500px;}')
+new_name=$(rofi -dmenu -p "Rename Workspace $idx:" -mesg "Current: $current_name" -filter "$current_name" -lines 0 \
+    -font "DejaVu Sans Mono 10" \
+    -theme-str '
+        window {
+            width: 100%;
+            location: south;
+            anchor: south;
+        }
+    ')
 
 # --- 4. EXECUTE RENAME ---
 if [[ -n "$new_name" ]]; then

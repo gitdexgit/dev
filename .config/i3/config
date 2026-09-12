@@ -20,6 +20,8 @@ tiling_drag modifier titlebar
 for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
 bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
 
+bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
+
 
 
 
@@ -391,6 +393,7 @@ bindsym Mod4+equal exec --no-startup-id ~/.local/bin/volume_control.sh up
 # =====================================================================
 
 
+bindsym Mod4+Mod1+l exec --no-startup-id i3lock
 
 
 # All of these need fixing but I don't use them that much though..
@@ -432,17 +435,24 @@ bindsym Control+Mod1+Left exec --no-startup-id "xdotool set_desktop --relative -
 #
 # You have to do it this way:
 bindsym --release Print exec --no-startup-id ~/.local/bin/screenshot
+bindsym Mod4+Mod1+Print exec --no-startup-id ~/.local/bin/ocr-selection
+bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
 
-bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
-bindsym --release Mod4+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
+
+# bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
+
+# bindsym --release Mod4+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
+
 bindsym --release Shift+Print exec --no-startup-id "~/scripts/video/record-area.sh"
 bindsym --release Mod4+Control+3 exec --no-startup-id "~/scripts/video/record-pause.sh"
 bindsym --release Mod4+Control+4 exec --no-startup-id "~/scripts/video/record-stop.sh"
-bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
+
 
 # --- Uploads & Notes ---
 bindsym Mod4+Mod1+i exec --no-startup-id "iupload"
 bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
+
+bindsym Mod4+Mod1+n exec --no-startup-id ~/.local/bin/night-light
 
 # --- AI / LLM Tools ---
 # bindsym Mod4+Shift+Control+u exec --no-startup-id "~/scripts/ddesk/typing/uppercase_selection.sh"
@@ -544,7 +554,7 @@ bindsym Control+Mod4+1 exec --no-startup-id "autoshot-toggle"
 bindsym Control+Mod4+2 exec --no-startup-id "autoshot-pause"
 
 bindsym Control+Mod4+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
-bindsym Control+Mod4+v exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
+# bindsym Control+Mod4+v exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
 
 # I think I killed the gnome-sound-recorder I think I no longer use it I didn't really find any particular use case for it tbh
 # Just use audacity or simple arecord it does the job I think. idk man. I don't record audio that much.
@@ -611,12 +621,14 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 # bindsym Mod4+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window -e zsh -c tmux-sessionizer || st -qq -e zsh -c tmux-sessionizer
 # bindsym Mod4+Return exec st -e zsh -c tmux-sessionizer
 
-# Update binding
-bindsym Mod4+mod1+Return exec st -c st_float -e zsh -c tmux-sessionizer
+
+# I to be honest don't use this... I like the idea of a floating thing but it's stupid...
+# You know what just make this some ai agent thing It makes sense... just like herder thing on omarchy...
+# bindsym Mod4+control+Return exec st -c st_float -e zsh -c tmux-sessionizer
 
 # bindsym Mod4+Shift+Return exec st -e zsh -c tmux-sessionizer
 
-bindsym Mod4+Control+Return exec st -e tmux
+bindsym Mod4+Mod1+Return exec st -e tmux
 
 
 for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center
@@ -646,7 +658,8 @@ bindsym Mod4+Return exec st -t st
 # bindsym Mod4+d exec --no-startup-id drun
 
 bindsym Mod4+d exec dmenu_run
-bindsym Mod4+Shift+d exec M-x
+# bindsym Mod4+Shift+d exec M-x
+bindsym Mod4+x exec M-x
 
 # Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like Mod4+d then type rofi -show run ez.
 # rofi -show run with different theme
@@ -704,12 +717,9 @@ bindsym Mod4+F18      exec --no-startup-id xdotool mousemove_relative -- -10 0
 bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
 bindsym F18 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
-bindsym Mod4+F5 bar mode invisible
-bindsym Mod4+F6 bar mode hide
-bindsym Mod4+F7 bar mode dock
-
-bindsym Mod4+F9 exec --no-startup-id ~/.local/bin/toggle-tabs
-bindsym Mod4+F10 exec --no-startup-id ~/.local/bin/toggle-edge-borders
+bindsym Mod4+F5 bar mode hide
+bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/toggle-tabs
+bindsym Mod4+Shift+BackSpace exec --no-startup-id ~/.local/bin/toggle-edge-borders
 
 
 
@@ -735,10 +745,14 @@ bindsym Mod4+v split v
 # bindsym Mod4+h split h
 bindsym Mod4+semicolon split h
 
+# Omarchy-style tiled maximize
+bindsym Mod4+Mod1+f exec --no-startup-id ~/.local/bin/i3-maximize
 
+
+# This is so stupid I never use these it's dumb... I tried to make it like tmux but it doens't work that way you know... don't screw with shift+num
 # It's like tmux where you can have like yeah just for compatibility and Mod4 is the prefix ok?
-bindsym Mod4+Shift+5 split h
-bindsym Mod4+Shift+apostrophe split v
+# bindsym Mod4+Shift+5 split h
+# bindsym Mod4+Shift+apostrophe split v
 
 bindsym Mod4+f fullscreen toggle
 
@@ -747,7 +761,6 @@ bindsym Mod4+w layout tabbed
 bindsym Mod4+e layout toggle split
 
 bindsym Mod4+Shift+space floating toggle
-bindsym Mod4+x           floating toggle
 bindsym Mod4+space       focus mode_toggle
 
 bindsym Mod4+a focus parent
@@ -771,7 +784,7 @@ bindsym Mod4+Shift+z [class="Zeal"] scratchpad show, move position center
 # bindsym Mod4+Control+z [class="Zeal"] scratchpad show
 
 # Shortcut to show/hide the CopyQ window
-bindsym Mod4+Mod1+c [class="copyq"] scratchpad show, move position center
+bindsym Mod4+Control+v [class="copyq"] scratchpad show, move position center
 
 # bindsym Mod4+Control+p [class="KeePassXC"] scratchpad show
 # bindsym Mod4+Control+o [class="obs"] scratchpad show
@@ -805,16 +818,16 @@ bindsym Mod4+0 workspace number $ws10
 # KEYBINDINGS — MOVE CONTAINER TO WORKSPACE
 # =====================================================================
 
-bindsym Mod4+Mod1+1 move container to workspace number $ws1
-bindsym Mod4+Mod1+2 move container to workspace number $ws2
-bindsym Mod4+Mod1+3 move container to workspace number $ws3
-bindsym Mod4+Mod1+4 move container to workspace number $ws4
-bindsym Mod4+Mod1+5 move container to workspace number $ws5
-bindsym Mod4+Mod1+6 move container to workspace number $ws6
-bindsym Mod4+Mod1+7 move container to workspace number $ws7
-bindsym Mod4+Mod1+8 move container to workspace number $ws8
-bindsym Mod4+Mod1+9 move container to workspace number $ws9
-bindsym Mod4+Mod1+0 move container to workspace number $ws10
+bindsym Mod4+Shift+1 move container to workspace number $ws1
+bindsym Mod4+Shift+2 move container to workspace number $ws2
+bindsym Mod4+Shift+3 move container to workspace number $ws3
+bindsym Mod4+Shift+4 move container to workspace number $ws4
+bindsym Mod4+Shift+5 move container to workspace number $ws5
+bindsym Mod4+Shift+6 move container to workspace number $ws6
+bindsym Mod4+Shift+7 move container to workspace number $ws7
+bindsym Mod4+Shift+8 move container to workspace number $ws8
+bindsym Mod4+Shift+9 move container to workspace number $ws9
+bindsym Mod4+Shift+0 move container to workspace number $ws10
 
 
 

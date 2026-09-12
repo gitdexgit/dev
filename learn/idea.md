@@ -1,5 +1,13 @@
 very good ideas:
 
+## Now that you have voxtype on basically you can hit scrolllock and hold and hold it and it's basically gonna type stuff out
+Okay, so the idea is to train a language model on Google CoolLab and then use
+VoxType to pipe the text to the model which is used in pocket TTS. So
+that's the idea.
+
+
+
+
 
 ## play wow KRONOS 5 private server Let's give old classic wow some try
 Yeah let's play old WoW why not just give it a try see how addictive it is?

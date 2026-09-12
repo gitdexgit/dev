@@ -1,0 +1,18 @@
+#!/bin/bash
+
+selection=$(slop -f '%x %y %w %h') || exit 0
+read -r x y w h <<< "$selection"
+
+maim -g "${w}x${h}+${x}+${y}" /tmp/ocr-selection.png
+
+text=$(tesseract /tmp/ocr-selection.png stdout 2>/dev/null)
+
+rm -f /tmp/ocr-selection.png
+
+if [ -n "$text" ]; then
+    printf '%s' "$text" | xclip -selection clipboard
+    notify-send "OCR complete" "Text copied to clipboard"
+else
+    notify-send "OCR" "No text detected"
+fi
+

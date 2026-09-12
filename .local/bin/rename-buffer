@@ -6,7 +6,15 @@
 CURRENT=$(xdotool getactivewindow getwindowname)
 
 # Pre-fill rofi using -filter
-NEW_TITLE=$(rofi -dmenu -p "Rename Window:" -filter "$CURRENT")
+NEW_TITLE=$(rofi -dmenu -p "Rename Window:" -filter "$CURRENT" \
+    -font "DejaVu Sans Mono 10" \
+    -theme-str '
+        window {
+            width: 100%;
+            location: south;
+            anchor: south;
+        }
+    ')
 
 # Apply if changed
 [ -n "$NEW_TITLE" ] && wmctrl -r :ACTIVE: -T "$NEW_TITLE"

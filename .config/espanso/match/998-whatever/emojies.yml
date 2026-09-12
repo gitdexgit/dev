@@ -12,7 +12,11 @@ matches:
     force_mode: clipboard
     replace: "OK (y)"
 
-  - trigger: ";;;k;"
+  - trigger: ";;k;"
+    force_mode: clipboard
+    replace: "✔"
+
+  - trigger: ";;check;"
     force_mode: clipboard
     replace: "✔"
 
@@ -75,7 +79,7 @@ matches:
   - trigger: ";;;sparkles;"
     force_mode: clipboard
     replace: "✨"
-    
+
   - trigger: ";;;heart;"
     force_mode: clipboard
     replace: "❤"

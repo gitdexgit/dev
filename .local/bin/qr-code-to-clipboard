@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Select a QR code on screen
+selection=$(slop -f '%x %y %w %h') || exit 0
+read -r x y w h <<< "$selection"
+
+# Capture the selected area
+maim -g "${w}x${h}+${x}+${y}" /tmp/qr-code.png
+
+# Decode QR code
+result=$(zbarimg --quiet --raw /tmp/qr-code.png 2>/dev/null)
+
+rm -f /tmp/qr-code.png
+
+if [ -n "$result" ]; then
+    printf '%s' "$result" | xclip -selection clipboard
+    notify-send "QR Code" "Decoded and copied to clipboard ✓"
+else
+    notify-send "QR Code" "No QR code detected"
+fi
+

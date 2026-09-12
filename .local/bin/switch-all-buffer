@@ -1,40 +1,40 @@
 #!/bin/bash
 
-# This script intelligently saves the last desktop number only when
-# switching windows with Rofi causes a desktop change.
-
-# 1. Define the file where we store the last desktop number.
+# Save the desktop we were on before switching windows.
 LAST_DESKTOP_FILE="$HOME/.cache/last_desktop"
-
-# 2. Get the desktop number we are on BEFORE running Rofi.
-#    This is the number we want to save if we move.
 ORIGINAL_DESKTOP=$(xdotool get_desktop)
 
-# 3. Launch Rofi and WAIT for the user to select a window.
-#    The script pauses here until Rofi closes.
-rofi -show window
+# Show Rofi's window switcher.
+# The list grows with the number of windows, up to 35 rows.
+rofi -show window \
+    -lines 35 \
+    -font "DejaVu Sans Mono 10" \
+    -window-format '{w}    {c}    {t}' \
+    -theme-str '
+        window {
+            width: 100%;
+            location: south;
+            anchor: south;
+        }
 
+        listview {
+            columns: 1;
+            fixed-height: false;
+            scrollbar: true;
+            lines: 35;
+        }
+    '
 
-
-# 4. IMPORTANT: Wait for a fraction of a second to give the
-#    window manager time to complete the desktop switch.
-#    This prevents a "race condition" where the script is too fast.
+# Give i3 a moment to finish a possible desktop switch.
 sleep 0.2
 
-
-# 5. Get the desktop number we are on AFTER Rofi has finished.
+# Check which desktop we ended up on.
 CURRENT_DESKTOP=$(xdotool get_desktop)
 
-# 6. THE LOGIC: Compare the original and current desktops.
+# If Rofi moved us to another desktop, remember where we came from.
 if [ "$ORIGINAL_DESKTOP" -ne "$CURRENT_DESKTOP" ]; then
-    # The desktop has changed! Save the ORIGINAL desktop number
-    # so we can toggle back to it later.
     echo "$ORIGINAL_DESKTOP" > "$LAST_DESKTOP_FILE"
 fi
 
-# If the desktops are the same, the script simply ends, doing nothing.
-
-sleep 0.2
-
-
-xdotool mousemove --window $(xdotool getactivewindow) --polar 0 0
+# Move the mouse to the newly focused window.
+xdotool mousemove --window "$(xdotool getactivewindow)" --polar 0 0

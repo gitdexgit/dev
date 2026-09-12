@@ -12,8 +12,6 @@ keycode 200 = F22
 keycode 201 = F23
 keycode 202 = F24
 
-! Optional: Scroll Lock as F13
-keycode 78 = F13
 
 ! FUTURE USE: Turn F13 into a custom modifier (Mod5)
 ! This allows bindings like 'bindsym Mod5+x' in i3.

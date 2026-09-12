@@ -1,0 +1,158 @@
+#!/bin/bash
+#
+# Shows windows on all workspaces except the floating habit workspaces I know.
+# Active window first, then same workspace, then other workspaces.
+#
+# Rofi:
+#   - 100% width
+#   - anchored to the bottom
+#   - grows upward naturally
+#   - minimum 5 rows
+#   - very high maximum row allowance
+#   - only scrolls when the screen physically cannot fit more rows
+
+FILE="$HOME/.cache/last_desktop"
+ORIGINAL_DESKTOP=$(xdotool get_desktop)
+
+# 1. Get current focused container ID
+ACTIVE_ID=$(i3-msg -t get_tree | jq '.. | select(.focused? == true) | .id')
+
+# 2. Generate RAW list
+RAW_LIST=$(i3-msg -t get_tree | jq -r '
+  .. | select(.type? == "workspace") as $ws |
+  .. | select(.window? != null) |
+  select(
+    (
+      (.window_properties.title | test("^\\*scratch\\*$|CopyQ"))
+      or
+      (
+        (.window_properties.title | test("^(btop|learn|config)$"))
+        and
+        (.floating | test("on"))
+      )
+    ) | not
+  ) |
+  "\($ws.num)\t\(.window_properties.class)\t\(.window_properties.title)\t\(.id)"
+')
+
+# 3. Hierarchical Sort
+
+# Active window
+ACTIVE_ROW=$(echo "$RAW_LIST" |
+    awk -v id="$ACTIVE_ID" '$NF == id')
+
+# Active workspace
+ACTIVE_WS=$(echo "$ACTIVE_ROW" |
+    awk '{print $1}')
+
+# Same workspace, excluding active
+SAME_WS=$(echo "$RAW_LIST" |
+    awk -v id="$ACTIVE_ID" -v ws="$ACTIVE_WS" \
+    '$NF != id && $1 == ws')
+
+# Other workspaces.
+# Workspace -1 is always forced to the very end.
+OTHER_WS=$(echo "$RAW_LIST" |
+    awk -v ws="$ACTIVE_WS" '$1 != ws' |
+    sort -n -k1,1 |
+    awk '
+        $1 == -1 { scratch = scratch "\n" $0; next }
+        { normal = normal "\n" $0 }
+        END {
+            sub(/^\n/, "", normal)
+            sub(/^\n/, "", scratch)
+            printf "%s", normal
+            if (scratch != "") {
+                if (normal != "") printf "\n"
+                printf "%s", scratch
+            }
+        }
+    ')
+
+# Final sorted list
+SORTED_LIST=$(printf "%s\n%s\n%s" \
+    "$ACTIVE_ROW" \
+    "$SAME_WS" \
+    "$OTHER_WS" |
+    sed '/^\s*$/d'
+)
+
+# 4. Prepare display list
+DISPLAY_LIST=$(echo "$SORTED_LIST" |
+    cut -f1,2,3 |
+    column -t -s $'\t')
+
+# 5. Number of windows
+ROW_COUNT=$(echo "$SORTED_LIST" | grep -c .)
+
+# Minimum number of visible rows
+MIN_LINES=5
+
+# Make sure we start at 5 rows,
+# but allow Rofi to grow far beyond that.
+if [ "$ROW_COUNT" -lt "$MIN_LINES" ]; then
+    LINES="$MIN_LINES"
+else
+    LINES="$ROW_COUNT"
+fi
+
+
+
+
+
+
+# 6. Launch Rofi
+INDEX=$(echo "$DISPLAY_LIST" |
+    rofi -dmenu -i \
+        -format i \
+        -p "window" \
+        -a 0 \
+        -selected-row 0 \
+        -lines "$LINES" \
+        -font "DejaVu Sans Mono 10" \
+        -theme-str '
+            window {
+                width: 100%;
+                location: south;
+                anchor: south;
+            }
+
+            listview {
+                columns: 1;
+                fixed-height: false;
+                scrollbar: true;
+                lines: 35;
+            }
+        '
+)
+
+
+
+
+
+
+
+
+# User cancelled
+[ -z "$INDEX" ] && exit
+
+# 7. Get selected window ID
+W_ID=$(echo "$SORTED_LIST" |
+    sed -n "$((INDEX + 1))p" |
+    awk -F'\t' '{print $NF}')
+
+# 8. Focus selected window
+i3-msg "[con_id=$W_ID] focus" > /dev/null
+
+# 9. Post-processing
+sleep 0.2
+
+CURRENT_DESKTOP=$(xdotool get_desktop)
+
+if [ "$ORIGINAL_DESKTOP" -ne "$CURRENT_DESKTOP" ]; then
+    echo "$ORIGINAL_DESKTOP" > "$FILE"
+fi
+
+# Move mouse to the newly focused window
+xdotool mousemove --window "$(xdotool getactivewindow)" --polar 0 0
+

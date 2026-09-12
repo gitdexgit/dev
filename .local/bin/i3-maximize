@@ -1,0 +1,395 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import subprocess
+import sys
+import time
+
+MARK = "__i3_maximized__"
+STATE_DIR = os.path.expanduser("~/.cache/i3-maximize")
+STATE_FILE = os.path.join(STATE_DIR, "state.json")
+
+
+def i3msg(*args):
+    result = subprocess.run(
+        ["i3-msg", *args],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+
+    if result.returncode != 0:
+        return None
+
+    return result.stdout
+
+
+def get_tree():
+    output = i3msg("-t", "get_tree")
+
+    if not output:
+        return None
+
+    try:
+        return json.loads(output)
+    except json.JSONDecodeError:
+        return None
+
+
+def walk(node):
+    yield node
+
+    for child in node.get("nodes", []):
+        yield from walk(child)
+
+    for child in node.get("floating_nodes", []):
+        yield from walk(child)
+
+
+def focused_container(tree):
+    for node in walk(tree):
+        if node.get("focused"):
+            return node
+
+    return None
+
+
+def workspace_for(container):
+    node = container
+
+    while node:
+        if node.get("type") == "workspace":
+            return node
+
+        node = node.get("_parent")
+
+    return None
+
+
+def add_parents(node, parent=None):
+    """
+    i3's JSON doesn't expose parents, so construct them ourselves.
+    """
+    if node is None:
+        return
+
+    node["_parent"] = parent
+
+    for child in node.get("nodes", []):
+        add_parents(child, node)
+
+    for child in node.get("floating_nodes", []):
+        add_parents(child, node)
+
+
+def find_by_id(tree, con_id):
+    for node in walk(tree):
+        if node.get("id") == con_id:
+            return node
+
+    return None
+
+
+def find_by_mark(tree, mark):
+    for node in walk(tree):
+        if mark in node.get("marks", []):
+            return node
+
+    return None
+
+
+def load_state():
+    if not os.path.exists(STATE_FILE):
+        return {}
+
+    try:
+        with open(STATE_FILE, "r") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def save_state(state):
+    os.makedirs(STATE_DIR, exist_ok=True)
+
+    tmp = STATE_FILE + ".tmp"
+
+    with open(tmp, "w") as f:
+        json.dump(state, f, indent=2)
+
+    os.replace(tmp, STATE_FILE)
+
+
+def workspace_key(workspace):
+    return str(workspace.get("name"))
+
+
+def get_workspace_path(container):
+    """
+    Return the chain of parent container IDs from workspace -> container.
+
+    This lets us remember which containers contained the window.
+    """
+
+    result = []
+
+    node = container
+
+    while node:
+        result.append({
+            "id": node.get("id"),
+            "type": node.get("type"),
+            "layout": node.get("layout"),
+            "percent": node.get("percent"),
+        })
+
+        if node.get("type") == "workspace":
+            break
+
+        node = node.get("_parent")
+
+    return list(reversed(result))
+
+
+def save_current_layout(container, workspace):
+    path = get_workspace_path(container)
+
+    return {
+        "workspace": workspace.get("name"),
+        "workspace_id": workspace.get("id"),
+        "container_id": container.get("id"),
+        "container_mark": MARK,
+        "path": path,
+        "saved_at": time.time(),
+    }
+
+
+def mark_container(container_id):
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "mark",
+        MARK,
+    )
+
+
+def unmark_container(container_id):
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "unmark",
+        MARK,
+    )
+
+
+def maximize(container, workspace):
+    state = load_state()
+
+    key = workspace_key(workspace)
+
+    # Don't allow two maximize states in the same workspace.
+    if key in state:
+        restore_workspace(key, state[key])
+        state = load_state()
+
+    saved = save_current_layout(container, workspace)
+
+    state[key] = saved
+    save_state(state)
+
+    container_id = container.get("id")
+
+    # Give the container a persistent identity.
+    mark_container(container_id)
+
+    # Move it to scratchpad.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "move",
+        "scratchpad",
+    )
+
+    # Show it again.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "scratchpad",
+        "show",
+    )
+
+    # Turn it into a floating container.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "floating",
+        "enable",
+    )
+
+    # Fill the workspace.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "resize",
+        "set",
+        "100",
+        "ppt",
+        "100",
+        "ppt",
+    )
+
+    # Center it.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "move",
+        "position",
+        "center",
+    )
+
+    # Make absolutely sure it stays focused.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "focus",
+    )
+
+
+def restore_workspace(key, saved):
+    tree = get_tree()
+
+    if tree is None:
+        return False
+
+    add_parents(tree)
+
+    container_id = saved.get("container_id")
+
+    container = find_by_id(tree, container_id)
+
+    if container is None:
+        # The window was closed or otherwise disappeared.
+        state = load_state()
+        state.pop(key, None)
+        save_state(state)
+        return False
+
+    # Turn floating back into tiled.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "floating",
+        "disable",
+    )
+
+    # Move back to the original workspace.
+    workspace_name = saved.get("workspace")
+
+    if workspace_name:
+        i3msg(
+            f'[con_id="{container_id}"]',
+            "move",
+            "container",
+            "to",
+            "workspace",
+            "number",
+            workspace_name,
+        )
+
+    # Remove our mark.
+    unmark_container(container_id)
+
+    # Focus it.
+    i3msg(
+        f'[con_id="{container_id}"]',
+        "focus",
+    )
+
+    # Remove state.
+    state = load_state()
+    state.pop(key, None)
+    save_state(state)
+
+    return True
+
+
+def restore_current_workspace(workspace):
+    state = load_state()
+
+    key = workspace_key(workspace)
+
+    saved = state.get(key)
+
+    if not saved:
+        return False
+
+    return restore_workspace(key, saved)
+
+
+def cleanup_dead_states():
+    """
+    Remove state entries whose containers no longer exist.
+    """
+
+    state = load_state()
+
+    if not state:
+        return
+
+    tree = get_tree()
+
+    if tree is None:
+        return
+
+    add_parents(tree)
+
+    changed = False
+
+    for key in list(state.keys()):
+        container_id = state[key].get("container_id")
+
+        if find_by_id(tree, container_id) is None:
+            del state[key]
+            changed = True
+
+    if changed:
+        save_state(state)
+
+
+def main():
+    tree = get_tree()
+
+    if tree is None:
+        sys.exit(1)
+
+    add_parents(tree)
+
+    cleanup_dead_states()
+
+    # Re-read the tree after cleanup.
+    tree = get_tree()
+
+    if tree is None:
+        sys.exit(1)
+
+    add_parents(tree)
+
+    focused = focused_container(tree)
+
+    if focused is None:
+        sys.exit(0)
+
+    workspace = workspace_for(focused)
+
+    if workspace is None:
+        sys.exit(0)
+
+    key = workspace_key(workspace)
+
+    state = load_state()
+
+    # If THIS workspace is already maximized,
+    # toggle it back.
+    if key in state:
+        restore_workspace(key, state[key])
+        return
+
+    # Otherwise maximize the currently focused container.
+    maximize(focused, workspace)
+
+
+if __name__ == "__main__":
+    main()
+
