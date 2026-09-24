@@ -718,9 +718,12 @@ bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
 bindsym F18 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
 bindsym Mod4+F5 bar mode hide
-bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/toggle-tabs
+# bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/toggle-tabs
+# bindsym Mod4+F7 exec --no-startup-id ~/.local/bin/toggle-tabs-slightly
 bindsym Mod4+Shift+BackSpace exec --no-startup-id ~/.local/bin/toggle-edge-borders
 
+bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/set-tabs toggle
+bindsym Mod4+F7 exec --no-startup-id ~/.local/bin/set-tabs slightly
 
 
 # i3-back
@@ -761,6 +764,7 @@ bindsym Mod4+w layout tabbed
 bindsym Mod4+e layout toggle split
 
 bindsym Mod4+Shift+space floating toggle
+bindsym Mod4+z floating toggle
 bindsym Mod4+space       focus mode_toggle
 
 bindsym Mod4+a focus parent

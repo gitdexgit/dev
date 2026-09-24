@@ -1,0 +1,45 @@
+#!/bin/sh
+
+CONFIG="$HOME/.config/i3/config"
+ACTION="$1"
+
+# Read the current font size from the config file
+CURRENT=$(grep -oE '^font pango:Iosevka [0-9.]+' "$CONFIG" | awk '{print $3}')
+
+# Decide the target size based on the key pressed
+case "$ACTION" in
+    # F6 action: toggle between completely hidden (0) and full titles (10)
+    toggle)
+        if [ "$CURRENT" = "0" ]; then
+            TARGET="10"
+        else
+            TARGET="0"
+        fi
+        ;;
+
+    # F7 action: toggle between the 4px thin indicator (0.1) and full titles (10)
+    slightly)
+        if [ "$CURRENT" = "0.1" ]; then
+            TARGET="10"
+        else
+            TARGET="0.1"
+        fi
+        ;;
+
+    # Fallback to full text if called without args
+    *)
+        TARGET="10"
+        ;;
+esac
+
+# Replace whatever font size is currently set with the target size
+sed -i -E "s/^(font pango:Iosevka) [0-9.]+$/\1 $TARGET/" "$CONFIG"
+
+# Save the current bar mode
+BAR_ID=$(i3-msg -t get_bar_config | jq -r '.[0]')
+BAR_MODE=$(i3-msg -t get_bar_config "$BAR_ID" | jq -r '.mode // "dock"')
+
+# Reload config and restore bar mode
+i3-msg reload >/dev/null
+sleep 0.1
+i3-msg "bar mode $BAR_MODE" >/dev/null
