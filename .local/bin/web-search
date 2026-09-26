@@ -12,7 +12,7 @@ engines=(
     ["claude"]="https://claude.ai/new?q=|Claude AI"
     ["pplx"]="https://www.perplexity.ai/search?q=|Perplexity AI"
     ["gem"]="https://gemini.google.com/app?q=|Gemini AI"
-    ["gs"]="https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview&q=|Gemini Studio"
+    ["gs"]="https://aistudio.google.com/prompts/new_chat|Gemini Studio"
     ["nbk"]="https://notebooklm.google.com/|NotebookLM"
     ["edb"]="https://www.exploit-db.com/search?q=|ExploitDB"
     ["cve"]="https://www.cvedetails.com/google-search-results.php?q=|CVE Details"
