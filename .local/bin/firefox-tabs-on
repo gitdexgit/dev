@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+found=0
+for file in $(find "$HOME/.mozilla/firefox" -maxdepth 3 -type f -name "userChrome.css" 2>/dev/null); do
+  mv -v "$file" "${file}.disabled"
+  found=1
+done
+
+if [ "$found" -eq 1 ]; then
+  echo "Tabs pinned permanently. Restart Firefox."
+else
+  echo "No active userChrome.css files found."
+fi

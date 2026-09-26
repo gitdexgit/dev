@@ -1,0 +1,11 @@
+#!/bin/sh
+target="$1"
+
+ws_name=$(sudo -u dex DISPLAY=:0 i3-msg -t get_workspaces \
+  | jq -r --argjson n "$target" '.[] | select(.num == $n) | .name')
+
+if [ -n "$ws_name" ]; then
+  exec sudo -u dex DISPLAY=:0 i3-msg "workspace \"$ws_name\""
+else
+  exec sudo -u dex DISPLAY=:0 i3-msg "workspace number $target"
+fi
