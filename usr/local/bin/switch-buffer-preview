@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 rofi -show windowcd \
     -window-format "{t}" \
     -show-icons \
@@ -10,3 +11,154 @@ rofi -show windowcd \
         element { orientation: vertical; width: 230px; padding: 5px; }
         element-icon { size: 200px; }
     '
+
+
+## If you want to fix the stupid when i3 window is split it's dumb doesn't know that it's the previous one... But at the cost of speed.
+#
+#
+# HIST_FILE="/tmp/i3-window-focus-history"
+#
+# # ------------------------------------------------------------
+# # Current workspace
+# # ------------------------------------------------------------
+#
+# ws_name=$(
+#     i3-msg -t get_workspaces |
+#     jq -r '.[] | select(.focused == true) | .name'
+# )
+#
+# tree=$(i3-msg -t get_tree)
+#
+# # ------------------------------------------------------------
+# # Extract windows on current workspace
+# # ------------------------------------------------------------
+#
+# mapfile -t raw_windows < <(
+#     echo "$tree" |
+#     jq -r --arg ws "$ws_name" '
+#         def find_workspace:
+#             if .type == "workspace" and .name == $ws then
+#                 .
+#             else
+#                 ((.nodes // []) + (.floating_nodes // []))
+#                 | map(find_workspace)
+#                 | map(select(. != null))
+#                 | .[0]
+#             end;
+#
+#         def leaves:
+#             if .window != null then
+#                 [ {
+#                     id: .window,
+#                     name: .name,
+#                     focused: .focused,
+#                     class: (.window_properties.class // "")
+#                 } ]
+#             else
+#                 ((.nodes // []) + (.floating_nodes // []))
+#                 | map(leaves)
+#                 | add // []
+#             end;
+#
+#         find_workspace
+#         | leaves[]
+#         | "\(.id)\t\(.focused)\t\(.class)\t\(.name)"
+#     '
+# )
+#
+# declare -A win_names win_classes win_focused win_exists
+#
+# for row in "${raw_windows[@]}"; do
+#     IFS=$'\t' read -r id focused class name <<< "$row"
+#     [ -z "$id" ] && continue
+#     win_names["$id"]="$name"
+#     win_classes["$id"]="$class"
+#     win_focused["$id"]="$focused"
+#     win_exists["$id"]=1
+# done
+#
+# ids=()
+# titles=()
+# classes=()
+#
+# # 1. Order by real focus history
+# if [ -f "$HIST_FILE" ]; then
+#     while read -r hist_id; do
+#         [ -z "$hist_id" ] && continue
+#         if [ "${win_exists[$hist_id]}" = "1" ]; then
+#             if [ "${win_focused[$hist_id]}" != "true" ] && [ -n "${win_names[$hist_id]}" ]; then
+#                 ids+=("$hist_id")
+#                 titles+=("${win_names[$hist_id]}")
+#                 classes+=("${win_classes[$hist_id]}")
+#             fi
+#             unset 'win_exists[$hist_id]'
+#         fi
+#     done < "$HIST_FILE"
+# fi
+#
+# # 2. Append any windows not yet recorded in history
+# for row in "${raw_windows[@]}"; do
+#     IFS=$'\t' read -r id focused class name <<< "$row"
+#     [ -z "$id" ] && continue
+#     [ "$focused" = "true" ] && continue
+#     [ -z "$name" ] && continue
+#
+#     if [ "${win_exists[$id]}" = "1" ]; then
+#         ids+=("$id")
+#         titles+=("$name")
+#         classes+=("$class")
+#     fi
+# done
+#
+# [ "${#ids[@]}" -eq 0 ] && exit 0
+#
+# # ------------------------------------------------------------
+# # Capture thumbnails in parallel
+# # ------------------------------------------------------------
+#
+# mkdir -p /tmp/rofi-thumbs
+#
+# for id in "${ids[@]}"; do
+#     (
+#         if command -v import >/dev/null 2>&1; then
+#             import -window "$id" -thumbnail 240x150 "/tmp/rofi-thumbs/$id.png" 2>/dev/null
+#         elif command -v maim >/dev/null 2>&1; then
+#             maim -i "$id" -m 1 "/tmp/rofi-thumbs/$id.png" 2>/dev/null
+#         fi
+#     ) &
+# done
+# wait
+#
+# # ------------------------------------------------------------
+# # Rofi thumbnail switcher with your exact theme
+# # ------------------------------------------------------------
+#
+# selected_idx=$(
+#     for i in "${!ids[@]}"; do
+#         wid="${ids[$i]}"
+#         thumb="/tmp/rofi-thumbs/$wid.png"
+#
+#         # Fall back to application icon if window capture failed
+#         if [ ! -s "$thumb" ]; then
+#             thumb=$(tr '[:upper:]' '[:lower:]' <<< "${classes[$i]}")
+#         fi
+#
+#         printf '%s\0icon\x1f%s\n' "${titles[$i]}" "$thumb"
+#     done |
+#     rofi -dmenu \
+#         -show-icons \
+#         -i \
+#         -format i \
+#         -selected-row 0 \
+#         -theme-str '
+#             window { width: 100%; }
+#             listview { layout: horizontal; spacing: 2px; }
+#             element { orientation: vertical; width: 230px; padding: 5px; }
+#             element-icon { size: 200px; }
+#         '
+# )
+#
+# [ -z "$selected_idx" ] && exit 0
+#
+# win_id="${ids[$selected_idx]}"
+# i3-msg "[id=$win_id] focus"

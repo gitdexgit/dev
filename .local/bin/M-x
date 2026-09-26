@@ -1,6 +1,12 @@
 #!/bin/bash
 
 THEME='
+* {
+    font: "Monospace 12";
+    border: 0px;
+    border-color: transparent;
+}
+
 window {
     width: 100%;
     anchor: north;
@@ -8,50 +14,97 @@ window {
     y-offset: -5px;
     border: 0;
     padding: 0;
+    margin: 0;
+    background-color: #222222;
     children: [ horibox ];
 }
+
 horibox {
     orientation: horizontal;
+    background-color: #222222;
     children: [ prompt, textbox-prefix, entry, listview, textbox-suffix ];
 }
+
 prompt {
     vertical-align: 0.5;
     padding: 0 5px 0 10px;
+    background-color: #222222;
+    text-color: #285577;
+    font: "Monospace Bold 12";
 }
+
 textbox-prefix {
     expand: false;
     content: "{";
     vertical-align: 0.5;
-    text-color: #e5c07b;
+    background-color: #222222;
+    text-color: #ffffff;
 }
+
 entry {
     expand: false;
     width: 8em;
     vertical-align: 0.5;
     placeholder: "";
+    background-color: #222222;
+    text-color: #ffffff;
+    cursor-color: #ffffff;
 }
+
 listview {
     layout: horizontal;
     spacing: 0px;
     lines: 100;
+    background-color: #222222;
 }
+
 element {
-    border: 0px 2px 0px 0px;
-    border-color: #666666;
+    border: 0px 1px 0px 0px;
+    border-color: #3a3a3a;
     padding: 2px 8px;
     margin: 0px;
+    background-color: #222222;
+    text-color: #ffffff;
 }
+
+element normal.normal {
+    background-color: #222222;
+    text-color: #ffffff;
+}
+
+element alternate.normal {
+    background-color: #222222;
+    text-color: #ffffff;
+}
+
 element-text {
     vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
 }
+
+element selected.normal {
+    background-color: #285577;
+    text-color: #ffffff;
+}
+
+element selected.normal element-text {
+    background-color: transparent;
+    text-color: #ffffff;
+    font: "Monospace Bold 12";
+}
+
 textbox-suffix {
     expand: false;
     content: "...}";
     vertical-align: 0.5;
+    background-color: #222222;
+    text-color: #ffffff;
 }
 '
 
 rofi -show run \
+    -bw 0 \
     -display-run "M-x" \
     -theme-str "$THEME" \
     -run-command "bash -c '{cmd}'"

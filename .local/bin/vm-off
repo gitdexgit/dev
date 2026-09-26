@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+sudo systemctl stop \
+  libvirtd.service libvirtd.socket libvirtd-ro.socket libvirtd-admin.socket \
+  virtlogd.service virtlogd.socket virtlogd-admin.socket

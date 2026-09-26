@@ -1,3 +1,4 @@
+
 unbind <C-x>
 unbind --mode=insert <C-x>
 unbind --mode=ignore <C-x>
@@ -209,9 +210,10 @@ bind <C-x>xr fillcmdline tabrename
 bind --mode=insert <C-x>xr fillcmdline tabrename
 bind --mode=ignore <C-x>xr fillcmdline tabrename
 
-bind <C-x><ArrowLeft> fillcmdline buffer
-bind --mode=insert <C-x><ArrowLeft> fillcmdline buffer
-bind --mode=ignore <C-x><ArrowLeft> fillcmdline buffer
+bind <C-x><ArrowLeft> fillcmdline tab #
+bind --mode=insert <C-x><ArrowLeft> fillcmdline tab #
+bind --mode=ignore <C-x><ArrowLeft> fillcmdline tab #
+
 
 bind <C-x>b fillcmdline buffer
 bind --mode=insert <C-x>b fillcmdline buffer

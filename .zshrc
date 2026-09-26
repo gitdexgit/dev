@@ -554,16 +554,19 @@ alias vpn-off='sudo systemctl stop proton.VPN.service'
 # AI
 alias ai-on='sudo systemctl start ollama'
 alias ai-off='sudo systemctl stop ollama'
+
 alias imgcap='xclip -selection clipboard -t image/png -o > ~/Pictures/$(date +%Y-%m-%d_%H-%M-%S).png'
+
+# I moved them to proper .local/bin/{script-name} same alias names.
 # VMs
-alias vm-on='sudo systemctl start libvirtd virtlogd'
-alias vm-off='sudo systemctl stop libvirtd virtlogd'
+# alias vm-on='sudo systemctl start libvirtd virtlogd'
+# alias vm-off='sudo systemctl stop libvirtd virtlogd'
 
 
 # 1) Just type freaking exit
 # 2) Just freaking practice C-d if you are outside tmux
 # 3) Just freaking practice C-b x y. (or hold tab then x y)
-alias eeee='exit'
+# alias eeee='exit'
 
 # I know these are handy it makes closing tmux windows fast... but just freaking hold tab and x and spam y ez... practice typing exit man
 # alias e='exit'

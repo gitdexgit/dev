@@ -1,0 +1,36 @@
+/* Keep the toolbox offscreen, leaving a 3px invisible strip to catch hover */
+#navigator-toolbox {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100 !important;
+  transform: translateY(calc(-100% + 3px));
+  opacity: 0 !important;
+  transition: none !important;
+}
+
+/* Keep the address bar pill completely hidden while idle */
+#navigator-toolbox:not(:hover):not(:focus-within) #urlbar,
+#navigator-toolbox:not(:hover):not(:focus-within) #urlbar-container {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+
+/* Reveal both navbar and bookmarks instantly on hover, focus, or open menus */
+#navigator-toolbox:hover,
+#navigator-toolbox:focus-within,
+#navigator-toolbox:has(toolbarbutton[open="true"]) {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+#navigator-toolbox:hover #urlbar,
+#navigator-toolbox:focus-within #urlbar,
+#navigator-toolbox:has(toolbarbutton[open="true"]) #urlbar {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transition: none !important;
+}

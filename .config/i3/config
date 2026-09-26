@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 0
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -136,6 +136,7 @@ exec --no-startup-id sxhkd
 # exec --no-startup-id skippy-xd --start-daemon
 
 
+
 # fixes grmmit-mpx
 exec --no-startup-id picom --backend glx --vsync --no-use-damage --config /dev/null
 
@@ -158,6 +159,8 @@ exec --no-startup-id dunst
 # exec --no-startup-id zeal
 exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
 # exec --no-startup-id xbindkeys
+
+exec_always --no-startup-id ~/.config/i3/scripts/i3-focus-tracker.sh
 
 exec_always --no-startup-id sh -c "setxkbmap us; xmodmap ~/.Xmodmap; xset r rate 220 50"
 
