@@ -1,5 +1,14 @@
 very good ideas:
 
+
+## I have a crazy idea... I should from time to time make like my interent cut off. Induced lag.
+now that I think about it... Like if my stuff lag when I watch a youtube video it makes me like you know... I think it's good to induce some lag.
+So that I can stop and do `pre` maybe go type something on the like monkey type or `tt` or `typioca`
+
+
+
+
+
 ## Now that you have voxtype on basically you can hit scrolllock and hold and hold it and it's basically gonna type stuff out
 Okay, so the idea is to train a language model on Google CoolLab and then use
 VoxType to pipe the text to the model which is used in pocket TTS. So

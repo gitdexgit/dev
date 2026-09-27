@@ -1,4 +1,39 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #  The questions answered by inspectional reading are:
 
  ## - first, what kind of book is it?
