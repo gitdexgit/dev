@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# If called without a terminal like from dmenu, relaunch inside st
+if [ ! -t 0 ]; then
+    exec st -c floating_bookmarks -n floating_bookmarks -e "$0" "$@"
+fi
+
+PROFILE_DIR=$(find "$HOME/.mozilla/firefox" -maxdepth 1 -type d -name "*.default-release" | head -n 1)
+DB_PATH="$PROFILE_DIR/places.sqlite"
+
+SEP=$'\x1f'
+
+QUERY="
+SELECT
+    CASE
+        WHEN group_concat(t.title, ', ') IS NOT NULL
+        THEN '[' || group_concat(t.title, ', ') || '] ' || b.title
+        ELSE b.title
+    END,
+    p.url
+FROM moz_bookmarks b
+JOIN moz_places p ON b.fk = p.id
+LEFT JOIN moz_bookmarks tag_link ON tag_link.fk = b.fk AND tag_link.title IS NULL
+LEFT JOIN moz_bookmarks t ON tag_link.parent = t.id AND t.parent = 4
+WHERE b.type = 1 AND b.title IS NOT NULL
+GROUP BY b.id
+ORDER BY b.dateAdded DESC;
+"
+
+# SELECTED=$(sqlite3 -separator "$SEP" "file:$DB_PATH?immutable=1" "$QUERY" \
+#     | fzf --delimiter="$SEP" --with-nth=1 --reverse --prompt="Bookmarks > ")
+
+SELECTED=$(sqlite3 -separator "$SEP" "file:$DB_PATH?immutable=1" "$QUERY" \
+    | FZF_DEFAULT_OPTS="" fzf --delimiter="$SEP" --with-nth=1 --reverse --prompt="Bookmarks > " --preview-window=hidden)
+
+
+[ -z "$SELECTED" ] && exit 0
+
+URL="${SELECTED##*$SEP}"
+
+firefox --new-tab "$URL"

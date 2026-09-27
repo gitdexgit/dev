@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# If called without a terminal like from dmenu, relaunch inside st
+if [ ! -t 0 ]; then
+    exec st -c floating_history -n floating_history -e "$0" "$@"
+fi
+
+PROFILE_DIR=$(find "$HOME/.mozilla/firefox" -maxdepth 1 -type d -name "*.default-release" | head -n 1)
+DB_PATH="$PROFILE_DIR/places.sqlite"
+
+SEP=$'\x1f'
+
+QUERY="
+SELECT title, url
+FROM moz_places
+WHERE title IS NOT NULL AND visit_count > 0
+ORDER BY last_visit_date DESC;
+"
+
+SELECTED=$(sqlite3 -separator "$SEP" "file:$DB_PATH?immutable=1" "$QUERY" \
+    | FZF_DEFAULT_OPTS="" fzf --delimiter="$SEP" --with-nth=1 --reverse --prompt="History > " --preview-window=hidden)
+
+[ -z "$SELECTED" ] && exit 0
+
+URL="${SELECTED##*$SEP}"
+
+firefox --new-tab "$URL"

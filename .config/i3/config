@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -15,6 +15,11 @@ bindsym button5 nop
 
 floating_modifier Mod4
 tiling_drag modifier titlebar
+
+
+for_window [instance="floating_bookmarks"] floating enable, resize set 1550 900, move position center
+
+for_window [instance="floating_history"] floating enable, resize set 1550 900, move position center
 
 
 for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
@@ -720,7 +725,13 @@ bindsym Mod4+F18      exec --no-startup-id xdotool mousemove_relative -- -10 0
 bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
 bindsym F18 exec --no-startup-id xdotool mousemove_relative -- 10 0
 
-bindsym Mod4+F5 bar mode hide
+# bindsym Mod4+F5 bar mode hide
+bindsym Mod4+F11 bar mode hide
+
+bindsym Mod4+F5 exec --no-startup-id ~/.local/bin/toggle-bar
+
+
+
 # bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/toggle-tabs
 # bindsym Mod4+F7 exec --no-startup-id ~/.local/bin/toggle-tabs-slightly
 bindsym Mod4+Shift+BackSpace exec --no-startup-id ~/.local/bin/toggle-edge-borders
@@ -767,8 +778,12 @@ bindsym Mod4+w layout tabbed
 bindsym Mod4+e layout toggle split
 
 bindsym Mod4+Shift+space floating toggle
-bindsym Mod4+z floating toggle
+# bindsym Mod4+z floating toggle
 bindsym Mod4+space       focus mode_toggle
+
+bindsym Mod4+z exec boomer
+
+
 
 bindsym Mod4+a focus parent
 bindsym Mod4+g focus child
