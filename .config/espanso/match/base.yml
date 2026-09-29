@@ -7,7 +7,18 @@ matches:
   #   replace: "echo \"\\n [$|$] \\n\" ; timer"
 
 
+  - trigger: ";;job;"
+    force_mode: clipboard
+    replace: "I Work in a private school In Morocco. They pay us 1.6k a month. It's in a small city. I have 16hrs per week. And I have 4th, 5th, 6th, and 7th grades to teach English. Their level is really bad maybe only 1 or 2 students who are good and want to learn. The rest are noobs. It's acceptable because English is like their 3rd languge after French and International Arabic, after darijaa. So yeah. Also 4th 5th and 6th graders have kid's bridge It's some slop badly designed book, meanwhile 7th graders have Captain 1 from blackswain It's a decent textbook, what you expect from a book that is appropriate for 7th graders. Help me prepare or If I ask you something at least now you know the context. I'm just doing this job so that parents stay shut up. And in reality I'm just like into archlinux i3 and hacking and cybercerurity and I might have adhd. And I do jog and go to the gym. And I'm saving for CCNA 300dh every like month while looking for extra 4hrs of work maybe at language center to get more like cash to help with the money.
+
+
+    "
+
   - trigger: ";;p;"
+    force_mode: clipboard
+    replace: "Are you really sure that is a clean approach?"
+
+  - trigger: ";;pp;"
     force_mode: clipboard
     replace: "Be concise and direct. Prioritize understanding over style. Use plain language. Don't invent facts. If you're unsure, say so. If the request is genuinely ambiguous, ask for clarification.
 
@@ -16,7 +27,7 @@ matches:
 
 
   - trigger: ";;pu;"
-    replace: "{{output}}"
+    replace: "{{output}}\n\n"
     force_clipboard: true
     paste_shortcut: "CTRL+V"
     vars:

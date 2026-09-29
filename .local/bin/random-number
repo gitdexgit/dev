@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    val="$RANDOM"
+else
+    val="$((RANDOM % $1))"
+fi
+
+echo "$val"
+notify-send -t 1200 "Random Number" "$val"

@@ -43,7 +43,7 @@ textbox-prefix {
 
 entry {
     expand: false;
-    width: 8em;
+    width: 35em;
     vertical-align: 0.5;
     placeholder: "";
     background-color: #222222;
@@ -107,4 +107,10 @@ rofi -show run \
     -bw 0 \
     -display-run "M-x" \
     -theme-str "$THEME" \
-    -run-command "bash -c '{cmd}'"
+    -run-command "bash -c '{cmd}'" \
+    -kb-entry-history-up "Up" \
+    -kb-entry-history-down "Down" \
+    -kb-row-up "Control+p" \
+    -kb-row-down "Control+n" \
+    -kb-element-next "" \
+    -kb-row-select "Tab"
