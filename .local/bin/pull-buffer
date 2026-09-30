@@ -1,0 +1,84 @@
+#!/bin/bash
+#
+# Pull any window from any workspace directly to the active workspace.
+
+CURRENT_WS=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused == true) | .name')
+ACTIVE_ID=$(i3-msg -t get_tree | jq '.. | select(.focused? == true) | .id')
+
+# Generate raw list of open windows, skipping scratchpads and utility popups
+RAW_LIST=$(i3-msg -t get_tree | jq -r '
+  .. | select(.type? == "workspace") as $ws |
+  .. | select(.window? != null) |
+  select(
+    (
+      (.window_properties.title | test("^\\*scratch\\*$|CopyQ"))
+      or
+      (
+        (.window_properties.title | test("^(btop|learn|config)$"))
+        and
+        (.floating | test("on"))
+      )
+    ) | not
+  ) |
+  "\($ws.name)\t\(.window_properties.class)\t\(.window_properties.title)\t\(.id)"
+')
+
+# Keep active window on top, then other windows on this workspace, then external ones
+ACTIVE_ROW=$(echo "$RAW_LIST" | awk -v id="$ACTIVE_ID" '$NF == id')
+
+SAME_WS=$(echo "$RAW_LIST" |
+    awk -v id="$ACTIVE_ID" -v ws="$CURRENT_WS" \
+    '$NF != id && $1 == ws')
+
+OTHER_WS=$(echo "$RAW_LIST" |
+    awk -v ws="$CURRENT_WS" '$1 != ws' |
+    sort -k1,1)
+
+SORTED_LIST=$(printf "%s\n%s\n%s" \
+    "$ACTIVE_ROW" \
+    "$SAME_WS" \
+    "$OTHER_WS" |
+    sed '/^\s*$/d')
+
+[ -z "$SORTED_LIST" ] && exit 0
+
+DISPLAY_LIST=$(echo "$SORTED_LIST" | cut -f1,2,3 | column -t -s $'\t')
+ROW_COUNT=$(echo "$SORTED_LIST" | grep -c .)
+
+LINES=5
+if [ "$ROW_COUNT" -gt 5 ]; then
+    LINES="$ROW_COUNT"
+fi
+
+INDEX=$(echo "$DISPLAY_LIST" |
+    rofi -dmenu -i \
+        -format i \
+        -p "pull window" \
+        -a 0 \
+        -selected-row 0 \
+        -lines "$LINES" \
+        -font "DejaVu Sans Mono 10" \
+        -theme-str '
+            window {
+                width: 100%;
+                location: south;
+                anchor: south;
+            }
+            listview {
+                columns: 1;
+                fixed-height: false;
+                scrollbar: true;
+                lines: 35;
+            }
+        ')
+
+[ -z "$INDEX" ] && exit 0
+
+W_ID=$(echo "$SORTED_LIST" | sed -n "$((INDEX + 1))p" | awk -F'\t' '{print $NF}')
+
+# Move the window to the current workspace and focus it
+i3-msg "[con_id=$W_ID] move container to workspace \"$CURRENT_WS\", [con_id=$W_ID] focus" > /dev/null
+
+# Warp mouse cursor to the pulled window
+sleep 0.1
+xdotool mousemove --window "$(xdotool getactivewindow)" --polar 0 0

@@ -1,5 +1,10 @@
 very good ideas:
 
+## Try a day without like keyd.
+
+But like only minimal keyd only like make cpaslock control and compose make it like alt and that's it. If you want to hit compose hold escape then compose I guess... And see what it feels like
+
+
 ## Actually you can use voxtype to record a part of the video's speech as note or something to remember
 I love like using voxtype but It turns out because of like my shitty earphones... I have like kinda same channel for like speaker and mic. So when someone on youtube says something and I have like voxtype on. It is recording what he is saying. And boom it turns it into text. It's also really good at typing with your own voice like this. So instead of typing with your keyboard you can type with your voice which is really useful and really handy I guess. So I like it. It's something I'll be using all the time and yeah, Voxtype.
 

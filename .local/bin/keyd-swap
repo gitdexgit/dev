@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -e
+
+# If not running as root, re-run self using graphical prompt (pkexec)
+if [ "$EUID" -ne 0 ]; then
+    exec pkexec "$0" "$@"
+fi
+
+KEYD_DIR="/etc/keyd"
+TARGET=$(readlink -f "$KEYD_DIR/default.conf")
+
+if [[ "$TARGET" == *"-minimal.conf" ]]; then
+    ln -sf "$KEYD_DIR/default-full.conf" "$KEYD_DIR/default.conf"
+    MODE="FULL"
+else
+    ln -sf "$KEYD_DIR/default-minimal.conf" "$KEYD_DIR/default.conf"
+    MODE="MINIMAL"
+fi
+
+keyd reload
+
+# Send a desktop notification to your user (since dmenu has no terminal output)
+if [ -n "$SUDO_USER" ] || [ -n "$PKEXEC_UID" ]; then
+    REAL_USER="${SUDO_USER:-$(id -nu "$PKEXEC_UID")}"
+    USER_ID=$(id -u "$REAL_USER")
+    sudo -u "$REAL_USER" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$USER_ID/bus" \
+        notify-send -i input-keyboard "keyd" "Switched to: $MODE"
+fi

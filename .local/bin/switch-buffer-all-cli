@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+#
+# Emacs ido-vertical style window switcher.
+
+set -euo pipefail
+
+# If called without a terminal, relaunch in st
+if [ ! -t 0 ]; then
+    exec st -c floating_switcher -n floating_switcher -e "$0" "$@"
+fi
+
+if command -v swaymsg &>/dev/null; then
+    GET_TREE=(swaymsg -t get_tree)
+    FOCUS_CMD() { swaymsg -t command "[con_id=$1] focus"; }
+elif command -v i3-msg &>/dev/null; then
+    GET_TREE=(i3-msg -t get_tree)
+    FOCUS_CMD() { i3-msg "[con_id=$1] focus"; }
+else
+    echo "Error: neither swaymsg nor i3-msg found." >&2
+    exit 1
+fi
+
+for bin in fzf jq; do
+    command -v "$bin" &>/dev/null || { echo "Error: '$bin' not found." >&2; exit 1; }
+done
+
+TREE_JSON=$("${GET_TREE[@]}")
+my_id=$(jq '.. | select(.focused? == true) | .id' <<<"$TREE_JSON" | head -1)
+
+# Format: ID in column 1, aligned class and title in column 2
+list=$(jq -r --arg my_id "$my_id" '
+  .. | select(.type? == "con" or .type? == "floating_con")
+     | select(.window? != null or .app_id? != null)
+     | select((.nodes // []) == [])
+     | select(.id != ($my_id | tonumber))
+     | [
+         (.id | tostring),
+         ((.app_id // .window_properties.class // "?") | .[0:18]),
+         (.name // "")
+       ]
+     | @tsv
+' <<<"$TREE_JSON" | awk -F'\t' '{ printf "%s\t%-20s  %s\n", $1, $2, $3 }')
+
+if [[ -z "$list" ]]; then
+    exit 0
+fi
+
+# Emacs minibuffer style fzf
+sel=$(FZF_DEFAULT_OPTS="" fzf \
+    --no-preview \
+    --delimiter='\t' \
+    --with-nth=2 \
+    --prompt="Switch to buffer: " \
+    --pointer="> " \
+    --layout=reverse \
+    --no-info \
+    --no-separator \
+    --no-scrollbar \
+    --cycle \
+    <<<"$list") || exit 0
+
+[ -z "$sel" ] && exit 0
+
+id=$(cut -f1 <<<"$sel")
+FOCUS_CMD "$id" >/dev/null

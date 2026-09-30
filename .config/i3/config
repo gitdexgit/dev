@@ -21,8 +21,14 @@ for_window [instance="floating_bookmarks"] floating enable, resize set 1550 900,
 
 for_window [instance="floating_history"] floating enable, resize set 1550 900, move position center
 
+for_window [instance="floating_switcher"] floating enable, resize set 1920 345, move position 0 px 730 px, border pixel 1
+
+# Only ensure it defaults to floating without a heavy border
+# for_window [instance="floating_switcher"] floating enable, border pixel 1
+
 
 for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
+
 bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
 
 bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar

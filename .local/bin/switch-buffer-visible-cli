@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+#
+# Terminal window switcher using fzf in st.
+# Hierarchical sort: active window, active workspace, other workspaces.
+
+set -euo pipefail
+
+# Capture currently focused window before st spawns and steals focus
+if [ ! -t 0 ]; then
+    active_id=$(i3-msg -t get_tree | jq '.. | select(.focused? == true) | .id' | head -n 1)
+    exec st -c floating_switcher -n floating_switcher -e "$0" "$active_id"
+fi
+
+ACTIVE_ID="${1:-}"
+
+for bin in i3-msg fzf jq awk; do
+    command -v "$bin" &>/dev/null || { echo "Error: '$bin' not found." >&2; exit 1; }
+done
+
+TREE_JSON=$(i3-msg -t get_tree)
+
+# Fallback if run manually from an existing terminal
+if [[ -z "$ACTIVE_ID" ]]; then
+    ACTIVE_ID=$(jq '.. | select(.focused? == true) | .id' <<<"$TREE_JSON" | head -1)
+fi
+
+# Extract windows: ws_num \t class \t title \t con_id
+# Excludes __i3_scratch, floating_switcher, and utility scratchpads
+RAW_LIST=$(jq -r '
+  .. | select(.type? == "workspace" and .name != "__i3_scratch" and .num != -1) as $ws
+     | .. | select(.type? == "con" or .type? == "floating_con")
+     | select(.window? != null or .app_id? != null)
+     | select((.nodes // []) == [])
+     | select((.window_properties.instance? != "floating_switcher") and (.app_id? != "floating_switcher"))
+     | select(
+         (
+           (.name // .window_properties.title // "" | test("^\\*scratch\\*$|CopyQ"))
+           or
+           (
+             (.name // .window_properties.title // "" | test("^(btop|learn|config)$"))
+             and
+             (.floating | test("on"))
+           )
+         ) | not
+       )
+     | "\($ws.num)\t\(.app_id // .window_properties.class // "?")\t\(.name // "")\t\(.id)"
+' <<<"$TREE_JSON")
+
+if [[ -z "$RAW_LIST" ]]; then
+    exit 0
+fi
+
+# 1. Active window
+ACTIVE_ROW=$(echo "$RAW_LIST" | awk -v id="$ACTIVE_ID" '$4 == id')
+
+# 2. Active workspace number
+ACTIVE_WS=$(echo "$ACTIVE_ROW" | awk '{print $1}')
+
+# 3. Other windows on the same workspace
+SAME_WS=""
+if [[ -n "$ACTIVE_WS" ]]; then
+    SAME_WS=$(echo "$RAW_LIST" | awk -v id="$ACTIVE_ID" -v ws="$ACTIVE_WS" '$4 != id && $1 == ws')
+fi
+
+# 4. Windows on other workspaces, sorted numerically
+OTHER_WS=""
+if [[ -n "$ACTIVE_WS" ]]; then
+    OTHER_WS=$(echo "$RAW_LIST" | awk -v ws="$ACTIVE_WS" '$1 != ws' | sort -n -k1,1)
+else
+    OTHER_WS=$(echo "$RAW_LIST" | sort -n -k1,1)
+fi
+
+# Merge into sorted list
+SORTED_LIST=$(printf "%s\n%s\n%s" "$ACTIVE_ROW" "$SAME_WS" "$OTHER_WS" | sed '/^\s*$/d')
+
+# Format for fzf:
+# Column 1 (hidden ID for cut) \t Column 2 (formatted workspace tag, class, title)
+FORMATTED=$(echo "$SORTED_LIST" | awk -F'\t' '{
+    printf "%s\t[%s]  %-18.18s  %s\n", $4, $1, $2, $3
+}')
+
+# Launch clean fzf with no previewer
+sel=$(FZF_DEFAULT_OPTS="" fzf \
+    --no-preview \
+    --delimiter='\t' \
+    --with-nth=2 \
+    --prompt="window > " \
+    --reverse \
+    <<<"$FORMATTED") || exit 0
+
+[ -z "$sel" ] && exit 0
+
+# Grab the container ID from hidden column 1
+id=$(cut -f1 <<<"$sel")
+i3-msg "[con_id=$id] focus" >/dev/null
+
+# Warp mouse to the selected window
+xdotool mousemove --window "$(xdotool getactivewindow)" --polar 0 0 2>/dev/null || true
