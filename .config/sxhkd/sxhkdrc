@@ -1,5 +1,20 @@
 # --- Universal Chords (Leader: Alt + Space) ---
 
+alt + space ; {1,2,3,4,5,6,7,8,9,0}
+    ~/.local/bin/i3-switch {1,2,3,4,5,6,7,8,9,0}
+
+# Toggle bar
+alt + space ; F5
+    ~/.local/bin/toggle-bar
+
+# Tabs
+alt + space ; {F6,F7}
+    ~/.local/bin/set-tabs {toggle,slightly}
+
+# Hide bar
+alt + space ; F11
+    i3-msg bar mode hide
+
 # Simple sequences
 alt + space ; {b,Left}
     switch-buffer
@@ -8,7 +23,7 @@ alt + space ; Tab
     switch-buffer-preview
 
 alt + space ; control + b
-    switch-all-visible-buffer
+    switch-buffer-visible
 
 alt + space ; k
     i3-msg kill
@@ -30,11 +45,11 @@ alt + space ; x ; b
     switch-buffer-preview-horizontal
 
 alt + space ; x ; control + b
-    switch-all-buffer
+    switch-buffer-all
 
 # Nested: 8 -> e -> s
-alt + space ; 8 ; e ; s
-    emoji
+# alt + space ; 8 ; e ; s
+#     emoji
 
 # Nested: t -> {t,r,m,o,O}
 alt + space ; t ; t
@@ -53,8 +68,19 @@ alt + space ; t ; O
     xdotool set_desktop --relative -- -1
 
 # Nested: 5 -> {o,m}
-alt + space ; 5 ; {o,m}
+# alt + space ; 5 ; {o,m}
+#     i3-msg {focus output next,move container to output next}
+
+# Frames and displays move from 5 to m for monitor
+alt + space ; m ; {o,m}
     i3-msg {focus output next,move container to output next}
+
+# Characters and emojis move from 8 to e
+alt + space ; e ; s
+    emoji
+
+alt + space ; Alt_L
+    hide-float
 
 # Nested: q -> {r,l,q,k,c,z}
 alt + space ; q ; {r,l,q,k,c,z}
@@ -66,3 +92,7 @@ alt + space ; h
 
 alt + space ; l
     xdotool set_desktop --relative -- 1
+
+# Open rofi action menu
+alt + space ; space
+    ~/.local/bin/leader-menu

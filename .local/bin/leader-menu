@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+tmpfile=$(mktemp)
+
+# Run fzf inside st, write choice to tmpfile, and exit st
+st -n "leader-menu" -e bash -c '
+commands="switch-buffer
+switch-buffer-preview
+switch-all-visible-buffer
+rename-buffer
+switch-buffer-preview-horizontal
+switch-all-buffer
+i3-msg kill
+quick-search
+dmenu_run
+web-search
+emoji
+switch-workspace
+rename-workspace
+move-buffer-to-workspace
+xdotool set_desktop --relative -- 1
+xdotool set_desktop --relative -- -1
+i3-msg focus output next
+i3-msg move container to output next
+i3-msg restart
+i3-msg reload
+i3-msg exit
+xkill
+xcontrol -c
+xcontrol -z"
+
+printf "%s\n" "$commands" | fzf --reverse --no-preview --prompt="cmd > " > "'"$tmpfile"'"
+'
+
+# Read choice and clean up
+chosen=$(cat "$tmpfile")
+rm -f "$tmpfile"
+
+# st is gone, focus has returned to your previous window
+if [ -n "$chosen" ]; then
+    eval "$chosen"
+fi

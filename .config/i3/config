@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -22,6 +22,10 @@ for_window [instance="floating_bookmarks"] floating enable, resize set 1550 900,
 for_window [instance="floating_history"] floating enable, resize set 1550 900, move position center
 
 for_window [instance="floating_switcher"] floating enable, resize set 1920 345, move position 0 px 730 px, border pixel 1
+
+for_window [instance="leader-menu"] floating enable, resize set 700 400, move position center
+
+
 
 # Only ensure it defaults to floating without a heavy border
 # for_window [instance="floating_switcher"] floating enable, border pixel 1
