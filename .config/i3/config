@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
