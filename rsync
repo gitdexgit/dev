@@ -61,6 +61,7 @@ SYSTEM_TARGETS=(
 # --- 2. Home directory files and directories (RELATIVE PATHS) ---
 HOME_TARGETS=(
     ".zshrc"
+    ".zsh"
     ".tridactylrc"
     ".xinitrc"
     ".Xmodmap"
