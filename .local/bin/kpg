@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+# Rerun as root with a graphical prompt if needed
+if [ "$EUID" -ne 0 ]; then
+    exec pkexec "$0" "$@"
+fi
+
+KEYD_DIR="/etc/keyd"
+
+# Force the symlink to full layout
+ln -sf "$KEYD_DIR/default-full.conf" "$KEYD_DIR/default.conf"
+
+keyd reload
+
+# Send desktop notification to the real user
+if [ -n "$SUDO_USER" ] || [ -n "$PKEXEC_UID" ]; then
+    REAL_USER="${SUDO_USER:-$(id -nu "$PKEXEC_UID")}"
+    USER_ID=$(id -u "$REAL_USER")
+    sudo -u "$REAL_USER" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$USER_ID/bus" \
+        notify-send -i input-keyboard "keyd" "Loaded: FULL"
+fi
