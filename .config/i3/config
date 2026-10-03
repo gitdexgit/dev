@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0.1
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -501,7 +501,7 @@ bindsym Mod4+Mod1+n exec --no-startup-id ~/.local/bin/night-light
 # bindsym Control+Mod1+z exec --no-startup-id "xcontrol -z"
 
 # I'm tempted to make a tab-x a m... but Mod+shift+m is faster... I'm tempted to make it mod+m because we moved mod+m to Tab-x t m
-bindsym Mod4+m exec --no-startup-id "~/.local/bin/mic-toggle.sh"
+bindsym Mod4+m exec --no-startup-id "~/.local/bin/mic-toggle"
 
 
 # --- Rofi & Navigation ---

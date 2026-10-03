@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+    if [ -t 0 ]; then
+        exec sudo "$0" "$@"
+    else
+        ASKPASS="/tmp/ai-askpass"
+        cat << 'EOF' > "$ASKPASS"
+#!/bin/sh
+if command -v rofi >/dev/null 2>&1; then
+    rofi -dmenu -password -p "Sudo password"
+elif command -v zenity >/dev/null 2>&1; then
+    zenity --password --title="Sudo Password"
+fi
+EOF
+        chmod +x "$ASKPASS"
+        SUDO_ASKPASS="$ASKPASS" exec sudo -A "$0" "$@"
+    fi
+fi
+
+HOSTS="/etc/hosts"
+LIST="/home/dex/.config/ai-domains.txt"
+START_TAG="# NO-AI-START"
+END_TAG="# NO-AI-END"
+
+if [ ! -f "$LIST" ]; then
+    echo "Error: $LIST does not exist."
+    exit 1
+fi
+
+USER_UID=`id -u "$SUDO_USER"`
+USER_BUS="unix:path=/run/user/$USER_UID/bus"
+
+if grep -q "$START_TAG" "$HOSTS"; then
+    sed -i "/$START_TAG/,/$END_TAG/d" "$HOSTS"
+    echo "AI unblocked."
+    if [ -n "$SUDO_USER" ]; then
+        sudo -u "$SUDO_USER" DBUS_SESSION_BUS_ADDRESS="$USER_BUS" notify-send "AI Unblocked" "Access restored"
+    fi
+else
+    echo "$START_TAG" >> "$HOSTS"
+    cat "$LIST" >> "$HOSTS"
+    echo "$END_TAG" >> "$HOSTS"
+    echo "AI blocked."
+    if [ -n "$SUDO_USER" ]; then
+        sudo -u "$SUDO_USER" DBUS_SESSION_BUS_ADDRESS="$USER_BUS" notify-send "AI Blocked" "Focus mode on"
+    fi
+fi

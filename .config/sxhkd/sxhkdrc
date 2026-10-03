@@ -71,9 +71,15 @@ alt + space ; t ; O
 # alt + space ; 5 ; {o,m}
 #     i3-msg {focus output next,move container to output next}
 
+# Keep this but I'm not sure if I'm gonna use this. This is like in emacs I think.
+# --------------------------
 # Frames and displays move from 5 to m for monitor
-alt + space ; m ; {o,m}
-    i3-msg {focus output next,move container to output next}
+# alt + space ; m ; {o,m}
+#     i3-msg {focus output next,move container to output next}
+
+
+alt + space ; m
+    mic-toggle
 
 # Characters and emojis move from 8 to e
 alt + space ; e ; s
@@ -89,6 +95,7 @@ alt + space ; q ; {r,l,q,k,c,z}
 # Move between virtual desktops
 alt + space ; h
     xdotool set_desktop --relative -- -1
+
 
 alt + space ; l
     xdotool set_desktop --relative -- 1

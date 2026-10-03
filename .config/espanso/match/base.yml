@@ -216,6 +216,28 @@ matches:
 
   ############### Dev console when using youtube, hit f12 and type to make player faster or slower ############################
 
+
+  - trigger: ";;ytx5;"
+    replace: "document.querySelector('video').playbackRate = 5;"
+
+  - trigger: ";;ytx3;"
+    replace: "document.querySelector('video').playbackRate = 3;"
+
+  - trigger: ";;ytx2.5;"
+    replace: "document.querySelector('video').playbackRate = 2.5;"
+
+  - trigger: ";;ytx2;"
+    replace: "document.querySelector('video').playbackRate = 2;"
+
+  - trigger: ";;ytx3.5;"
+    replace: "document.querySelector('video').playbackRate = 3.5;"
+
+  - trigger: ";;ytx4;"
+    replace: "document.querySelector('video').playbackRate = 4;"
+
+  - trigger: ";;ytx4.5;"
+    replace: "document.querySelector('video').playbackRate = 4.5;"
+
   - trigger: ";;yt5;"
     replace: "document.querySelector('video').currentTime += 5;"
 

@@ -1,5 +1,46 @@
 very good ideas:
 
+
+
+## get inspiration from vis it's a cool text editor like vi or vim but has cool multiple cursor mass edits that are well thought of
+
+#inspiration #vis #text-editor
+
+https://www.youtube.com/watch?v=UrvcW6nGyN4
+
+Watch it so you get it... The project has 5k starts on github I think. It's probably one of the best multiple cursor implementations I've seen.
+But like if you can do what vis does anyways in nvim then no need. If not look for plugin.
+
+
+## Set up Pi-hole
+
+It only eats 512mb can even set it up in docker. But maybe get a rasbery pi and set it up there
+
+
+
+
+## only tty challenge
+
+Try to push yourself into using only tty as a challenge in archlinux. No i3 just you know. Use gpm and things like that anything that can help you to live inside a consol.
+
+
+Also don't start completly from a vacume... open like tty2 and like read stuff from tty1 and swtich to tty2 you know...
+
+### ai: when trying this out try out:
+
+You are correct about gpm. It cannot talk to the X11 clipboard. GPM keeps its text buffer inside kernel memory for virtual terminals, while Xorg runs an entirely independent clipboard mechanism. If you want to push text from your browser on TTY1 into your terminal on TTY2, dump it into a temporary scratch file like `/tmp/clip` and read it from the other side.
+
+When you spend an afternoon living inside a raw TTY, install these packages from the Arch repositories to see what Linux can pull off without an X server:
+
+* `mpv` for watching videos. You can literally watch movies in a bare TTY. Run `mpv --vo=drm video.mp4` and it uses the Linux Direct Rendering Manager to push video frames straight to your graphics card.
+* `fbi` for viewing photos. It reads JPEG and PNG files and draws high-resolution images directly onto the framebuffer over your text console.
+* `links` with the graphics flag. If you launch it as `links -g https://duckduckgo.com`, it does not just show text. It starts its own built-in graphics driver and renders actual images and clickable buttons on the screen.
+* `mc` for file management. Midnight Commander gives you a dual-pane file browser that works seamlessly with your mouse cursor via gpm.
+* `cmus` for background music. It is a lightweight, keyboard-driven music player that handles large local audio libraries effortlessly.
+* `fbterm` for display quality. The default Linux TTY font uses an ancient 8x16 pixel grid. `fbterm` replaces that with a fast framebuffer terminal that renders crisp modern TrueType fonts and full 256-color output.
+* `tmux` to tie everything together. Without a window manager, tmux is the only thing keeping you from losing your mind. It lets you run an editor, a file manager, and system logs in split panes on a single screen.
+
+
 ## Try a day without like keyd.
 
 But like only minimal keyd only like make cpaslock control and compose make it like alt and that's it. If you want to hit compose hold escape then compose I guess... And see what it feels like

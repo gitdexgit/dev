@@ -706,29 +706,19 @@ compilation-error-regexp-alist-alist
 
 (global-set-key (kbd "C-;") 'rc/comment-line-stay)
 
-
-
 ;; --- ERC AUTOJOIN FORCED FIX (v19 - SASL + no shadow bug) ---
 (require 'erc)
 (require 'erc-sasl)
 (require 'auth-source)
+(require 'cl-lib)
 
 ;; --- 1. SPELLING FIX ---
-;; Use aspell it is the default it is good so if it's the default then no need to uncomment these
-
-; (setq ispell-program-name "hunspell")
-; (setq ispell-dictionary "en_US")
-; (setq ispell-hunspell-dict-alist-pos 1)
-
-
 (defun my-erc-hook-spelling ()
   "Enable flyspell safely in ERC buffers."
   (require 'flyspell)
   (ignore-errors
     (setq-local flyspell-generic-check-word-predicate 'erc-check-ispell-without-commands)
-    (flyspell-mode 1))
-    (text-scale-set -1))
-
+    (flyspell-mode 1)))
 
 (add-hook 'erc-mode-hook 'my-erc-hook-spelling)
 
@@ -739,26 +729,74 @@ compilation-error-regexp-alist-alist
 (setq erc-port 6697)
 (setq erc-prompt-for-password nil)
 
-;; --- 3. MANUAL COMMANDS (renamed — erc-login is core fn, don't shadow) ---
-(defun erc-identify ()
-  "Manual command to identify if SASL didn't fire (DC/timeout)."
-  (interactive)
-  (let* ((secret (plist-get (car (auth-source-search :host "irc.libera.chat" :user "dex3rd")) :secret))
-         (password (if (functionp secret) (funcall secret) secret)))
-    (if password
-        (progn
-          (erc-message "PRIVMSG" (format "NickServ IDENTIFY %s" password))
-          (message "ERC: Sent manual IDENTIFY."))
-      (message "ERC Error: No password found in .authinfo"))))
+;; --- 3. HELPER FUNCTIONS ---
+(defun my-erc-get-libera-password ()
+  "Fetch Libera.Chat password from auth-source."
+  (let* ((match (car (auth-source-search :host "irc.libera.chat"
+                                         :user "dex3rd"
+                                         :require '(:secret)
+                                         :max 1)))
+         (secret (plist-get match :secret)))
+    (if (functionp secret) (funcall secret) secret)))
 
-;; --- 8. TOGGLE CHANNEL-INFO SPAM (numerics only, JOIN/PART/etc stay hidden) ---
+(defun my-erc-get-server-buffer ()
+  "Find an active Libera.Chat server buffer."
+  (if (and (derived-mode-p 'erc-mode) (erc-server-buffer-live-p))
+      (erc-server-buffer)
+    (cl-find-if (lambda (buf)
+                  (with-current-buffer buf
+                    (and (derived-mode-p 'erc-mode)
+                         (erc-server-buffer-p)
+                         (erc-server-process-alive))))
+                (buffer-list))))
+
+;; --- 4. MANUAL INTERACTIVE COMMANDS ---
+(defun erc-identify ()
+  "Manual command to identify with NickServ."
+  (interactive)
+  (let ((buf (my-erc-get-server-buffer))
+        (password (my-erc-get-libera-password)))
+    (cond
+     ((not buf)
+      (user-error "ERC: No active IRC connection found"))
+     ((not password)
+      (user-error "ERC: No password found for dex3rd in auth-source"))
+     (t
+      (with-current-buffer buf
+        (erc-server-send (format "PRIVMSG NickServ :IDENTIFY %s" password))
+        (message "ERC: Sent IDENTIFY to NickServ."))))))
+
+(defun erc-ghost ()
+  "Kill stuck dex3rd session, reclaim nick, and identify."
+  (interactive)
+  (let ((buf (my-erc-get-server-buffer))
+        (password (my-erc-get-libera-password)))
+    (cond
+     ((not buf)
+      (user-error "ERC: No active IRC connection found"))
+     ((not password)
+      (user-error "ERC: No password found for dex3rd in auth-source"))
+     (t
+      (with-current-buffer buf
+        (erc-server-send (format "PRIVMSG NickServ :GHOST dex3rd %s" password))
+        (message "ERC: Sent GHOST. Reclaiming nick in 2 seconds...")
+        (run-at-time 2 nil
+                     (lambda (server-buf pass)
+                       (when (buffer-live-p server-buf)
+                         (with-current-buffer server-buf
+                           (erc-server-send "NICK dex3rd")
+                           (erc-server-send (format "PRIVMSG NickServ :IDENTIFY %s" pass))
+                           (message "ERC: Reclaimed nick and re-identified."))))
+                     buf password))))))
+
+;; --- 5. TOGGLE CHANNEL-INFO SPAM ---
 (defvar my-erc-info-codes '("324" "328" "329" "332" "333" "353" "366")
   "Numeric channel-info codes toggled by `erc-toggle-spam'.")
 (defvar my-erc-info-hidden t
   "State: t = info codes hidden, nil = shown.")
+
 (defun erc-toggle-spam ()
-  "Toggle visibility of channel-info numerics (topic/url/names/etc).
-JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
+  "Toggle visibility of channel-info numerics."
   (interactive)
   (if my-erc-info-hidden
       (progn
@@ -770,29 +808,11 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
       (setq my-erc-info-hidden t)
       (message "ERC: channel info HIDDEN."))))
 
-
-
-(defun erc-ghost ()
-  "Kill stuck dex3rd session, reclaim nick, identify."
-  (interactive)
-  (let* ((secret (plist-get (car (auth-source-search :host "irc.libera.chat" :user "dex3rd")) :secret))
-         (password (if (functionp secret) (funcall secret) secret)))
-    (if password
-        (progn
-          (erc-message "PRIVMSG" (format "NickServ GHOST dex3rd %s" password))
-          (run-at-time "2 sec" nil
-                       (lambda ()
-                         (erc-cmd-NICK "dex3rd")
-                         (erc-identify)))
-          (message "ERC: Ghosting old session..."))
-      (message "ERC Error: No password found in .authinfo"))))
-
-;; --- 4. SASL (auto-auth on connect, no "Not Registered" error) ---
+;; --- 6. SASL (auto-auth on connect) ---
 (setq erc-sasl-mechanism 'plain)
 (setq erc-sasl-user "dex3rd")
-;; password pulled from auth-source automatically by erc-sasl
 
-;; --- 5. AUTOJOIN & SPAM ---
+;; --- 7. AUTOJOIN & SPAM ---
 (setq-default erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE" "NOTICE"
                               "324" "328" "329" "332" "333" "353" "366"))
 (setq erc-autojoin-on-identify 'all)
@@ -802,17 +822,19 @@ JOIN/PART/QUIT/NICK/MODE/NOTICE stay hidden always."
          "#c++-basic" "#lua" "#go-nuts" "#odin" "#ctf"
          "#picoctf" "#networking" "#python")))
 
-;; --- 6. MODULES ---
+;; --- 8. MODULES ---
 (setq erc-modules '(netsplit fill button match track completion
                     readonly networks ring autojoin services
                     bufbar stamp sasl))
 (erc-update-modules)
 
-;; --- 7. UI & TIMESTAMPS ---
+;; --- 9. UI & TIMESTAMPS ---
 (setq erc-timestamp-format "[%H:%M] ")
 (setq erc-insert-timestamp-function 'erc-insert-timestamp-left)
 (setq erc-header-line-format "%t")
 (setq erc-bufbar-width 15)
+
+
 
 ;; for live preview
 (with-eval-after-load 'man

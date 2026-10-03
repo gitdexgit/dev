@@ -83,6 +83,7 @@ HOME_TARGETS=(
     "themes"
     "Documents/Bookmarks"
     ".config/yazi"
+    ".config/ai-domains.txt"
     ".config/feh"
     ".config/skippy-xd/skippy-xd.rc"
     ".config/sxhkd/sxhkdrc"
