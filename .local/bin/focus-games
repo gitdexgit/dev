@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if pgrep -f "st -c games_float" >/dev/null; then
+    i3-msg '[class="games_float"] scratchpad show'
+else
+    st -c games_float -e tmux attach-session -t "*games*" &
+fi

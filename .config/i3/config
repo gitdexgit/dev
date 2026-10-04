@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 0
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -140,6 +140,7 @@ workspace 43 output eDP-1
 # =====================================================================
 
 exec --no-startup-id emacs --daemon
+exec --no-startup-id noisetorch -i
 
 
 # This is dogshit for now
@@ -356,7 +357,7 @@ bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.local/bin/focus-config
 
 for_window [class="st_scratch"] floating enable, border none, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
 # I prefer space+f3 or sipmly typing focus-scratch
-# bindsym Mod4+t exec --no-startup-id ~/.local/bin/focus-scratch
+bindsym Mod4+Shift+t exec --no-startup-id ~/.local/bin/focus-scratch
 
 
 
@@ -541,7 +542,15 @@ bindsym Mod4+Mod1+m exec --no-startup-id move-buffer-to-workspace
 
 
 # I'm not sure about this Do I even use this?
-bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
+# Meh... good idea but no money and it's stupid maybe? idk. Needs Jev. then jev routs to proper script then script runs the model.
+# bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
+
+for_window [class="games_float"] floating enable, resize set 1400 500, sticky enable, move position center, move up 250 px, move right 255 px, move scratchpad, scratchpad show
+bindsym Mod4+Shift+g exec --no-startup-id ~/.local/bin/focus-games
+
+
+
+# bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
 
 # --- Mouse Window Management ---
 # bindsym Control+Shift+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"

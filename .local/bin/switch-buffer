@@ -3,6 +3,7 @@
 Y_OFFSET="-2px"
 MAX_LEN=50
 HIST_FILE="/tmp/i3-window-focus-history"
+ACCENT="#6c9bc2"
 
 extract_display_name() {
     local name="$1"
@@ -99,7 +100,6 @@ if [ -f "$HIST_FILE" ]; then
     while read -r hist_id; do
         [ -z "$hist_id" ] && continue
 
-        # Only include if it belongs to current workspace and is not currently focused
         if [ "${win_exists[$hist_id]}" = "1" ]; then
             if [ "${win_focused[$hist_id]}" != "true" ] && [ -n "${win_names[$hist_id]}" ]; then
                 ids+=("$hist_id")
@@ -107,7 +107,6 @@ if [ -f "$HIST_FILE" ]; then
                 disp="$(extract_display_name "${win_names[$hist_id]}")"
                 titles+=("$(truncate_name "$disp" "$MAX_LEN")")
             fi
-            # Unset so we don't duplicate below
             unset 'win_exists[$hist_id]'
         fi
     done < "$HIST_FILE"
@@ -143,14 +142,15 @@ selected_idx=$(
     rofi -dmenu \
         -bw 0 \
         -i \
-        -p "Buffer: " \
         -format i \
         -selected-row 0 \
+        -kb-row-right "Control+s,Control+Page_Down" \
+        -kb-row-left "Control+r,Control+Page_Up" \
         -theme-str "
-
             * {
+                font: \"Monospace 14\";
                 border: 0px;
-                border-color: transparent;
+                background-color: transparent;
             }
 
             configuration {
@@ -163,96 +163,112 @@ selected_idx=$(
                 width: 100%;
                 y-offset: ${Y_OFFSET};
                 border: 0px;
-                border-color: transparent;
-                padding: 0px;
+                padding: 3px 0px;
                 margin: 0px;
+                background-color: #1a1a1a;
                 children: [ mainbox ];
-                background-color: #222222;
             }
 
             mainbox {
                 orientation: horizontal;
-                border: 0px;
-                padding: 0px;
-                margin: 0px;
-                children: [
-                    prompt,
-                    entry,
-                    listview
-                ];
-                background-color: #222222;
+                spacing: 0px;
+                children: [ inputbar, listview, textbox-suffix ];
             }
 
-            prompt {
-                padding: 2px 10px;
-                background-color: #222222;
-                text-color: #285577;
-                font: \"Monospace Bold 11\";
+            inputbar {
+                expand: false;
+                orientation: horizontal;
+                spacing: 0px;
+                padding: 0px 0px 0px 10px;
+                children: [ entry, textbox-prefix ];
             }
 
             entry {
                 expand: false;
-                width: 100px;
-                padding: 2px 10px;
-                background-color: #222222;
-                text-color: #ffffff;
+                vertical-align: 0.5;
                 placeholder: \"\";
-                cursor-color: #ffffff;
+                text-color: #ffffff;
+                cursor-width: 2px;
+                cursor-color: ${ACCENT};
+                font: \"Monospace 14\";
+            }
+
+            textbox-prefix {
+                expand: false;
+                str: \"{\";
+                content: \"{\";
+                vertical-align: 0.5;
+                background-color: transparent;
+                text-color: #888888;
+                padding: 0px 4px 0px 0px;
+                font: \"Monospace 14\";
             }
 
             listview {
+                expand: true;
                 layout: horizontal;
                 lines: 100;
                 spacing: 0px;
-                background-color: #222222;
                 scrollbar: false;
+                fixed-height: true;
             }
 
             element {
-                padding: 3px 10px;
-                border: 0px 1px 0px 0px;
-                border-color: #3a3a3a;
-                background-color: #222222;
-                text-color: #ffffff;
-            }
-
-            element normal.normal {
-                background-color: #222222;
-                text-color: #ffffff;
-                border: 0px 1px 0px 0px;
-                border-color: #3a3a3a;
+                orientation: horizontal;
+                children: [ element-text, textbox-sep ];
+                padding: 0px;
+                margin: 0px;
+                background-color: transparent;
             }
 
             element-text {
+                vertical-align: 0.5;
                 background-color: transparent;
                 text-color: inherit;
+                font: inherit;
+            }
+
+            textbox-sep {
+                expand: false;
+                str: \" | \";
+                content: \" | \";
                 vertical-align: 0.5;
-                font: \"Monospace 11\";
+                text-color: #666666;
+                font: \"Monospace 14\";
             }
 
-            element selected.normal {
-                background-color: #285577;
-                text-color: #ffffff;
-                border: 0px 1px 0px 0px;
-                border-color: #3a3a3a;
-            }
-
-            element selected.normal element-text {
+            element normal.normal {
+                text-color: #dcdcdc;
                 background-color: transparent;
-                text-color: #ffffff;
-                font: \"Monospace Bold 11\";
             }
 
             element alternate.normal {
-                background-color: #222222;
-                text-color: #ffffff;
-                border: 0px 1px 0px 0px;
-                border-color: #3a3a3a;
+                text-color: #dcdcdc;
+                background-color: transparent;
             }
 
-            element alternate.normal element-text {
+            element selected.normal {
+                text-color: ${ACCENT};
                 background-color: transparent;
-                text-color: #ffffff;
+            }
+
+            element selected.normal element-text {
+                text-color: ${ACCENT};
+                font: \"Monospace Bold 14\";
+            }
+
+            element selected.normal textbox-sep {
+                text-color: #666666;
+            }
+
+            textbox-suffix {
+                expand: false;
+                str: \"}\";
+                content: \"}\";
+                vertical-align: 0.5;
+                padding: 0px 10px 0px 0px;
+                text-color: #888888;
+                font: \"Monospace 14\";
             }
         "
 )
