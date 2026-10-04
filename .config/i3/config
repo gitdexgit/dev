@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 0.1
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -356,7 +356,7 @@ bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.local/bin/focus-config
 
 for_window [class="st_scratch"] floating enable, border none, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
 # I prefer space+f3 or sipmly typing focus-scratch
-bindsym Mod4+t exec --no-startup-id ~/.local/bin/focus-scratch
+# bindsym Mod4+t exec --no-startup-id ~/.local/bin/focus-scratch
 
 
 
@@ -392,8 +392,9 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 
 # bindsym Mod4+Control+t exec st -e tmux-sessionizer
 
-bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
-
+# bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
+bindsym Mod4+Control+t exec st -e tmux-sessionizer
+bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
 
 # --- Kill Window ---
 # NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
@@ -646,7 +647,8 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 
 # bindsym Mod4+Shift+Return exec st -e zsh -c tmux-sessionizer
 
-bindsym Mod4+Mod1+Return exec st -e tmux
+# bindsym Mod4+Mdo1+Return exec st -e tmux
+bindsym Control+Mod1+t exec st -e tmux
 
 
 for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center

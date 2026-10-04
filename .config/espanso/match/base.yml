@@ -25,6 +25,11 @@ matches:
 
     "
 
+  - trigger: ";;co;"
+    force_mode: clipboard
+    replace: " Give me only the CODE! OR COMMAND! Do not speak or yap or talk non-sense.
+
+    "
 
   - trigger: ";;pu;"
     replace: "{{output}}\n\n"
