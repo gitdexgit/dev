@@ -31,32 +31,40 @@ export FZF_CTRL_R_OPTS="
 "
 
 
-# IDEA: Add preview for tmux sessions
-#
-# WORKING:
-# Hit ctrl-r to refrech preview
-# once in a [TMUX] Hit a number to move window around.
+
 export FZF_DEFAULT_OPTS="
   --ansi
   --layout=reverse
   --preview-window='up:65%:wrap'
-  --preview 'bash ~/.config/fzf/preview.sh {}'
   --bind 'delete:delete-char,ctrl-delete:kill-word,ctrl-backspace:backward-kill-word,ctrl-left:backward-word,ctrl-right:forward-word,ctrl-k:kill-line'
   --bind 'alt-j:preview-down,alt-k:preview-up'
   --bind 'alt-J:preview-page-down,alt-K:preview-page-up'
   --bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up'
   --bind 'alt-w:toggle-wrap'
-  --bind 'focus:refresh-preview'
   --bind 'ctrl-home:first,ctrl-end:last'
-  --bind 'ctrl-r:refresh-preview'
-  --bind 'f1:execute-silent(bash ~/.config/fzf/win.sh {} 1)+refresh-preview'
-  --bind 'f2:execute-silent(bash ~/.config/fzf/win.sh {} 2)+refresh-preview'
-  --bind 'f3:execute-silent(bash ~/.config/fzf/win.sh {} 3)+refresh-preview'
-  --bind 'f4:execute-silent(bash ~/.config/fzf/win.sh {} 4)+refresh-preview'
-  --bind 'f5:execute-silent(bash ~/.config/fzf/win.sh {} 5)+refresh-preview'
-  --bind 'alt-,:execute-silent(bash ~/.config/fzf/winc.sh {} prev)+refresh-preview'
-  --bind 'alt-.:execute-silent(bash ~/.config/fzf/winc.sh {} next)+refresh-preview'
 "
+
+# export FZF_DEFAULT_OPTS="
+#   --ansi
+#   --layout=reverse
+#   --preview-window='up:65%:wrap'
+#   --preview 'bash ~/.config/fzf/preview.sh {}'
+#   --bind 'delete:delete-char,ctrl-delete:kill-word,ctrl-backspace:backward-kill-word,ctrl-left:backward-word,ctrl-right:forward-word,ctrl-k:kill-line'
+#   --bind 'alt-j:preview-down,alt-k:preview-up'
+#   --bind 'alt-J:preview-page-down,alt-K:preview-page-up'
+#   --bind 'ctrl-f:preview-page-down,ctrl-b:preview-page-up'
+#   --bind 'alt-w:toggle-wrap'
+#   --bind 'focus:refresh-preview'
+#   --bind 'ctrl-home:first,ctrl-end:last'
+#   --bind 'ctrl-r:refresh-preview'
+#   --bind 'f1:execute-silent(bash ~/.config/fzf/win.sh {} 1)+refresh-preview'
+#   --bind 'f2:execute-silent(bash ~/.config/fzf/win.sh {} 2)+refresh-preview'
+#   --bind 'f3:execute-silent(bash ~/.config/fzf/win.sh {} 3)+refresh-preview'
+#   --bind 'f4:execute-silent(bash ~/.config/fzf/win.sh {} 4)+refresh-preview'
+#   --bind 'f5:execute-silent(bash ~/.config/fzf/win.sh {} 5)+refresh-preview'
+#   --bind 'alt-,:execute-silent(bash ~/.config/fzf/winc.sh {} prev)+refresh-preview'
+#   --bind 'alt-.:execute-silent(bash ~/.config/fzf/winc.sh {} next)+refresh-preview'
+# "
 
 
 # --- GLOBAL FZF CONFIG ---

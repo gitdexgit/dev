@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-item="$1"
-dir="$2"
+item=$(echo "$1" | tr -d "'\"")
+action="$2"
+
 [[ "$item" != "[TMUX] "* ]] && exit 0
 session="${item#\[TMUX\] }"
-if [[ "$dir" == "next" ]]; then
-  tmux select-pane -t "$session":.+ 2>/dev/null
+
+if [[ "$action" == "next" ]]; then
+  tmux next-window -t "$session"
 else
-  tmux select-pane -t "$session":.- 2>/dev/null
+  tmux previous-window -t "$session"
 fi

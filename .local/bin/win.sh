@@ -5,7 +5,6 @@ win="$2"
 [[ "$item" != "[TMUX] "* ]] && exit 0
 session="${item#\[TMUX\] }"
 
-# Resolve the unique window ID like @1 or @2
 target_id=$(tmux list-windows -t "$session:" -F '#{window_index} #{window_id}' 2>/dev/null | awk -v w="$win" '$1==w {print $2}')
 
 if [[ -n "$target_id" ]]; then

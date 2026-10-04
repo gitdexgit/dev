@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+port=$((20000 + RANDOM % 20000))
+
+flag="/tmp/tmux-pick-$port.paused"
+
+# refresh preview every 1s, skip while paused
+(
+  while sleep 1; do
+    [[ -f "$flag" ]] && continue
+    curl -s -XPOST "localhost:$port" -d refresh-preview >/dev/null 2>&1 || break
+  done
+) &
+refresher=$!
+
+trap 'kill $refresher 2>/dev/null; rm -f "$flag" "/tmp/tmux-pick-$port.off"' EXIT
+
+
+selection=$(
+  {
+    tmux list-sessions -F '[TMUX] #S' 2>/dev/null
+    find "$HOME" -maxdepth 2 -type d 2>/dev/null
+  } | fzf --listen="$port" \
+    --preview-window='up:65%:wrap' \
+    --preview='bash ~/.local/bin/fzf-preview {}' \
+    --bind="alt-j:execute-silent(bash ~/.local/bin/scroll.sh $port 3)+refresh-preview" \
+    --bind="alt-k:execute-silent(bash ~/.local/bin/scroll.sh $port -3)+refresh-preview" \
+    --bind="focus:execute-silent(echo 0 > /tmp/tmux-pick-$port.off)" \
+    --bind='alt-w:toggle-wrap' \
+    --bind="alt-r:execute-silent(test -f $flag && rm $flag || touch $flag)+transform-header(test -f $flag && echo PAUSED)" \
+    --bind='alt-1:execute-silent(bash ~/.local/bin/win.sh {} 1)+refresh-preview' \
+    --bind='alt-2:execute-silent(bash ~/.local/bin/win.sh {} 2)+refresh-preview' \
+    --bind='alt-3:execute-silent(bash ~/.local/bin/win.sh {} 3)+refresh-preview' \
+    --bind='alt-4:execute-silent(bash ~/.local/bin/win.sh {} 4)+refresh-preview' \
+    --bind='alt-5:execute-silent(bash ~/.local/bin/win.sh {} 5)+refresh-preview' \
+    --bind='f1:execute-silent(bash ~/.local/bin/pane.sh {} 1)+refresh-preview' \
+    --bind='f2:execute-silent(bash ~/.local/bin/pane.sh {} 2)+refresh-preview' \
+    --bind='f3:execute-silent(bash ~/.local/bin/pane.sh {} 3)+refresh-preview' \
+    --bind='f4:execute-silent(bash ~/.local/bin/pane.sh {} 4)+refresh-preview' \
+    --bind='f5:execute-silent(bash ~/.local/bin/pane.sh {} 5)+refresh-preview'
+)
+
+[[ -z "$selection" ]] && exit 0
+
+selection=$(echo "$selection" | tr -d "'\"")
+
+if [[ "$selection" == "[TMUX] "* ]]; then
+  session="${selection#\[TMUX\] }"
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session:"
+  else
+    tmux attach-session -t "$session:"
+  fi
+elif [[ -d "$selection" ]]; then
+  session_name=$(basename "$selection" | tr . _)
+  if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux new-session -d -s "$session_name" -c "$selection"
+  fi
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session_name:"
+  else
+    tmux attach-session -t "$session_name:"
+  fi
+fi

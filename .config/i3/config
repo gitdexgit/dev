@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -393,7 +393,7 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 # bindsym Mod4+Control+t exec st -e tmux-sessionizer
 
 # bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
-bindsym Mod4+Control+t exec st -e tmux-sessionizer
+bindsym Mod4+Control+t exec st -e tmux-pick
 bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
 
 # --- Kill Window ---
