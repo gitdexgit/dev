@@ -23,16 +23,16 @@ RAW_LIST=$(i3-msg -t get_tree | jq -r '
   .. | select(.window? != null) |
   select(
     (
-      (.window_properties.title | test("^\\*scratch\\*$|CopyQ"))
+      ((.window_properties.title // "") | test("^\\*scratch\\*$|CopyQ"))
       or
       (
-        (.window_properties.title | test("^(btop|learn|config)$"))
+        ((.window_properties.title // "") | test("^(btop|games|learn|config)$"))
         and
         (.floating | test("on"))
       )
     ) | not
   ) |
-  "\($ws.num)\t\(.window_properties.class)\t\(.window_properties.title)\t\(.id)"
+  "\($ws.num)\t\(.window_properties.class // "" | gsub("[\r\n\t]+"; " "))\t\(.window_properties.title // "" | gsub("[\r\n\t]+"; " "))\t\(.id)"
 ')
 
 # 3. Hierarchical Sort
@@ -96,11 +96,6 @@ else
     LINES="$ROW_COUNT"
 fi
 
-
-
-
-
-
 # 6. Launch Rofi
 INDEX=$(echo "$DISPLAY_LIST" |
     rofi -dmenu -i \
@@ -126,13 +121,6 @@ INDEX=$(echo "$DISPLAY_LIST" |
         '
 )
 
-
-
-
-
-
-
-
 # User cancelled
 [ -z "$INDEX" ] && exit
 
@@ -155,4 +143,3 @@ fi
 
 # Move mouse to the newly focused window
 xdotool mousemove --window "$(xdotool getactivewindow)" --polar 0 0
-

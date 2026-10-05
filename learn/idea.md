@@ -2,6 +2,33 @@ very good ideas:
 
 
 
+
+## Try out void linux in /data/VMs/iso_installers/iso/linux/v/void-live-x86_64-20250202-base.iso
+
+I just want to try it out it feels like it matches my setup
+
+
+
+## Make computer lock when idle then suspend if locked for x amount of time
+
+xautolock like what is that for? like if you are idle it locks your computer?
+
+why not simply M-d opens dmenu and type pc-suspend or simply systemclt suspend. or i3lock && systemctl suspend. put it on script and name it like pc-suspend or sus (suspend) or susl (suspend and lock)
+
+that's why I do I guess... I like it only takes 1s to do
+ [ZOE],
+imagine using discord or vesktop — 10:42 PM
+Oh conky nice
+SparkLost [ZOE],  — 10:43 PM
+because i wanted it to first lock screen, then after some time suspend
+imagine using discord or vesktop — 10:43 PM
+I never tried conky... I was going to try it out to do some hacky stuff meaning I wasn't going to use it to monitor system resources but I think I didn't like it because that idea didn't survive because I'm not using it. But I bet I have something in idea.md to use conkey that I haven't processed yet lol.
+ [ZOE],
+imagine using discord or vesktop — 10:43 PM
+That's smart.
+Yeah it makes sense... Thanks I'll add that too to my computer (daily driver)
+
+
 ## get inspiration from vis it's a cool text editor like vi or vim but has cool multiple cursor mass edits that are well thought of
 
 #inspiration #vis #text-editor

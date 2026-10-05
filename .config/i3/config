@@ -549,6 +549,12 @@ for_window [class="games_float"] floating enable, resize set 1400 500, sticky en
 bindsym Mod4+Shift+g exec --no-startup-id ~/.local/bin/focus-games
 
 
+for_window [title="^games$"] border none
+bindsym Mod4+Control+g exec st -t games -e tmux new-session -A -s "*games*"
+
+# bindsym Mod4+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
+
+
 
 # bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
 

@@ -1,58 +1,55 @@
 #!/bin/bash
 
 # --- START OF CONFIGURATION ---
-# PASTE YOUR IMGUR API CREDENTIALS HERE
 export IMGUR_API_ID="976495ae3744eb6"
 export IMGUR_API_SECRET="defe65993fa1c7c52420a9305148830b8f460df0"
 # --- END OF CONFIGURATION ---
 
-# The full path to your project's venv activate script
 source /home/dex/scripts/tools/python/imgur/venv/bin/activate
 
-# Check if required credentials are set
 if [ -z "$IMGUR_API_ID" ] || [ "$IMGUR_API_ID" == "YOUR_CLIENT_ID_HERE" ]; then
     echo "ERROR: You need to set your IMGUR_API_ID in the script." >&2
     deactivate
     exit 1
 fi
 
-# Check if a command-line argument (a file path) was provided
+TMP_DIR="/tmp"
+BASE_NAME="screenshot-$(date +%Y-%m-%d-%H-%M-%S)"
+RAW_FILE="$TMP_DIR/$BASE_NAME-raw.png"
+FILE_TO_UPLOAD="$TMP_DIR/$BASE_NAME.png"
+
 if [ $# -gt 0 ]; then
-    # If an argument exists, use it as the file path
-    FILE_TO_UPLOAD="$1"
-else
-    # If no argument is provided, get the image from the clipboard
-    echo "No file path provided. Attempting to upload from clipboard..."
-
-    # Create a unique filename for the temporary image in the /tmp/ directory
-    TMP_FILE="/tmp/screenshot-$(date +%Y-%m-%d-%H-%M-%S).png"
-
-    # Save the image from the clipboard to the temporary file
-    # The '||' part ensures the script exits if xclip fails
-    if xclip -selection clipboard -t image/png -o > "$TMP_FILE"; then
-        FILE_TO_UPLOAD="$TMP_FILE"
-    else
-        echo "ERROR: No PNG image found on the clipboard or xclip is not installed." >&2
+    INPUT_FILE="$1"
+    if [ ! -f "$INPUT_FILE" ]; then
+        echo "ERROR: File '$INPUT_FILE' not found." >&2
         deactivate
         exit 1
     fi
+else
+    echo "No file path provided. Attempting to upload from clipboard..."
+    if ! xclip -selection clipboard -t image/png -o > "$RAW_FILE" 2>/dev/null || [ ! -s "$RAW_FILE" ]; then
+        echo "ERROR: No image found on the clipboard or xclip failed." >&2
+        rm -f "$RAW_FILE"
+        deactivate
+        exit 1
+    fi
+    INPUT_FILE="$RAW_FILE"
 fi
+
+# Re-encode image slightly to bypass Imgur hash ban filters
+magick "$INPUT_FILE" -quality 98 "$FILE_TO_UPLOAD"
+rm -f "$RAW_FILE"
 
 echo "Uploading $FILE_TO_UPLOAD..."
 
-# Run the uploader with the determined file path
 /home/dex/scripts/tools/python/imgur/venv/bin/imgur-uploader "$FILE_TO_UPLOAD"
 
+# Clean up processed temp file if it was generated in /tmp
+rm -f "$FILE_TO_UPLOAD"
 
-
-# Deactivate the virtual environment, since we're done with it
 deactivate
-
 
 notify-send -t 400 \
 -h string:bgcolor:#95F034 \
 -h string:fgcolor:#000000 \
-"Upload to Imagur" "done" &
-
-
-
+"Upload to Imgur" "done" &
