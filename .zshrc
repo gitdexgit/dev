@@ -440,7 +440,7 @@ alias history="history 0"
 
 alias mydocs='kiwix-serve --library --port 8080 ~/KiwixLibrary/library.xml'
 
-alias p='ps aux | grep'
+alias P='ps aux | grep'
 alias o='less'
 alias sudo='sudo '
 alias msgbox='zenity'
@@ -538,7 +538,7 @@ alias clrfea='clear; _NEW_LINE_BEFORE_PROMPT=1'
 
 # dictionary
 alias dict='dict -d wn'
-alias d='dict -d wn'
+alias D='dict -d wn'
 # alias define='dict -d wn'
 
 

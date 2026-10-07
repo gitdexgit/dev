@@ -1,7 +1,12 @@
-very good ideas:
 
 
 
+
+## Try installing alpine OS
+
+There is even a vido showing you how to set it up you know
+
+https://www.youtube.com/watch?v=BRBuH-1dM3g
 
 ## Try out void linux in /data/VMs/iso_installers/iso/linux/v/void-live-x86_64-20250202-base.iso
 

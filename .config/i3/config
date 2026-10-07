@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 0
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -664,6 +664,7 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 
 # bindsym Mod4+Mdo1+Return exec st -e tmux
 bindsym Control+Mod1+t exec st -e tmux
+bindsym Mod4+t exec st -e tmux
 
 
 for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center

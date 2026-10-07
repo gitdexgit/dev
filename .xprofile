@@ -10,6 +10,7 @@ if xrandr | grep "HDMI-1 connected"; then
     xrandr --output eDP-1 --off --output HDMI-1 --auto --primary
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
 
 ## These accessibility settings are meant for goodnight_mouse a cool project that should be merged with warpd and done beter
 # Enable Accessibility Toolkits for goodnight-mouse with the following block:
