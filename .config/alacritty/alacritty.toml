@@ -26,6 +26,14 @@ key = "V"
 mods = "Control"
 action = "Paste"
 
+[[keyboard.bindings]]
+key = "Home"
+chars = "\u001b[H"
+
+[[keyboard.bindings]]
+key = "End"
+chars = "\u001b[F"
+
 [font]
 size = 12
 
