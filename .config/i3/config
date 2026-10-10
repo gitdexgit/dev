@@ -1,5 +1,6 @@
 
 
+
 font pango:Iosevka 0.1
 new_window pixel 1
 new_float pixel 1
@@ -177,6 +178,8 @@ exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
 # exec --no-startup-id xbindkeys
 
 exec_always --no-startup-id ~/.config/i3/scripts/i3-focus-tracker.sh
+
+exec_always --no-startup-id sh -c 'pkill -x switch-thumbs; exec switch-thumbs daemon'
 
 exec_always --no-startup-id sh -c "setxkbmap us; xmodmap ~/.Xmodmap; xset r rate 220 50"
 

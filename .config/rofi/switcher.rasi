@@ -1,0 +1,118 @@
+* {
+    font: "Monospace 14";
+    border: 0px;
+    background-color: transparent;
+}
+
+configuration {
+    sidebar-mode: false;
+}
+
+window {
+    location: north;
+    anchor: north;
+    width: 100%;
+    y-offset: -2px;
+    border: 0px;
+    padding: 3px 0px;
+    margin: 0px;
+    background-color: #1a1a1a;
+    children: [ mainbox ];
+}
+
+mainbox {
+    orientation: horizontal;
+    spacing: 0px;
+    children: [ inputbar, listview, textbox-suffix ];
+}
+
+inputbar {
+    expand: false;
+    orientation: horizontal;
+    spacing: 0px;
+    padding: 0px 0px 0px 10px;
+    children: [ entry, textbox-prefix ];
+}
+
+entry {
+    expand: false;
+    vertical-align: 0.5;
+    placeholder: "";
+    text-color: #ffffff;
+    cursor-width: 2px;
+    cursor-color: #6c9bc2;
+    font: "Monospace 14";
+}
+
+textbox-prefix {
+    expand: false;
+    str: "{";
+    content: "{";
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: #888888;
+    padding: 0px 4px 0px 0px;
+    font: "Monospace 14";
+}
+
+listview {
+    expand: true;
+    layout: horizontal;
+    lines: 100;
+    spacing: 0px;
+    scrollbar: false;
+    fixed-height: true;
+}
+
+element {
+    orientation: horizontal;
+    children: [ element-text, textbox-sep ];
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+    font: inherit;
+}
+
+textbox-sep {
+    expand: false;
+    str: " | ";
+    content: " | ";
+    vertical-align: 0.5;
+    text-color: #666666;
+    font: "Monospace 14";
+}
+
+element normal.normal, element alternate.normal {
+    text-color: #dcdcdc;
+    background-color: transparent;
+}
+
+element selected.normal {
+    text-color: #6c9bc2;
+    background-color: transparent;
+}
+
+element selected.normal element-text {
+    text-color: #6c9bc2;
+    font: "Monospace Bold 14";
+}
+
+element selected.normal textbox-sep {
+    text-color: #666666;
+}
+
+textbox-suffix {
+    expand: false;
+    str: "}";
+    content: "}";
+    vertical-align: 0.5;
+    padding: 0px 10px 0px 0px;
+    text-color: #888888;
+    font: "Monospace 14";
+}

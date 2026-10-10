@@ -20,7 +20,7 @@ alt + space ; {b,Left}
     switch-buffer
 
 alt + space ; Tab
-    switch-buffer-preview
+    switch-thumbs
 
 alt + space ; control + b
     switch-buffer-visible
