@@ -4,6 +4,7 @@ rofi -show windowcd \
     -window-format "{t}" \
     -show-icons \
     -window-thumbnail \
+    -selected-row 1 \
     -theme-str '
         window { width: 100%; }
         listview { layout: horizontal; spacing: 2px; }

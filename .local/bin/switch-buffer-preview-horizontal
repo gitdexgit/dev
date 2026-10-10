@@ -2,6 +2,6 @@
 
 # List of window classes/instances to HIDE
 # Add any others here separated by commas
-BLACKLIST="!st_learn,!st_scratch,!st_btop,!copyq,!st_config"
+BLACKLIST="!st_learn,!st_scratch,!st_btop,!copyq,!st_config,!games_float"
 
 skippy-xd --wm-class "$BLACKLIST"

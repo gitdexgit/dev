@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SRC="/home/dex/.local/bin"
+DEST="/usr/local/bin"
+
+# Make sure other users can enter dex's directories to read the scripts
+chmod o+rx /home/dex /home/dex/.local "$SRC"
+
+for file in "$SRC"/*; do
+    [ -f "$file" ] || continue
+    name="$(basename "$file")"
+    chmod +x "$file"
+    sudo ln -sf "$file" "$DEST/$name"
+    echo "Linked: $name -> $DEST/$name"
+done

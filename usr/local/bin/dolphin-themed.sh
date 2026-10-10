@@ -1,0 +1,1 @@
+/home/dex/.local/bin/dolphin-themed.sh

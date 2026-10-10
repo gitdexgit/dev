@@ -1,0 +1,1 @@
+/home/dex/.local/bin/switch_ob_config.sh

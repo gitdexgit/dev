@@ -533,7 +533,7 @@ bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 # bindsym Mod4+b exec --no-startup-id "~/.local/bin/rofi-switch-all-windows-except-habit-windows"
 
 # Caps+A+x b --> switch-buffer
-# bindsym Mod4+b exec --no-startup-id switch-buffer
+bindsym Mod4+b exec --no-startup-id switch-buffer
 # bindsym Mod4+Mod1+r exec --no-startup-id "rofi -show windowcd"
 
 

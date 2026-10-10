@@ -196,6 +196,7 @@ bindkey '^[[1;5D' backward-word
 bindkey "^[[3~" delete-char
 
 
+# bindkey '\et' tmux-sessionizer
 
 
 
@@ -291,7 +292,8 @@ bindkey '^G' autosuggest-toggle
 # bindkey -s '\et' "tmux-sessionizer\r"
 
 # \em is the escape sequence for Alt+m
-# bindkey -s '\em' "tmux-sessionizer\r"
+bindkey -s '\et' "tmux-sessionizer\r"
+# bindkey -s '\et' "tmux-pick\r"
 
 # bindkey -s 's' "scratchpad-sessionizer"
 
@@ -395,7 +397,7 @@ fi
 
 # Must have on every OS
 alias ll='ls -alhF'
-alias t='tmux-sessionizer'
+# alias t='tmux-sessionizer'
 alias la='ls -AlhF'
 alias l='ls -CF'
 alias ls='ls --color=auto'
