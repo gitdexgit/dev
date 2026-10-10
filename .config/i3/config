@@ -1,6 +1,6 @@
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0.1
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -394,7 +394,7 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 # bindsym Mod4+Control+t exec st -e tmux-sessionizer
 
 # bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
-bindsym Mod4+Control+t exec st -e tmux-pick
+# bindsym Mod4+Control+t exec st -e tmux-pick
 bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
 
 # --- Kill Window ---
@@ -545,7 +545,10 @@ bindsym Mod4+Mod1+m exec --no-startup-id move-buffer-to-workspace
 # Meh... good idea but no money and it's stupid maybe? idk. Needs Jev. then jev routs to proper script then script runs the model.
 # bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
 
-for_window [class="games_float"] floating enable, resize set 1400 500, sticky enable, move position center, move up 250 px, move right 255 px, move scratchpad, scratchpad show
+# for_window [class="games_float"] floating enable, resize set 1400 500, sticky enable, move position center, move up 250 px, move right 255 px, move scratchpad
+
+for_window [class="games_float"] floating enable, resize set 1400 500, sticky enable, move position 515 px 40 px, move scratchpad
+
 bindsym Mod4+Shift+g exec --no-startup-id ~/.local/bin/focus-games
 
 
@@ -664,7 +667,7 @@ bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /hom
 
 # bindsym Mod4+Mdo1+Return exec st -e tmux
 bindsym Control+Mod1+t exec st -e tmux
-bindsym Mod4+t exec st -e tmux
+bindsym Mod4+t exec st -e tmux-pick
 
 
 for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center

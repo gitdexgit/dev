@@ -13,8 +13,7 @@ pre_paste_delay: 10
 post_form_delay: 100 # Reduced from 200
 post_search_delay: 100 # Reduced from 200
 
-# this is bad it preserves the replaced string
-preserve_clipboard: false
+preserve_clipboard: true
 disable_x11_fast_inject: true
 
 #==== Of of these gives me like freezes to my system it's eather xdotool backend or somehting

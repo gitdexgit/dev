@@ -9,7 +9,7 @@ matches:
 
   # make sure you are in the / search mode in nvim then type this
   # This makes the search non-case sensitive so it highlights everyting
-  - trigger: ";;c;"
+  - trigger: ";;cc;"
     replace: "$|$\\c"
 
   # Make sure you select something then hit / and type bellow

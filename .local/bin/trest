@@ -11,7 +11,7 @@ if [ -z "$OLD_NAME" ]; then
 
     BEFORE=$(i3-msg -t get_tree | jq '[.. | objects | select(.window != null) | .window]')
 
-    i3-msg "exec --no-startup-id i3-sensible-terminal" > /dev/null
+    i3-msg "exec --no-startup-id st" > /dev/null
 
     NEW_ID=""
     for i in {1..20}; do

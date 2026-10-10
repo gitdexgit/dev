@@ -215,6 +215,10 @@ bind --mode=insert <C-x><ArrowLeft> fillcmdline tab #
 bind --mode=ignore <C-x><ArrowLeft> fillcmdline tab #
 
 
+bind <C-x>d fillcmdline bd
+bind --mode=insert <C-x>d fillcmdline bd
+bind --mode=ignore <C-x>d fillcmdline bd
+
 bind <C-x>b fillcmdline buffer
 bind --mode=insert <C-x>b fillcmdline buffer
 bind --mode=ignore <C-x>b fillcmdline buffer
@@ -237,9 +241,9 @@ bind <C-x>t fillcmdline tabopen
 bind --mode=insert <C-x>t fillcmdline tabopen
 bind --mode=ignore <C-x>t fillcmdline tabopen
 
-bind <C-x>d tabduplicate
-bind --mode=insert <C-x>d tabduplicate
-bind --mode=ignore <C-x>d tabduplicate
+bind <C-x>p tabduplicate
+bind --mode=insert <C-x>p tabduplicate
+bind --mode=ignore <C-x>p tabduplicate
 
 bind <C-x><Delete> tabduplicate
 bind --mode=insert <C-x><Delete> tabduplicate

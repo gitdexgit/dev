@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 
-echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo > /dev/null
-echo "Intel Turbo Boost disabled."
+export SUDO_ASKPASS="/usr/lib/ssh/x11-ssh-askpass"
+
+echo 1 | sudo -A tee /sys/devices/system/cpu/intel_pstate/no_turbo > /dev/null
+
+# echo 1 | pkexec tee /sys/devices/system/cpu/intel_pstate/no_turbo > /dev/null
+# echo "Intel Turbo Boost disabled."

@@ -1,10 +1,45 @@
 matches:
 
-  ##################### Esentials ###############################333
+  # The natural sequence is simple:
+  # 1. If you do not get it, run `;;e;`.
+  # 2. Once you think you get it, run `;;w;` to check the limits.
+  # 3. Run `;;g;` to prove you can solve a problem with it.
 
-  # old ;;timer; used to look like this
-  # - trigger: ";;timer;"
-  #   replace: "echo \"\\n [$|$] \\n\" ; timer"
+  # For LLM interactions, learning purposes
+  - trigger: ";;e;"
+    force_mode: clipboard
+    replace: "Explain that again in another different way"
+
+  # For LLM interactions, learning purposes
+  - trigger: ";;g;"
+    force_mode: clipboard
+    replace: "Generate a practice problem for that for me"
+
+  # For LLM interactions, learning purposes
+  - trigger: ";;w;"
+    force_mode: clipboard
+    replace: "What edge cases break this?"
+
+  # For LLM interactions, learning purposes
+  - trigger: ";;p;"
+    force_mode: clipboard
+    replace: "Are you really sure that is a clean approach?"
+
+  # For LLM interactions, learning purposes
+  - trigger: ";;l;"
+    force_mode: clipboard
+    replace: "Explain your last message in plain English using simple words. Cut the length in half."
+
+  # For LLM interactions, learning purposes
+  - trigger: ";;b;"
+    force_mode: clipboard
+    replace: "Restate your last message. Stop using jargon and speak coherently. State it more simply and concisely, like one human talking to another."
+
+  # For LLM interactions, for when I only want the code no text.
+  - trigger: ";;c;"
+    force_mode: clipboard
+    replace: "Return only the raw code or command inside a markdown code block. No explanations, no markdown headers, and no introductory or concluding text."
+
 
 
   - trigger: ";;job;"
@@ -14,23 +49,10 @@ matches:
 
     "
 
-  - trigger: ";;p;"
-    force_mode: clipboard
-    replace: "Are you really sure that is a clean approach?"
-
-  - trigger: ";;pp;"
-    force_mode: clipboard
-    replace: "Be concise and direct. Prioritize understanding over style. Use plain language. Don't invent facts. If you're unsure, say so. If the request is genuinely ambiguous, ask for clarification.
 
 
-    "
 
-  - trigger: ";;co;"
-    force_mode: clipboard
-    replace: " Give me only the CODE! OR COMMAND! Do not speak or yap or talk non-sense.
-
-    "
-
+  # For LLM interactions
   - trigger: ";;pu;"
     replace: "{{output}}\n\n"
     force_clipboard: true
@@ -51,17 +73,6 @@ matches:
         params:
           cmd: "cat ~/ai/prompts/wait-what.md"
 
-
-
-  - trigger: ";;pb;"
-    replace: "{{output}}"
-    force_clipboard: true
-    paste_shortcut: "CTRL+V"
-    vars:
-      - name: output
-        type: shell
-        params:
-          cmd: "cat ~/ai/prompts/bro.md"
 
 
   - trigger: ";;timer;"
