@@ -1,0 +1,5 @@
+#!/bin/sh
+if i3-msg '[class="Emacs"] focus' | grep -q '"success":true'; then
+    exit 0
+fi
+emacsclient -a "" -c -n

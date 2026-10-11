@@ -189,19 +189,19 @@ moveMouse = false
 # Case sensitive and <space> seperated list.
 # Run the program 'xev' to find them.
 
-keysUp = Up
-keysDown = Down
-keysLeft = Left
-keysRight = Right
+keysUp = Up k
+keysDown = Down j
+keysLeft = Left h
+keysRight = Right l
 
-keysSelect = Return space
-keysCancel = Escape
+keysSelect = Return space m
+keysCancel = Escape q
 keysNext = n
 keysPrev = p
 
 keysIconify = 1
 keysShade = 2
-keysClose = 3
+keysClose = 3 c
 
 # Mouse button bindings, options include
 # "no": do nothing

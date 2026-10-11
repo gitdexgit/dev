@@ -382,13 +382,19 @@ bindsym Mod4+Shift+t exec --no-startup-id ~/.local/bin/focus-scratch
 # bindsym Mod4+Control+Left exec st -e tmux new-session -A -s btop
 # bindsym Mod4+Control+c exec st -e tmux new-session -A -s config
 
-bindsym Mod4+Control+e exec emacsclient -c
+# I lose the frame that was focused if I close emacs that is running in daemon
+# bindsym Mod4+Control+e exec emacsclient -c
+bindsym Mod4+Control+e exec ~/.local/bin/e
 
 bindsym Mod4+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
 
 
 for_window [title="learn"] border none
 bindsym Mod4+Control+l exec st -t learn -e tmux new-session -A -s "*learn*"
+
+for_window [class="popterm"] floating enable, border pixel 2, move position center, move up 460 px
+bindsym Mod4+apostrophe exec st -c popterm -g 70x2 -e ~/.local/bin/popterm
+
 
 for_window [title="^btop$"] border none
 bindsym Mod4+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
@@ -759,8 +765,8 @@ bindsym Mod4+Shift+l move right
 
 # Monitor focus, I only have 1 monitor on at all time. But It is pluged.
 # So if I need to turn on monitor these are handy. With xrandr. To pin something on the right like discord.
-bindsym Mod4+apostrophe focus output HDMI-1
-bindsym Mod4+backslash  focus output eDP-1
+# bindsym Mod4+apostrophe focus output HDMI-1
+# bindsym Mod4+backslash  focus output eDP-1
 
 
 # his is for window_management keyd that I lost or stopped using I think just keep holding f and hit q and it should be there

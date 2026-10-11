@@ -77,6 +77,11 @@ alt + space ; t ; O
 # alt + space ; m ; {o,m}
 #     i3-msg {focus output next,move container to output next}
 
+# alt + space ; a
+#     xdotool key Super+apostrophe
+
+alt + space ; a
+    sleep 0.1; xdotool key --clearmodifiers Super+apostrophe
 
 alt + space ; m
     mic-toggle
