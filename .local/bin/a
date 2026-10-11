@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+PIPE="/dev/shm/needle.pipe"
+
+if [ -p "$PIPE" ]; then
+    echo "$*" > "$PIPE"
+else
+    exec /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/actions.py "$*"
+fi

@@ -50,7 +50,7 @@ bind yo clipboard yankorg
 bind yt clipboard yanktitle
 bind gh home
 bind gH home true
-bind p clipboard open
+" bind p clipboard open
 bind P clipboard tabopen
 bind <C-e> scrollline 10
 bind <C-y> scrollline -10

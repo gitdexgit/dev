@@ -147,6 +147,7 @@ exec --no-startup-id emacs --daemon
 exec --no-startup-id noisetorch -i
 
 exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon.py
+exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon_needle.py
 
 # This is dogshit for now
 # exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
