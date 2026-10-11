@@ -1,7 +1,7 @@
 
 
 
-font pango:Iosevka 10
+font pango:Iosevka 0
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -410,10 +410,12 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 # bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
 # bindsym Mod4+Control+t exec st -e tmux-pick
 # bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
+bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle
 bindsym Mod4+i exec --no-startup-id voxtype record toggle --model tiny.en
 bindsym Control+Shift+Mod4+x exec --no-startup-id voxtype record toggle --model small.en
 
-bindsym Control+Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
+# bindsym Control+Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
+bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
 
 
 # --- Kill Window ---
@@ -717,7 +719,7 @@ bindsym Mod4+Return exec st -t st
 
 bindsym Mod4+d exec dmenu_run
 # bindsym Mod4+Shift+d exec M-x
-bindsym Mod4+x exec M-x
+# bindsym Mod4+Shift+x exec M-x
 
 # Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like Mod4+d then type rofi -show run ez.
 # rofi -show run with different theme

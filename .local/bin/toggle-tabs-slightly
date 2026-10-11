@@ -9,12 +9,11 @@ BAR_ID=$(i3-msg -t get_bar_config | jq -r '.[0]')
 BAR_MODE=$(i3-msg -t get_bar_config "$BAR_ID" | jq -r '.mode // "dock"')
 
 # Toggle font size.
-if grep -q '^font pango:Iosevka 0$' "$CONFIG"; then
-    sed -i 's/^font pango:Iosevka 0$/font pango:Iosevka 10/' "$CONFIG"
+if grep -q '^font pango:Iosevka 0.1$' "$CONFIG"; then
+    sed -i 's/^font pango:Iosevka 0.1$/font pango:Iosevka 10/' "$CONFIG"
 else
     sed -i 's/^font pango:Iosevka 10$/font pango:Iosevka 0.1/' "$CONFIG"
 fi
-
 
 
 # Reload i3.

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+CONFIG="$HOME/.config/i3/config"
+
+# Get the first i3bar ID.
+BAR_ID=$(i3-msg -t get_bar_config | jq -r '.[0]')
+
+# Remember the current bar mode.
+BAR_MODE=$(i3-msg -t get_bar_config "$BAR_ID" | jq -r '.mode // "dock"')
+
+# Toggle font size.
+if grep -q '^font pango:Iosevka 0$' "$CONFIG"; then
+    sed -i 's/^font pango:Iosevka 0$/font pango:Iosevka 10/' "$CONFIG"
+else
+    sed -i 's/^font pango:Iosevka 10$/font pango:Iosevka 0/' "$CONFIG"
+fi
+
+# Reload i3.
+i3-msg reload >/dev/null
+
+# Give i3 a moment to recreate/reload the bar.
+sleep 0.1
+
+# Restore the bar mode from before the reload.
+i3-msg "bar mode $BAR_MODE"
+

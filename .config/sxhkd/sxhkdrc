@@ -80,11 +80,14 @@ alt + space ; t ; O
 # alt + space ; a
 #     xdotool key Super+apostrophe
 
+# alt + space ; a
+#     sleep 0.1; xdotool key --clearmodifiers Super+apostrophe
+
 alt + space ; a
-    sleep 0.1; xdotool key --clearmodifiers Super+apostrophe
+    st -c popterm -g 70x2 -e $HOME/.local/bin/popterm
 
 alt + space ; m
-    mic-toggle
+    env -u WAYLAND_DISPLAY warpd --hint
 
 # Characters and emojis move from 8 to e
 alt + space ; e ; s

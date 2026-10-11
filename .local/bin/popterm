@@ -5,9 +5,10 @@ touch "$H"
 out=$(tac "$H" | awk '!s[$0]++' | fzf \
     --print-query --query="a " --no-sort --exact \
     --layout=reverse --height=100% --no-info --no-separator \
-    --prompt="> " --bind='esc:abort,tab:replace-query,right:replace-query') || [[ -n $out ]] || exit 0
+    --prompt="> " --bind='esc:abort,tab:replace-query,right:replace-query')
+[[ $? -eq 130 ]] && exit 0
 
-cmd=$(printf '%s\n' "$out" | tail -n1)
+cmd=$(printf '%s\n' "$out" | head -n1)
 [[ -z $cmd ]] && exit 0
 
 printf '%s\n' "$cmd" >> "$H"

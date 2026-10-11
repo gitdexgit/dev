@@ -1,0 +1,13 @@
+#!/bin/sh
+
+STATE="$HOME/.cache/i3-bar-mode"
+mkdir -p "$(dirname "$STATE")"
+
+if [ "$(cat "$STATE" 2>/dev/null)" = "invisible" ]; then
+    i3-msg 'bar mode dock'
+    echo dock > "$STATE"
+else
+    i3-msg 'bar mode invisible'
+    echo invisible > "$STATE"
+fi
+
