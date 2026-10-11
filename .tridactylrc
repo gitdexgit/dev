@@ -245,6 +245,10 @@ bind <C-x>p tabduplicate
 bind --mode=insert <C-x>p tabduplicate
 bind --mode=ignore <C-x>p tabduplicate
 
+bind <C-x>o tabduplicate
+bind --mode=insert <C-x>o tabduplicate
+bind --mode=ignore <C-x>o tabduplicate
+
 bind <C-x><Delete> tabduplicate
 bind --mode=insert <C-x><Delete> tabduplicate
 bind --mode=ignore <C-x><Delete> tabduplicate

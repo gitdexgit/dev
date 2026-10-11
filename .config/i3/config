@@ -39,6 +39,10 @@ bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
 bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
 
 
+bindsym Mod4+c exec --no-startup-id "warpd --hint"
+bindsym Mod4+i exec --no-startup-id /home/dex/tools/whistle/toggle.sh
+
+
 
 
 
@@ -143,6 +147,7 @@ workspace 43 output eDP-1
 exec --no-startup-id emacs --daemon
 exec --no-startup-id noisetorch -i
 
+exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon.py
 
 # This is dogshit for now
 # exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml

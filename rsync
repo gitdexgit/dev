@@ -1,40 +1,37 @@
 #!/bin/bash
 #
-# TODO:
-# - [ ] Please refactor this and include what you use and remove what you don't.
-#
-#
-#
-#
-#
-#
-#
-#
 # This script intelligently syncs both system and user-level config files.
-# It MUST be run with sudo, but it will correctly find the original user's
-# home directory and fix repository permissions upon completion.
+# It automatically elevates permissions with sudo (using x11-ssh-askpass if available).
 
 set -e
 
-# --- Sudo & User Detection ---
+# --- Auto-Elevation & Askpass Detection ---
 if [[ $EUID -ne 0 ]]; then
-   echo "❌ This script must be run with sudo."
-   exit 1
+    ASKPASS_BIN="${SUDO_ASKPASS:-/usr/lib/ssh/x11-ssh-askpass}"
+
+    # If in a GUI session and askpass binary exists, use GUI prompt (-A)
+    if [[ -n "${DISPLAY:-$WAYLAND_DISPLAY}" ]] && [[ -x "$ASKPASS_BIN" ]]; then
+        export SUDO_ASKPASS="$ASKPASS_BIN"
+        exec sudo -A "$0" "$@"
+    else
+        # Otherwise, fall back to standard terminal sudo prompt
+        exec sudo "$0" "$@"
+    fi
 fi
 
+# --- User & Directory Detection ---
 if [ -n "$SUDO_USER" ]; then
-    ORIGINAL_USER=$SUDO_USER
+    ORIGINAL_USER="$SUDO_USER"
     HOME_DIR=$(getent passwd "$SUDO_USER" | cut -d: -f6)
 else
-    echo "❌ Could not determine the original user. Please run with 'sudo'."
-    exit 1
+    ORIGINAL_USER="$USER"
+    HOME_DIR="$HOME"
 fi
 
 echo "🚀 Running as root, syncing files for user '$ORIGINAL_USER' from '$HOME_DIR'"
 
 # --- Configuration ---
 REPO_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-# --- CORRECTED: Use a bash array for rsync exclusion flags ---
 EXCLUDE_ARRAY=(--exclude='*.dat' --exclude='.git')
 
 # --- ### List of Targets to Sync ### ---
@@ -83,6 +80,7 @@ HOME_TARGETS=(
     "themes"
     "Documents/Bookmarks"
     ".config/yazi"
+    ".config/voxtype"
     ".config/ai-domains.txt"
     ".config/feh"
     ".config/skippy-xd/skippy-xd.rc"
@@ -144,7 +142,6 @@ for target in "${HOME_TARGETS[@]}"; do
     elif [ -d "$source_path" ]; then
         echo "   - Syncing dir:  ~/$target/"
         mkdir -p "$dest_path"
-        # --- CORRECTED: Use the array expansion syntax ---
         rsync -a --delete "${EXCLUDE_ARRAY[@]}" "$source_path/" "$dest_path/"
     else
         echo "   - WARNING: Target ~/$target not found. Skipping."
@@ -156,7 +153,6 @@ echo "⚙️  Syncing system-level targets..."
 for target in "${SYSTEM_TARGETS[@]}"; do
     if [ -e "$target" ]; then
         echo "   - Syncing: $target"
-        # --- CORRECTED: Use the array expansion syntax ---
         rsync -aR --delete "${EXCLUDE_ARRAY[@]}" "$target" "$REPO_DIR/"
     else
         echo "   - WARNING: Target $target not found. Skipping."

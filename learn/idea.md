@@ -1,5 +1,9 @@
 
 
+## Ideas to imrpve daily driver - Use whistle a tiny speech to text model in 16mb It's good with the needle model.
+Sun Oct 11 09:45:11 AM +0000 2026
+Try to set up needle and whistle see what you can come up with with tool calling and what not on my computer
+
 
 
 ## Try installing alpine OS
