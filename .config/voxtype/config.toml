@@ -90,12 +90,21 @@ max_duration_secs = 120
 # - remote: Send audio to a remote whisper.cpp server or OpenAI-compatible API
 # backend = "local"
 
+# eager_processing = true
+# eager_chunk_secs = 3.0
+# eager_overlap_secs = 0.4
+
+
 # Model to use for transcription (local backend)
 # Options: tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v3, large-v3-turbo
 # .en models are English-only but faster and more accurate for English
 # large-v3-turbo is faster than large-v3 with minimal accuracy loss (recommended for GPU)
 # Or provide absolute path to a custom .bin model file
 model = "base.en"
+secondary_model = "tiny.en"
+available_models = ["tiny.en", "small.en"]
+max_loaded_models = 3
+
 
 # Language for transcription
 # Options:
@@ -111,7 +120,7 @@ language = "en"
 translate = false
 
 # Number of CPU threads for inference (omit for auto-detection)
-# threads = 4
+threads = 4
 
 # GPU device index for Vulkan/CUDA backend selection.
 # On multi-GPU systems, whisper.cpp may default to the integrated GPU (index 0),
@@ -355,13 +364,13 @@ layout = "compact"
 # opacity = 1.0
 # mirror = true
 
-# [vad]
+[vad]
 # Voice Activity Detection - filters silence-only recordings
 # Prevents Whisper hallucinations on silent audio
-#
-# enabled = false      # Enable VAD (off by default)
-# threshold = 0.5      # 0.0 = sensitive, 1.0 = aggressive
-# min_speech_duration_ms = 100  # Minimum speech required
+
+enabled = false      # Enable VAD (off by default)
+threshold = 0.5      # 0.0 = sensitive, 1.0 = aggressive
+min_speech_duration_ms = 100  # Minimum speech required
 
 # [status]
 # Status display icons for Waybar/tray integrations

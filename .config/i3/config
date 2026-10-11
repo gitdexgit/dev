@@ -1,7 +1,7 @@
 
 
 
-font pango:Iosevka 0.1
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -40,7 +40,6 @@ bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
 
 
 bindsym Mod4+c exec --no-startup-id "warpd --hint"
-bindsym Mod4+i exec --no-startup-id /home/dex/tools/whistle/toggle.sh
 
 
 
@@ -403,7 +402,12 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 
 # bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
 # bindsym Mod4+Control+t exec st -e tmux-pick
-bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
+# bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
+bindsym Mod4+i exec --no-startup-id voxtype record toggle --model tiny.en
+bindsym Control+Shift+Mod4+x exec --no-startup-id voxtype record toggle --model small.en
+
+bindsym Control+Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
+
 
 # --- Kill Window ---
 # NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
