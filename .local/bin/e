@@ -1,5 +1,7 @@
 #!/bin/sh
-if i3-msg '[class="Emacs"] focus' | grep -q '"success":true'; then
+if i3-msg '[con_mark="emacs-edit"] focus' | grep -q '"success":true'; then
     exit 0
 fi
 emacsclient -a "" -c -n
+sleep 0.3
+i3-msg 'mark emacs-edit'
