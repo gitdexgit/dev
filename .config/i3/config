@@ -39,7 +39,7 @@ bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
 bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
 
 
-bindsym Mod4+c exec --no-startup-id "warpd --hint"
+bindsym Mod4+Shift+v exec --no-startup-id "warpd --hint"
 
 
 
@@ -197,7 +197,7 @@ exec --no-startup-id xsetroot -solid "#000000"
 # bindsym Mod4+Shift+v exec --no-startup-id clipmenu
 
 exec --no-startup-id ~/.local/bin/greenclip daemon
-bindsym Mod4+Shift+v exec --no-startup-id sh -c '~/.local/bin/greenclip print | sed "/^$/d" | dmenu -i -l 10 | xargs -r -d"\n" -I{} ~/.local/bin/greenclip print "{}"'
+bindsym Mod4+c exec --no-startup-id sh -c '~/.local/bin/greenclip print | sed "/^$/d" | dmenu -i -l 10 | xargs -r -d"\n" -I{} ~/.local/bin/greenclip print "{}"'
 
 
 # Gromit-MPX (screen annotation)
@@ -495,11 +495,14 @@ bindsym --release Mod4+Control+3 exec --no-startup-id "~/scripts/video/record-pa
 bindsym --release Mod4+Control+4 exec --no-startup-id "~/scripts/video/record-stop.sh"
 
 
+# bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
+
+
 # --- Uploads & Notes ---
 bindsym Mod4+Mod1+i exec --no-startup-id "iupload"
-bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
-
-bindsym Mod4+Mod1+n exec --no-startup-id ~/.local/bin/night-light
+bindsym Mod4+Shift+i exec --no-startup-id ~/.local/bin/image-upload-x0
+bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/upload-text-to-bin
+bindsym Mod4+Shift+n exec --no-startup-id ~/.local/bin/night-light
 
 # --- AI / LLM Tools ---
 # bindsym Mod4+Shift+Control+u exec --no-startup-id "~/scripts/ddesk/typing/uppercase_selection.sh"

@@ -1,0 +1,9 @@
+#!/bin/sh
+out=$(xclip -o -sel c | wgetpaste -s dpaste 2>&1)
+url=$(printf '%s' "$out" | grep -Eo 'https?://[^ ]+' | tail -1)
+if [ -n "$url" ]; then
+  printf '%s' "$url" | xclip -sel c
+  dunstify "Paste done" "$url" -t 1500
+else
+  dunstify -u critical "Paste failed" "$out"
+fi

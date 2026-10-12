@@ -94,7 +94,7 @@ alt + space ; m
     mic-toggle
 
 
-alt + space ; c
+alt + space ; v
     env -u WAYLAND_DISPLAY warpd --hint
 
 # Characters and emojis move from 8 to e

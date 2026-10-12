@@ -835,6 +835,13 @@ compilation-error-regexp-alist-alist
 (setq erc-bufbar-width 15)
 
 
+(setq elfeed-feeds
+      '("https://archlinux.org/feeds/news/"
+        "https://danluu.com/atom.xml"
+        "https://jvns.ca/atom.xml"
+        "https://krebsonsecurity.com/feed/"
+        "https://blog.apnic.net/feed/"))
+
 
 ;; for live preview
 (with-eval-after-load 'man
