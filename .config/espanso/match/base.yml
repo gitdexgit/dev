@@ -50,8 +50,6 @@ matches:
     "
 
 
-
-
   # For LLM interactions
   - trigger: ";;pu;"
     replace: "{{output}}\n\n"
@@ -143,6 +141,7 @@ matches:
         type: shell
         params:
           cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
+
 
   - trigger: ";;discord-hide;"
     replace: |

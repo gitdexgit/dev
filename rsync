@@ -111,6 +111,7 @@ HOME_TARGETS=(
     ".config/vlc"
     ".config/qterminal.org"
     ".config/mpv"
+    ".config/greenclip.toml"
     ".config/input-remapper-2"
     ".config/openbox"
     ".config/openrazer"

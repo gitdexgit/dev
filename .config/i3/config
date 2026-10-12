@@ -1,7 +1,7 @@
 
 
 
-font pango:Iosevka 0
+font pango:Iosevka 10
 new_window pixel 1
 new_float pixel 1
 hide_edge_borders both
@@ -191,8 +191,14 @@ exec_always --no-startup-id sh -c "setxkbmap us; xmodmap ~/.Xmodmap; xset r rate
 exec --no-startup-id xsetroot -solid "#000000"
 
 # CopyQ — launch daemon and show the window on startup
-exec --no-startup-id copyq
-exec --no-startup-id copyq show
+# exec --no-startup-id copyq
+# exec --no-startup-id copyq show
+# exec --no-startup-id clipmenud
+# bindsym Mod4+Shift+v exec --no-startup-id clipmenu
+
+exec --no-startup-id ~/.local/bin/greenclip daemon
+bindsym Mod4+Shift+v exec --no-startup-id sh -c '~/.local/bin/greenclip print | sed "/^$/d" | dmenu -i -l 10 | xargs -r -d"\n" -I{} ~/.local/bin/greenclip print "{}"'
+
 
 # Gromit-MPX (screen annotation)
 exec --no-startup-id sh -c "sleep 6; gromit-mpx --key none --undo-key none -o 0.4"
@@ -858,7 +864,7 @@ bindsym Mod4+Shift+z [class="Zeal"] scratchpad show, move position center
 # bindsym Mod4+Control+z [class="Zeal"] scratchpad show
 
 # Shortcut to show/hide the CopyQ window
-bindsym Mod4+Control+v [class="copyq"] scratchpad show, move position center
+# bindsym Mod4+Control+v [class="copyq"] scratchpad show, move position center
 
 # bindsym Mod4+Control+p [class="KeePassXC"] scratchpad show
 # bindsym Mod4+Control+o [class="obs"] scratchpad show

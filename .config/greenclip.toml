@@ -1,0 +1,12 @@
+
+[greenclip]
+  blacklisted_applications = []
+  enable_image_support = true
+  history_file = "/home/dex/.cache/greenclip.history"
+  image_cache_directory = "/tmp/greenclip"
+  max_history_length = 40
+  # max_selection_size_bytes = 0
+  max_selection_size_bytes = 50000000
+  static_history = ["Greenclip has been updated to v4.1, update your new config file at ~/.config/greenclip.toml"]
+  trim_space_from_selection = false
+  use_primary_selection_as_input = false

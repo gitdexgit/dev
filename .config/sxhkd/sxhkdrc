@@ -25,6 +25,9 @@ alt + space ; Tab
 alt + space ; control + b
     switch-buffer-visible
 
+alt + space ; Return
+    st
+
 alt + space ; k
     i3-msg kill
 
@@ -86,7 +89,12 @@ alt + space ; t ; O
 alt + space ; a
     st -c popterm -g 70x2 -e $HOME/.local/bin/popterm
 
+
 alt + space ; m
+    mic-toggle
+
+
+alt + space ; c
     env -u WAYLAND_DISPLAY warpd --hint
 
 # Characters and emojis move from 8 to e
@@ -97,8 +105,8 @@ alt + space ; Alt_L
     hide-float
 
 # Nested: q -> {r,l,q,k,c,z}
-alt + space ; q ; {r,l,q,k,c,z}
-    {i3-msg restart,i3-msg reload,i3-msg exit,xkill,xcontrol -c,xcontrol -z}
+alt + space ; q ; {r,l,k,c,z}
+    {i3-msg restart,i3-msg reload,xkill,xcontrol -c,xcontrol -z}
 
 # Move between virtual desktops
 alt + space ; h

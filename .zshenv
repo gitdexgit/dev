@@ -2,6 +2,9 @@
 # This is very important
 export VISUAL=nvim
 
+export CM_SELECTIONS='clipboard'
+export CM_DEBUG=1
+export CM_MAX_CLIPS=40
 
 
 # --- ESSENTIALS ---
