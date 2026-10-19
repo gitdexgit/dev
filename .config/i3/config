@@ -146,8 +146,11 @@ workspace 43 output eDP-1
 exec --no-startup-id emacs --daemon
 exec --no-startup-id noisetorch -i
 
-exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon.py
+# exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon.py
 exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon_needle.py
+exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py run idle
+
+
 
 # This is dogshit for now
 # exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
@@ -160,10 +163,10 @@ exec --no-startup-id sxhkd
 
 
 # fixes grmmit-mpx
-exec --no-startup-id picom --backend glx --vsync --no-use-damage --config /dev/null
+# exec --no-startup-id picom --backend glx --vsync --no-use-damage --config /dev/null
 
 # compositor alternative (picom better)
-# exec --no-startup-id xcompmgr -n
+exec --no-startup-id xcompmgr -n
 
 # fixes ueberzugpp/Yazi previews inside tmux
 exec --no-startup-id ~/scripts/fix/yazi-ueberzugpp-tmux-fix
@@ -193,11 +196,12 @@ exec --no-startup-id xsetroot -solid "#000000"
 # CopyQ — launch daemon and show the window on startup
 # exec --no-startup-id copyq
 # exec --no-startup-id copyq show
-# exec --no-startup-id clipmenud
+exec --no-startup-id clipmenud
 # bindsym Mod4+Shift+v exec --no-startup-id clipmenu
+bindsym Mod4+c exec --no-startup-id clipmenu
 
-exec --no-startup-id ~/.local/bin/greenclip daemon
-bindsym Mod4+c exec --no-startup-id sh -c '~/.local/bin/greenclip print | sed "/^$/d" | dmenu -i -l 10 | xargs -r -d"\n" -I{} ~/.local/bin/greenclip print "{}"'
+# exec --no-startup-id ~/.local/bin/greenclip daemon
+# bindsym Mod4+c exec --no-startup-id sh -c '~/.local/bin/greenclip print | sed "/^$/d" | dmenu -i -l 10 | xargs -r -d"\n" -I{} ~/.local/bin/greenclip print "{}"'
 
 
 # Gromit-MPX (screen annotation)
@@ -296,7 +300,8 @@ for_window [title="Godot"] floating enable
 # for_window [class="Zeal"] move position center
 
 
-for_window [class="mpv"] floating enable, border none
+# for_window [class="mpv"] floating enable, border none
+for_window [class="mpv"] border none
 
 
 # Zeal
@@ -411,17 +416,24 @@ bindsym Mod4+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
 for_window [title="^config$"] border none
 bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 
-# bindsym Mod4+Control+t exec st -e tmux-sessionizer
+# Simply hit scrolllock or escape space
+# bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle
 
-# bindsym Mod4+Shift+Return exec st -e tmux-sessionizer
-# bindsym Mod4+Control+t exec st -e tmux-pick
-# bindsym Control+Mod4+x exec --no-startup-id voxtype record toggle
-bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle
-bindsym Mod4+i exec --no-startup-id voxtype record toggle --model tiny.en
+
+
+bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle --model tiny.en
 bindsym Control+Shift+Mod4+x exec --no-startup-id voxtype record toggle --model small.en
 
+# 1. Continuous prose typing toggle
+bindsym Mod4+i exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py
+
+# 3. Voice commands routed to Needle pipe
+# bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py --command
+
+bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py --command
+
 # bindsym Control+Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
-bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
+# bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
 
 
 # --- Kill Window ---
@@ -500,7 +512,7 @@ bindsym --release Mod4+Control+4 exec --no-startup-id "~/scripts/video/record-st
 
 # --- Uploads & Notes ---
 bindsym Mod4+Mod1+i exec --no-startup-id "iupload"
-bindsym Mod4+Shift+i exec --no-startup-id ~/.local/bin/image-upload-x0
+bindsym Mod4+control+i exec --no-startup-id ~/.local/bin/image-upload-x0
 bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/upload-text-to-bin
 bindsym Mod4+Shift+n exec --no-startup-id ~/.local/bin/night-light
 
@@ -1022,8 +1034,8 @@ bindsym Mod4+r mode "resize"
 # }
 
 bar {
-    # mode dock
-    mode invisible
+    mode dock
+    # mode invisible
     wheel_up_cmd nop
     wheel_down_cmd nop
     status_command i3status

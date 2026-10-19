@@ -32,9 +32,9 @@ scroll_speed: 300
 
 # --- Mouse Buttons (Clicks) ---
 buttons: m , .
-buttons: m w r
+buttons: m w o
 
-screen: o
+screen: i
 
 
 # --- Mode Switching ---

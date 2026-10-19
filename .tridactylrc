@@ -210,9 +210,9 @@ bind <C-x>xr fillcmdline tabrename
 bind --mode=insert <C-x>xr fillcmdline tabrename
 bind --mode=ignore <C-x>xr fillcmdline tabrename
 
-bind <C-x><ArrowLeft> fillcmdline tab #
-bind --mode=insert <C-x><ArrowLeft> fillcmdline tab #
-bind --mode=ignore <C-x><ArrowLeft> fillcmdline tab #
+bind <C-x><ArrowLeft> fillcmdline tab
+bind --mode=insert <C-x><ArrowLeft> fillcmdline tab
+bind --mode=ignore <C-x><ArrowLeft> fillcmdline tab
 
 
 bind <C-x>d fillcmdline bd
@@ -241,17 +241,9 @@ bind <C-x>t fillcmdline tabopen
 bind --mode=insert <C-x>t fillcmdline tabopen
 bind --mode=ignore <C-x>t fillcmdline tabopen
 
-bind <C-x>p tabduplicate
-bind --mode=insert <C-x>p tabduplicate
-bind --mode=ignore <C-x>p tabduplicate
-
-bind <C-x>o tabduplicate
-bind --mode=insert <C-x>o tabduplicate
-bind --mode=ignore <C-x>o tabduplicate
-
-bind <C-x><Delete> tabduplicate
-bind --mode=insert <C-x><Delete> tabduplicate
-bind --mode=ignore <C-x><Delete> tabduplicate
+bind <C-x>u tabduplicate
+bind --mode=insert <C-x>u tabduplicate
+bind --mode=ignore <C-x>u tabduplicate
 
 bind --mode=ex <ArrowDown> ex.next_completion
 bind --mode=ex <ArrowUp> ex.prev_completion

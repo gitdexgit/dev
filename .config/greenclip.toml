@@ -1,6 +1,6 @@
 
 [greenclip]
-  blacklisted_applications = []
+  blacklisted_applications = ['Qt Selection Owner for keepassxc']
   enable_image_support = true
   history_file = "/home/dex/.cache/greenclip.history"
   image_cache_directory = "/tmp/greenclip"

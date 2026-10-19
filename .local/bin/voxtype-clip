@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Which item to copy: 1 is the latest, 2 is previous, etc. Default is 1.
+INDEX="${1:-1}"
+
+if ! [[ "$INDEX" =~ ^[0-9]+$ ]] || [ "$INDEX" -le 0 ]; then
+    echo "Usage: voxtype-clip [1|2|3...]" >&2
+    exit 1
+fi
+
+# Grab the item at the requested index
+TEXT=$(journalctl --user -b -n 10000 | grep 'Transcribed: "' | sed 's/.*Transcribed: "\(.*\)"/\1/' | tac | sed -n "${INDEX}p")
+
+if [[ -z "$TEXT" ]]; then
+    echo "Item [$INDEX] not found in recent history." >&2
+    exit 1
+fi
+
+# Copy directly to clipboard
+printf '%s' "$TEXT" | xclip -selection clipboard
+
+echo "✓ Copied [$INDEX] to clipboard: $TEXT"

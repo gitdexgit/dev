@@ -1,1 +1,0 @@
-/home/dex/.local/bin/volume_control.sh

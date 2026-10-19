@@ -443,7 +443,7 @@ alias history="history 0"
 alias mydocs='kiwix-serve --library --port 8080 ~/KiwixLibrary/library.xml'
 
 alias P='ps aux | grep'
-alias o='less'
+# alias o='less'
 alias sudo='sudo '
 alias msgbox='zenity'
 
@@ -575,10 +575,10 @@ alias imgcap='xclip -selection clipboard -t image/png -o > ~/Pictures/$(date +%Y
 # alias ee='exit'
 # alias eeee='exit'
 
-alias i='hostname -i'
-alias I='hostname -I'
-alias II='ip addr show | grep "inet " | grep -v 127.0.0.1'
-alias h='whoami'
+# alias i='hostname -i'
+# alias I='hostname -I'
+alias I='ip addr show | grep "inet " | grep -v 127.0.0.1'
+# alias h='whoami'
 
 alias ops='ollama ps'
 alias dps='docker ps'

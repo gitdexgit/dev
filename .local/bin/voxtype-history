@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Number of items to show (default: 5)
+COUNT="${1:-5}"
+
+if ! [[ "$COUNT" =~ ^[0-9]+$ ]] || [ "$COUNT" -le 0 ]; then
+    echo "Usage: voxtype-history [number_of_items]" >&2
+    exit 1
+fi
+
+# Fetch items (newest to oldest)
+mapfile -t items < <(journalctl --user -b -n 10000 | grep 'Transcribed: "' | sed 's/.*Transcribed: "\(.*\)"/\1/' | tac | head -n "$COUNT")
+
+if [ ${#items[@]} -eq 0 ]; then
+    echo "No recent Voxtype transcriptions found." >&2
+    exit 1
+fi
+
+# If user asked for 1 item, output clean text with no dividers
+if [ "$COUNT" -eq 1 ]; then
+    echo "${items[0]}"
+    exit 0
+fi
+
+# Print numbered list from [1] (newest) down
+for i in "${!items[@]}"; do
+    num=$((i + 1))
+    echo "[$num] ${items[$i]}"
+    if [ "$num" -lt "${#items[@]}" ]; then
+        echo "--------------------------------------------------"
+    fi
+done

@@ -90,9 +90,12 @@ max_duration_secs = 120
 # - remote: Send audio to a remote whisper.cpp server or OpenAI-compatible API
 # backend = "local"
 
+# backend = "remote"
+# remote_endpoint = "http://127.0.0.1:8000"
+
 # eager_processing = true
-# eager_chunk_secs = 3.0
-# eager_overlap_secs = 0.4
+# eager_chunk_secs = 2.0
+# eager_overlap_secs = 0.3
 
 
 # Model to use for transcription (local backend)
@@ -293,7 +296,7 @@ on_recording_start = false
 on_recording_stop = false
 
 # Show notification with transcribed text after transcription completes
-on_transcription = true
+on_transcription = false
 
 # Notification urgency level: "low", "normal", or "critical".
 # On GNOME, "low" notifications are delivered to the drawer without a popup banner.

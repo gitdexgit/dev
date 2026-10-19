@@ -97,6 +97,9 @@ alt + space ; m
 alt + space ; v
     env -u WAYLAND_DISPLAY warpd --hint
 
+alt + space ; c
+    clipmenu
+
 # Characters and emojis move from 8 to e
 alt + space ; e ; s
     emoji

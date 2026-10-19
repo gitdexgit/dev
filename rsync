@@ -52,7 +52,7 @@ SYSTEM_TARGETS=(
     "/usr/bin/keyd-application-mapper"
     "/usr/bin/keyd-application-mapper.bak"
     "/etc/sudoers.d"
-    "/usr/local/bin"
+    # "/usr/local/bin"
 )
 
 # --- 2. Home directory files and directories (RELATIVE PATHS) ---

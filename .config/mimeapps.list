@@ -50,6 +50,7 @@ video/x-ms-wmv=mpv.desktop;
 application/x-zerosize=neovim-allacrity.desktop;mpv.desktop;audacity.desktop;
 x-scheme-handler/mailto=userapp-Thunderbird-8UMES3.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-8UMES3.desktop;
+application/x-bittorrent=bitcomet.desktop;
 
 [Default Applications]
 audio/aac=mpv.desktop;
@@ -95,3 +96,4 @@ x-scheme-handler/discord-409416265891971072=discord-409416265891971072.desktop
 x-scheme-handler/rshub=jagex-launcher.desktop
 application/pdf=org.pwmt.zathura.desktop
 video/webm=mpv.desktop
+application/x-bittorrent=bitcomet.desktop
