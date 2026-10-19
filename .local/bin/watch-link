@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+play_video() {
+    local url="$1"
+    local quality="$2"
+
+    if [ -z "$quality" ]; then
+        quality=$(printf "720\n480\n360\nbest\naudio" | fzf --prompt="Resolution > " --height=30% --reverse)
+    fi
+
+    case "$quality" in
+        "720"|"480"|"360")
+            mpv --ytdl-format="bestvideo[height<=${quality}]+bestaudio/best[height<=${quality}]/best" "$url"
+            ;;
+        "best")
+            mpv "$url"
+            ;;
+        "audio")
+            mpv --no-video "$url"
+            ;;
+        *)
+            exit 0
+            ;;
+    esac
+}
+
+# 1. Direct link argument: play at 720p immediately without prompts
+if [ -n "$1" ]; then
+    play_video "$1" "720"
+    exit 0
+fi
+
+# 2. No argument: check clipboard
+clip=$(xclip -o -selection clipboard 2>/dev/null | tr -d '\r\n')
+url=""
+
+if [[ "$clip" =~ ^https?:// ]]; then
+    echo "Clipboard: $clip"
+    read -rp "Use this link? [Y/n]: " ans
+    ans="${ans:-y}"
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+        url="$clip"
+    fi
+fi
+
+# If clipboard had no URL or user declined, prompt to paste
+if [ -z "$url" ]; then
+    read -rp "Paste link: " url
+fi
+
+# Exit if empty
+if [ -z "$url" ]; then
+    echo "No link provided."
+    exit 1
+fi
+
+# Prompt resolution and play
+play_video "$url"

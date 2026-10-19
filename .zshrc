@@ -1,7 +1,6 @@
 # In the future try out fast-syntax-highlighting thing instead of zsh-syntax-highlighting
 
 
-
 # Also get good and like try to like read bellow and try to like make it less bloat
 # and smart... take inspiration from tsooding and the prime gen
 # Also go to your scripts and reduce the scripts bloot and what not... you know... and try to like idk...
@@ -434,6 +433,9 @@ alias vimrc='cd ~/.config/nvim/ ; nvim .'
 
 # Still i'm too used to the ]]r screw it it's a cool
 alias -g ]]r='source ~/.zshrc ; source ~/.zshenv'
+alias -g ]]c='setterm --cursor on'
+
+
 
 alias md='mkdir -p'
 alias history="history 0"
