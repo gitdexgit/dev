@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! pactl list modules short 2>/dev/null | grep -qi "echo-cancel"; then
+  echo "Echo cancellation is not running."
+  exit 0
+fi
+
+pactl unload-module module-echo-cancel
+echo "Echo cancellation stopped."

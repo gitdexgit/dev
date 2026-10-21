@@ -31,14 +31,21 @@ alt + space ; Return
 alt + space ; k
     i3-msg kill
 
-alt + space ; s
+# alt + space ; s
+#     quick-search
+#
+# alt + space ; shift + s
+#     web-search
+
+alt + space ; y
     quick-search
+
+alt + space ; shift + y
+    web-search
 
 alt + space ; d
     dmenu_run
 
-alt + space ; shift + s
-    web-search
 
 # Nested: x -> r, b, control + b
 alt + space ; x ; r
@@ -86,15 +93,17 @@ alt + space ; t ; O
 # alt + space ; a
 #     sleep 0.1; xdotool key --clearmodifiers Super+apostrophe
 
-alt + space ; a
-    st -c popterm -g 70x2 -e $HOME/.local/bin/popterm
+# alt + space ; a
+#     st -c popterm -g 70x2 -e $HOME/.local/bin/popterm
+
+
 
 
 alt + space ; m
     mic-toggle
 
 
-alt + space ; v
+alt + space ; f
     env -u WAYLAND_DISPLAY warpd --hint
 
 alt + space ; c
@@ -112,12 +121,18 @@ alt + space ; q ; {r,l,k,c,z}
     {i3-msg restart,i3-msg reload,xkill,xcontrol -c,xcontrol -z}
 
 # Move between virtual desktops
-alt + space ; h
+alt + space ; shift + h
     xdotool set_desktop --relative -- -1
 
 
-alt + space ; l
+alt + space ; shift + l
     xdotool set_desktop --relative -- 1
+
+alt + space ; l
+    switch-last-buffer
+
+alt + space ; grave
+    switch-last-buffer
 
 # Open rofi action menu
 alt + space ; space

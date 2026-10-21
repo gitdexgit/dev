@@ -39,7 +39,9 @@ bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
 bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
 
 
-bindsym Mod4+Shift+v exec --no-startup-id "warpd --hint"
+# bindsym Mod4+Shift+v exec --no-startup-id "warpd --hint"
+bindsym Mod4+Shift+f exec --no-startup-id "warpd --hint"
+bindsym Mod4+control+f exec --no-startup-id "warpd --hint"
 
 
 
@@ -178,7 +180,13 @@ exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # exec --no-startup-id espanso daemon
 exec --no-startup-id flameshot
-exec --no-startup-id xset s off -dpms
+
+# No screen saver turn off
+# exec --no-startup-id xset s off -dpms
+
+# with screen saver
+exec --no-startup-id xset s off +dpms
+
 # exec --no-startup-id qalculate-gtk
 exec --no-startup-id dunst
 # exec --no-startup-id zeal
@@ -192,6 +200,8 @@ exec_always --no-startup-id sh -c 'pkill -x switch-thumbs; exec switch-thumbs da
 exec_always --no-startup-id sh -c "setxkbmap us; xmodmap ~/.Xmodmap; xset r rate 220 50"
 
 exec --no-startup-id xsetroot -solid "#000000"
+exec_always --no-startup-id hsetroot -solid '#000000'
+
 
 # CopyQ — launch daemon and show the window on startup
 # exec --no-startup-id copyq
@@ -403,8 +413,10 @@ bindsym Mod4+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
 for_window [title="learn"] border none
 bindsym Mod4+Control+l exec st -t learn -e tmux new-session -A -s "*learn*"
 
-for_window [class="popterm"] floating enable, border pixel 2, move position center, move up 460 px
-bindsym Mod4+apostrophe exec st -c popterm -g 70x2 -e ~/.local/bin/popterm
+bindsym Control+Mod1+l exec --no-startup-id ~/.local/bin/so-lo
+
+# for_window [class="popterm"] floating enable, border pixel 2, move position center, move up 460 px
+# bindsym Mod4+apostrophe exec st -c popterm -g 70x2 -e ~/.local/bin/popterm
 
 
 for_window [title="^btop$"] border none
@@ -570,6 +582,11 @@ bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
 # Tab-x S
 # bindsym Mod4+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
 # bindsym Mod4+Shift+y exec --no-startup-id web-search
+
+
+bindsym Mod4+y exec --no-startup-id quick-search
+bindsym Mod4+Shift+y exec --no-startup-id web-search
+
 
 
 # bindsym Mod4+b exec --no-startup-id "~/.local/bin/rofi-switch-all-windows-except-habit-windows"
@@ -763,10 +780,18 @@ bindsym Mod1+Shift+BackSpace exec --no-startup-id hide-float
 # =====================================================================
 
 
-bindsym Mod4+h focus left
-bindsym Mod4+j focus down
-bindsym Mod4+k focus up
-bindsym Mod4+l focus right
+# Old nvim way.
+# bindsym Mod4+h focus left
+# bindsym Mod4+j focus down
+# bindsym Mod4+k focus up
+# bindsym Mod4+l focus right
+
+# To this:
+# Staying to vannila or stock as possible I guess
+bindsym Mod4+j focus left
+bindsym Mod4+k focus down
+bindsym Mod4+l focus up
+bindsym Mod4+semicolon focus right
 
 
 # bindsym Mod4+Shift+Left  move left
@@ -780,11 +805,17 @@ bindsym Mod4+l focus right
 # bindsym Mod4+Up    focus up
 # bindsym Mod4+Right focus right
 
-bindsym Mod4+Shift+h move left
-bindsym Mod4+Shift+j move down
-bindsym Mod4+Shift+k move up
-bindsym Mod4+Shift+l move right
+# Old nvim way
+# bindsym Mod4+Shift+h move left
+# bindsym Mod4+Shift+j move down
+# bindsym Mod4+Shift+k move up
+# bindsym Mod4+Shift+l move right
 
+# Staying to stock as possbile
+bindsym Mod4+Shift+j move left
+bindsym Mod4+Shift+k move down
+bindsym Mod4+Shift+l move up
+bindsym Mod4+Shift+semicolon move right
 
 # Monitor focus, I only have 1 monitor on at all time. But It is pluged.
 # So if I need to turn on monitor these are handy. With xrandr. To pin something on the right like discord.
@@ -815,6 +846,7 @@ bindsym Mod4+F7 exec --no-startup-id ~/.local/bin/set-tabs slightly
 
 # i3-back
 bindsym Mod1+Tab        [con_mark=_back] focus
+bindsym Mod4+Tab exec --no-startup-id ~/.local/bin/switch-last-buffer
 bindsym Mod4+grave workspace back_and_forth
 
 # bindsym Mod1+semicolon        [con_mark=_back] focus
@@ -828,12 +860,14 @@ bindsym Mod4+grave workspace back_and_forth
 
 bindsym Mod4+v split v
 
-
-# bindsym Mod4+b split h
-
 # split in horizontal orientation
-# bindsym Mod4+h split h
-bindsym Mod4+semicolon split h
+# Now that it's free we just split like this
+bindsym Mod4+h split h
+
+
+# Old nvim way because we remapped it
+# bindsym Mod4+semicolon split h
+# bindsym Mod4+b split h
 
 # Omarchy-style tiled maximize
 bindsym Mod4+Mod1+f exec --no-startup-id ~/.local/bin/i3-maximize
@@ -935,7 +969,10 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+bindsym Mod4+Shift+equal exec --no-startup-id ~/.local/bin/hdmi-brightness up
+bindsym Mod4+Shift+minus exec --no-startup-id ~/.local/bin/hdmi-brightness down
 
 # =====================================================================
 # KEYBINDINGS — I3 MANAGEMENT

@@ -1,0 +1,23 @@
+#!/bin/bash
+STEP=0.1
+MAX=1.5
+MIN=0.2
+
+# Get current brightness
+CURRENT=$(xrandr --verbose | awk '/HDMI-1 connected/{getline; while($0 !~ /Brightness:/){getline}; print $2; exit}')
+CURRENT=${CURRENT:-1.0}
+
+if [ "$1" = "up" ]; then
+    NEW=$(awk -v c="$CURRENT" -v s="$STEP" -v m="$MAX" 'BEGIN {val = c + s; if (val > m) val = m; printf "%.1f", val}')
+elif [ "$1" = "down" ]; then
+    NEW=$(awk -v c="$CURRENT" -v s="$STEP" -v m="$MIN" 'BEGIN {val = c - s; if (val < m) val = m; printf "%.1f", val}')
+else
+    exit 0
+fi
+
+# Apply new brightness
+xrandr --output HDMI-1 --brightness "$NEW"
+
+# Convert to percentage and show dunst progress slider (replaces previous notification cleanly)
+PERCENT=$(awk -v val="$NEW" -v max="$MAX" 'BEGIN {printf "%d", (val / max) * 100}')
+dunstify -a "brightness" -u low -r 9991 -h int:value:"$PERCENT" -h string:x-dunst-stack-tag:brightness "HDMI Brightness" "${PERCENT}%"

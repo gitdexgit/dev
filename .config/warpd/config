@@ -17,7 +17,7 @@ exit: q
 up: k p
 down: j n
 left: h b
-right: l f
+right: l
 
 # --- Vertical Scrolling ---
 # s/d for vertical scrolling
@@ -39,7 +39,7 @@ screen: i
 
 # --- Mode Switching ---
 # 'v' for Hints (Teleport)
-hint: v
+hint: f
 # 'g' for Grab (Drag)
 drag: g
 
