@@ -121,11 +121,10 @@ alt + space ; q ; {r,l,k,c,z}
     {i3-msg restart,i3-msg reload,xkill,xcontrol -c,xcontrol -z}
 
 # Move between virtual desktops
-alt + space ; shift + h
+alt + space ; shift + j
     xdotool set_desktop --relative -- -1
 
-
-alt + space ; shift + l
+alt + space ; shift + semicolon
     xdotool set_desktop --relative -- 1
 
 alt + space ; l
@@ -135,5 +134,5 @@ alt + space ; grave
     switch-last-buffer
 
 # Open rofi action menu
-alt + space ; space
-    ~/.local/bin/leader-menu
+# alt + space ; space
+#     ~/.local/bin/leader-menu

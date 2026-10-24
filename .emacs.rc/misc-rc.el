@@ -8,7 +8,6 @@
               tab-width 4
               indent-tabs-mode nil
               compilation-scroll-output t
-              default-input-method "russian-computer"
               visible-bell (equal system-type 'windows-nt))
 
 (defun rc/colorize-compilation-buffer ()
@@ -79,7 +78,7 @@ by using nxml's indentation rules."
   (save-excursion
     (nxml-mode)
     (goto-char begin)
-    (while (search-forward-regexp "\>[ \\t]*\<" nil t) 
+    (while (search-forward-regexp "\>[ \\t]*\<" nil t)
       (backward-char) (insert "\n"))
     (indent-region begin end))
   (message "Ah, much better!"))

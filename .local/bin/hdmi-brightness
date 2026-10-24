@@ -1,12 +1,19 @@
 #!/bin/bash
 STEP=0.1
-MAX=1.5
+MAX=1.0      # Note: Redshift brightness (-b) generally expects values between 0.1 and 1.0
 MIN=0.2
 
-# Get current brightness
-CURRENT=$(xrandr --verbose | awk '/HDMI-1 connected/{getline; while($0 !~ /Brightness:/){getline}; print $2; exit}')
-CURRENT=${CURRENT:-1.0}
+STATE_FILE="$HOME/.cache/hdmi_brightness"
+ORANGE_CACHE="$HOME/.cache/orange-light"
 
+# 1. Read current brightness from state file (fallback to 1.0)
+if [ -f "$STATE_FILE" ]; then
+    CURRENT=$(cat "$STATE_FILE")
+else
+    CURRENT=1.0
+fi
+
+# 2. Calculate new brightness
 if [ "$1" = "up" ]; then
     NEW=$(awk -v c="$CURRENT" -v s="$STEP" -v m="$MAX" 'BEGIN {val = c + s; if (val > m) val = m; printf "%.1f", val}')
 elif [ "$1" = "down" ]; then
@@ -15,9 +22,18 @@ else
     exit 0
 fi
 
-# Apply new brightness
-xrandr --output HDMI-1 --brightness "$NEW"
+# 3. Apply brightness while respecting Redshift state
+if [ -f "$ORANGE_CACHE" ]; then
+    # Orange light is active: apply brightness with 2500K warmth
+    DISPLAY=:0 redshift -P -O 2500 -b "$NEW"
+else
+    # Normal mode: apply brightness with standard 6500K daylight
+    DISPLAY=:0 redshift -P -O 6500 -b "$NEW"
+fi
 
-# Convert to percentage and show dunst progress slider (replaces previous notification cleanly)
+# Save state
+echo "$NEW" > "$STATE_FILE"
+
+# 4. Dunst progress notification
 PERCENT=$(awk -v val="$NEW" -v max="$MAX" 'BEGIN {printf "%d", (val / max) * 100}')
 dunstify -a "brightness" -u low -r 9991 -h int:value:"$PERCENT" -h string:x-dunst-stack-tag:brightness "HDMI Brightness" "${PERCENT}%"

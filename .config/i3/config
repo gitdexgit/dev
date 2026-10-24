@@ -1,4 +1,5 @@
 
+# exec --no-startup-id sxhkd
 
 
 font pango:Iosevka 10
@@ -41,9 +42,9 @@ bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
 
 # bindsym Mod4+Shift+v exec --no-startup-id "warpd --hint"
 bindsym Mod4+Shift+f exec --no-startup-id "warpd --hint"
-bindsym Mod4+control+f exec --no-startup-id "warpd --hint"
+# bindsym Mod4+control+f exec --no-startup-id "warpd --hint"
 
-
+bindsym Mod4+control+f exec --no-startup-id focus-firefox
 
 
 
@@ -158,9 +159,7 @@ exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whi
 # exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
 
 # Testing this instead of xremap
-exec --no-startup-id sxhkd
 
-# exec --no-startup-id skippy-xd --start-daemon
 
 
 
@@ -206,7 +205,12 @@ exec_always --no-startup-id hsetroot -solid '#000000'
 # CopyQ — launch daemon and show the window on startup
 # exec --no-startup-id copyq
 # exec --no-startup-id copyq show
-exec --no-startup-id clipmenud
+
+# This is meh because you don't like ingore keepass you know.
+# exec --no-startup-id clipmenud
+
+
+exec_always --no-startup-id env CM_IGNORE_WINDOW=".*KeePassXC.*" clipmenud
 # bindsym Mod4+Shift+v exec --no-startup-id clipmenu
 bindsym Mod4+c exec --no-startup-id clipmenu
 
@@ -215,7 +219,8 @@ bindsym Mod4+c exec --no-startup-id clipmenu
 
 
 # Gromit-MPX (screen annotation)
-exec --no-startup-id sh -c "sleep 6; gromit-mpx --key none --undo-key none -o 0.4"
+# exec --no-startup-id sh -c "sleep 6; gromit-mpx --key none --undo-key none -o 0.4"
+exec --no-startup-id sh -c "sleep 6; gromit-mpx -o 0.5"
 
 # Razer DPI
 exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"
@@ -514,9 +519,9 @@ bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
 
 # bindsym --release Mod4+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
 
-bindsym --release Shift+Print exec --no-startup-id "~/scripts/video/record-area.sh"
-bindsym --release Mod4+Control+3 exec --no-startup-id "~/scripts/video/record-pause.sh"
-bindsym --release Mod4+Control+4 exec --no-startup-id "~/scripts/video/record-stop.sh"
+bindsym --release Shift+Print exec --no-startup-id "~/.local/bin/record-area.sh"
+bindsym --release Mod4+Control+3 exec --no-startup-id "~/.local/bin/record-area-pause-toggle"
+bindsym --release Mod4+Control+4 exec --no-startup-id "~/.local/bin/record-area-stop"
 
 
 # bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'

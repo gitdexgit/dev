@@ -406,7 +406,8 @@ alias fgrep='grep -F --color=auto'
 alias egrep='grep -E --color=auto'
 
 # nvim is better than vim. If only vim then just use vi instead.
-alias -g vim='nvim'
+# alias -g vim='nvim'
+alias nv='nvim'
 
 # just time the fking command name
 # alias tt='timew'
@@ -517,7 +518,7 @@ alias cal='cal -w'
 
 # I don't use this
 # alias scratch='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
-alias scr='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
+# alias scr='tmux new-session -d -s scratch 3>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'
 
 # What even is this man
 # alias uvim='UVIM_MODE=true nvim'

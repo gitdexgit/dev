@@ -1,0 +1,11 @@
+#!/bin/sh
+export PATH="$HOME/.local/bin:$PATH"
+CACHE="$HOME/.cache/last_dmenu_cmd"
+
+if [ -s "$CACHE" ]; then
+    cmd=$(cat "$CACHE")
+    # Execute and capture any errors
+    /bin/sh -c "$cmd"
+else
+    command -v dunstify >/dev/null 2>&1 && dunstify "rr" "Cache is empty" -u critical
+fi

@@ -835,6 +835,31 @@ compilation-error-regexp-alist-alist
 (setq erc-bufbar-width 15)
 
 
+(defun my-erc-beginning-of-visual-line ()
+  "Move to start of visual line without crossing behind prompt."
+  (interactive)
+  (let ((prompt-end (save-excursion (erc-bol) (point))))
+    (beginning-of-visual-line)
+    (when (< (point) prompt-end)
+      (goto-char prompt-end))))
+
+(with-eval-after-load 'erc
+  (define-key erc-mode-map (kbd "C-a") #'my-erc-beginning-of-visual-line)
+  (define-key erc-mode-map (kbd "C-e") #'end-of-visual-line)
+  (define-key erc-mode-map (kbd "<home>") #'my-erc-beginning-of-visual-line)
+  (define-key erc-mode-map (kbd "<end>") #'end-of-visual-line)
+  (define-key erc-mode-map (kbd "C-p") #'previous-line)
+  (define-key erc-mode-map (kbd "C-n") #'next-line)
+  (define-key erc-mode-map (kbd "<up>") #'previous-line)
+  (define-key erc-mode-map (kbd "<down>") #'next-line))
+
+(add-hook 'erc-mode-hook
+          (lambda ()
+            (setq-local line-move-visual t)
+            (visual-line-mode 1)))
+
+
+
 (setq elfeed-feeds
       '("https://archlinux.org/feeds/news/"
         "https://danluu.com/atom.xml"

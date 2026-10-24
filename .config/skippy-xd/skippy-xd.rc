@@ -79,7 +79,7 @@ switchCycleDesktops = false
 exposeCycleDesktops = false
 
 # Relative minimal pixel distance between windows
-distance = 0
+distance = 5
 
 # Fill screen by upscaling windows
 upscaleWindows = true
@@ -132,10 +132,10 @@ iconSize = 48
 
 # Currently highlighted window
 [highlight]
-tint = #FFFFFF
-tintOpacity = 128
-tintWindow = true
-tintBorder = 10
+tint = #1f6feb
+tintOpacity = 150
+tintWindow = false
+tintBorder = 7
 
 # Highlighted in multi-select mode
 [multiselect]
@@ -164,7 +164,8 @@ offsetY = -30
 width = 0.8
 border = #0e0e0e
 background = #111111
-backgroundHighlight = #999999
+# backgroundHighlight = #999999
+backgroundHighlight = #1f6feb
 opacity = 196
 text = white
 textOutline = #0e0e0e
