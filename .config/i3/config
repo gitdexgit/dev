@@ -40,6 +40,7 @@ bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
 bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
 
 
+bindsym Mod1+Control+e exec --no-startup-id thunar
 # bindsym Mod4+Shift+v exec --no-startup-id "warpd --hint"
 bindsym Mod4+Shift+f exec --no-startup-id "warpd --hint"
 # bindsym Mod4+control+f exec --no-startup-id "warpd --hint"
@@ -412,7 +413,8 @@ bindsym Mod4+Shift+t exec --no-startup-id ~/.local/bin/focus-scratch
 # bindsym Mod4+Control+e exec emacsclient -c
 bindsym Mod4+Control+e exec ~/.local/bin/e
 
-bindsym Mod4+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
+# bindsym Mod4+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
+bindsym Mod1+Control+s exec ~/.local/bin/screenshot
 
 
 for_window [title="learn"] border none
@@ -931,7 +933,7 @@ bindsym Mod4+Shift+s     scratchpad show
 # Why would you do this? It just clutters your monitor... use rofi instead or just cycle and such.
 # bindsym Mod4+Mod1+s      [workspace="__i3_scratch"] scratchpad show
 
-bindsym Control+Mod1+s sticky toggle
+# bindsym Control+Mod1+s sticky toggle
 
 # =====================================================================
 # KEYBINDINGS — WORKSPACES (switch)

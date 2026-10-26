@@ -1,5 +1,64 @@
 
 
+## An interseting new idea for an activity game
+
+----
+Thu Oct 22 09:14:47 AM +0000 2026
+
+Erase two words from the board and ask who remembers them. Erase two more, repeat until the board is empty.
+
+It works every time. In English language teaching, it is called the vanishing board drill.
+
+This is how to run it:
+
+For 4th grade, run the vanishing drill before they ever open their notebooks. If their notebooks are on the desk, they will look down every time.
+
+The sequence is:
+
+ Desks empty, no pens in hand.
+
+ Put words on the board and run the vanishing drill.
+
+ Put the words back up on the board.
+
+ Tell them to open notebooks and copy.
+
+Like it's the warm up but like with vanishing words.
+
+
+## Try to make tiktok shorts and youtube vids using like animations of worlds
+
+The idea is something like this:
+
+btw: It was inspired by like a video on dunyio thingy the Chinese Ticktok thing. I saw this world building 5s loop It's nice.
+Like almost feels like game cenimatics where like character you know....anywys
+
+
+
+### The plan
+
+Create a quiet, empty world. People will put the long videos on in the background while studying, working, or sleeping.
+
+### Two formats
+
+1. **Shorts and TikTok:** A five-second looping clip. Show one moving detail like rain, campfire smoke, or a flashing light. Put the link to the long video in the comments.
+2. **YouTube main video:** Thirty minutes long. String five quiet scenes together with steady footsteps and weather sounds.
+
+### How to make it on your laptop
+
+- **Draw:** Open Aseprite or Krita. Use a tiny canvas like 384x216. Draw simple pixel art and animate just three or four frames.
+- **Audio:** Open Audacity. Layer three basic sounds: wind, footsteps, and light rain. Skip music completely.
+- **Render:** Loop the video over the audio in seconds with this terminal command:
+
+```bash
+ffmpeg -stream_loop -1 -i scene.mp4 -i audio.wav -shortest -c:v copy output.mp4
+```
+
+### First step
+
+Draw one easy scene tonight, like an old doorway or a tree under a red sky. Add a wind track, make sure the loop works, and test it on your screen.
+
+
 
 ## Try everyting in here
 

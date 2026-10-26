@@ -140,6 +140,7 @@ tmux split-window -h -t "*games*":1.1 -l 1
 tmux send-keys -t "*games*":1.1 "tt -blockcursor -highlight1 -notheme" C-m
 tmux send-keys -t "*games*":1.2 "ping 8.8.8.8" C-m
 tmux select-pane -t "*games*":1.1
+tmux new-window -t "*games*":2  -n "sentence or word of the day" -c "$HOME"
 
 
 ####
