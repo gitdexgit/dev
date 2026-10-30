@@ -163,7 +163,9 @@ setopt appendhistory sharehistory histignorealldups histignorespace
 setopt incappendhistory autocd interactivecomments notify
 setopt numericglobsort promptsubst nonomatch magicequalsubst HIST_FCNTL_LOCK
 export ZSH_DISABLE_COMPFIX=true
-PROMPT_EOL_MARK=""
+
+
+# PROMPT_EOL_MARK=""
 
 stty ixon
 

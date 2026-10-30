@@ -151,8 +151,12 @@ exec --no-startup-id emacs --daemon
 exec --no-startup-id noisetorch -i
 
 # exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon.py
-exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon_needle.py
-exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py run idle
+
+# Not sure if this works or not I missed my voice to commands setup even though it's kinda stupid and meh lol -  Tue Oct 27 12:48:46 PM +00 2026
+# exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon_needle.py
+
+# For some reason this stopped working, I missed my voice to commands setup even though it's kinda stupid and meh lol - Tue Oct 27 12:48:46 PM +00 2026
+# exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py run idle
 
 
 
