@@ -1,0 +1,3 @@
+#!/bin/bash
+
+yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"

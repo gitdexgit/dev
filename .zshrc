@@ -219,7 +219,9 @@ bindkey '^Y' yank
 
 
 bindkey ' ' magic-space
-bindkey '^@' expand-or-complete
+
+
+# bindkey '^@' expand-or-complete
 
 
 
@@ -488,6 +490,7 @@ alias ip='ip --color=auto'
 
 # This tries to copy like file from terminal to the clipbard mayeb I should learn how to type man...
 alias xcg='xclip -selection clipboard -t image/png -o > /tmp/clip.png'
+alias xc='xclip -sel c'
 
 # just use zoxide or simple cd
 # alias s='cd ~/scripts'
@@ -516,7 +519,7 @@ alias wcal='while true; do cal -w ; sleep 300; clear; done'
 
 alias wawake='watch -n 10 -c "time-awake"'
 alias wprest='watch -n 3 -c "cli-prest"'
-alias cal='cal -w'
+# alias cal='cal -w'
 
 # I don't use this
 # alias scratch='tmux new-session -d -s scratch 2>/dev/null; tmux switch-client -t scratch || tmux attach-session -t scratch'

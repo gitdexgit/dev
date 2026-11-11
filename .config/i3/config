@@ -1,5 +1,5 @@
 
-# exec --no-startup-id sxhkd
+exec --no-startup-id sxhkd
 
 
 font pango:Iosevka 10
@@ -516,18 +516,23 @@ bindsym Control+Mod1+Left exec --no-startup-id "xdotool set_desktop --relative -
 # bindsym --release Print exec --no-startup-id bash -c "WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
 #
 # You have to do it this way:
-bindsym --release Print exec --no-startup-id ~/.local/bin/screenshot
-bindsym Mod4+Mod1+Print exec --no-startup-id ~/.local/bin/ocr-selection
-bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
+bindsym --release Print exec --no-startup-id ~/.local/bin/f-scr
+
+## Doesn't work and I probably will forget this
+# bindsym Mod4+Mod1+Print exec --no-startup-id ~/.local/bin/ocr-selection
+
+## Doesn't work and I probably will forget this
+# bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
 
 
 # bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
 
 # bindsym --release Mod4+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
 
-bindsym --release Shift+Print exec --no-startup-id "~/.local/bin/record-area.sh"
-bindsym --release Mod4+Control+3 exec --no-startup-id "~/.local/bin/record-area-pause-toggle"
-bindsym --release Mod4+Control+4 exec --no-startup-id "~/.local/bin/record-area-stop"
+## These do not work on this old keyboard
+# bindsym --release Shift+Print exec --no-startup-id "~/.local/bin/record-area.sh"
+# bindsym --release Mod4+Control+3 exec --no-startup-id "~/.local/bin/record-area-pause-toggle"
+# bindsym --release Mod4+Control+4 exec --no-startup-id "~/.local/bin/record-area-stop"
 
 
 # bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
@@ -535,8 +540,13 @@ bindsym --release Mod4+Control+4 exec --no-startup-id "~/.local/bin/record-area-
 
 # --- Uploads & Notes ---
 bindsym Mod4+Mod1+i exec --no-startup-id "iupload"
-bindsym Mod4+control+i exec --no-startup-id ~/.local/bin/image-upload-x0
-bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/upload-text-to-bin
+
+# Doesn't work on my keyboard just remember the name.
+# bindsym Mod4+control+i exec --no-startup-id ~/.local/bin/image-upload-x0
+
+# just remember the name.
+# bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/tupload
+# bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/upload-text-to-bin
 bindsym Mod4+Shift+n exec --no-startup-id ~/.local/bin/night-light
 
 # --- AI / LLM Tools ---

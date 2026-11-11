@@ -1,5 +1,275 @@
 
 
+
+
+
+Writing web novels actually fits your specific setup better than most people. You have 30 hours of free time every week, a degree in English, and you can touch type fast. High typing speed is the single biggest weapon web novel authors have.
+
+If you like *Shadow Slave* and *The Tutorial Is Too Hard*, you understand the core loop: a brutal world, high stakes, clear progression mechanics, and a protagonist who has to think their way out of impossible situations.
+
+Watch out for one massive trap, and follow three rules to make it work:
+
+### The worldbuilder trap
+Do not spend two months designing complex markdown vaults in Obsidian with fifty folders of lore, stats, and pantheons before writing a single scene. That is worldbuilder disease. 
+
+Write the actual story. Discover the world through the character's eyes as they bleed and struggle. Keep your Obsidian notes minimal: character sheets, skill tables, and a simple timeline.
+
+### 1. The right platform is Royal Road
+Do not publish on Webnovel. Their contracts take your copyright and pay garbage. 
+
+Post your story on **Royal Road** (`royalroad.com`). That is the home of Western progression fantasy, LitRPG, and system apocalypse fiction. The readers there actively look for hell-difficulty tutorials, dark survival themes, and detailed game systems.
+
+### 2. Build a backlog before posting
+Web novel readers demand regular updates. If you post chapter one today and chapter two next month, the story dies. 
+
+Write **15 chapters** in your local text editor before you publish chapter one online. That buffer protects you when school work gets busy or you feel uninspired, allowing you to maintain a steady schedule of three chapters a week.
+
+### 3. How the money actually works
+Royal Road is free to read, but readers are obsessive. 
+
+Authors set up a Patreon where readers pay five dollars a month to read five or ten chapters ahead of the public release. Having just 30 paying patrons earns you 150 dollars a month (around 1,500 DH), which completely replaces your private school salary from your keyboard.
+
+Start chapter one tonight. Put your character straight into the meat grinder on page one, just like Sunny in his first nightmare, and start typing.
+
+me: 
+Yeah I just want to turn everything... I'm doing like playign video games
+testign this and doing this and what not... into target it into 1 novel where I
+don't even know what the title is... I'm not wirting a title I'll just write the
+chapter first and writite and read and edit and write and read and edit and
+sometimes even delete a hug e trash chunk ... So I need to write fast and raed
+fast and sometimes be slow and see connections and try to like connect
+
+I think I'll enjoy it maybe
+
+
+ai:
+
+That is discovery writing, and it is the most satisfying way to create. 
+
+You treat the story like a private sandbox. Every strange game mechanic you experience, every system frustration, and every random idea gets thrown into the furnace and turned into fiction. 
+
+The rhythm you described is the exact process:
+- **Write fast.** Turn off your inner critic and let your fingers dump raw words on the page. Do not worry about spelling, pacing, or beauty. Just move the character forward.
+- **Read slow.** Come back later with fresh eyes. Look for patterns, find the accidental connections your subconscious left behind, and sharpen the dialogue.
+- **Cut ruthlessly.** Deleting a 2,000-word dead end is not wasted time. It is how you clear the bad ideas out of the way.
+
+One practical trick in Obsidian: create a note called `graveyard.md`. When you want to delete a huge chunk of text, cut and paste it into the graveyard instead of hitting backspace. Knowing the words are stored somewhere safe makes it much easier to chop away the bloat without hesitating.
+
+Forget the title. Just start with Chapter 1 and a character facing a situation they do not understand. You will figure out what the story is as you write it.
+
+
+
+
+---
+
+#try #suggestion #web-novel #webnovel #writing
+
+I'm also into reading these web novels I find them interesting this shadow slave this like lord of the mysteries these like kill the sun and weapons if mass destruction and like the tutorial is too hard and things like that... 
+
+I want to like start writing web novels as well.. Same world building and what not and have obsidian and what not... make game elements make hell difficulty and make an interesting thing that people might enjoy to read. 
+
+I'm also doing it for myself so I can improve my writing and my reading and also to try out something new.
+
+
+---
+
+#license #free #cert #certificatins 
+
+https://www.netacad.com/
+
+
+If you want to strengthen your profile legitimately, focus only on Certifications:
+
+    - Knock out the free Cisco Introduction to Cybersecurity or Networking Basics course on skillsforall.com.
+
+    - Paste the official Credly badge link into your profile.
+
+Cisco Skills for All is **100 percent free**. Cisco built that entire platform to provide free public training. They never ask for a credit card or payment. 
+
+Both options cost zero dollars. Here is how to choose between them right now:
+
+### Option 1: Google Skillshop (Fastest certificate)
+If you want a certificate in your hands in under two hours:
+- Go to `skillshop.withgoogle.com`.
+- Select **Google Ads** and click **Google Ads Search Certification**.
+- The exam is 50 questions, open-book, and completely free.
+- The second you pass, Google generates an official PDF certificate with a verification link you can paste into Mindrift immediately.
+
+### Option 2: Cisco Skills for All (Best for IT and Linux)
+If you want a badge that matches your tech and CCNA goals:
+- Go to `skillsforall.com`.
+- Enroll in **Introduction to Cybersecurity** or **Networking Basics**.
+- It is completely free, includes short interactive quizzes, and automatically issues an official Cisco Credly badge when you finish.
+
+If you just want to clear the profile box today without waiting, do **Google Skillshop**. If you want something for your IT path, do **Cisco**.
+
+
+me: I see only like high value certs like 4 or 5 and that's it.. do not get certs from stupid websites... maybe only for fun? right? 
+
+
+ai: Yes, exactly. You nailed the strategy.
+
+Here is the golden rule: if an employer does not recognize the company name within two seconds, the certificate does not belong on your CV. 
+
+Names like **Cisco**, **Google**, and **Microsoft** carry instant authority. Random course completion certificates from obscure websites make a resume look desperate and amateur. 
+
+Take those small tutorials on your own time for fun and curiosity. That is great for learning how things work. But keep your public CV and Credly profile clean and focused on four or five heavy hitters:
+
+1. **Cisco Introduction to Cybersecurity** (Free on Credly)
+2. **Cisco Networking Basics** (Free on Credly)
+3. **Google Ads Search** (Free on Skillshop)
+4. **Cisco CCNA** (Your future proctored target)
+
+That specific stack tells a clear, powerful story to anyone looking at your profile in Morocco: you have an English degree, but you also have verified competence in computer networks, digital security, and internet business systems.
+
+
+
+me: 
+
+What else can I do for fun even if the cert is not like 
+
+ai: 
+
+Here are the four most respected hands-on platforms that actually carry weight on a technical CV. They are gamified, fun to grind, and teach real exploitation skills.
+
+### 1. TryHackMe
+TryHackMe is the best platform to start with. It runs live vulnerable Linux virtual machines directly in your browser. 
+- **What to farm:** Finish the **Pre-Security** and **Complete Beginner** learning paths. 
+- **The payoff:** TryHackMe issues official path completion certificates. More importantly, maintaining a daily streak and climbing into the top five percent on the global leaderboard gives you a public profile badge that junior security recruiters take seriously.
+
+### 2. PortSwigger Web Security Academy
+PortSwigger makes Burp Suite, the primary tool every professional penetration tester uses daily. Their academy is **100 percent free**.
+- **What to farm:** Complete the Apprentice and Practitioner labs covering SQL injection, cross-site scripting, and authentication bypasses.
+- **The payoff:** Pentesters respect PortSwigger labs far more than basic multiple-choice certificates. Showing twenty or thirty solved PortSwigger labs on your CV proves you understand real web application vulnerabilities.
+
+### 3. OverTheWire (Bandit)
+OverTheWire has no fancy certificates, but finishing the **Bandit** wargame is the universal badge of honor for Linux users.
+- **What to farm:** Play through Bandit levels 0 to 34 using SSH from your Arch Linux terminal.
+- **The payoff:** Each level forces you to find hidden passwords using command line utilities like `grep`, `find`, `base64`, `cron`, and file permissions. It turns your Arch Linux terminal skills into second nature.
+
+### 4. picoCTF
+Created by Carnegie Mellon University, picoCTF is an open capture-the-flag platform running year-round.
+- **What to farm:** Solve the General Skills, Web Exploitation, and Cryptography challenges in the picoGym.
+- **The payoff:** It teaches you how competitive security contests work and sharpens reverse-engineering logic.
+
+### How to use them on your CV
+Do not list them as paper certificates. Put a section under your GitHub link called **Security Labs & Portfolios**:
+- TryHackMe: `tryhackme.com/p/your-username`
+- PortSwigger Academy: Solved 25+ web vulnerability labs
+- OverTheWire: Completed Bandit 0-34 Linux shell challenges
+
+A technical hiring manager looking at that will respect it immediately. It proves you practice real hacking in a terminal rather than just watching video courses.
+
+
+me: Any more like stuff on the list maybe? 
+
+ai: 
+Stop collecting lists. Do not add anything else.
+
+Every time you look for more websites, tutorials, and platforms, your brain gets a cheap hit of dopamine while you make zero actual progress. That is the ADHD rabbit hole talking. It feels like working, but it is just procrastination disguised as research.
+
+The four platforms on that list (TryHackMe, PortSwigger, OverTheWire, and Cisco) contain more than two years of deep, brutal technical material. If you actually finish OverTheWire Bandit and the TryHackMe Beginner path, you will know more practical security and Linux networking than most four-year computer science graduates in Morocco.
+
+Here is your exact rule going forward:
+
+1. **Stick strictly to the list.** Do not search for more platforms or novelty certificates.
+2. **Combine hands-on labs with one good book.** When you get stuck on networking or Linux concepts during a lab, read the relevant chapter in a classic book like *The Linux Command Line* by William Shotts or *TCP/IP Illustrated*. 
+3. **Finish before you switch.** Do not touch PortSwigger until you clear Bandit. Do not buy a book until you hit a wall in a lab.
+
+Pick Bandit level 0 on OverTheWire tonight, open your terminal, and log in over SSH. That is where real learning starts.
+
+
+---
+
+#money #make-money #cert #certification #certificate #learn #must #need #future #plan 
+
+Here are your notes in plain bullet points:
+
+- **The school job is an incubator, not a career.** It trades 16 hours of low-stress work for basic survival money, giving you 30 hours of free time each week to build high-value skills.
+- **Modern digital literacy is essential.** Knowing how to launch a website, run an ad campaign, and record a clean video creates long-term earning power.
+- **Avoid the multi-tasking trap.** Trying to learn web development, Google Ads, YouTube, coding, and networking all at once leads to zero progress.
+- **Focus on one concrete project at a time.** Ship a single landing page, run one small test campaign, or record three BAC English lessons.
+- **Execution beats theory.** Finishing one imperfect, working project teaches more than reading tutorials about six different topics.
+
+Studying CompTIA A+ material for free without buying the exam voucher is smart. Watch Professor Messer on YouTube to learn the hardware, voltage, and basic motherboard components without spending a single dirham on the certificate.
+
+
+me: yes tell me what to do for the certs so everyone knows hey I have these online free cert that mean I know how like ad capain thingy and what not... like tell me what to do so I save it
+
+Here is the exact blueprint to get and display those marketing certificates for free.
+
+### The two certificates to get
+
+**1. Google Ads Search Certification**
+- **Website:** Google Skillshop (`skillshop.withgoogle.com`)
+- **Cost:** Free
+- **What it covers:** Setting up search campaigns, bidding strategies, keyword match types, and negative keywords.
+- **How to pass:** Complete the free study path on Skillshop and pass the 50-question test. You can retake it after 24 hours if you fail.
+
+**2. HubSpot Digital Marketing Certification**
+- **Website:** HubSpot Academy (`academy.hubspot.com`)
+- **Cost:** Free
+- **What it covers:** Paid advertising, search engine optimization, content strategy, and conversion reporting.
+- **How to pass:** Watch the video modules and pass the final multiple-choice exam.
+
+### How to display them so clients and employers see them
+
+1. **Add them to your CV.** Put a new section called **Certifications** right above Skills. Write:
+   - Google Ads Search Certified | Google Skillshop | 2026
+   - Inbound Marketing Certified | HubSpot Academy | 2026
+2. **Add the verification link.** Every time you pass one of these, you get a unique URL. Put that public link on your CV or LinkedIn profile so anyone can verify it with one click.
+3. **Add them to LinkedIn.** Go to the Licenses and Certifications section on your profile. Select Google and HubSpot as the issuing organizations and paste your credential ID.
+4. **Use them in your client pitch.** When contacting local agencies or desert tour operators, state that you are Google Ads Search certified and handle English ad copy directly.
+
+
+---
+
+#side-cash #free #some-time
+
+okay so 
+
+data labeling or microtask crowdsourcing.
+
+is actually a real thing to farm some extra money for gym or food or something I like it... 
+
+Okay let's start... If this is good this could even be huge if it's really good maybe it could beat my 1.6k month bs 
+
+
+----
+
+#archery #climbing #mountain-climbing #no-material #scratch #alone 
+
+Okay So basically I need to figure out how to practice it with no materials right... 
+
+- So figure out a way to practice climbing
+- Figure out a way to practice archery 
+
+with no materials 
+
+
+---
+
+## Ideas on what you can also do maybe 2026-11-02_00-18-59
+Mon Nov 02 12:19:04 AM +0000 2026
+
+Set up wake up on lane with dell laptop over wifi
+
+- overthewire bandit (where you left last time)
+- tls
+- openssl
+- tryhackme's networking path
+- tryhackme's linux fundamental path
+- Continue Read books in ~/Documents/books/basics
+- Practice speed reading
+- Practice keyboard writing
+- Refactor keyd old comments and such
+- Try out Kanata
+- Read ~/learn/remember.md
+- Read ~/learn/idea.md
+- Do SMT gather some stuff in the ~/bag but don't rush it get something to analyse first.
+
+
+
 ## An interseting new idea for an activity game
 
 ----
@@ -1903,6 +2173,40 @@ Thu, 07, May
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## [DONE] Ideas to imrpve daily driver - Use whistle a tiny speech to text model in 16mb It's good with the needle model.
 Sun Oct 11 09:45:11 AM +0000 2026
 Try to set up needle and whistle see what you can come up with with tool calling and what not on my computer
+
+
+
+

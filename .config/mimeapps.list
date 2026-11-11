@@ -1,5 +1,5 @@
 [Added Associations]
-application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;calibre-gui.desktop;org.gnome.Evince.desktop;
+application/pdf=libreoffice-draw.desktop;firefox.desktop;org.pwmt.zathura-pdf-mupdf.desktop;calibre-gui.desktop;org.gnome.Evince.desktop;
 audio/aac=mpv.desktop;
 audio/mp4=mpv.desktop;
 audio/mpeg=vlc.desktop;mpv.desktop;

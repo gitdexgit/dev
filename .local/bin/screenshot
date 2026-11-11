@@ -1,12 +1,4 @@
 #!/bin/bash
-# Get the currently active window ID
-WID=$(xdotool getactivewindow)
 
-# Launch flameshot
-# Note: flameshot gui usually blocks until the screenshot is taken or cancelled
-flameshot gui
+scrot -s /tmp/s.png && xclip -selection clipboard -t image/png -i /tmp/s.png && rm /tmp/s.png
 
-# Refocus the original window
-if [ -n "$WID" ]; then
-    xdotool windowfocus "$WID"
-fi

@@ -1,0 +1,16 @@
+TMUX-CLIPBOARD(1)
+
+NAME
+    tmux-clipboard — copy tmux’s current buffer to the system clipboard
+
+TIP
+    Prefer your terminal’s mouse selection and copy/paste. Keep tmux vanilla.
+
+    If you need text copied inside tmux and its buffer isn’t synced to the
+    system clipboard, run:
+
+        tmux show-buffer | xclip -selection clipboard
+
+NOTE
+    This copies tmux’s current buffer. Copy the text in tmux first.
+

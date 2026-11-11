@@ -1,0 +1,7 @@
+#!/bin/bash
+
+WID=$(xdotool getactivewindow)
+
+flameshot gui -s --pin
+
+xdotool windowfocus $WID

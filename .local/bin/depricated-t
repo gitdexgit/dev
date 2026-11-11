@@ -1,0 +1,53 @@
+#!/bin/bash
+
+WS_NUM=10
+BACKUP_FILE="/tmp/i3_ws_${WS_NUM}_prev"
+
+# Restore mode
+if [ "$1" = "-r" ]; then
+    [ ! -f "$BACKUP_FILE" ] && echo "No previous name saved" && exit 1
+    RESTORE_NAME=$(cat "$BACKUP_FILE")
+    CURRENT_NAME=$(i3-msg -t get_workspaces | jq -r --argjson n "$WS_NUM" \
+        '.[] | select(.num == $n) | .name')
+
+    [ -z "$CURRENT_NAME" ] && echo "Workspace $WS_NUM does not exist" && exit 1
+
+    i3-msg "rename workspace \"$CURRENT_NAME\" to \"$RESTORE_NAME\"" > /dev/null
+    exit 0
+fi
+
+# Normal run
+OLD_NAME=$(i3-msg -t get_workspaces | jq -r --argjson n "$WS_NUM" \
+    '.[] | select(.num == $n) | .name')
+
+if [ -z "$OLD_NAME" ]; then
+    BEFORE=$(i3-msg -t get_tree | jq '[.. | objects | select(.window != null) | .window]')
+
+    i3-msg "exec --no-startup-id st" > /dev/null
+
+    NEW_ID=""
+    for i in {1..20}; do
+        sleep 0.1
+        AFTER=$(i3-msg -t get_tree | jq '[.. | objects | select(.window != null) | .window]')
+        NEW_ID=$(jq -n --argjson a "$AFTER" --argjson b "$BEFORE" '$a - $b | .[0] // empty')
+        [ -n "$NEW_ID" ] && break
+    done
+
+    [ -z "$NEW_ID" ] && exit 1
+
+    i3-msg "[id=\"$NEW_ID\"] move to workspace number $WS_NUM" > /dev/null
+
+    for i in {1..10}; do
+        sleep 0.1
+        OLD_NAME=$(i3-msg -t get_workspaces | jq -r --argjson n "$WS_NUM" \
+            '.[] | select(.num == $n) | .name')
+        [ -n "$OLD_NAME" ] && break
+    done
+fi
+
+[ -z "$OLD_NAME" ] && exit 1
+
+# Save old name before overwriting it
+echo "$OLD_NAME" > "$BACKUP_FILE"
+
+i3-msg "rename workspace \"$OLD_NAME\" to \"$WS_NUM:$(date +%H:%M:%S)\"" > /dev/null

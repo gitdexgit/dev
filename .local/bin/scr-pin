@@ -1,0 +1,4 @@
+#!/bin/bash
+
+FILE="/tmp/pin_$(date +%s).png"
+scrot -s "$FILE" && feh --class 'pin_shot' -. "$FILE" &

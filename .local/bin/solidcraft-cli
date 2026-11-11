@@ -1,0 +1,3 @@
+#!/bin/sh
+# solidcraft-cli wrapper written by the SolidCraft AppImage
+SOLIDCRAFT_APPIMAGE_CLI=1 exec "/home/dex/opt/solidcraft-linux-x86_64.AppImage" "$@"

@@ -1,20 +1,36 @@
 #!/bin/bash
 
-# 1. Define temp file
-TMP_FILE="/tmp/x0_upload.png"
+TMP_FILE="/tmp/upload_$(date +%s).png"
 
-# 2. Save clipboard image to temp file
-if ! xclip -selection clipboard -t image/png -o > "$TMP_FILE" 2>/dev/null; then
-    notify-send "Error" "No image in clipboard"
+# 1. Grab image from clipboard
+if ! xclip -selection clipboard -t image/png -o > "$TMP_FILE" 2>/dev/null || [ ! -s "$TMP_FILE" ]; then
+    notify-send "Error" "No image found in clipboard"
+    rm -f "$TMP_FILE"
     exit 1
 fi
 
-# 3. Upload to x0.at and capture URL
-URL=$(curl -s -F "file=@$TMP_FILE" https://x0.at/)
+# 2. Try x0.at
+URL=$(curl -s --max-time 10 -F "file=@$TMP_FILE" https://x0.at/)
 
-# 4. Copy URL to clipboard
-echo -n "$URL" | xclip -selection clipboard
+# 3. Fallback to 0x0.st
+if [[ -z "$URL" || "$URL" != http* ]]; then
+    URL=$(curl -s --max-time 10 -F "file=@$TMP_FILE" https://0x0.st)
+fi
 
-# 5. Cleanup and Notify
-rm "$TMP_FILE"
-notify-send -t 400 -h string:bgcolor:#95F034 -h string:fgcolor:#000000 "x0.at" "Link copied to clipboard"
+# 4. Fallback to Catbox
+if [[ -z "$URL" || "$URL" != http* ]]; then
+    URL=$(curl -s --max-time 15 -F "reqtype=fileupload" -F "fileToUpload=@$TMP_FILE" https://catbox.moe/user/api.php)
+fi
+
+rm -f "$TMP_FILE"
+
+# 5. Check final result
+if [[ -z "$URL" || "$URL" != http* ]]; then
+    notify-send "Error" "All hosts failed"
+    exit 1
+fi
+
+# 6. Copy URL to clipboard and notify
+echo -n "$URL" | nohup xclip -selection clipboard >/dev/null 2>&1 &
+
+notify-send -t 400 -h string:bgcolor:#95F034 -h string:fgcolor:#000000 "Upload" "Link copied: $URL"

@@ -1,0 +1,26 @@
+#!/bin/sh
+text=$(xclip -o -sel c 2>/dev/null)
+
+if [ -z "$text" ]; then
+  echo "Clipboard is empty." >&2
+  dunstify -u critical "Paste failed" "Clipboard is empty"
+  exit 1
+fi
+
+out=$(printf '%s' "$text" | wgetpaste -s dpaste 2>&1)
+url=$(printf '%s' "$out" | grep -Eo 'https?://[^ ]+' | tail -1)
+
+if [ -z "$url" ]; then
+  out=$(printf '%s' "$text" | curl -sS -m 10 -F 'file=@-' https://0x0.st 2>&1)
+  url=$(printf '%s' "$out" | grep -Eo 'https?://[^ ]+' | tail -1)
+fi
+
+if [ -n "$url" ]; then
+  printf '%s' "$url" | xclip -sel c
+  echo "$url"
+  dunstify "Paste done" "$url" -t 1500
+else
+  echo "Upload failed on all services." >&2
+  dunstify -u critical "Paste failed" "All attempts failed"
+  exit 1
+fi
