@@ -1,0 +1,5 @@
+Linux:
+setsid -f COMMAND
+
+Everywhere else:
+nohup COMMAND >/dev/null 2>&1 &

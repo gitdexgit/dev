@@ -1,0 +1,5 @@
+Make Caps Lock a Control key:
+setxkbmap -option ctrl:nocaps
+
+Reset:
+setxkbmap -option ""

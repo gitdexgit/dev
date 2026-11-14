@@ -1,0 +1,2 @@
+# Update Arch mirrorlist with the fastest nearby HTTPS mirrors:
+sudo reflector --verbose --latest 20 --number 10 --country Morocco,Spain,Portugal,France,Germany --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist --download-timeout 15

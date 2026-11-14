@@ -1,0 +1,7 @@
+# 1. Identify the USB drive letter first, never guess:
+lsblk
+
+# 2. Format and install Ventoy:
+sudo ventoy -i /dev/sdX
+
+# 3. Mount the new partition and copy ISO files directly into it.

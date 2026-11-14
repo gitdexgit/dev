@@ -1,0 +1,7 @@
+RULE: The letter "i" means powers of two.
+
+KiB, MiB, GiB = 1024. Used by RAM and operating systems.
+KB, MB, GB    = 1000. Used on storage drive packaging.
+
+Reference on any machine:
+man units

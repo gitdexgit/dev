@@ -1,0 +1,10 @@
+RULE: Two or three words only. Formula: TARGET-ACTION.txt
+
+1. Hard limit
+   Two or three words, kebab-case, plain text only.
+
+2. Concrete words
+   Name the tool, the machine, or the exact mechanism. Never use vague labels like tips, workflow, or ideas.
+
+3. The panic test
+   Name the file after the two words you will type into fzf when you are stressed and need the fix immediately.

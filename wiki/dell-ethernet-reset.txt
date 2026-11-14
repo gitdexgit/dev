@@ -1,0 +1,6 @@
+# Fix missing Intel Ethernet in Clonezilla when dmesg shows error -3:
+sudo -i
+modprobe -r e1000e
+echo 1 > /sys/bus/pci/devices/0000:00:19.0/reset
+modprobe e1000e
+dhclient -v || dhcpcd

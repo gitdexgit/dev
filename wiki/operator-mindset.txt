@@ -1,0 +1,6 @@
+GOAL: Work on any terminal on Earth with zero config.
+
+1. Default is king. Stick to vanilla tools and standard POSIX flags.
+2. Separate concerns. Vim edits text, the shell manages files with Ctrl+Z and fg.
+3. Eliminate hesitation. One universal habit beats ten custom shortcuts.
+4. Bare install rule. If it fails on a fresh machine, drop it.

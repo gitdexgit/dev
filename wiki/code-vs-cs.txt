@@ -1,0 +1,12 @@
+RULE: Anyone can write code that works. Computer science is solving problems using the least resources.
+
+1. Linear search
+   One step at a time. Correct, but slow. 1,000 items take up to 1,000 checks.
+
+2. Binary search
+   Cut the problem in half on every move. 1,000 items take at most 10 checks.
+
+3. The metric
+   Good design is not just finishing the task, but using the least CPU, RAM, and time.
+
+Inspiration of this note: https://youtu.be/UuIEbpQms8o?t=3514  CS50x - Lecture 0 - Scratch

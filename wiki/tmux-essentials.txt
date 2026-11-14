@@ -1,0 +1,5 @@
+# Fix Vim Escape key lag
+set -sg escape-time 10
+
+# Enable mouse scroll and pane selection
+set -g mouse on

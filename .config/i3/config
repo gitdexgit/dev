@@ -1,6 +1,8 @@
 
-exec --no-startup-id sxhkd
+bindsym Mod4+d exec dmenu_run
 
+# Learn to execute this manualy
+# exec --no-startup-id sxhkd
 
 font pango:Iosevka 10
 new_window pixel 1
@@ -443,17 +445,19 @@ bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
 # bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle
 
 
-
-bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle --model tiny.en
-bindsym Control+Shift+Mod4+x exec --no-startup-id voxtype record toggle --model small.en
+# I do not care about this bs.
+# bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle --model tiny.en
+# bindsym Control+Shift+Mod4+x exec --no-startup-id voxtype record toggle --model small.en
 
 # 1. Continuous prose typing toggle
-bindsym Mod4+i exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py
+
+## Stupid just gives me over head. and more cpu usage.
+# bindsym Mod4+i exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py
+# bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py --command
 
 # 3. Voice commands routed to Needle pipe
 # bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py --command
 
-bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py --command
 
 # bindsym Control+Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
 # bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
@@ -776,7 +780,10 @@ bindsym Mod4+Return exec st -t st
 # prevent demnu from accedently opening many demnu instances. Requires floating demnu window rule for this to work. else having it here won't hurt.
 # bindsym Mod4+d exec --no-startup-id drun
 
-bindsym Mod4+d exec dmenu_run
+
+
+
+
 # bindsym Mod4+Shift+d exec M-x
 # bindsym Mod4+Shift+x exec M-x
 
@@ -1045,10 +1052,10 @@ bindsym ctrl+mod1+shift+Mod4+comma exec "~/scripts/i3/ws-goto.sh 38 '38,:'"
 # =====================================================================
 
 mode "resize" {
-    bindsym l resize shrink width  10 px or 10 ppt
-    bindsym k resize grow   height 10 px or 10 ppt
-    bindsym j resize shrink height 10 px or 10 ppt
-    bindsym h resize grow   width  10 px or 10 ppt
+    bindsym j resize shrink width  10 px or 10 ppt
+    bindsym j resize grow   height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow   width  10 px or 10 ppt
 
     bindsym Right resize shrink width  10 px or 10 ppt
     bindsym Up    resize grow   height 10 px or 10 ppt

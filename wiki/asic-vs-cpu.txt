@@ -1,0 +1,11 @@
+RULE: Be the workshop, not the stamping machine.
+
+1. The factory (ASIC)
+   Built to do one job over and over. Fast, but obsolete the second the requirements change.
+
+2. The workshop (CPU)
+   Uses basic tools, reads any new blueprint, and adapts on the fly. Slower, but impossible to replace.
+
+3. The survival test
+   If your workday is a fixed checklist, a script will take it. If you can fix any broken system using bare tools, you stay
+   dangerous anywhere.

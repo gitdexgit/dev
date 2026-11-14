@@ -1,0 +1,8 @@
+# Set pitch black background with built-in X11 tool:
+xsetroot -solid "#000000"
+
+# If a compositor blocks xsetroot:
+hsetroot -solid "#000000"
+
+# Autostart in ~/.config/i3/config:
+exec_always --no-startup-id xsetroot -solid "#000000"

@@ -1,0 +1,5 @@
+RULE: If a task does not justify standing up to tape it to the wall, it does not matter.
+
+1. Physical filter. Having to stand up kills fake work instantly.
+2. Ambient visibility. The wall never hides behind a minimized terminal.
+3. Physical proof. Rip the paper off the wall and throw it in the bin.
