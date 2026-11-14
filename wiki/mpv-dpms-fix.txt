@@ -1,0 +1,8 @@
+Problem
+  mpv blocks DPMS while a window is open and wakes your monitor after
+  xset dpms force off.
+
+Fix
+  Add one line to ~/.config/mpv/mpv.conf on every new machine.
+
+  stop-screensaver=no

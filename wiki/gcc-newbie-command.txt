@@ -1,0 +1,3 @@
+Use this command args for when learning C for the first time:
+
+gcc -Wextra -Wall -g -std=c99 -o main main.c
