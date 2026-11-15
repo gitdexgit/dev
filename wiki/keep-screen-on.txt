@@ -1,0 +1,7 @@
+RULE: Kill the 10-minute X11 sleep timer when you need to watch or read uninterrupted.
+
+1. Current session
+   Run `xset s off -dpms` in any terminal. Wipes the screen saver and power-off timers until the next reboot.
+
+2. Permanent
+   Add `exec --no-startup-id xset s off -dpms` to `~/.config/i3/config`. Locks it off across every boot, leaving suspend entirely to `susl`.

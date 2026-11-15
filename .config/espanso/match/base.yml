@@ -1,9 +1,22 @@
 matches:
 
-  # The natural sequence is simple:
-  # 1. If you do not get it, run `;;e;`.
-  # 2. Once you think you get it, run `;;w;` to check the limits.
-  # 3. Run `;;g;` to prove you can solve a problem with it.
+  - trigger: ";;job;"
+    force_mode: clipboard
+    replace: "I Work in a private school In Morocco. They pay us 1.6k a month. It's in a small city. I have 16hrs per week. And I have 4th, 5th, 6th, and 7th grades to teach English. Their level is really bad maybe only 1 or 2 students who are good and want to learn. The rest are noobs. It's acceptable because English is like their 3rd languge after French and International Arabic, after darijaa. So yeah. Also 4th 5th and 6th graders have kid's bridge It's some slop badly designed book, meanwhile 7th graders have Captain 1 from blackswain It's a decent textbook, what you expect from a book that is appropriate for 7th graders. Help me prepare or If I ask you something at least now you know the context. I'm just doing this job so that parents stay shut up. And in reality I'm just like into archlinux i3 and hacking and cybercerurity and I might have adhd. And I do jog and go to the gym. And I'm saving for CCNA 300dh every like month while looking for extra 4hrs of work maybe at language center to get more like cash to help with the money.
+
+
+    "
+
+  # For LLM interactions
+  - trigger: ";;pu;"
+    replace: "{{output}}\n\n"
+    force_clipboard: true
+    paste_shortcut: "CTRL+V"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "cat ~/ai/prompts/unslop.md"
 
   # For LLM interactions, learning purposes
   - trigger: ";;e;"
@@ -40,27 +53,6 @@ matches:
     force_mode: clipboard
     replace: "Return only the raw code or command inside a markdown code block. No explanations, no markdown headers, and no introductory or concluding text."
 
-
-
-  - trigger: ";;job;"
-    force_mode: clipboard
-    replace: "I Work in a private school In Morocco. They pay us 1.6k a month. It's in a small city. I have 16hrs per week. And I have 4th, 5th, 6th, and 7th grades to teach English. Their level is really bad maybe only 1 or 2 students who are good and want to learn. The rest are noobs. It's acceptable because English is like their 3rd languge after French and International Arabic, after darijaa. So yeah. Also 4th 5th and 6th graders have kid's bridge It's some slop badly designed book, meanwhile 7th graders have Captain 1 from blackswain It's a decent textbook, what you expect from a book that is appropriate for 7th graders. Help me prepare or If I ask you something at least now you know the context. I'm just doing this job so that parents stay shut up. And in reality I'm just like into archlinux i3 and hacking and cybercerurity and I might have adhd. And I do jog and go to the gym. And I'm saving for CCNA 300dh every like month while looking for extra 4hrs of work maybe at language center to get more like cash to help with the money.
-
-
-    "
-
-
-  # For LLM interactions
-  - trigger: ";;pu;"
-    replace: "{{output}}\n\n"
-    force_clipboard: true
-    paste_shortcut: "CTRL+V"
-    vars:
-      - name: output
-        type: shell
-        params:
-          cmd: "cat ~/ai/prompts/unslop.md"
-
   - trigger: ";;pw;"
     replace: "{{output}}"
     force_clipboard: true
@@ -70,78 +62,6 @@ matches:
         type: shell
         params:
           cmd: "cat ~/ai/prompts/wait-what.md"
-
-
-
-  - trigger: ";;timer;"
-    replace: "echo $|$; timer"
-
-  # very useful when asking and answering questions to llm
-  - trigger: ";;q;"
-    force_mode: clipboard
-    vars:
-      - name: clip
-        type: clipboard
-    replace: |
-      questions:
-      {{clip}}
-      answer:
-
-  - trigger: ";;qq;"
-    force_mode: clipboard
-    vars:
-      - name: clip
-        type: clipboard
-    replace: |
-      questions:
-      $|$
-      answer:
-
-  - trigger: ";;todo;"
-    replace: "- [ ] "
-
-  ################ Coding blocks #######################
-  - trigger: ";;`bash;"
-    replace: "```bash\n$|$\n```"
-    propagate_case: false
-
-  - trigger: ";;`py;"
-    replace: "```py\n$|$\n```"
-    propagate_case: false
-
-  - trigger: ";;`c;"
-    replace: "```c\n$|$\n```"
-    propagate_case: false
-
-  - trigger: ";;`scm;"
-    replace: "```c\n$|$\n```"
-    propagate_case: false
-
-  - trigger: ";;`elisp;"
-    replace: "```c\n$|$\n```"
-    propagate_case: false
-
-  - trigger: ";;`lua;"
-    replace: "```lua\n$|$\n```"
-    propagate_case: false
-
-  - trigger: ";;`;"
-    replace: "```\n$|$\n```"
-    propagate_case: false
-
-
-
-  ################ Coding blocks with clipboard content inside #######################
-  - trigger: ";;cb;"
-    replace: "```\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
 
   - trigger: ";;discord-hide;"
     replace: |
@@ -157,67 +77,6 @@ matches:
     force_clipboard: true
     paste_shortcut: "CTRL+V"
 
-  - trigger: ";;luacb;"
-    replace: "```lua\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-
-  - trigger: ";;ccb;"
-    replace: "```c\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-  - trigger: ";;pythoncb;"
-    replace: "```python\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-  - trigger: ";;bcb;"
-    replace: "```bash\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-  - trigger: ";;bashcb;"
-    replace: "```bash\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
-  - trigger: ";;pycb;"
-    replace: "```py\n{{content}}\n```\n\n"
-    force_clipboard: true
-    paste_shortcut: "Ctrl+V"
-    vars:
-      - name: content
-        type: shell
-        params:
-          cmd: "bash ~/scripts/espanso/paste-wrapped.sh"
-
 
   ############### Email section ##############################
 
@@ -228,9 +87,7 @@ matches:
   - trigger: ';;g.f;'
     replace: 'fagottarik@gmail.com'
 
-
   ############### Dev console when using youtube, hit f12 and type to make player faster or slower ############################
-
 
   - trigger: ";;ytx5;"
     replace: "document.querySelector('video').playbackRate = 5;"

@@ -1,0 +1,2 @@
+#!/bin/bash
+${TERMINAL:-x-terminal-emulator} -e tmux new-session -A -s btop

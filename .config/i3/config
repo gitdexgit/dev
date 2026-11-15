@@ -1,910 +1,21 @@
 
-bindsym Mod4+d exec dmenu_run
 
-# Learn to execute this manualy
-# exec --no-startup-id sxhkd
-
-font pango:Iosevka 10
-new_window pixel 1
-new_float pixel 1
-hide_edge_borders both
-
-# less mouse usage the better
-focus_follows_mouse no
-
-# I hate the mouse scroll on the tabbed. I often hit it by mistake
-bindsym button4 nop
-bindsym button5 nop
-
-
-floating_modifier Mod4
-tiling_drag modifier titlebar
-
-
-for_window [instance="floating_bookmarks"] floating enable, resize set 1550 900, move position center
-
-for_window [instance="floating_history"] floating enable, resize set 1550 900, move position center
-
-for_window [instance="floating_switcher"] floating enable, resize set 1920 345, move position 0 px 730 px, border pixel 1
-
-for_window [instance="leader-menu"] floating enable, resize set 700 400, move position center
-
-
-
-# Only ensure it defaults to floating without a heavy border
-# for_window [instance="floating_switcher"] floating enable, border pixel 1
-
-
-for_window [class="st_btop"] floating enable, sticky enable, resize set 90 ppt 85 ppt, move position 5 ppt 4 ppt
-
-bindsym Mod4+Shift+b exec --no-startup-id ~/.local/bin/focus-btop
-
-bindsym Mod4+control+space exec --no-startup-id ~/.local/bin/toggle-bar
-
-
-bindsym Mod1+Control+e exec --no-startup-id thunar
-# bindsym Mod4+Shift+v exec --no-startup-id "warpd --hint"
-bindsym Mod4+Shift+f exec --no-startup-id "warpd --hint"
-# bindsym Mod4+control+f exec --no-startup-id "warpd --hint"
-
-bindsym Mod4+control+f exec --no-startup-id focus-firefox
-
-
-
-set $ws1  "1"
-set $ws2  "2"
-set $ws3  "3"
-set $ws4  "4"
-set $ws5  "5"
-set $ws6  "6"
-set $ws7  "7"
-set $ws8  "8"
-set $ws9  "9"
-set $ws10 "10"
-
-set $ws11 "11q:"
-set $ws12 "12w:"
-set $ws13 "13e:"
-set $ws14 "14r:"
-set $ws15 "15t:"
-set $ws16 "16y:"
-set $ws17 "17u:"
-set $ws18 "18i:"
-set $ws19 "19o:"
-set $ws20 "20p:"
-set $ws21 "21a:"
-set $ws22 "22s:"
-set $ws23 "23d:"
-set $ws24 "24f:"
-set $ws25 "25g:"
-set $ws26 "26h:"
-set $ws27 "27j:"
-set $ws28 "28k:"
-set $ws29 "29l:"
-set $ws30 "30;:"
-set $ws31 "31z:"
-set $ws32 "32x:"
-set $ws33 "33c:"
-set $ws34 "34v:"
-set $ws35 "35b:"
-set $ws36 "36n:"
-set $ws37 "37m:"
-set $ws38 "38,:"
-set $ws39 "39.:"
-set $ws40 "40/:"
-
-
-
-
-# =====================================================================
-# WORKSPACE OUTPUT ASSIGNMENTS (single declaration, no duplicates)
-# =====================================================================
-
-workspace 1  output HDMI-1
-workspace 2  output HDMI-1
-workspace 3  output HDMI-1
-workspace 4  output HDMI-1
-workspace 5  output HDMI-1
-workspace 6  output HDMI-1
-workspace 7  output HDMI-1
-workspace 8  output HDMI-1
-workspace 9  output HDMI-1
-workspace 10 output HDMI-1
-workspace 11 output HDMI-1
-workspace 12 output HDMI-1
-workspace 13 output HDMI-1
-workspace 14 output HDMI-1
-workspace 15 output HDMI-1
-workspace 16 output HDMI-1
-workspace 17 output HDMI-1
-workspace 18 output HDMI-1
-workspace 19 output HDMI-1
-workspace 20 output HDMI-1
-workspace 21 output HDMI-1
-workspace 22 output HDMI-1
-workspace 23 output HDMI-1
-workspace 24 output HDMI-1
-workspace 25 output HDMI-1
-workspace 26 output HDMI-1
-workspace 27 output HDMI-1
-workspace 28 output HDMI-1
-workspace 29 output HDMI-1
-workspace 30 output HDMI-1
-workspace 31 output HDMI-1
-workspace 32 output HDMI-1
-workspace 33 output HDMI-1
-workspace 34 output HDMI-1
-workspace 35 output HDMI-1
-workspace 36 output HDMI-1
-workspace 37 output HDMI-1
-workspace 38 output HDMI-1
-workspace 39 output HDMI-1
-workspace 40 output HDMI-1
-workspace 41 output eDP-1
-workspace 42 output eDP-1
-workspace 43 output eDP-1
-
-
-# =====================================================================
-# AUTOSTART
-# =====================================================================
-
-exec --no-startup-id emacs --daemon
-exec --no-startup-id noisetorch -i
-
-# exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon.py
-
-# Not sure if this works or not I missed my voice to commands setup even though it's kinda stupid and meh lol -  Tue Oct 27 12:48:46 PM +00 2026
-# exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/daemon_needle.py
-
-# For some reason this stopped working, I missed my voice to commands setup even though it's kinda stupid and meh lol - Tue Oct 27 12:48:46 PM +00 2026
-# exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py run idle
-
-
-
-# This is dogshit for now
-# exec --no-startup-id xremap --watch=config --device "keyd virtual keyboard" ~/.config/xremap.yml
-
-# Testing this instead of xremap
-
-
-
-
-# fixes grmmit-mpx
-# exec --no-startup-id picom --backend glx --vsync --no-use-damage --config /dev/null
-
-# compositor alternative (picom better)
-exec --no-startup-id xcompmgr -n
-
-# fixes ueberzugpp/Yazi previews inside tmux
-exec --no-startup-id ~/scripts/fix/yazi-ueberzugpp-tmux-fix
-
-# 1. Start the daemon on login
-# exec --no-startup-id skippy-xd --start-daemon
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id nm-applet
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-# exec --no-startup-id espanso daemon
-exec --no-startup-id flameshot
-
-# No screen saver turn off
-# exec --no-startup-id xset s off -dpms
-
-# with screen saver
-exec --no-startup-id xset s off +dpms
-
-# exec --no-startup-id qalculate-gtk
-exec --no-startup-id dunst
-# exec --no-startup-id zeal
-exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
-# exec --no-startup-id xbindkeys
-
-exec_always --no-startup-id ~/.config/i3/scripts/i3-focus-tracker.sh
-
-exec_always --no-startup-id sh -c 'pkill -x switch-thumbs; exec switch-thumbs daemon'
-
-exec_always --no-startup-id sh -c "setxkbmap us; xmodmap ~/.Xmodmap; xset r rate 220 50"
-
-exec --no-startup-id xsetroot -solid "#000000"
-exec_always --no-startup-id hsetroot -solid '#000000'
-
-
-# CopyQ — launch daemon and show the window on startup
-# exec --no-startup-id copyq
-# exec --no-startup-id copyq show
-
-# This is meh because you don't like ingore keepass you know.
-# exec --no-startup-id clipmenud
-
-
-exec_always --no-startup-id env CM_IGNORE_WINDOW=".*KeePassXC.*" clipmenud
-# bindsym Mod4+Shift+v exec --no-startup-id clipmenu
-bindsym Mod4+c exec --no-startup-id clipmenu
-
-# exec --no-startup-id ~/.local/bin/greenclip daemon
-# bindsym Mod4+c exec --no-startup-id sh -c '~/.local/bin/greenclip print | sed "/^$/d" | dmenu -i -l 10 | xargs -r -d"\n" -I{} ~/.local/bin/greenclip print "{}"'
-
-
-# Gromit-MPX (screen annotation)
-# exec --no-startup-id sh -c "sleep 6; gromit-mpx --key none --undo-key none -o 0.4"
-exec --no-startup-id sh -c "sleep 6; gromit-mpx -o 0.5"
-
-# Razer DPI
-exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"
-
-# Firefox profiles
-exec --no-startup-id sleep 5  && firefox -P default-release -c default-release
-# exec --no-startup-id sleep 10 && firefox -P ai -c ai
-
-# Alacritty daemon (silent — suppresses copy log noise)
-# exec --no-startup-id st -qq --daemon --socket /tmp/st-daemon.sock
-
-# urxvt daemon
-# exec --no-startup-id urxvtd -q -o -f
-
-## It has problems in i3... Especially if you have tdrop... after some usage you start getting windows tearing and everything... So I guess I'm no longer using skippy-xd... Not that I use it that much tbh
-# Skippy-XD (expose-style window switcher)
-# exec --no-startup-id skippy-xd --start-daemon
-
-# i3-back
-exec --no-startup-id i3-back
-
-
-# trey icon for tdrop terminals.
-# exec --no-startup-id yad --notification --image="/usr/share/icons/Papirus/16x16/apps/draftsight.svg" --text="Click to send Super+Backspace" --command="xdotool key super+shift+g"
-# exec --no-startup-id yad --notification --image="edit-clear" --text="Click to send Super+Backspace" --command="xdotool key alt+BackSpace"
-
-
-exec --no-startup-id yad --notification --image="btop" --text="Click to send Super+Backspace" --command="xdotool key super+shift+b"
-exec --no-startup-id ad -y-notification --image="clock" --text="Task/Time Terminal" --command="xdotool key super+shift+t"
-# exec --no-startup-id yad --notification --image="Alacritty" --text="Click to send Super+Backspace" --command="xdotool key super+BackSpace"
-
-
-# exec --no-startup-id yad --notification --image="zeal" --text="Zeal Docs" --command="xdotool key super+shift+z"
-# exec --no-startup-id yad --notification --image="utilities-terminal" --text="QTerminal" --command="xdotool key super+F12"
-
-# exec --no-startup-id yad --notification --image="vesktop" --text="Click to send Super+Backspace" --command="xdotool key super+control+v"
-# exec --no-startup-id yad --notification --image="copyq" --text="Click to send Super+Backspace" --command="xdotool key super+control+c"
-
-# exec --no-startup-id yad --notification --image="yast-release-notes" --text="Click to send Super+Backspace" --command="xdotool key super+shift+f"
-# exec --no-startup-id yad --notification --image="text-wiki" --text="Click to send Super+Backspace" --command="xdotool key super+alt+BackSpace"
-# exec --no-startup-id yad --notification --image="cpu" --text="Click to send Super+Backspace" --command="xdotool key super+shift+BackSpace"
-# exec --no-startup-id yad --notification --image="preferences-system" --text="Click to send Super+Backspace" --command="xdotool key super+control+BackSpace"
-# exec --no-startup-id yad --notification --image="Alacritty" --text="Click to send Super+Backspace" --command="xdotool key control+grave"
-# exec --no-startup-id yad --notification --image="qterminal" --text="Click to send Super+Backspace" --command="xdotool key super+F12"
-# exec --no-startup-id yad --notification --image="urxvt" --text="Click to send Super+Backspace" --command="xdotool key super+BackSpace"
-
-# Land on ws1 after everything has loaded
-exec --no-startup-id sleep 12 && i3-msg workspace 1
-
-
-# =====================================================================
-# WINDOW ASSIGNMENTS
-# =====================================================================
-
-assign [class="default-release"] $ws1
-
-# useless
-# assign [class="^ai$"]              $ws2
-
-
-# assign [class="KeePassXC"]       $ws9
-
-# It has been moved to the scratchpad
-# assign [class="copyq"]           $ws10
-
-# =====================================================================
-# WINDOW RULES (floating)
-# =====================================================================
-
-
-# This tells i3: "Don't tile dmenu, let it float on top"
-
-
-# Float dmenu and pin to top-center
-for_window [class="dmenu"] floating enable, border pixel 2, move absolute position 0 0
-
-# # Target the specific title we set in the script
-# for_window [title="screenshot_pin"] floating enable, sticky disable, border none
-
-# Send Qalculate to scratchpad automatically
-# for_window [class="Qalculate-gtk"] floating enable, move scratchpad
-
-# Only float windows with the specific class 'pin_shot'
-for_window [class="pin_shot"] floating enable, border none
-
-for_window [instance="godot"] floating enable
-for_window [title="Godot"] floating enable
-
-# Automatically send Zeal to the "background" (scratchpad) when it opens
-# for_window [class="Zeal"] move scratchpad
-# for_window [class="Zeal"] floating enable
-# for_window [class="Zeal"] move position center
-
-
-# for_window [class="mpv"] floating enable, border none
-for_window [class="mpv"] border none
-
-
-# Zeal
-# for_window [class="Zeal"] floating enable, move position center, move scratchpad
-
-# for_window [class="Zeal"] floating enable, move scratchpad
-# for_window [class="Zeal"] floating enable, move scratchpad
-# for_window [class="vesktop"] floating enable, move scratchpad
-
-# for_window [class="vesktop"] floating enable, border pixel 2, resize set 1368 px 810 px, move position 36 45, move scratchpad
-
-
-# 2. Window Rule (Add to WINDOW RULES section)
-# for_window [class="vesktop"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
-
-
-
-# for copyq
-# for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
-
-# CopyQ
-for_window [class="copyq"] floating enable, move scratchpad
-# for_window [class="copyq"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
-
-# for_window [class="KeePassXC"] floating enable, move scratchpad
-# for_window [class="obs"] floating enable, move scratchpad
-# for_window [class="scrcpy"] floating enable, move scratchpad
-# for_window [class="KeePassXC"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
-# for_window [class="org.mozilla.Thunderbird"] floating enable, border pixel 2, resize set 95 ppt 90 ppt, move position center, move scratchpad
-
-
-
-# Style and position for CopyQ
-# for_window [class="copyq"] floating enable, border pixel 0, move position 0 0, resize set 1440 900
-# for_window [class="copyq"] border pixel 0
-
-# for_window [class="KeePassXC"] floating enable, border pixel 0, resize set 1440 900, focus, exec --no-startup-id "i3-msg move absolute position 0 0"
-# for_window [class="KeePassXC"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
-# for_window [class="osb"] focus, exec --no-startup-id "i3-msg move absolute position 0 0"
-
-for_window [instance="floating_thunar"]   floating enable
-
-
-# for_window [class="st_scratch"]    floating enable, border pixel 0, move position center
-# for_window [class="st_draft"]      floating enable, border pixel 0, move position center
-# for_window [class="st_task"]       floating enable, border pixel 0, move position center
-# for_window [class="st_btop"]       floating enable, border pixel 0, move position center
-# for_window [class="st_config"]     floating enable, border pixel 0, move position center
-# for_window [class="st_cpu"]        floating enable, border pixel 0, move position center
-
-# for_window [class="st_scratch"]    floating enable, move position center
-# for_window [class="st_work"]      floating enable, move position center
-# for_window [class="st_draft"]      floating enable, move position center
-# for_window [class="st_task"]       floating enable, move position center
-# for_window [class="st_btop"]       floating enable, move position center
-# for_window [class="st_config"]     floating enable, move position center
-
-# for_window [class="st_scratch"]    floating enable
-# for_window [class="st_draft"]      floating enable
-# for_window [class="st_scratch"]       floating enable
-# for_window [class="st_btop"]       floating enable
-
-
-
-for_window [class="st_learn"] floating enable, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
-# I prefer space+f1 or sipmly typing focus-learn
-bindsym Mod4+Control+Shift+f exec --no-startup-id ~/.local/bin/focus-learn
-
-for_window [class="st_config"] floating enable, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
-# I prefer space+f2 or sipmly typing focus-config
-bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.local/bin/focus-config
-
-for_window [class="st_scratch"] floating enable, border none, sticky enable, resize set 100 ppt 98 ppt, move position -3 -8
-# I prefer space+f3 or sipmly typing focus-scratch
-bindsym Mod4+Shift+t exec --no-startup-id ~/.local/bin/focus-scratch
-
-
-
-
-
-
-
-
-
-# --- Tmux Session Tiled Terminals ---
-# bindsym Mod4+Control+s exec st -e tmux new-session -A -s session
-# bindsym Mod4+Control+l exec st -e tmux new-session -A -s learn
-# bindsym Mod4+Control+b exec st -e tmux new-session -A -s btop
-# bindsym Mod4+Control+Left exec st -e tmux new-session -A -s btop
-# bindsym Mod4+Control+c exec st -e tmux new-session -A -s config
-
-# I lose the frame that was focused if I close emacs that is running in daemon
-# bindsym Mod4+Control+e exec emacsclient -c
-bindsym Mod4+Control+e exec ~/.local/bin/e
-
-# bindsym Mod4+Control+s exec st -t session -e tmux new-session -A -s "*scratch*"
-bindsym Mod1+Control+s exec ~/.local/bin/screenshot
-
-
-for_window [title="learn"] border none
-bindsym Mod4+Control+l exec st -t learn -e tmux new-session -A -s "*learn*"
-
-bindsym Control+Mod1+l exec --no-startup-id ~/.local/bin/so-lo
-
-# for_window [class="popterm"] floating enable, border pixel 2, move position center, move up 460 px
-# bindsym Mod4+apostrophe exec st -c popterm -g 70x2 -e ~/.local/bin/popterm
-
-
-for_window [title="^btop$"] border none
-bindsym Mod4+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
-# bindsym Mod4+Control+w exec st -t word -e tmux new-session -A -s word
-# bindsym Mod4+Control+Left exec st -t btop -e tmux new-session -A -s btop
-
-
-for_window [title="^config$"] border none
-bindsym Mod4+Control+c exec st -t config -e tmux new-session -A -s "*config*"
-
-# Simply hit scrolllock or escape space
-# bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle
-
-
-# I do not care about this bs.
-# bindsym Mod4+Shift+x exec --no-startup-id voxtype record toggle --model tiny.en
-# bindsym Control+Shift+Mod4+x exec --no-startup-id voxtype record toggle --model small.en
-
-# 1. Continuous prose typing toggle
-
-## Stupid just gives me over head. and more cpu usage.
-# bindsym Mod4+i exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py
-# bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/whistle_daemon.py --command
-
-# 3. Voice commands routed to Needle pipe
-# bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/venv/bin/python /home/dex/tools/whistle/voice_daemon.py --command
-
-
-# bindsym Control+Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
-# bindsym Mod4+x exec --no-startup-id /home/dex/tools/whistle/toggle.sh
-
-
-# --- Kill Window ---
-# NOTE: Make sure to comment out line 454 (Qalculate) to avoid a conflict!
-bindsym Mod4+Control+q kill
-
-bindsym Mod4+BackSpace exec --no-startup-id ~/.local/bin/volume_control.sh mute
-bindsym Mod4+minus exec --no-startup-id ~/.local/bin/volume_control.sh down
-bindsym Mod4+equal exec --no-startup-id ~/.local/bin/volume_control.sh up
-
-
-
-
-# =====================================================================
-# KEYBINDINGS — APPLICATIONS
-# =====================================================================
-
-
-bindsym Mod4+Mod1+l exec --no-startup-id i3lock
-
-
-# All of these need fixing but I don't use them that much though..
-# --- Window Management (wmctrl) - QUOTED TO FIX ERRORS ---
-# bindsym Mod4+Mod1+l exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
-# bindsym Mod4+Mod1+Right exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
-# bindsym Mod4+Mod1+Up exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
-# bindsym Mod4+Mod1+k exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
-# bindsym Mod4+Mod1+Down exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
-# bindsym Mod4+Mod1+j exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
-# bindsym Mod4+Mod1+Left exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
-# bindsym Mod4+Mod1+h exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
-# bindsym Mod4+Mod1+u exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,419"
-# bindsym Mod4+Mod1+o exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,419"
-# bindsym Mod4+Mod1+period exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,457,716,396"
-# bindsym Mod4+Mod1+control+m exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,456,716,396"
-# bindsym Mod4+Mod1+f exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,19,1435,855"
-# bindsym Mod4+Mod1+slash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
-# bindsym Mod4+Mod1+backslash exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,330,147,790,504"
-
-bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, border none, move position 0 0, resize set 1924 1075'"
-
-# bindsym Mod1+Mod4+F11 exec --no-startup-id "i3-msg 'floating enable, move position 0 0, resize set 1924 1075'"
-
-# bindsym Mod1+F11 exec --no-startup-id "i3-msg 'border none, move position 0 0, resize set 1924 1075'"
-# bindsym Mod1+F11 exec --no-startup-id "i3-msg 'floating enable, move position -3 0, resize set 1924 1075'"
-bindsym Mod1+Shift+F11 exec --no-startup-id "~/.local/bin/toggle-borders"
-bindsym Mod1+Shift+Control+F11 exec --no-startup-id "~/.local/bin/toggle-borders-pixel-1"
-
-
-
-# --- Desktop Navigation ---
-bindsym Control+Mod1+Right exec --no-startup-id "xdotool set_desktop --relative -- 1"
-bindsym Control+Mod1+Left exec --no-startup-id "xdotool set_desktop --relative -- -1"
-
-# --- Screenshots (Fixed alt+Print to Mod1+Print) ---
-# This doesn't:
-# bindsym --release Print exec --no-startup-id bash -c "WID=$(xdotool getactivewindow); flameshot gui; xdotool windowfocus $WID"
-#
-# You have to do it this way:
-bindsym --release Print exec --no-startup-id ~/.local/bin/f-scr
-
-## Doesn't work and I probably will forget this
-# bindsym Mod4+Mod1+Print exec --no-startup-id ~/.local/bin/ocr-selection
-
-## Doesn't work and I probably will forget this
-# bindsym --release Mod1+Print exec --no-startup-id "flameshot gui -s --pin"
-
-
-# bindsym --release Control+Mod1+c exec --no-startup-id sh -c "scrot -s -o - | xclip -selection clipboard -t image/png"
-
-# bindsym --release Mod4+Print exec --no-startup-id "~/.local/bin/screenshot-menu"
-
-## These do not work on this old keyboard
-# bindsym --release Shift+Print exec --no-startup-id "~/.local/bin/record-area.sh"
-# bindsym --release Mod4+Control+3 exec --no-startup-id "~/.local/bin/record-area-pause-toggle"
-# bindsym --release Mod4+Control+4 exec --no-startup-id "~/.local/bin/record-area-stop"
-
-
-# bindsym Mod4+Mod1+p exec --no-startup-id sh -c 'URL=$(xclip -o -sel c | wgetpaste) && echo -n "$URL" | xclip -sel c && dunstify "Paste Done" "$URL" -t 1500'
-
-
-# --- Uploads & Notes ---
-bindsym Mod4+Mod1+i exec --no-startup-id "iupload"
-
-# Doesn't work on my keyboard just remember the name.
-# bindsym Mod4+control+i exec --no-startup-id ~/.local/bin/image-upload-x0
-
-# just remember the name.
-# bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/tupload
-# bindsym Mod4+Shift+p exec --no-startup-id ~/.local/bin/upload-text-to-bin
-bindsym Mod4+Shift+n exec --no-startup-id ~/.local/bin/night-light
-
-# --- AI / LLM Tools ---
-# bindsym Mod4+Shift+Control+u exec --no-startup-id "~/scripts/ddesk/typing/uppercase_selection.sh"
-# bindsym Mod4+Shift+Control+l exec --no-startup-id "~/scripts/ddesk/typing/lowercase_selection.sh"
-# bindsym Mod4+Shift+Control+g exec --no-startup-id "~/scripts/ddesk/correct_text_spelling.sh"
-# bindsym Mod4+Shift+Control+Mod1+g exec --no-startup-id "~/scripts/ddesk/correct_text.sh"
-# bindsym Mod4+Mod1+Control+w exec --no-startup-id "~/scripts/ai/wiki_search.sh"
-# bindsym Mod4+Mod1+Control+n exec --no-startup-id "~/scripts/ai/names_suggestion.sh"
-# bindsym Mod4+Mod1+Control+l exec --no-startup-id "~/scripts/ai/commit.sh"
-# bindsym Mod4+Mod1+Control+k exec --no-startup-id "~/scripts/ai/taskdump.sh"
-# bindsym Mod4+Mod1+Control+i exec --no-startup-id "~/scripts/ai/clarify.sh"
-# bindsym Mod4+Mod1+Control+y exec --no-startup-id "~/scripts/ai/search_queries_suggestion.sh"
-# bindsym Mod4+Mod1+Control+r exec --no-startup-id "~/scripts/ai/cav.sh"
-# bindsym Mod4+Mod1+Control+g exec --no-startup-id "~/scripts/ai/fix_text_from_clipboard.sh"
-# bindsym Mod4+Mod1+Control+d exec --no-startup-id "~/scripts/ai/think.sh"
-# bindsym Mod4+Mod1+Control+q exec --no-startup-id "~/scripts/ai/atomic_question_maker.sh"
-# bindsym Mod4+Mod1+Control+e exec --no-startup-id "~/scripts/ai/learn.sh"
-
-# --- Resource & System ---
-
-# Caps+A+x q k
-# bindsym Mod4+Shift+x exec --no-startup-id "xkill"
-
-# Tab-x q c
-# bindsym Control+Mod1+c exec --no-startup-id "xcontrol -c"
-
-# Tab-x q z
-# bindsym Control+Mod1+z exec --no-startup-id "xcontrol -z"
-
-# I'm tempted to make a tab-x a m... but Mod+shift+m is faster... I'm tempted to make it mod+m because we moved mod+m to Tab-x t m
-bindsym Mod4+m exec --no-startup-id "~/.local/bin/mic-toggle"
-
-
-# --- Rofi & Navigation ---
-# we keep alt+f1 because in kali linux that is the default for the xfce4 replacement program for demnu that comes by default
-bindsym Mod1+F1 exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
-
-# Just hold Alt then hold x for 130s
-# Well this goes well with mod+d
-# bindsym Mod4+Shift+d exec --no-startup-id "~/scripts/rofi/rofi-run.sh"
-
-
-
-
-# Tab-x 8 e
-# bindsym Mod4+Mod1+e exec --no-startup-id "rofi -show emoji"
-# bindsym Mod4+Mod1+e exec --no-startup-id emoji
-
-# Tab-x s
-# bindsym Mod4+y exec --no-startup-id "~/scripts/rofi/quick-search-i3.sh"
-# bindsym Mod4+y exec --no-startup-id quick-search
-
-# Tab-x S
-# bindsym Mod4+Shift+y exec --no-startup-id "~/scripts/rofi/rofi-web-search.sh"
-# bindsym Mod4+Shift+y exec --no-startup-id web-search
-
-
-bindsym Mod4+y exec --no-startup-id quick-search
-bindsym Mod4+Shift+y exec --no-startup-id web-search
-
-
-
-# bindsym Mod4+b exec --no-startup-id "~/.local/bin/rofi-switch-all-windows-except-habit-windows"
-
-# Caps+A+x b --> switch-buffer
-bindsym Mod4+b exec --no-startup-id switch-buffer
-# bindsym Mod4+Mod1+r exec --no-startup-id "rofi -show windowcd"
-
-
-# open rofi. Show workspaces as options. Select option; rofi Moves current window to a selected option.
-bindsym Mod4+Mod1+m exec --no-startup-id move-buffer-to-workspace
-
-
-# I'm not sure about this Do I even use this?
-# Meh... good idea but no money and it's stupid maybe? idk. Needs Jev. then jev routs to proper script then script runs the model.
-# bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
-
-# for_window [class="games_float"] floating enable, resize set 1400 500, sticky enable, move position center, move up 250 px, move right 255 px, move scratchpad
-
-for_window [class="games_float"] floating enable, resize set 1400 500, sticky enable, move position 515 px 40 px, move scratchpad
-
-bindsym Mod4+Shift+g exec --no-startup-id ~/.local/bin/focus-games
-
-
-for_window [title="^games$"] border none
-bindsym Mod4+Control+g exec st -t games -e tmux new-session -A -s "*games*"
-
-# bindsym Mod4+Control+b exec st -t btop -e tmux new-session -A -s "*btop*"
-
-
-
-# bindsym Mod4+Shift+g exec --no-startup-id "~/.local/bin/ai-run"
-
-# --- Mouse Window Management ---
-# bindsym Control+Shift+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,721,16,716,837"
-# bindsym Control+Mod4+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
-# bindsym Control+Mod1+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,1434,419"
-# bindsym Control+Mod1+button5 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,455,1434,419"
-# bindsym Control+Shift+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,3,16,716,837"
-# bindsym Control+Mod4+button4 exec --no-startup-id "wmctrl -r :ACTIVE: -e 0,73,36,1294,765"
-
-# --- Misc Tools ---
-
-# why do you even care about this?
-# I mean idk whatever I guess
-# It's a cool script but like it's useless if I want to get the time I can get it real quick no big deal I think.
-# bindsym Control+Mod1+t exec --no-startup-id "~/scripts/yt/yt_get_current_player_timestamps.sh"
-
-bindsym Mod1+F2 exec --no-startup-id "rofi -show drun -show-icons"
-
-# we don't really use this anymore... sadly... I think rofi is simpler and faster
-# bindsym Mod1+F3 exec --no-startup-id "xfce4-appfinder -c"
-
-# Oh this autoshot script I'm not sure It's here. I guess... I should maybe start using it but I'm not really using it.
-# I think this is only good for when like I'm making something. But for like now ... I'll keep it for now but maybe
-# We change it in the future but it's cool
-# This is a very well done script I like it. Very nice usage of the dunstify very nice use of the other tools and with keyd'S caps+meta+1 and 2.. it's
-# some good stuff
-bindsym Control+Mod4+a exec --no-startup-id "autoshot-toggle"
-bindsym Control+Mod4+1 exec --no-startup-id "autoshot-toggle"
-bindsym Control+Mod4+2 exec --no-startup-id "autoshot-pause"
-
-bindsym Control+Mod4+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
-# bindsym Control+Mod4+v exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
-
-# I think I killed the gnome-sound-recorder I think I no longer use it I didn't really find any particular use case for it tbh
-# Just use audacity or simple arecord it does the job I think. idk man. I don't record audio that much.
-# bindsym Control+Mod4+8 exec --no-startup-id "env ADW_DEBUG_COLOR_SCHEME=prefer-dark gnome-sound-recorder"
-
-# So we I think we killed gnome-clock I no longer use it
-# bindsym Control+Mod4+9 exec --no-startup-id "env GTK_THEME=Arc-Dark gnome-clocks"
-
-# Turn monitor off
-#
-# this sucks I have to click it 3 times
-# bindsym Mod4+Shift+Mod1+Control+0 exec --no-startup-id "st -e xset dpms force off"
-#
-# wow all I needed is a tiny sleep and it works perfectly now
-bindsym Mod4+Shift+Mod1+Control+0 exec --no-startup-id "sleep 0.5; xset dpms force off"
-
-
-# --- Window & Workspace Rename ---
-# bindsym Mod4+Control+t exec --no-startup-id "/home/dex/scripts/ddesk/nothing/rename_window.sh"
-
-# Caps+A+x x r --> rename-buffer
-# bindsym Mod4+Control+r exec --no-startup-id rename-buffer
-
-
-# Caps+A+x t r --> rename-buffer
-# bindsym Mod4+Mod1+t exec --no-startup-id "rename-workspace"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###
-### .file manager for keyd stuff
-###
-
-# Downloads shortcut (Control+Alt+F24)
-bindsym Control+Mod1+F24 exec --no-startup-id thunar --name=floating_thunar /home/$USER/Workspace/Downloads/
-
-# ------------
-
-# Terminal (Alacritty via daemon)
-# Open st terminal but attach to tmux-sessionizer and we make sure we never open a new tmux-session because it's stuck at picker. Really fast and handy. should be default
-# bindsym Mod4+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window -e tmux-sessionizer || st -qq -e tmux-sessionizer
-
-# bindsym Mod4+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window -e zsh -c tmux-sessionizer || st -qq -e zsh -c tmux-sessionizer
-# bindsym Mod4+Return exec st -e zsh -c tmux-sessionizer
-
-
-# I to be honest don't use this... I like the idea of a floating thing but it's stupid...
-# You know what just make this some ai agent thing It makes sense... just like herder thing on omarchy...
-# bindsym Mod4+control+Return exec st -c st_float -e zsh -c tmux-sessionizer
-
-# bindsym Mod4+Shift+Return exec st -e zsh -c tmux-sessionizer
-
-# bindsym Mod4+Mdo1+Return exec st -e tmux
-bindsym Control+Mod1+t exec st -e tmux
-bindsym Mod4+t exec st -e tmux-pick
-
-
-for_window [class="st_float"] floating enable, resize set 90 ppt 90 ppt, move position center
-
-# Open default st temrinal. Just the same as you would open dmenu and type st
-# bindsym Mod4+Shift+Return exec st -qq msg --socket /tmp/st-daemon.sock create-window || st -qq
-
-bindsym Mod4+Return exec st -t st
-
-
-
-
-# Toggle Qalculate scratchpad
-# bindsym Control+Mod4+q [class="Qalculate-gtk"] scratchpad show, move position center
-
-# USELESS:
-# I no longe use urxvtc. It's not worth it. st is way worth it for a little bit extra price.
-#
-# Terminal (urxvtc — clean, no tmux)
-# bindsym Mod4+Shift+Return exec --no-startup-id urxvtc
-
-# Launcher (default)
-# bindsym Mod4+d exec --no-startup-id dmenu_run
-
-
-# prevent demnu from accedently opening many demnu instances. Requires floating demnu window rule for this to work. else having it here won't hurt.
-# bindsym Mod4+d exec --no-startup-id drun
-
-
-
-
-
-# bindsym Mod4+Shift+d exec M-x
-# bindsym Mod4+Shift+x exec M-x
-
-# Practically speaking I don't care about this... just use alt+f1 or just type rofi -show run. Do like Mod4+d then type rofi -show run ez.
-# rofi -show run with different theme
-# bindsym Mod4+Shift+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
-# bindsym Mod4+Mod1+d exec --no-startup-id "/home/dex/scripts/rofi/rofi-dmenu.sh"
-
-
-
-# Kill focused window
 bindsym Mod4+Shift+q kill
 
-
-
-# Just tap tal then tap alt... make sure both keyd and xremap are on.
-bindsym Mod1+Shift+BackSpace exec --no-startup-id hide-float
-
-
-# =====================================================================
-# KEYBINDINGS — FOCUS & MOVEMENT
-# =====================================================================
-
-
-# Old nvim way.
-# bindsym Mod4+h focus left
-# bindsym Mod4+j focus down
-# bindsym Mod4+k focus up
-# bindsym Mod4+l focus right
-
-# To this:
-# Staying to vannila or stock as possible I guess
 bindsym Mod4+j focus left
 bindsym Mod4+k focus down
 bindsym Mod4+l focus up
 bindsym Mod4+semicolon focus right
 
-
-# bindsym Mod4+Shift+Left  move left
-# bindsym Mod4+Shift+Down  move down
-# bindsym Mod4+Shift+Up    move up
-# bindsym Mod4+Shift+Right move right
-
-
-# bindsym Mod4+Left  focus left
-# bindsym Mod4+Down  focus down
-# bindsym Mod4+Up    focus up
-# bindsym Mod4+Right focus right
-
-# Old nvim way
-# bindsym Mod4+Shift+h move left
-# bindsym Mod4+Shift+j move down
-# bindsym Mod4+Shift+k move up
-# bindsym Mod4+Shift+l move right
-
-# Staying to stock as possbile
 bindsym Mod4+Shift+j move left
 bindsym Mod4+Shift+k move down
 bindsym Mod4+Shift+l move up
 bindsym Mod4+Shift+semicolon move right
 
-# Monitor focus, I only have 1 monitor on at all time. But It is pluged.
-# So if I need to turn on monitor these are handy. With xrandr. To pin something on the right like discord.
-# bindsym Mod4+apostrophe focus output HDMI-1
-# bindsym Mod4+backslash  focus output eDP-1
-
-
-# his is for window_management keyd that I lost or stopped using I think just keep holding f and hit q and it should be there
-bindsym F19              exec --no-startup-id xdotool mousemove_relative -- 0 -10
-bindsym Mod4+F18      exec --no-startup-id xdotool mousemove_relative -- -10 0
-bindsym Mod4+F19         exec --no-startup-id xdotool mousemove_relative -- 0 10
-bindsym F18 exec --no-startup-id xdotool mousemove_relative -- 10 0
-
-# bindsym Mod4+F5 bar mode hide
-bindsym Mod4+F11 bar mode hide
-
-bindsym Mod4+F5 exec --no-startup-id ~/.local/bin/toggle-bar
-
-
-
-# bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/toggle-tabs
-# bindsym Mod4+F7 exec --no-startup-id ~/.local/bin/toggle-tabs-slightly
-bindsym Mod4+Shift+BackSpace exec --no-startup-id ~/.local/bin/toggle-edge-borders
-
-bindsym Mod4+F6 exec --no-startup-id ~/.local/bin/set-tabs toggle
-bindsym Mod4+F7 exec --no-startup-id ~/.local/bin/set-tabs slightly
-
-
-# i3-back
-bindsym Mod1+Tab        [con_mark=_back] focus
-bindsym Mod4+Tab exec --no-startup-id ~/.local/bin/switch-last-buffer
 bindsym Mod4+grave workspace back_and_forth
 
-# bindsym Mod1+semicolon        [con_mark=_back] focus
-# bindsym Mod4+semicolon workspace back_and_forth
-
-
-
-# =====================================================================
-# KEYBINDINGS — LAYOUT
-# =====================================================================
-
 bindsym Mod4+v split v
-
-# split in horizontal orientation
-# Now that it's free we just split like this
 bindsym Mod4+h split h
-
-
-# Old nvim way because we remapped it
-# bindsym Mod4+semicolon split h
-# bindsym Mod4+b split h
-
-# Omarchy-style tiled maximize
-bindsym Mod4+Mod1+f exec --no-startup-id ~/.local/bin/i3-maximize
-
-
-# This is so stupid I never use these it's dumb... I tried to make it like tmux but it doens't work that way you know... don't screw with shift+num
-# It's like tmux where you can have like yeah just for compatibility and Mod4 is the prefix ok?
-# bindsym Mod4+Shift+5 split h
-# bindsym Mod4+Shift+apostrophe split v
 
 bindsym Mod4+f fullscreen toggle
 
@@ -913,52 +24,14 @@ bindsym Mod4+w layout tabbed
 bindsym Mod4+e layout toggle split
 
 bindsym Mod4+Shift+space floating toggle
-# bindsym Mod4+z floating toggle
+
 bindsym Mod4+space       focus mode_toggle
-
-bindsym Mod4+z exec boomer
-
-
 
 bindsym Mod4+a focus parent
 bindsym Mod4+g focus child
 
-
-# =====================================================================
-# KEYBINDINGS — SCRATCHPAD
-# =====================================================================
-
-# This tells i3: "Specifically find the window with class 'Zeal' and toggle it"
-bindsym Mod4+Shift+z [class="Zeal"] scratchpad show, move position center
-
-# 2. Bind key to show ONLY floating windows
-# Change Mod4+z to your preferred key
-# bindsym Mod4+z exec --no-startup-id skippy-xd --wm-status float
-# bindsym Mod4+z exec --no-startup-id skippy-scratch
-
-
-# ctrl+Mod4+z does't work...
-# bindsym Mod4+Control+z [class="Zeal"] scratchpad show
-
-# Shortcut to show/hide the CopyQ window
-# bindsym Mod4+Control+v [class="copyq"] scratchpad show, move position center
-
-# bindsym Mod4+Control+p [class="KeePassXC"] scratchpad show
-# bindsym Mod4+Control+o [class="obs"] scratchpad show
-# bindsym Mod4+Control+s [class="scrcpy"] scratchpad show
-# bindsym Mod4+Control+e [class="org.mozilla.Thunderbird"] scratchpad show
-
-bindsym Mod4+q           move scratchpad
-bindsym Mod4+Shift+s     scratchpad show
-
-# Why would you do this? It just clutters your monitor... use rofi instead or just cycle and such.
-# bindsym Mod4+Mod1+s      [workspace="__i3_scratch"] scratchpad show
-
-# bindsym Control+Mod1+s sticky toggle
-
-# =====================================================================
-# KEYBINDINGS — WORKSPACES (switch)
-# =====================================================================
+bindsym Mod4+Shift+minus move scratchpad
+bindsym Mod4+minus scratchpad show
 
 bindsym Mod4+1 workspace number $ws1
 bindsym Mod4+2 workspace number $ws2
@@ -971,10 +44,6 @@ bindsym Mod4+8 workspace number $ws8
 bindsym Mod4+9 workspace number $ws9
 bindsym Mod4+0 workspace number $ws10
 
-# =====================================================================
-# KEYBINDINGS — MOVE CONTAINER TO WORKSPACE
-# =====================================================================
-
 bindsym Mod4+Shift+1 move container to workspace number $ws1
 bindsym Mod4+Shift+2 move container to workspace number $ws2
 bindsym Mod4+Shift+3 move container to workspace number $ws3
@@ -986,11 +55,170 @@ bindsym Mod4+Shift+8 move container to workspace number $ws8
 bindsym Mod4+Shift+9 move container to workspace number $ws9
 bindsym Mod4+Shift+0 move container to workspace number $ws10
 
+bindsym Mod4+Shift+c reload
+bindsym Mod4+Shift+r restart
+bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym Mod4+Return exec st -t st
+bindsym Mod4+d exec dmenu_run
+bindsym Mod4+z exec boomer
+
+# switch-last-buffer this tracker has to be there for it to work well
+exec_always --no-startup-id ~/.config/i3/scripts/i3-focus-tracker.sh
+bindsym Mod4+Tab exec --no-startup-id ~/.local/bin/switch-last-buffer
 
 
-# =====================================================================
-# KEYBINDINGS — AUDIO (PulseAudio)
-# =====================================================================
+# Just so handy to see icons because dmenu doesn't have them for programs names
+# also search by program name it's handy.
+bindsym Mod1+F2 exec --no-startup-id "rofi -show drun -show-icons"
+
+# i3-back
+exec --no-startup-id i3-back
+bindsym Mod1+Tab        [con_mark=_back] focus
+
+# A program I made that works well with i3-back and it just fast. feels like emacs on i3
+bindsym Mod4+b exec --no-startup-id switch-buffer
+
+# This program makes using the mouse less
+bindsym Mod4+Shift+f exec --no-startup-id "warpd --hint"
+
+# fast screenshot no bs or drawing... just select region and boom it's in your clipboard.
+bindsym Mod1+Control+s exec scrot -s /tmp/s.png && xclip -selection clipboard -t image/png -i /tmp/s.png && rm /tmp/s.png
+
+# a screenshot program on print
+bindsym --release Print exec --no-startup-id ~/.local/bin/f-screenshot
+
+# this makes ~/.local/bin/scr-pin look like pin.
+for_window [class="pin_shot"] floating enable, border none
+
+# emacs anywhere
+bindsym Mod1+Control+e exec ~/.local/bin/e
+
+# My clipboard menu
+bindsym Mod4+c exec --no-startup-id clipmenu
+
+
+# lock computer and turn off screen.
+bindsym Control+Mod1+l exec --no-startup-id "i3lock; sleep 0.5; xset dpms force off"
+
+# mic toggle for discord and coms.
+bindsym Mod4+m exec --no-startup-id "~/.local/bin/mic-toggle"
+
+# Real handy too lazy to switch to firefox and type url then inside webpage seach the thing. just 1 search take me there man
+bindsym Mod4+y exec --no-startup-id quick-search
+bindsym Mod4+Shift+y exec --no-startup-id web-search
+
+# So handy for volume up and down and mute... instead of bringing gui pavucontrol or something.
+bindsym Mod4+Control+BackSpace exec --no-startup-id ~/.local/bin/volumectl mute
+bindsym Mod4+Control+minus exec --no-startup-id ~/.local/bin/volumectl down
+bindsym Mod4+Control+equal exec --no-startup-id ~/.local/bin/volumectl up
+
+# pavucontrol with dark theme. also it's faster here than typing it on keyboard.
+bindsym Control+Mod4+7 exec --no-startup-id "GTK_THEME=Arc-Dark pavucontrol"
+
+font pango:Iosevka 10
+
+new_window pixel 1
+new_float pixel 1
+
+# set it both or none.
+hide_edge_borders both
+
+focus_follows_mouse no
+
+# stupid mouse scroll i3 tabs
+bindsym button4 nop
+bindsym button5 nop
+
+floating_modifier Mod4
+
+tiling_drag modifier titlebar
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20"
+
+workspace 1  output HDMI-1
+workspace 2  output HDMI-1
+workspace 3  output HDMI-1
+workspace 4  output HDMI-1
+workspace 5  output HDMI-1
+workspace 6  output HDMI-1
+workspace 7  output HDMI-1
+workspace 8  output HDMI-1
+workspace 9  output HDMI-1
+workspace 10 output HDMI-1
+
+workspace 11 output eDP-1
+workspace 12 output eDP-1
+workspace 13 output eDP-1
+workspace 14 output eDP-1
+workspace 15 output eDP-1
+workspace 16 output eDP-1
+workspace 17 output eDP-1
+workspace 18 output eDP-1
+workspace 19 output eDP-1
+workspace 20 output eDP-1
+
+# Gromit-MPX (screen annotation)
+exec --no-startup-id sh -c "sleep 6; gromit-mpx -o 0.5"
+
+# Razer DPI (fix my mouse)
+exec --no-startup-id sh -c "sleep 3; razer-cli --dpi 400"
+
+# Fixes
+#########
+# exec_always --no-startup-id sh -c "setxkbmap us; xmodmap ~/.Xmodmap; xset r rate 220 50"
+exec_always --no-startup-id sh -c "setxkbmap us; xset r rate 220 50"
+exec --no-startup-id xsetroot -solid "#000000"
+exec_always --no-startup-id hsetroot -solid '#000000'
+
+
+# fixes clipboard manager copying my passwords
+exec_always --no-startup-id env CM_IGNORE_WINDOW=".*KeePassXC.*" clipmenud
+
+# I hate the mouse visibile so this fixes it
+exec --no-startup-id unclutter --timeout 5 --ignore-scrolling --jitter 10 --fork
+
+# for ctrl+mod4+e
+exec --no-startup-id emacs --daemon
+
+# fixes my mic to an extent
+exec --no-startup-id noisetorch -i
+
+# picom is better but this is light
+exec --no-startup-id xcompmgr -n
+
+# 2nd screenshot program I use. The first one is scrot and like
+exec --no-startup-id flameshot
+
+# My notification program.
+exec --no-startup-id dunst
+
+# fixes ueberzugpp/Yazi previews inside tmux
+exec --no-startup-id ~/scripts/fix/yazi-ueberzugpp-tmux-fix
+
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -999,104 +227,26 @@ bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_S
 bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
-bindsym Mod4+Shift+equal exec --no-startup-id ~/.local/bin/hdmi-brightness up
-bindsym Mod4+Shift+minus exec --no-startup-id ~/.local/bin/hdmi-brightness down
-
-# =====================================================================
-# KEYBINDINGS — I3 MANAGEMENT
-# =====================================================================
-
-bindsym Mod4+Shift+c reload
-bindsym Mod4+Shift+r restart
-bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-bindsym ctrl+mod1+shift+Mod4+q exec ~/scripts/i3/ws-goto.sh 11 "11q:"
-bindsym ctrl+mod1+shift+Mod4+w exec ~/scripts/i3/ws-goto.sh 12 "12w:"
-bindsym ctrl+mod1+shift+Mod4+e exec ~/scripts/i3/ws-goto.sh 13 "13e:"
-bindsym ctrl+mod1+shift+Mod4+r exec ~/scripts/i3/ws-goto.sh 14 "14r:"
-bindsym ctrl+mod1+shift+Mod4+t exec ~/scripts/i3/ws-goto.sh 15 "15t:"
-bindsym ctrl+mod1+shift+Mod4+y exec ~/scripts/i3/ws-goto.sh 16 "16y:"
-bindsym ctrl+mod1+shift+Mod4+u exec ~/scripts/i3/ws-goto.sh 17 "17u:"
-bindsym ctrl+mod1+shift+Mod4+i exec ~/scripts/i3/ws-goto.sh 18 "18i:"
-bindsym ctrl+mod1+shift+Mod4+o exec ~/scripts/i3/ws-goto.sh 19 "19o:"
-bindsym ctrl+mod1+shift+Mod4+p exec ~/scripts/i3/ws-goto.sh 20 "20p:"
-bindsym ctrl+mod1+shift+Mod4+a exec ~/scripts/i3/ws-goto.sh 21 "21a:"
-bindsym ctrl+mod1+shift+Mod4+s exec ~/scripts/i3/ws-goto.sh 22 "22s:"
-bindsym ctrl+mod1+shift+Mod4+d exec ~/scripts/i3/ws-goto.sh 23 "23d:"
-bindsym ctrl+mod1+shift+Mod4+f exec ~/scripts/i3/ws-goto.sh 24 "24f:"
-
-# Sadly have to use F1 key. bause this hotkey+g is taken. for languagetools correction hotkey.
-bindsym ctrl+mod1+shift+Mod4+F1 exec ~/scripts/i3/ws-goto.sh 25 "25g:"
-bindsym ctrl+mod1+shift+Mod4+h exec ~/scripts/i3/ws-goto.sh 26 "26h:"
-bindsym ctrl+mod1+shift+Mod4+j exec ~/scripts/i3/ws-goto.sh 27 "27j:"
-bindsym ctrl+mod1+shift+Mod4+k exec ~/scripts/i3/ws-goto.sh 28 "28k:"
-bindsym ctrl+mod1+shift+Mod4+l exec ~/scripts/i3/ws-goto.sh 29 "29l:"
-bindsym ctrl+mod1+shift+Mod4+semicolon exec "~/scripts/i3/ws-goto.sh 30 '30;:'"
-
-# I guess for some reason this doesn't work so... I'll just use this for something else Do not make this work.
-
-bindsym ctrl+mod1+shift+Mod4+z exec ~/scripts/i3/ws-goto.sh 31 "31z:"
-bindsym ctrl+mod1+shift+Mod4+x exec ~/scripts/i3/ws-goto.sh 32 "32x:"
-bindsym ctrl+mod1+shift+Mod4+c exec ~/scripts/i3/ws-goto.sh 33 "33c:"
-bindsym ctrl+mod1+shift+Mod4+v exec ~/scripts/i3/ws-goto.sh 34 "34v:"
-bindsym Mod4+ctrl+mod1+shift+b exec ~/scripts/i3/ws-goto.sh 35 "35b:"
-bindsym ctrl+mod1+shift+Mod4+n exec ~/scripts/i3/ws-goto.sh 36 "36n:"
-bindsym ctrl+mod1+shift+Mod4+m exec ~/scripts/i3/ws-goto.sh 37 "37m:"
-bindsym ctrl+mod1+shift+Mod4+period exec ~/scripts/i3/ws-goto.sh 39 "39.:"
-bindsym ctrl+mod1+shift+Mod4+slash exec ~/scripts/i3/ws-goto.sh 40 "40/:"
-bindsym ctrl+mod1+shift+Mod4+comma exec "~/scripts/i3/ws-goto.sh 38 '38,:'"
-
-
-# =====================================================================
-# RESIZE MODE
-# =====================================================================
+bindsym Mod4+Mod1+equal exec --no-startup-id ~/.local/bin/hdmi-brightness up
+bindsym Mod4+Mod1+minus exec --no-startup-id ~/.local/bin/hdmi-brightness down
 
 mode "resize" {
-    bindsym j resize shrink width  10 px or 10 ppt
-    bindsym j resize grow   height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym semicolon resize grow   width  10 px or 10 ppt
+    bindsym j resize shrink width 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow width 10 px or 10 ppt
 
-    bindsym Right resize shrink width  10 px or 10 ppt
-    bindsym Up    resize grow   height 10 px or 10 ppt
-    bindsym Down  resize shrink height 10 px or 10 ppt
-    bindsym Left  resize grow   width  10 px or 10 ppt
+    bindsym Left  resize shrink width  10 px or 10 ppt
+    bindsym Down  resize grow   height 10 px or 10 ppt
+    bindsym Up    resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow   width  10 px or 10 ppt
 
-    bindsym Return escape
+    bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym Mod4+r mode "default"
 }
 
 bindsym Mod4+r mode "resize"
-
-
-# =====================================================================
-# BAR
-# =====================================================================
-
-# bar {
-#     wheel_up_cmd nop
-#     wheel_down_cmd nop
-#     status_command i3status
-#     position bottom
-#     strip_workspace_numbers yes
-#     tray_output HDMI-1
-#     # font pango:Iosevka Term Narrow 9
-#     font pango:Iosevka 10
-# }
-
-# bar {
-#     mode hide
-#     hidden_state hide
-#
-#     wheel_up_cmd nop
-#     wheel_down_cmd nop
-#     status_command i3status
-#     position bottom
-#     strip_workspace_numbers yes
-#     tray_output HDMI-1
-#     font pango:Iosevka 10
-# }
 
 bar {
     mode dock
@@ -1106,12 +256,7 @@ bar {
     status_command i3status
     position bottom
     strip_workspace_numbers yes
-    tray_output HDMI-1
+    # tray_output HDMI-1
+    tray_output primary
     font pango:Iosevka 10
 }
-
-
-
-
-
-

@@ -1,4 +1,3 @@
 #!/bin/bash
 
 scrot -s /tmp/s.png && xclip -selection clipboard -t image/png -i /tmp/s.png && rm /tmp/s.png
-
