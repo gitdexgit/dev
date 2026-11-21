@@ -1,0 +1,10 @@
+GOAL: Learn C and pentesting together by writing simple C programs and trying to break them.
+
+1. Study C99 slowly
+   Read K. N. King, take notes on paper, and write small test programs without rushing.
+
+2. Break your own code
+   Reproduce classic bugs on purpose, starting with scanf %s buffer overflows, to see how vulnerabilities happen in memory.
+
+3. Test compiler flags
+   Compile with -Wall -Wextra first, then compare normal builds against hardened flags to see what warnings catch and what slips through.

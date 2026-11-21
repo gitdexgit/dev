@@ -309,7 +309,6 @@
     (vterm-send-key "c" nil nil t)))
 (define-key vterm-mode-map (kbd "C-\\") nil)
 (define-key vterm-mode-map (kbd "C-\\ C-n") 'vterm-copy-mode)
-(define-key vterm-mode-map (kbd "C-v") 'vterm-yank)
 (define-key vterm-copy-mode-map (kbd "i") 'vterm-copy-mode)
 (add-to-list 'vterm-eval-cmds
              '("vterm-clear-scrollback" (lambda () (vterm-clear-scrollback))))
@@ -686,9 +685,8 @@ compilation-error-regexp-alist-alist
 (load-file custom-file)
 
 ;; Global keys (at end to override everything)
-(global-set-key (kbd "C-v") 'yank)
-(global-set-key (kbd "C-x <right>") 'find-file)
-(global-set-key (kbd "C-x <left>") 'ido-switch-buffer)
+
+
 (global-set-key (kbd "C-x <end>") 'eval-last-sexp)
 
 (global-set-key (kbd "C-M-<right>") 'forward-sexp)
@@ -816,11 +814,10 @@ compilation-error-regexp-alist-alist
 (setq-default erc-hide-list '("JOIN" "PART" "QUIT" "NICK" "MODE" "NOTICE"
                               "324" "328" "329" "332" "333" "353" "366"))
 (setq erc-autojoin-on-identify 'all)
+
 (setq erc-autojoin-channels-alist
-      '(("Libera.Chat" "##programming" "#bash" "#emacs" "#linux"
-         "#hackers" "#c++" "#ai" "#c++-general"
-         "#c++-basic" "#lua" "#go-nuts" "#odin" "#ctf"
-         "#picoctf" "#networking" "#python")))
+      '(("Libera.Chat" "#archlinux" "#c" "#bash" "#emacs" "#linux" "#networking")))
+
 
 ;; --- 8. MODULES ---
 (setq erc-modules '(netsplit fill button match track completion

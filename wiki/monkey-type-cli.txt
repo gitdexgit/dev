@@ -1,0 +1,5 @@
+
+Run this command and args on CLI, make sure you have tt installed "https://github.com/lemnos/tt": 
+
+tt -blockcursor -highlight1 -notheme
+
